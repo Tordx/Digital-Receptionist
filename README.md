@@ -1,5 +1,3 @@
-# Digital-Receptionist
-
 <h1>DIGITAL RECEPTIONIST</h1>
 <h2> Hello, welcome!</h2>
 
