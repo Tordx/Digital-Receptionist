@@ -1,7 +1,5 @@
 <h1>DIGITAL RECEPTIONIST</h1>
 
-<h2> Hello, welcome!</h2>
-
 <p> Please feel free to view or clone this repository </p>
 
 <h5>here is a screenshot of the current update:</h5>
