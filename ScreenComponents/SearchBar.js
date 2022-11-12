@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
     StyleSheet,
     Keyboard,
+    Alert,
+    ToastAndroid,
 
 } from 'react-native'
 import React, {useEffect, useState} from 'react'
@@ -22,10 +24,22 @@ import { SearchResult } from './SearchResult';
 export const SearchScreen = () => {
 
     const [pressed, setPressed] = useState(true);
-    const [TextValue, setTextValue] = useState(false);
+    const [TextValue, setTextValue] = useState('');
     const navigation = useNavigation();
 
+  const SearchInput = () => {
+    if (TextValue.length == 0){
 
+        // Alert.alert('Please input search')
+        ToastAndroid.show('Please input search',ToastAndroid.LONG)
+        console.log('error')
+
+    } else {
+            
+        setPressed(false)
+        console.log('Search_success')
+    } 
+} 
 
   return (
     
@@ -36,7 +50,7 @@ export const SearchScreen = () => {
     
         <WelcomeText/>
         :                 
-        <TouchableWithoutFeedback
+        <TouchableOpacity
             style = {styles.GoBack}
             onPressIn={() => setPressed(!pressed)}
             keyboardWillHide
@@ -49,7 +63,7 @@ export const SearchScreen = () => {
                 style = {{marginRight: 20   }}
 
             />
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
    
     }
         <View style = {pressed? styles.TextInput: styleActive.TextInput1}>
@@ -65,7 +79,7 @@ export const SearchScreen = () => {
                 placeholder='How can I help you?'
                 style = {{fontSize: 20,}}
                 onChangeText = {(value) => setTextValue(value)}
-                value = {!TextValue}
+                value = {TextValue}
                 
             />
         
@@ -76,6 +90,7 @@ export const SearchScreen = () => {
         >
         <TouchableOpacity
          style = {pressed? styles.Search: styleActive.Search1}
+        onPress = {SearchInput}
         
          >
             <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: '600'}}>

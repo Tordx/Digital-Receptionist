@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     
     View,
@@ -7,15 +7,17 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    ToastAndroid,
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import psu_logo from '../Assets/Img/psu_logo.png';
 import psu_backgroundImage from '../Assets/Img/psu_backgroundImage.png';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect ,useNavigation } from '@react-navigation/native';
 import { AppName, Version, WCT, TagLine, Report } from '../Assets/constants/constants';
 import {ReportButton} from '../ScreenComponents/Buttons';
+import BackgroundTimer from 'react-native-background-timer';
 
 export default function LoginScreen() {
 
@@ -82,6 +84,8 @@ export default function LoginScreen() {
                 
                 />
         </View>
+        
+        <Text> <Text style = {{color: 'red'}}>*</Text> Choose visitor login if you don't know your ID </Text>
         <TouchableOpacity
         onPress={() => navigation.navigate('Students')}
         style = {styles.Continue}

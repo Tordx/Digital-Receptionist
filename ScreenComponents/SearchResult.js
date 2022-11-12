@@ -6,6 +6,7 @@ import {
     StyleSheet, 
     Text,  
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DATA = [
     {
@@ -55,7 +56,7 @@ const DATA = [
       );
 
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             
           <FlatList
             showsVerticalScrollIndicator = {false}
@@ -63,7 +64,7 @@ const DATA = [
             renderItem={renderItem}
             keyExtractor={item => item.id}
           />
-        </View>
+        </SafeAreaView>
       );
     
 
@@ -76,12 +77,13 @@ const DATA = [
         justifyContent: 'center',
         alignItems: 'center',
         paddingBottom: 80,
+        
     },
 
     item: {
 
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#e6e9fc',
         padding: 30,
         width: 1200,
         height: 300,

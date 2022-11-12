@@ -9,6 +9,7 @@ import VisitorLogin from './Screens/VisitorLoginScreen';
 import EmployeeLogin from './Screens/EmployeeLoginScreen';
 import Students from './Navigations/Students';
 import ReportScreen from './Screens/ReportScreen';
+import IdleScreen from './Screens/IdleScreen'
 
 
 export default function Directory() {
@@ -49,6 +50,16 @@ export default function Directory() {
                 component={ReportScreen}
             
             />
+
+            <Stack.Screen
+            
+                name = 'IdleScreen'
+                component={IdleScreen}
+                options = {{
+                    headerShown: false
+                }}  
+            />
+
 {/* Navigations */}
 
             <Stack.Screen 
