@@ -19,7 +19,32 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchResult } from './SearchResult';
+import MainMenu from './MainMenu';
 
+export const SearchBar = (props) => {
+
+    return (
+
+        <View style = {[styles.TextInput, props.style]}>
+            <Icon
+            
+            name = 'search'
+            size={30}
+            style = {{margin: 10}}
+
+            />
+            <TextInput
+                placeholder= {props.placeholder}
+                style = {{fontSize: 20,}}
+                
+            />
+        
+        
+        </View>
+
+    )
+
+}
 
 export const SearchScreen = () => {
 
@@ -98,13 +123,12 @@ export const SearchScreen = () => {
             </Text>
         </TouchableOpacity>
         </SafeAreaView>
-        {pressed? <AppointmentButton/>: null }
          <View >
         
          </View>
          
     </View>
-    {pressed? null:<View  style = {{marginTop: 150 }}>
+    {pressed? <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', top: 175 }}><MainMenu/></View>:<View  style = {{marginTop: 150 }}>
     <Text  style = {{textAlign: 'left', fontSize: 30, fontWeight: '900', color: 'black' }}>Results of "{TextValue}" </Text>
     <SearchResult/>
     </View>}
@@ -119,8 +143,11 @@ export const SearchScreen = () => {
 
     Container: {
         
+        
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        top: 50,
         
     },
 
@@ -144,14 +171,21 @@ export const SearchScreen = () => {
 
     TextInput: {
 
-        width: 800,
+        backgroundColor: '#f2f3f7',
+        width: 600,
         borderRadius: 15,
         height: 50,
-        borderWidth: 2,
         alignItems: 'center',
-        borderStyle: 'dashed',
         alignContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        shadowColor: "#000",
+        shadowOffset: {
+	        width: 1,
+	        height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 3.41,
+        elevation: 10,
 
     },
 

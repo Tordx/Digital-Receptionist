@@ -4,12 +4,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Employee from './Navigations/Employee';
-import LoginScreen from './Screens/LoginScreen';
 import VisitorLogin from './Screens/VisitorLoginScreen';
 import EmployeeLogin from './Screens/EmployeeLoginScreen';
-import Students from './Navigations/Students';
+import ClassScreen from './Screens/Navigations/Student/ClassScreen';
 import ReportScreen from './Screens/ReportScreen';
 import IdleScreen from './Screens/IdleScreen'
+import Student_HomeScreen from './Screens/Navigations/Student/Student_HomeScreen';
+import InitialLoginRouting from './Screens/InitialLoginRouting';
+import AdminScreen from './Screens/Navigations/Student/AdminScreen';
+import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
+import EventScreen from './Screens/Navigations/Student/EventScreen';
+import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
+import SuggestionsScreen from './Screens/SuggestionsScreen';
 
 
 export default function Directory() {
@@ -18,23 +24,25 @@ export default function Directory() {
 
   return (
     <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='InitialLoginRouting'>
             <Stack.Screen
             
-                name = 'LoginScreen'
-                component={LoginScreen}
+                name = 'InitialLoginRouting'
+                component={InitialLoginRouting}
                 options = {{
                     headerShown: false
                 }}
             />
+
             <Stack.Screen
             
-            name = 'VisitorLogin'
-            component={VisitorLogin}
-            options = {{
+                name = 'Student_HomeScreen'
+                component={Student_HomeScreen}
+                options = {{
                 headerShown: false
-            }}
+                }}
             />
+
             <Stack.Screen
             
                 name = 'Employee'
@@ -59,28 +67,62 @@ export default function Directory() {
                     headerShown: false
                 }}  
             />
-
-{/* Navigations */}
-
-            <Stack.Screen 
+        {/* Student Screen */}
+            <Stack.Screen
             
-                name = 'EmployeeLogin'
-                component={EmployeeLogin}
+                name = 'ClassScreen'
+                component={ClassScreen}
+                options = {{
+                headerShown: false
+                }}  
+             />
+
+            <Stack.Screen
+            
+                name = 'AdminScreen'
+                component={AdminScreen}
+                options = {{
+                headerShown: false
+                }}  
+            />
+
+            <Stack.Screen
+
+                name = 'FacultyScreen'
+                component={FacultySreen}
                 options = {{
                     headerShown: false
-                }}
-                
+                }}  
+            />
+
+            <Stack.Screen
+
+                name = 'EventScreen'
+                component={EventScreen}
+                options = {{
+                    headerShown: false
+                }}  
             />
 
             <Stack.Screen
             
-                name= 'Students'
-                component={Students}
+                name = 'OfficesScreen'
+                component={OfficesScreen}
                 options = {{
                     headerShown: false
                 }}
             
             />
+
+            <Stack.Screen 
+            
+                name = 'SuggestionsScreen'
+                component={SuggestionsScreen}
+                options = {{
+                    headerShown: false
+                }}
+            />
+
         </Stack.Navigator>
     </NavigationContainer>
   )

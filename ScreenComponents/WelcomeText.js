@@ -9,10 +9,9 @@ export const WelcomeText = () => {
         <Image
         
         source={psu_logo}
-        style = {{width: 150, height: 150, alignSelf: 'center', margin: 10,}}
+        style = {{width: 125, height: 125, alignSelf: 'center', margin: 10,}}
 
         />
-        <Text style = {{fontSize: 50, textAlign: 'center', fontWeight: '900', marginBottom: 0}}>{HOMEPAGEWELCOME}</Text>
         <Text style ={{fontSize: 20, textAlign: 'center', fontWeight: '500', marginBottom: 0 }}>{HOMEPAGETAG}</Text>
         {/* <Text style ={{fontSize: 15, textAlign: 'center', fontWeight: '500', marginBottom: 10 }}>{HOMEPAGESUBTAG}</Text> */}
     </View>

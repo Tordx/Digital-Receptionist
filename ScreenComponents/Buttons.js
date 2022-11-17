@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import React, { useState } from 'react'
 
 import {REPORT} from '../Assets/constants/constants';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export const ReportButton = () => {
@@ -12,15 +13,14 @@ export const ReportButton = () => {
 
     return (
 
-        <View style = {styles.Report}>
         <TouchableOpacity
+         style = {styles.Report}
         onPress={()=>navigation.navigate('ReportScreen')}
         >
             <Text style = {styles.ReportText}>
                 {REPORT}
             </Text>
         </TouchableOpacity>
-    </View>
 
     )
 
@@ -51,22 +51,62 @@ export const AppointmentButton = () =>{
   )
 }
 
+
+export const CloseButton = (props) => {
+
+    return (
+
+        <TouchableOpacity
+        onPress={props.onPress}
+        style = {props.style}
+        >
+        <Icon
+        
+        name = {props.name}
+        size = {props.size}
+
+
+        />
+        <Text style = {{fontSize: 20}}>{props.title}</Text>
+
+</TouchableOpacity>
+        
+    )
+
+
+}
+
+
 const styles = StyleSheet.create({
 
     Report: {
 
+        justifyContent: 'center',
         position: 'absolute',
-        top: 0,
-        right: 0,
+        bottom: 20,
+        right: 20,
         margin: 20,
+        width: 100,
+        height: 50,
+        backgroundColor: 'red',
+        borderRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+	        width: 1,
+	        height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 2.65, 
+        elevation: 2,
         
     },
 
     ReportText: {
 
-        color: 'red',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
+        textAlign: 'center'
 
     },
     
