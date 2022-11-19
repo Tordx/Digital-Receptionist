@@ -2,15 +2,15 @@ import PouchDB from 'pouchdb-react-native' ; 'pouchdb-core';
 
 PouchDB.plugin(require('pouchdb-adapter-asyncstorage').default)
 export const localDBSchedules = new PouchDB('Schedules', {adapter: 'asyncstorage'})
-export const remoteDBUser = new PouchDB('http://admin:1234@192.168.1.236:5984/roracausers')
+export const remoteDBSchedules = new PouchDB('http://admin:1234@192.168.0.199:5984/schedule')
 
- export const SyncUser = () => {
-  localDBWOWDBUser.sync(remoteDBUser, {
+ export const SyncSchedules = () => {
+  localDBSchedules.sync(remoteDBSchedules, {
     live: true, 
     retry: true
   }).on('change', function () {
    
-    localDBWOWDBUser.allDocs({include_docs:true}).then(function(doc){
+    localDBSchedules.allDocs({include_docs:true}).then(function(doc){
       console.log(doc)
   })
   }).on('error', function (err) {

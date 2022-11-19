@@ -9,15 +9,24 @@ import {
     Alert,
 
 } from 'react-native';
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBSchedules} from '../../../Database/pouchDb'
+import {localDBSchedules , remoteDBSchedules , SyncSchedules} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
+import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AddClassScreen() {
+
+  useEffect(() => {
+    SyncSchedules()
+  }, []);
+
+  
+    const navigation = useNavigation('');
 
     const [classname, setClassName] = useState('');
     const [subject, setSubject] = useState('');
@@ -67,9 +76,16 @@ export default function AddClassScreen() {
 
 
   return (
+    
     <View style={styles.container}>
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <CloseButton
+                    onPress = {() => navigation.navigate('Student_HomeScreen')}
+                    name = 'arrow-back'
+                    size = {50}
+                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+        />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
             Add Class </Text>
@@ -212,6 +228,7 @@ export default function AddClassScreen() {
             </Pressable>
      </ScrollView>     
     </View>
+
   )
 }
 
