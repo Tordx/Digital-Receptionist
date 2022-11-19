@@ -7,12 +7,14 @@ import {
     Text,  
     TextInput,
     ImageBackground,
+    TouchableOpacity
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Button } from 'react-native-paper';
 
 const DATA = [
     {
@@ -71,7 +73,8 @@ const DATA = [
        
         <ScrollView>
         <View style = {styles.status} >
-          <Text style  = {styles.text}>On-going class</Text></View> 
+          <Text style  = {styles.text}>On-going class</Text>
+          </View> 
             <FlatList
               horizontal
               showsHorizontalScrollIndicator = {false}
@@ -80,7 +83,8 @@ const DATA = [
               keyExtractor={item => item.id}
           />
         <View style = {[styles.status, {backgroundColor: '#0f2ed6'}]}>
-          <Text style  = {styles.text}>Next class</Text></View>
+          <Text style  = {styles.text}>Next class</Text>
+          </View>
             <FlatList
               horizontal
               showsHorizontalScrollIndicator = {false}
@@ -89,7 +93,8 @@ const DATA = [
               keyExtractor={item => item.id}
             />
         <View style = {[styles.status, {backgroundColor: 'grey'}]}>
-          <Text style  = {styles.text}>Previous class</Text></View>
+          <Text style  = {styles.text}>Previous class</Text>
+          </View>
             <FlatList
               horizontal
               showsHorizontalScrollIndicator = {false}
@@ -97,6 +102,7 @@ const DATA = [
               renderItem={renderItem}
               keyExtractor={item => item.id}
             /> 
+          
         </ScrollView>
         <View style = {styles.TextInput}>
             <Icon

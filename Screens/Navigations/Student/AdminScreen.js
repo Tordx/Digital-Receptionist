@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 
@@ -104,6 +104,13 @@ const DATA = [
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 />
+              <AddButton
+                    onPress = {() => navigation.navigate('AddClassScreen')}
+                    name = 'add'
+                    color = 'green'
+                    size = {100}
+                    style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
+              />
             </SafeAreaView>
         </ImageBackground>
       );

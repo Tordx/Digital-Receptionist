@@ -16,6 +16,7 @@ import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
 import EventScreen from './Screens/Navigations/Student/EventScreen';
 import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
+import AddClassScreen from './Screens/Navigations/Employee/AddClassScreen';
 
 
 export default function Directory() {
@@ -122,6 +123,14 @@ export default function Directory() {
                     headerShown: false
                 }}
             />
+            <Stack.Screen 
+            
+            name = 'AddClassScreen'
+            component={AddClassScreen}
+            options = {{
+                headerShown: false
+            }}
+        />
 
         </Stack.Navigator>
     </NavigationContainer>

@@ -76,6 +76,30 @@ export const CloseButton = (props) => {
 
 }
 
+export const AddButton = (props) => {
+
+    return (
+
+        <TouchableOpacity
+        onPress={props.onPress}
+        style = {props.style}
+        >
+        <Icon
+        color={props.color}
+        name = {props.name}
+        size = {props.size}
+
+
+        />
+        <Text style = {{fontSize: 20}}>{props.title}</Text>
+
+</TouchableOpacity>
+        
+    )
+
+
+}
+
 
 const styles = StyleSheet.create({
 
