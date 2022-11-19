@@ -69,7 +69,7 @@ export const SearchScreen = () => {
   return (
     
     <View style = {{flex: 1,  justifyContent: 'center',
-    alignItems: 'center',}}>
+    alignItems: 'center', }}>
     <View style = {pressed? styles.Container : styleActive.Container1}>
     {pressed?  
     
@@ -128,10 +128,6 @@ export const SearchScreen = () => {
          </View>
          
     </View>
-    {pressed? <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', top: 175 }}><MainMenu/></View>:<View  style = {{marginTop: 150 }}>
-    <Text  style = {{textAlign: 'left', fontSize: 30, fontWeight: '900', color: 'black' }}>Results of "{TextValue}" </Text>
-    <SearchResult/>
-    </View>}
     </View>
     
 

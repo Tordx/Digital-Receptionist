@@ -37,7 +37,7 @@ export default function InitialLoginRouting() {
         <ReportButton/>
         <View style = {{flexDirection: 'row'}}>
             <Pressable style = {[styles.Box, {backgroundColor: '#f2f3f7'}]}
-                onPress = {() => navigation.navigate('Student_HomeScreen')}
+                onPress = {() => navigation.navigate('StudentLoginScreen')}
                 android_ripple = {{
       
                     color: '#fddf54',
@@ -54,7 +54,7 @@ export default function InitialLoginRouting() {
 
             </Pressable>
             <Pressable style = {styles.Box}
-                onPress = {() => navigation.navigate('Student_HomeScreen')}
+                onPress = {() => navigation.navigate('')}
                 android_ripple = {{
       
                     color: '#f2f3f7',

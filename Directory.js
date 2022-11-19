@@ -16,6 +16,7 @@ import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
 import EventScreen from './Screens/Navigations/Student/EventScreen';
 import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
+import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
 
 
 export default function Directory() {
@@ -56,6 +57,9 @@ export default function Directory() {
             
                 name = 'ReportScreen'
                 component={ReportScreen}
+                options = {{
+                    headerShown: false
+                }}  
             
             />
 
@@ -68,6 +72,16 @@ export default function Directory() {
                 }}  
             />
         {/* Student Screen */}
+
+            <Stack.Screen
+            
+            name = 'StudentLoginScreen'
+            component={StudentLoginScreen}
+            options = {{
+                headerShown: false
+            }}
+            />
+
             <Stack.Screen
             
                 name = 'ClassScreen'
