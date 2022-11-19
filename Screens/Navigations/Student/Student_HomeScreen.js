@@ -16,6 +16,7 @@ import { CloseButton, ReportButton } from '../../../ScreenComponents/Buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
 import psu_logo from '../../../Assets/Img/psu_logo.png'
+import {StudentMainMenu} from '../../../ScreenComponents/MainMenu';
 
 export default function Student_HomeScreen() {
 
@@ -29,25 +30,25 @@ export default function Student_HomeScreen() {
     BackgroundTimer.runBackgroundTimer(() => {
       setSeconds((secs) => {
 
-        if (secs > 0) return secs - 1;
+
+        if (secs > 0) return secs - 1; 
 
        
-            
-        if (secs == 0)
-            navigation.navigate('InitialLoginRouting')
-            
+
         else return 0;
     
-      });
+        
+      }
+       );
     }, 1000);
-
     
   
   },[])
 
   if (seconds == 60) 
   ToastAndroid.show("Session ending in 60 seconds, Please re-login", ToastAndroid.SHORT)
-
+  if (seconds == 0) 
+  navigation.navigate('InitialLoginRouting')
    
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -55,6 +56,17 @@ export default function Student_HomeScreen() {
     }, [])
 
     
+    // let n = t
+    // let t =  n
+    // if (seconds > 0) {
+
+    //   t = n + 1
+
+    // } if (t == 60) {
+
+    //   t = 0
+
+    // } console.log(t)
 
    const confirmLogout = () => {
 
@@ -85,7 +97,7 @@ export default function Student_HomeScreen() {
       backgroundColor: '#f2f3f7',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100%' 
+      flex: 1,
 
     }}
     >
@@ -99,9 +111,16 @@ export default function Student_HomeScreen() {
        <ReportButton
        />
       <View style = {{alignItems: 'center', justifyContent: 'center',}}>
+        <Image
         
-       
-          <SearchScreen/>
+        source={require('../../../Assets/Img/psu_logo.png')}
+        style = {{width: 200, height: 200, marginBottom: 25}}
+
+        />
+        <Text style = {{fontSize: 20,}}> Welcome to Pangasinan State University, Lingayen Campus </Text>
+          <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center'}}>
+            <StudentMainMenu/>
+            </View>
           <Text>{seconds}</Text>
       </View>
 

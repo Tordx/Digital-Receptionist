@@ -5,8 +5,33 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
 
 
+const Box = (props) => {
 
-export default function MainMenu() {
+  return (
+  <Pressable 
+  style = {[styles.box, props.style]}
+  onPress = {props.onPress}
+  android_ripple = {{
+
+      color: '#fddf54',
+      radius: 130,
+      borderless: 25,
+
+  }}
+  >
+  <Image
+    source={props.source}
+    style = {{width: 100, height: 100}}
+  />
+  <Text style = {styles.text}>{props.title}</Text>
+</Pressable>
+
+)
+
+}
+
+
+export const StudentMainMenu = () => {
 
   const navigation = useNavigation('');
   const [pressed, isPressed] = useState(true);
@@ -15,119 +40,55 @@ export default function MainMenu() {
   return (
     <View style = {{ justifyContent: 'center', flexDirection: 'column' }}>
       <View style = {{flexDirection: 'row'}}>
-        <Pressable 
-          style = {styles.box}
-          onPress = {() =>  navigation.navigate('ClassScreen')}
-          android_ripple = {{
-      
-              color: '#fddf54',
-              radius: 94,
-              borderless: 25,
 
-          }}
-        >
-          <Image
-            source={require("../Assets/Img/icons8-classroom-96.png")}
-            style = {{width: 75, height: 75}}
-          />
-          
-          <Text style = {styles.text}>Classes</Text>
-        </Pressable>
-        <Pressable 
-          onPress = {() =>  navigation.navigate('AdminScreen')}
-          style = {styles.box}
-          android_ripple = {{
-      
-              color: '#fddf54',
-              radius: 94,
-              borderless: 25,
-
-          }} 
+        <Box
         
-        >
-        
-        <Image
-        source={require("../Assets/Img/icons8-admin-settings-male-96.png")}
-        style = {{width: 75, height: 75}}
-        /><Text style = {styles.text}>Admin</Text>
-        </Pressable>
-
-          <Pressable  style = {styles.box}
-            onPress = {() => navigation.navigate('EventScreen')}
-            android_ripple = {{
-      
-            color: '#fddf54',
-            radius: 94,
-            borderless: 25
-            }}
-            >
-        
-        <Image
-        source={require("../Assets/Img/icons8-event-accepted-96.png")}
-        style = {{width: 75, height: 75}}
+        style = {[{}]}
+        source = {require("../Assets/Img/icons8-classroom-96.png")}
+        title = 'Classes'
+        onPress = {() =>  navigation.navigate('ClassScreen')}
         />
         
-        <Text style = {styles.text}>Events</Text>
-      </Pressable>
+
+        <Box
+        
+        source={require("../Assets/Img/icons8-admin-settings-male-96.png")}
+        onPress = {() => navigation.navigate('AdminScreen')}
+        title = 'Admin'
+        
+        />
+         
+        <Box
+        
+        source={require("../Assets/Img/icons8-event-accepted-96.png")}
+        onPress = {() => navigation.navigate('EventScreen')}
+        title = 'Event'
+
+        />
       </View>
       <View style = {{flexDirection: 'row'}}>
-      <Pressable 
-          onPress={() => navigation.navigate('FacultyScreen')}
-          style = {styles.box}
-          android_ripple = {{
-      
-              color: '#fddf54',
-              radius: 94,
-              borderless: 25,
-
-          }}
+        <Box
         
-        >
+        source={require("../Assets/Img/icons8-female-teacher-96.png")}
+        onPress = {() => navigation.navigate('FacultyScreen')}
+        title = 'Faculty'
 
-        <Image
-          source={require("../Assets/Img/icons8-female-teacher-96.png")}
-          style = {{width: 75, height: 75}}
         />
+        <Box
         
-        <Text style = {styles.text}>Faculty</Text>
-          
-      </Pressable>
-      <Pressable 
-          onPress={() => navigation.navigate('OfficesScreen')}
-          style = {styles.box}
-          android_ripple = {{
-      
-              color: '#fddf54',
-              radius: 94,
-              borderless: 25,
-
-          }}
-        
-        >
-       <Image
         source={require("../Assets/Img/icons8-university-96.png")}
-        style = {{width: 75, height: 75}}/>
-        
-        <Text style = {styles.text}>Buildings</Text>
-      </Pressable>
-      <Pressable 
-          onPress={() =>  navigation.navigate('SuggestionsScreen')}
-          style = {styles.box}
-          android_ripple = {{
-      
-              color: '#fddf54',
-              radius: 94,
-              borderless: 25,
+        onPress={() => navigation.navigate('OfficesScreen')}
+        title = 'Buildings'
 
-          }}
-        
-        >
-      
-      <Image
-        source={require("../Assets/Img/icons8-hint-96.png")}
-        style = {{width: 75, height: 75}}
         />
-        <Text style = {styles.text}>Suggestions</Text></Pressable>
+
+        <Box
+        
+        onPress={() =>  navigation.navigate('SuggestionsScreen')}
+        source={require("../Assets/Img/icons8-hint-96.png")}
+        title = 'Suggestions'
+
+        />
       </View>
     </View>
   )
@@ -137,13 +98,15 @@ const styles  = StyleSheet.create({
 
   box: {
     
-    height: 150,
-    width: 150,  
+    height: 200,
+    width: 200,  
     borderRadius: 30,
     margin: 20,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#f2f3f7',
     backgroundColor: '#0f2ed6',
     shadowColor: "#000",
     shadowOffset: {
@@ -152,7 +115,6 @@ const styles  = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
 
   
@@ -174,7 +136,8 @@ const styles  = StyleSheet.create({
 
   text: {
 
-    color: '#fff'
+    color: '#fff',
+    fontSize: 25,
 
   }
 
