@@ -17,73 +17,73 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Button } from 'react-native-paper';
 import { remoteDBSchedules } from '../../../Database/pouchDb';
 
-
-// const DATA = [
-//     {
-//       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//       title: 'First Item',
-//     },
-//     {
-//       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//       title: 'Second Item',
-//     },
-//     {
-//       id: '58694a0f-3da1-471f-bd96-145571e29d72',
-//       title: 'Third Item',
-//     },
-//     {
-//       id: '58694a0f-3d]a1-471f-bd96-145571e29d72',
-//       title: 'Third Item',
-//     },
-//     {
-//       id: '58694a0f-3da11-471f-bd96-145571e29d72',
-//       title: 'Third Item',
-//     },
-//     {
-//         id: '58694a0f2-3da11-471f-bd96-145571e29d72',
-//         title: 'Third Item',
-//       },
-//       {
-//         id: '58694a0f-3da131-471f-bd96-145571e29d72',
-//         title: 'Third Item',
-//       },
-//       {
-//         id: '58694a0f-3da11-471f3-bd96-145571e29d72',
-//         title: 'Third Item',
-//       },
-//   ];
-
-
-
-  
-  // const Item = ({ title }) => (
-  //   <View style={styles.item}>
-  //     <Text style={styles.title}>{title}</Text>
-  //   </View>
-  // );
-
   export const ClassScreen = () => {
 
     useEffect(() => {
-      // getData()
+
       Nextclass()
       Ongoingclass()
-      // StartsSync()
-      var today = new Date();
-      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      console.log('time')
-      console.log(time)
-      console.log('time')
+      PreviousClass()
+
 
     }, []);
 
-
-
     const [itemdata,setItemdata] = useState('')
     const [nextclass,setNextclass] = useState('')
-    const [ongoing,setOngoing] = useState('')
+    const [ongoingclass,setOngoingclass] = useState('')
+    const [previousclass,setPreviousclass] = useState('')
+    const [previousclasstime,setPreviousClassTime] = useState('')
+    const [ongoingcclasstime,setOngoingClassTime] = useState('')
+    const [nextclasstime,setNextClassTime] = useState('')
+    
+    // var date = new Date();
+    // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    // time = time.split(':');// here the time is like "16:14"
+    // let meridiemTime = time[0] >= 12 && (time[0]-12 || 12) + ':' + '00' + ' PM' || (Number(time[0]) || 12) + ':' + '00' + ' AM';
+    // console.log(meridiemTime)
+    // setOngoingClassTime(meridiemTime)
+    
+    //Previous Class
+    // function subtractHours(numOfHours, date = new Date()) {
+    //   date.setHours(date.getHours() - numOfHours);
+    
+    //   return date;
+    // }
+    // const newsubtracted = (subtractHours(1, date));
+    // var xxxx = newsubtracted.getHours() + ":" + newsubtracted.getMinutes() + ":" + newsubtracted.getSeconds();
+    // xxxx = xxxx.split(':');// here the time is like "16:14"
+    // let meridiemTimex = xxxx[0] >= 12 && (xxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxx[0]) || 12) + ':' + '00' + ' AM';
+    // console.log(meridiemTimex)
+    // setPreviousClassTime(meridiemTimex)
 
+    //Next Class
+    // function addHours(numOfHours, date = new Date()) {
+    //   date.setHours(date.getHours() + numOfHours);
+    
+    //   return date;
+    // }
+    // const newadd = (addHours(2, date));
+    // var xxxxx = newadd.getHours() + ":" + newadd.getMinutes() + ":" + newadd.getSeconds();
+    // xxxxx = xxxxx.split(':');// here the time is like "16:14"
+    // let newadds = xxxxx[0] >= 12 && (xxxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxxx[0]) || 12) + ':' + '00' + ' AM';
+    // console.log(newadds)
+    // setNextClassTime(newadds)
+
+  
     const Nextclass = async() => {
+
+      var date = new Date();
+      function addHours(numOfHours, date = new Date()) {
+        date.setHours(date.getHours() + numOfHours);
+      
+        return date;
+      }
+      const newadd = (addHours(1, date));
+      var xxxxx = newadd.getHours() + ":" + newadd.getMinutes() + ":" + newadd.getSeconds();
+      xxxxx = xxxxx.split(':');// here the time is like "16:14"
+      let newadds = xxxxx[0] >= 12 && (xxxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxxx[0]) || 12) + ':' + '00' + ' AM';
+      console.log(newadds)
+      // setNextClassTime(newadds)
         
       var result = await remoteDBSchedules.allDocs({
         include_docs: true,
@@ -94,7 +94,7 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
            return item.doc
       });
       let filteredData = modifiedArr.filter(item => {
-          return item.Time === '7:00-8:00';
+          return item.StartTime === newadds;
         });
         if(filteredData) {
             let newFilterData = filteredData.map(item => {
@@ -105,6 +105,13 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
   }  
 }
       const Ongoingclass = async() => {
+
+        var date = new Date();
+        var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        time = time.split(':');// here the time is like "16:14"
+        let meridiemTime = time[0] >= 12 && (time[0]-12 || 12) + ':' + '00' + ' PM' || (Number(time[0]) || 12) + ':' + '00' + ' AM';
+        console.log(meridiemTime)
+        // setOngoingClassTime(meridiemTime)
               
         var result = await remoteDBSchedules.allDocs({
           include_docs: true,
@@ -115,13 +122,49 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
             return item.doc
         });
         let filteredData = modifiedArr.filter(item => {
-            return item.Time === '8:00-9:00';
+            return item.StartTime === meridiemTime;
           });
           if(filteredData) {
               let newFilterData = filteredData.map(item => {
                   return item
               })
-              setOngoing(newFilterData)
+              setOngoingclass(newFilterData)
+          }
+      }  
+      }
+
+      const PreviousClass = async() => {
+
+        var date = new Date();
+        function subtractHours(numOfHours, date = new Date()) {
+          date.setHours(date.getHours() - numOfHours);
+        
+          return date;
+        }
+        const newsubtracted = (subtractHours(1, date));
+        var xxxx = newsubtracted.getHours() + ":" + newsubtracted.getMinutes() + ":" + newsubtracted.getSeconds();
+        xxxx = xxxx.split(':');// here the time is like "16:14"
+        let meridiemTimex = xxxx[0] >= 12 && (xxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxx[0]) || 12) + ':' + '00' + ' AM';
+        console.log(meridiemTimex)
+        // setPreviousClassTime(meridiemTimex)
+    
+              
+        var result = await remoteDBSchedules.allDocs({
+          include_docs: true,
+          attachments: true
+        });
+        if(result.rows){
+            let modifiedArr = result.rows.map(function(item){
+            return item.doc
+        });
+        let filteredData = modifiedArr.filter(item => {
+            return item.StartTime === meridiemTimex;
+          });
+          if(filteredData) {
+              let newFilterData = filteredData.map(item => {
+                  return item
+              })
+              setPreviousclass(newFilterData)
           }
       }  
       }
@@ -141,11 +184,11 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
   //     console.log("modifiedArr")
   //      }
   // }
-  var today = new Date();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  console.log('time')
-  console.log(time)
-  console.log('time')
+  // var today = new Date();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // console.log('time')
+  // console.log(time)
+  // console.log('time')
 
 
     const navigation = useNavigation();
@@ -174,7 +217,7 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
             <FlatList
               horizontal
               showsHorizontalScrollIndicator = {false}
-              data={ongoing}
+              data={ongoingclass}
               renderItem={renderItem}
               keyExtractor={item => item.id}
           />
@@ -194,7 +237,7 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
             <FlatList
               horizontal
               showsHorizontalScrollIndicator = {false}
-              data={itemdata}
+              data={previousclass}
               renderItem={renderItem}
               keyExtractor={item => item.id}
             /> 

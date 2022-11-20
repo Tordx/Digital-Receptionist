@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 
@@ -103,6 +103,13 @@ const DATA = [
                     keyExtractor={item => item.id}
                 />
             </View>
+            <AddButton
+                    onPress = {() => navigation.navigate('AddFaculty')}
+                    name = 'add'
+                    color = 'green'
+                    size = {100}
+                    style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
+              />
             </SafeAreaView>
         </ImageBackground>
       );

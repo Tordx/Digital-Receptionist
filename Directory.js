@@ -18,6 +18,7 @@ import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
 import AddClassScreen from './Screens/Navigations/Employee/AddClassScreen';
 import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
+import AddFaculty from './Screens/Navigations/Employee/AddFaculty';
 
 
 export default function Directory() {
@@ -144,7 +145,15 @@ export default function Directory() {
             options = {{
                 headerShown: false
             }}
-        />
+            />
+            <Stack.Screen 
+                
+            name = 'AddFaculty'
+            component={AddFaculty}
+            options = {{
+                headerShown: false
+            }}
+           />
 
         </Stack.Navigator>
     </NavigationContainer>
