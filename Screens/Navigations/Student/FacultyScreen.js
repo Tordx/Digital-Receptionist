@@ -103,13 +103,6 @@ const DATA = [
                     keyExtractor={item => item.id}
                 />
             </View>
-            <AddButton
-                    onPress = {() => navigation.navigate('AddFaculty')}
-                    name = 'add'
-                    color = 'green'
-                    size = {100}
-                    style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
-              />
             </SafeAreaView>
         </ImageBackground>
       );
