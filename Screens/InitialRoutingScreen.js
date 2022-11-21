@@ -36,7 +36,7 @@ export default function InitialRoutingScreen() {
         <Text style = {{bottom: 50, position: 'absolute', margin:20}}>DKHDR {Version}</Text>
         <ReportButton/>
         <View style = {{flexDirection: 'row'}}>
-            <Pressable style = {[styles.Box, {backgroundColor: '#f2f3f7'}]}
+            <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}
                 onPress = {() => navigation.navigate('StudentLoginScreen')}
                 android_ripple = {{
       
@@ -50,14 +50,22 @@ export default function InitialRoutingScreen() {
                     style = {{width: 175, height: 175}}
           />
           
-          <Text style = {[styles.text, {color: 'grey'}]}>STUDENT</Text>
+          <Text style = {[styles.text, {color: '#fddf54'}]}>STUDENT</Text>
 
+            </Pressable>
+            <Pressable style = {{justifyContent: 'center', marginHorizontal: 20, }}
+                onLongPress = {() => navigation.navigate('AdminLoginScreen')}
+            >
+                <Image
+                    source={require("../Assets/Img/psu_logo.png")}
+                    style = {{width: 200, height: 200}}
+          />
             </Pressable>
             <Pressable style = {styles.Box}
                 onPress = {() => navigation.navigate('')}
                 android_ripple = {{
       
-                    color: '#f2f3f7',
+                    color: '#0f2ed6',
                     radius: 275,
       
                 }}
@@ -70,23 +78,7 @@ export default function InitialRoutingScreen() {
           <Text style = {styles.text}>GUEST</Text>
 
             </Pressable>
-            <Pressable style = {[styles.Box, {backgroundColor: '#fddf54'}]}
-                onPress = {() => navigation.navigate('AdminHomeScreen')}
-                android_ripple = {{
-      
-                    color: '#0f2ed6',
-                    radius: 275,
-      
-                }}
-            >
-                <Image
-                    source={require("../Assets/Img/icons8-key-security-96.png")}
-                    style = {{width: 175, height: 175}}
-          />
-          
-          <Text style = {[styles.text, {color: '#0f2ed6'}]}>ADMINISTRATOR</Text>
-
-            </Pressable>
+            
         </View>
     </ImageBackground>
   )
@@ -112,7 +104,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#0f2ed6',
+        backgroundColor: '#fddf54',
         shadowColor: "#000",
         shadowOffset: {
 	    width:  0,
@@ -127,8 +119,8 @@ const styles = StyleSheet.create({
     text: {
 
         fontSize: 30,
-        color: 'white',
-        fontWeight: '700',
+        color: '#0f2ed6',
+        fontWeight: '500',
         margin: 20,
 
     }

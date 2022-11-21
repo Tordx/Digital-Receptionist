@@ -20,6 +20,7 @@ import AddClassScreen from './Screens/Navigations/Employee/AddClassScreen';
 import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
 import AdminHomeScreen from './Screens/Navigations/Employee/AdminHomeScreen';
 import AdminMainMenu from './Screens/Navigations/Employee/AdminMainMenu';
+import AdminLoginScreen from './Screens/Navigations/Employee/AdminLoginScreen';
 import FacultyConfig from './Screens/Navigations/Employee/FacultyConfig';
 import AddFacultyScreen from './Screens/Navigations/Employee/AddFacultyScreen';
 import AddAdminScreen from './Screens/Navigations/Employee/AddAdminScreen';
@@ -180,6 +181,16 @@ export default function Directory() {
                     headerShown: false
                 }}
             />
+
+            <Stack.Screen
+            
+                name = 'AdminLoginScreen'
+                component={AdminLoginScreen}
+                options = {{
+                    headerShown: false
+                }}
+            />
+
             <Stack.Screen 
                 
             name = 'AddFacultyScreen'
