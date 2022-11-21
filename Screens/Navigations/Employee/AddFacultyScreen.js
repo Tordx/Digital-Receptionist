@@ -68,7 +68,7 @@ export default function AddFacultyScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncFaculty()
-             navigation.navigate('AdminMainMenu')
+             navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
            
@@ -85,7 +85,7 @@ export default function AddFacultyScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.navigate('AdminMainMenu')}
+                    onPress = {() => navigation.navigate('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}

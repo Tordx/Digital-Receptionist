@@ -35,7 +35,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-event-settings-96.png')}
-      onPress = {() => console.log('Add Class')}
+      onPress = {() => navigation.navigate('AddEventScreen')}
       title = 'Events'
       style = {styles.Box}
       titleStyle = {styles.title}

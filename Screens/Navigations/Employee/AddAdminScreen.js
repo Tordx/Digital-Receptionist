@@ -49,11 +49,11 @@ export default function AddFacultyScreen() {
          try {
            var NewAdmin = {
             _id: admincode,
-             Facultyname : adminname,
-             FacultyBuilding : adminbuilding,
-             FacultyPresident: adminpresident,
-             FacultyVicePresident : adminvicepresident,
-             FacultyMembers : adminmembers,
+             AdminName : adminname,
+             AdminBuilding : adminbuilding,
+             AdminPresident: adminpresident,
+             AdminVicePresident : adminvicepresident,
+             AdminMembers : adminmembers,
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -68,7 +68,7 @@ export default function AddFacultyScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncAdmin()
-             navigation.navigate('AdminMainMenu')
+             navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
            
@@ -85,14 +85,14 @@ export default function AddFacultyScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.navigate('AdminMainMenu')}
+                    onPress = {() => navigation.navigate('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Faculty </Text>
+            Add Admin </Text>
         </View>
         <View style = {styles.TextInput}>
               <View

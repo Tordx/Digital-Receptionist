@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import { 
     
     View, 
@@ -12,20 +12,52 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
+import { remoteDBAdmin } from '../../../Database/pouchDb';
 
   export default function AdminScreen () {
 
+    const [admindata , setAdminData] = useState('')
+
+    useEffect(() => {
+
+      getAdminData()
+
+    }, []);
+
     const navigation = useNavigation();
+
+    const getAdminData = async() => {
+
+    var result = await remoteDBAdmin.allDocs({
+      include_docs: true,
+      attachments: true
+    });
+    if(result.rows){
+        let modifiedArr = result.rows.map(function(item){
+        return item.doc
+    });
+    let filteredData = modifiedArr.filter(item => {
+        return item;
+      });
+      if(filteredData) {
+          let newFilterData = filteredData.map(item => {
+              return item
+          })
+          setAdminData(newFilterData)
+      }
+  }  
+
+}
 
     const renderItem = ({ item }) => {
       console.log('item')
-      console.log(item)
+      console.log(item.AdminName)
       console.log('item')
 
       return(
       <View style = {styles.item}>
         <Text style = {styles.title}>
-          {item.Classname}
+          {item.AdminName}
         </Text>
       </View>
       )
@@ -50,7 +82,7 @@ import { SearchBar } from '../../../ScreenComponents/SearchBar';
                 <FlatList
                     showsVerticalScrollIndicator = {false}
                     numColumns = '4'
-                    // data={DATA}
+                    data={admindata}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />

@@ -13,13 +13,13 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBSchedules , remoteDBSchedules , SyncSchedules} from '../../../Database/pouchDb'
+import {localDBEvent , SyncEvent} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function AddClassScreen() {
+export default function AddEventScreen() {
 
   useEffect(() => {
    
@@ -28,17 +28,18 @@ export default function AddClassScreen() {
   
     const navigation = useNavigation('');
 
-    const [classname, setClassName] = useState('');
-    const [subject, setSubject] = useState('');
-    const [time, setTime] = useState('');
-    const [room, setRoom] = useState('');
-    const [classcode, setClassCode] = useState('');
+    const [eventname, setEventName] = useState('');
+    const [eventtagline, setEventTagline] = useState('');
+    const [eventwhen, setEventWhen] = useState('');
+    const [eventwhere, setEventWhere] = useState('');
+    const [eventcode, setEventCode] = useState('');
+    const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
-     const setNewSchedule = async () => {
+     const setNewEvent = async () => {
         if(1+1 == 3){
           console.log('hey')
         }
@@ -46,12 +47,12 @@ export default function AddClassScreen() {
         //   console.log('ilove')}
        else{
          try {
-           var NewSchedule = {
-            _id: classcode,
-             Classname : classname,
-             Subject : subject,
-             StartTime: time,
-             Room : room,
+            var NewEvent = {
+                _id: eventcode,
+                 EventName : eventname,
+                 EventTagline : eventtagline,
+                 EventWhen: eventwhen,
+                 EventWhere : eventwhere,
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -61,11 +62,11 @@ export default function AddClassScreen() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBSchedules.put(NewSchedule)
+        localDBEvent.put(NewEvent)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
-             SyncSchedules()
+             SyncEvent()
              navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
@@ -83,14 +84,14 @@ export default function AddClassScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.goBack('AdminHomeScreen')}
+                    onPress = {() => navigation.navigate('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Class </Text>
+            Add Event </Text>
         </View>
         <View style = {styles.TextInput}>
               <View
@@ -104,9 +105,9 @@ export default function AddClassScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setClassCode(value)}
-                   value={classcode}
-                   label="Class Code"
+                    onChangeText={(value) => setEventCode(value)}
+                   value={eventcode}
+                   label="Event Code"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -115,6 +116,7 @@ export default function AddClassScreen() {
 
                 />
                 </View>
+                
         <View style = {styles.TextInput}>
               <View
                     style = {{
@@ -127,9 +129,9 @@ export default function AddClassScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setClassName(value)}
-                   value={classname}
-                   label="Class name"
+                    onChangeText={(value) => setEventName(value)}
+                   value={eventname}
+                   label="Event Name"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -149,11 +151,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setSubject(value)}
-                value={subject}
+                onChangeText={(value) => setEventTagline(value)}
+                value={eventtagline}
                 mode ='Outlined'
                 multiline
-                label='Subject'
+                label='Event Tagline'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -173,11 +175,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setTime(value)}
-                value={time}
+                onChangeText={(value) => setEventWhen(value)}
+                value={eventwhen}
                 mode ='Outlined'
                 multiline
-                label='StartTime'
+                label='The Event will be held on'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -197,11 +199,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setRoom(value)}
-                value={room}
+                onChangeText={(value) => setEventWhere(value)}
+                value={eventwhere}
                 mode ='Outlined'
                 multiline
-                label='Room'
+                label='The Event will be held at'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -210,25 +212,49 @@ export default function AddClassScreen() {
               
                 />
                 </View>
+                {/* <View style = {styles.TextInput}>
+              <View
+                    style = {{
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    margin: 5,
+                  }}
+        
+                    >
+            
+                </View>
+                <TextInput
+                    onChangeText={(value) => setAdminMembers(value)}
+                   value={adminmembers}
+                   label="Admin Members"
+                    theme={{    
+                        colors: {
+                          primary: '#225'
+                        }
+                      }}
+
+                />
+                </View> */}
+               
+             </ScrollView>  
                 <Pressable
-            style = {{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                height: 50,
-                width: 500,
-                backgroundColor: '#225',
-                borderRadius: 20,
-                position: 'absolute',
-                bottom: 0,
-            }}
-            onPress={setNewSchedule}
-            >
-                <Text
-                
-                style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                >  ADD CLASS </Text>
-            </Pressable>
-     </ScrollView>     
+                        style = {{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 500,
+                            backgroundColor: '#225',
+                            borderRadius: 20,
+                            position: 'absolute',
+                            bottom: 100,
+                        }}
+                        onPress={setNewEvent}
+                        >
+                            <Text
+                            
+                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
+                            >  ADD ADMIN </Text>
+              </Pressable>   
     </View>
 
   )
@@ -241,7 +267,7 @@ const styles = StyleSheet.create({
         margin: 25,
         width: 400,
         height: 40  ,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: 'red',
         alignSelf: 'center',
         justifyContent: 'center',

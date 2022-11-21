@@ -27,13 +27,13 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
 
     }, []);
 
-    const [itemdata,setItemdata] = useState('')
+    // const [itemdata,setItemdata] = useState('')
     const [nextclass,setNextclass] = useState('')
     const [ongoingclass,setOngoingclass] = useState('')
     const [previousclass,setPreviousclass] = useState('')
-    const [previousclasstime,setPreviousClassTime] = useState('')
-    const [ongoingcclasstime,setOngoingClassTime] = useState('')
-    const [nextclasstime,setNextClassTime] = useState('')
+    // const [previousclasstime,setPreviousClassTime] = useState('')
+    // const [ongoingcclasstime,setOngoingClassTime] = useState('')
+    // const [nextclasstime,setNextClassTime] = useState('')
     
     // var date = new Date();
     // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
