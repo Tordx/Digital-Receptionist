@@ -13,66 +13,23 @@ import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3d]a1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3da11-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-        id: '58694a0f2-3da11-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-32da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-13da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3d6a11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-  ];
-  
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-
   export default function AdminScreen () {
 
     const navigation = useNavigation();
 
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-      );
+    const renderItem = ({ item }) => {
+      console.log('item')
+      console.log(item)
+      console.log('item')
+
+      return(
+      <View style = {styles.item}>
+        <Text style = {styles.title}>
+          {item.Classname}
+        </Text>
+      </View>
+      )
+  }
 
       return (
         <ImageBackground style={styles.container}
@@ -93,7 +50,7 @@ const DATA = [
                 <FlatList
                     showsVerticalScrollIndicator = {false}
                     numColumns = '4'
-                    data={DATA}
+                    // data={DATA}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
@@ -104,13 +61,13 @@ const DATA = [
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 />
-              <AddButton
+              {/* <AddButton
                     onPress = {() => navigation.navigate('AddClassScreen')}
                     name = 'add'
                     color = 'green'
                     size = {100}
                     style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
-              />
+              /> */}
             </SafeAreaView>
         </ImageBackground>
       );

@@ -26,7 +26,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-admin-settings-96.png')}
-      onPress = {() => console.log('Admin')}
+      onPress = {() => navigation.navigate('AddAdminScreen')}
       title = 'Admin'
       style = {styles.Box}
       titleStyle = {styles.title}
@@ -44,7 +44,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-female-teacher-settings-96.png')}
-      onPress = {() => navigation.navigate('FacultyConfig')}
+      onPress = {() => navigation.navigate('AddFacultyScreen')}
       title = 'Faculty'
       style = {styles.Box}
       titleStyle = {styles.title}
@@ -53,7 +53,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-building-settings-96.png')}
-      onPress = {() => console.log('Admin')}
+      onPress = {() => navigation.navigate('Admin')}
       title = 'Buildings'
       style = {styles.Box}
       titleStyle = {styles.title}

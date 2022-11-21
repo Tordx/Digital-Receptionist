@@ -19,7 +19,7 @@ import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function AddClassScreen() {
+export default function AddFacultyScreen() {
 
   useEffect(() => {
    
@@ -68,7 +68,7 @@ export default function AddClassScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncFaculty()
-             navigation.navigate('FacultyScreen')
+             navigation.navigate('AdminMainMenu')
            })
            .catch(err=>console.log(err))
            
@@ -85,14 +85,14 @@ export default function AddClassScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.navigate('AdminScreen')}
+                    onPress = {() => navigation.navigate('AdminMainMenu')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Class </Text>
+            Add Faculty </Text>
         </View>
         <View style = {styles.TextInput}>
               <View
