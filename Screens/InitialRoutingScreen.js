@@ -20,7 +20,7 @@ import { AppName, Version, WCT, TagLine, Report } from '../Assets/constants/cons
 import {ReportButton} from '../ScreenComponents/Buttons';
 import BackgroundTimer from 'react-native-background-timer';
 
-export default function InitialLoginRouting() {
+export default function InitialRoutingScreen() {
 
     const navigation = useNavigation();
 
@@ -71,7 +71,7 @@ export default function InitialLoginRouting() {
 
             </Pressable>
             <Pressable style = {[styles.Box, {backgroundColor: '#fddf54'}]}
-                onPress = {() => navigation.navigate('Student_HomeScreen')}
+                onPress = {() => navigation.navigate('AdminHomeScreen')}
                 android_ripple = {{
       
                     color: '#0f2ed6',
@@ -80,7 +80,7 @@ export default function InitialLoginRouting() {
                 }}
             >
                 <Image
-                    source={require("../Assets/Img/icons8-admin-settings-male-96.png")}
+                    source={require("../Assets/Img/icons8-key-security-96.png")}
                     style = {{width: 175, height: 175}}
           />
           

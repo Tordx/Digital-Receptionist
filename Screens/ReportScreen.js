@@ -29,7 +29,7 @@ export default function SuggestionsScreen() {
       <CloseButton
       
         name = "arrow-back"
-        onPress = {() => navigation.navigate('InitialLoginRouting')}
+        onPress = {() => navigation.navigate('InitialRoutingScreen')}
         size = {50}
         color = 'white'
         style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
@@ -41,7 +41,7 @@ export default function SuggestionsScreen() {
           <RadioButton
             value="first"
             color='#eb4034'
-            status={ checked === 'first' ? 'checked' : 'unchecked' }
+            status={checked === 'first' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('first')}
           />
           <Text style = {{fontSize: 20,}}>Complaint</Text>
@@ -86,7 +86,7 @@ export default function SuggestionsScreen() {
       </View>
       <TouchableOpacity
          style = {styles.submit}
-        onPress = {{}}
+        onPress = {() => console.log('Submitted')}
         
          >
             <Text style = {{textAlign: 'center', color: 'white', fontSize: 20, fontWeight: '600'}}>

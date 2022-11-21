@@ -12,14 +12,9 @@ import {
 } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { FrequentyAskQuestions } from './FAQ';
-import { AppointmentButton } from './Buttons';
 import { WelcomeText } from './WelcomeText';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SearchResult } from './SearchResult';
-import MainMenu from './MainMenu';
 
 export const SearchBar = (props) => {
 

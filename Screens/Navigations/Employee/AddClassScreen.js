@@ -81,7 +81,7 @@ export default function AddClassScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.navigate('Student_HomeScreen')}
+                    onPress = {() => navigation.goBack('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}

@@ -16,13 +16,13 @@ import { CloseButton, ReportButton } from '../../../ScreenComponents/Buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
 import psu_logo from '../../../Assets/Img/psu_logo.png'
-import {StudentMainMenu} from '../../../ScreenComponents/MainMenu';
+import {StudentMainMenu} from './StudentMainMenu';
 
 export default function Student_HomeScreen() {
 
   const navigation = useNavigation();
 
-  const [seconds, setSeconds] = useState(60);
+  const [seconds, setSeconds] = useState(600); // Set time limit to 10 mins [by seconds], (if possible can be set by admin)
   
   
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Student_HomeScreen() {
       setSeconds((secs) => {
 
 
-        if (secs > 0) return secs - 1; 
+        if (secs > 0) return secs - 1; //increment time limit - 1
 
        
 
@@ -45,8 +45,8 @@ export default function Student_HomeScreen() {
   
   },[])
 
-  if (seconds == 60) 
-  ToastAndroid.show("Session ending in 60 seconds, Please re-login", ToastAndroid.SHORT)
+  if (seconds == 60)
+  ToastAndroid.show("Session ending in 60 seconds, Please re-login", ToastAndroid.SHORT) // shows warning time interval 
   if (seconds == 0) 
   navigation.navigate('InitialLoginRouting')
    
@@ -68,7 +68,7 @@ export default function Student_HomeScreen() {
 
     // } console.log(t)
 
-   const confirmLogout = () => {
+   const confirmLogout = () => { //Logout Navigation to IntialRoutingScreen
 
     Alert.alert(
         'Confirm logout',
@@ -79,7 +79,7 @@ export default function Student_HomeScreen() {
             onPress: () => console.log('Cancel Pressed'),
             style: "cancel"
           },
-          { text: "Yes", onPress: () => navigation.navigate('InitialLoginRouting')}
+          { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen')}
         ]
       );
 
@@ -111,10 +111,11 @@ export default function Student_HomeScreen() {
        <ReportButton
        />
       <View style = {{alignItems: 'center', justifyContent: 'center',}}>
+        
         <Image
         
-        source={require('../../../Assets/Img/psu_logo.png')}
-        style = {{width: 200, height: 200, marginBottom: 25}}
+        source={require('../../../Assets/Img/psu_logo_emboss.png')}
+        style = {{width: 200, height: 200, marginBottom: 25, }}
 
         />
         <Text style = {{fontSize: 20,}}> Welcome to Pangasinan State University, Lingayen Campus </Text>

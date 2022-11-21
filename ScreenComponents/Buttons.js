@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Pressable, Image } from 'react-native'
 import React, { useState } from 'react'
 
 import {REPORT} from '../Assets/constants/constants';
@@ -117,8 +117,80 @@ export const AddButton = (props) => {
 
 }
 
+export const Box = (props) => {
+
+    return (
+    <Pressable 
+    style = {[styles.box, props.style]}
+    onPress = {props.onPress}
+    android_ripple = {{
+  
+        color: '#fddf54',
+        radius: 130,
+        borderless: 25,
+  
+    }}
+    >
+    <Image
+      source={props.source}
+      style = {{width: 100, height: 100}}
+    />
+    <Text style = {[styles.text, props.titleStyle]}>{props.title}</Text>
+  </Pressable>
+  
+  )
+  
+  } 
+
+  
+
 
 const styles = StyleSheet.create({
+
+    box: {
+    
+        height: 200,
+        width: 200,  
+        borderRadius: 30,
+        margin: 20,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#f2f3f7',
+        backgroundColor: '#0f2ed6',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    
+      
+      },
+    
+      boxpressed: {
+        
+        height: 150,
+        width: 150,  
+        borderRadius: 20,
+        margin: 20,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fddf54',
+    
+      
+      },
+    
+      text: {
+    
+        color: '#fff',
+        fontSize: 25,
+    
+      },
 
     proceed: {
 

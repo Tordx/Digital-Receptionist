@@ -9,8 +9,8 @@ import EmployeeLogin from './Screens/EmployeeLoginScreen';
 import ClassScreen from './Screens/Navigations/Student/ClassScreen';
 import ReportScreen from './Screens/ReportScreen';
 import IdleScreen from './Screens/IdleScreen'
-import Student_HomeScreen from './Screens/Navigations/Student/Student_HomeScreen';
-import InitialLoginRouting from './Screens/InitialLoginRouting';
+import Student_HomeScreen from './Screens/Navigations/Student/StudentHomeScreen';
+import InitialRoutingScreen from './Screens/InitialRoutingScreen';
 import AdminScreen from './Screens/Navigations/Student/AdminScreen';
 import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
 import EventScreen from './Screens/Navigations/Student/EventScreen';
@@ -18,6 +18,9 @@ import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
 import AddClassScreen from './Screens/Navigations/Employee/AddClassScreen';
 import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
+import AdminHomeScreen from './Screens/Navigations/Employee/AdminHomeScreen';
+import AdminMainMenu from './Screens/Navigations/Employee/AdminMainMenu';
+import FacultyConfig from './Screens/Navigations/Employee/FacultyConfig';
 
 
 export default function Directory() {
@@ -26,11 +29,11 @@ export default function Directory() {
 
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='InitialLoginRouting'>
+        <Stack.Navigator initialRouteName='IntialRoutingScreen'>
             <Stack.Screen
             
-                name = 'InitialLoginRouting'
-                component={InitialLoginRouting}
+                name = 'InitialRoutingScreen'
+                component={InitialRoutingScreen}
                 options = {{
                     headerShown: false
                 }}
@@ -137,14 +140,45 @@ export default function Directory() {
                     headerShown: false
                 }}
             />
+
+                {/* Admin Screens */}
+
             <Stack.Screen 
             
-            name = 'AddClassScreen'
-            component={AddClassScreen}
-            options = {{
+                name = 'AdminHomeScreen'
+                component={AdminHomeScreen}
+                options = {{
                 headerShown: false
-            }}
-        />
+                }}
+            />
+
+            <Stack.Screen 
+            
+                name = 'AdminMainMenu'
+                component={AdminMainMenu}
+                options = {{
+                headerShown: false
+                }}
+            />
+
+            <Stack.Screen 
+            
+                name = 'AddClassScreen'
+                component={AddClassScreen}
+                options = {{
+                    headerShown: false
+                }}
+            />
+
+            <Stack.Screen 
+            
+                name = 'FacultyConfig'
+                component={FacultyConfig}
+                options = {{
+                    headerShown: false
+                }}
+            />
+
 
         </Stack.Navigator>
     </NavigationContainer>

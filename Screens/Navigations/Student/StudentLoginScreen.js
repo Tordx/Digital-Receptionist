@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TextInput, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, TextInput, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
@@ -14,6 +14,7 @@ export default function StudentLoginScreen() {
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
         source = {require('../../../Assets/Img/Background_image2.png')}
     >
+     
         <CloseButton
         
         name = 'close'
@@ -23,7 +24,7 @@ export default function StudentLoginScreen() {
         onPress = {() => navigation.goBack('InitialLoginRouting')}
 
         />
-        <View style = {{width: 1000, height: 700, backgroundColor: '#00000009', justifyContent: 'center', alignItems: 'center', borderRadius: 20,}}>
+        <View style = {styles.container}>
             <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >LOGIN</Text>
             <Text style = {{bottom: 30}}> If you don't know your student ID, please use the guest login </Text>
          <View style = {{marginTop: 10}}>
@@ -59,6 +60,16 @@ export default function StudentLoginScreen() {
 
 const styles = StyleSheet.create({
 
+    container: {
+        
+        width: 1000, 
+        height: 700, 
+        backgroundColor: '#00000009', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 20,
+    
+    },
 
     loginInput: {
         backgroundColor: '#f2f3f7',
