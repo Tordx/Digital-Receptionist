@@ -18,17 +18,17 @@ export const remoteDBSchedules = new PouchDB('http://admin:1234@192.168.0.199:59
   });
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const localDBWOWDBItem = new PouchDB('RoracaItem', {adapter: 'asyncstorage'})
-export const remoteDBItem = new PouchDB('http://admin:1234@192.168.1.236:5984/roracaitem')
+export const localDBFaculty = new PouchDB('Faculty', {adapter: 'asyncstorage'})
+export const remoteDBFaculty = new PouchDB('http://admin:1234@192.168.0.199:5984/faculty')
 
- export const SyncItems = () => {  
-  localDBWOWDBItem.sync(remoteDBItem, {
+ export const SyncFaculty = () => {  
+  localDBFaculty.sync(remoteDBFaculty, {
     live: true, 
     retry: true
   }).on('change', function () {
    console.log('start sync')
 
-   localDBWOWDBItem.allDocs({include_docs:true}).then(function(doc){
+   localDBFaculty.allDocs({include_docs:true}).then(function(doc){
       console.log(doc)
       console.log('done sync')
   })

@@ -13,7 +13,7 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBSchedules , remoteDBSchedules , SyncSchedules} from '../../../Database/pouchDb'
+import {localDBFaculty , remoteDBSchedules , SyncFaculty} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
@@ -28,11 +28,12 @@ export default function AddClassScreen() {
   
     const navigation = useNavigation('');
 
-    const [classname, setClassName] = useState('');
-    const [subject, setSubject] = useState('');
-    const [time, setTime] = useState('');
-    const [room, setRoom] = useState('');
-    const [classcode, setClassCode] = useState('');
+    const [facultyname, setFacultysName] = useState('');
+    const [facultybuilding, setFacultyBuilding] = useState('');
+    const [facultypresident, setFacultyPresident] = useState('');
+    const [facultyvicepresident, setFacultyVicePresident] = useState('');
+    const [facultymembers, setFacultyMembers] = useState('');
+    const [facultycode, setFacultyCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
@@ -46,12 +47,13 @@ export default function AddClassScreen() {
         //   console.log('ilove')}
        else{
          try {
-           var NewSchedule = {
-            _id: classcode,
-             Classname : classname,
-             Subject : subject,
-             StartTime: time,
-             Room : room,
+           var NewFaculty = {
+            _id: facultycode,
+             Facultyname : facultyname,
+             FacultyBuilding : facultybuilding,
+             FacultyPresident: facultypresident,
+             FacultyVicePresident : facultyvicepresident,
+             FacultyMembers : facultymembers,
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -61,12 +63,12 @@ export default function AddClassScreen() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBSchedules.put(NewSchedule)
+        localDBFaculty.put(NewFaculty)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
-             SyncSchedules()
-             navigation.navigate('AdminScreen')
+             SyncFaculty()
+             navigation.navigate('FacultyScreen')
            })
            .catch(err=>console.log(err))
            
@@ -83,7 +85,7 @@ export default function AddClassScreen() {
         <ScrollView>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <CloseButton
-                    onPress = {() => navigation.goBack('AdminHomeScreen')}
+                    onPress = {() => navigation.navigate('AdminScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
@@ -104,9 +106,9 @@ export default function AddClassScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setClassCode(value)}
-                   value={classcode}
-                   label="Class Code"
+                    onChangeText={(value) => setFacultyCode(value)}
+                   value={facultycode}
+                   label="Faculty Code"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -115,6 +117,7 @@ export default function AddClassScreen() {
 
                 />
                 </View>
+                
         <View style = {styles.TextInput}>
               <View
                     style = {{
@@ -127,9 +130,9 @@ export default function AddClassScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setClassName(value)}
-                   value={classname}
-                   label="Class name"
+                    onChangeText={(value) => setFacultysName(value)}
+                   value={facultyname}
+                   label="Faculty Name"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -149,11 +152,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setSubject(value)}
-                value={subject}
+                onChangeText={(value) => setFacultyBuilding(value)}
+                value={facultybuilding}
                 mode ='Outlined'
                 multiline
-                label='Subject'
+                label='Faculty Building'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -173,11 +176,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setTime(value)}
-                value={time}
+                onChangeText={(value) => setFacultyPresident(value)}
+                value={facultypresident}
                 mode ='Outlined'
                 multiline
-                label='StartTime'
+                label='Faculty President'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -197,11 +200,11 @@ export default function AddClassScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setRoom(value)}
-                value={room}
+                onChangeText={(value) => setFacultyVicePresident(value)}
+                value={facultyvicepresident}
                 mode ='Outlined'
                 multiline
-                label='Room'
+                label='Faculty Vice President'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -210,25 +213,49 @@ export default function AddClassScreen() {
               
                 />
                 </View>
+                <View style = {styles.TextInput}>
+              <View
+                    style = {{
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    margin: 5,
+                  }}
+        
+                    >
+            
+                </View>
+                <TextInput
+                    onChangeText={(value) => setFacultyMembers(value)}
+                   value={facultymembers}
+                   label="Faculty Members"
+                    theme={{    
+                        colors: {
+                          primary: '#225'
+                        }
+                      }}
+
+                />
+                </View>
+               
+             </ScrollView>  
                 <Pressable
-            style = {{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                height: 50,
-                width: 500,
-                backgroundColor: '#225',
-                borderRadius: 20,
-                position: 'absolute',
-                bottom: 0,
-            }}
-            onPress={setNewSchedule}
-            >
-                <Text
-                
-                style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                >  ADD CLASS </Text>
-            </Pressable>
-     </ScrollView>     
+                        style = {{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 500,
+                            backgroundColor: '#225',
+                            borderRadius: 20,
+                            position: 'absolute',
+                            bottom: 100,
+                        }}
+                        onPress={setNewSchedule}
+                        >
+                            <Text
+                            
+                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
+                            >  ADD CLASS </Text>
+              </Pressable>   
     </View>
 
   )
@@ -241,7 +268,7 @@ const styles = StyleSheet.create({
         margin: 25,
         width: 400,
         height: 40  ,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: 'red',
         alignSelf: 'center',
         justifyContent: 'center',
