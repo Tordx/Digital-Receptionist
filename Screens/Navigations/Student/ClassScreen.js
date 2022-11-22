@@ -7,6 +7,7 @@ import {
     Text,  
     TextInput,
     ImageBackground,
+    TouchableOpacity
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -195,11 +196,13 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
     const renderItem = ({ item }) => {
 
       return(
-      <View style = {styles.item}>
-        <Text style = {styles.title}>
-          {item.Classname}
-        </Text>
-      </View>
+        <TouchableOpacity>
+          <View style = {styles.item}>
+            <Text style = {styles.title}>
+              {item.Classname}
+            </Text>
+          </View>
+       </TouchableOpacity>
       )
   }
 

@@ -25,6 +25,7 @@ import FacultyConfig from './Screens/Navigations/Employee/FacultyConfig';
 import AddFacultyScreen from './Screens/Navigations/Employee/AddFacultyScreen';
 import AddAdminScreen from './Screens/Navigations/Employee/AddAdminScreen';
 import AddEventScreen from './Screens/Navigations/Employee/AddEventScreen';
+import AdminReports from './Screens/Navigations/Employee/AdminReports';
 
 
 export default function Directory() {
@@ -212,6 +213,14 @@ export default function Directory() {
                 
                 name = 'AddEventScreen'
                 component={AddEventScreen}
+                options = {{
+                    headerShown: false
+                }}
+               />
+               <Stack.Screen 
+                
+                name = 'AdminReports'
+                component={AdminReports}
                 options = {{
                     headerShown: false
                 }}

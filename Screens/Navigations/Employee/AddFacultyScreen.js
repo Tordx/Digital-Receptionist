@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 export default function AddFacultyScreen() {
 
@@ -33,13 +34,16 @@ export default function AddFacultyScreen() {
     const [facultypresident, setFacultyPresident] = useState('');
     const [facultyvicepresident, setFacultyVicePresident] = useState('');
     const [facultymembers, setFacultyMembers] = useState('');
-    const [facultycode, setFacultyCode] = useState('');
+    // const [facultycode, setFacultyCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
      const setNewSchedule = async () => {
+      
+      const id = uuid.v4();
+
         if(1+1 == 3){
           console.log('hey')
         }
@@ -48,7 +52,7 @@ export default function AddFacultyScreen() {
        else{
          try {
            var NewFaculty = {
-            _id: facultycode,
+            _id: id,
              Facultyname : facultyname,
              FacultyBuilding : facultybuilding,
              FacultyPresident: facultypresident,
@@ -94,30 +98,6 @@ export default function AddFacultyScreen() {
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
             Add Faculty </Text>
         </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setFacultyCode(value)}
-                   value={facultycode}
-                   label="Faculty Code"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                
         <View style = {styles.TextInput}>
               <View
                     style = {{

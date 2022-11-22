@@ -5,7 +5,8 @@ import {
     FlatList, 
     StyleSheet, 
     Text,
-    ImageBackground,  
+    ImageBackground, 
+    TouchableOpacity 
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,16 +51,15 @@ import { remoteDBAdmin } from '../../../Database/pouchDb';
 }
 
     const renderItem = ({ item }) => {
-      console.log('item')
-      console.log(item.AdminName)
-      console.log('item')
-
+ 
       return(
-      <View style = {styles.item}>
-        <Text style = {styles.title}>
-          {item.AdminName}
-        </Text>
-      </View>
+      <TouchableOpacity>
+        <View style = {styles.item}>
+          <Text style = {styles.title}>
+            {item.AdminName}
+          </Text>
+        </View>
+      </TouchableOpacity>
       )
   }
 

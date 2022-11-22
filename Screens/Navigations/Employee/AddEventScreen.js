@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 export default function AddEventScreen() {
 
@@ -32,14 +33,17 @@ export default function AddEventScreen() {
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
-    const [eventcode, setEventCode] = useState('');
-    const [eventposter, setEventPoster] = useState('');
+    // const [eventcode, setEventCode] = useState('');
+    // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
      const setNewEvent = async () => {
+      
+      const id = uuid.v4();
+
         if(1+1 == 3){
           console.log('hey')
         }
@@ -48,7 +52,7 @@ export default function AddEventScreen() {
        else{
          try {
             var NewEvent = {
-                _id: eventcode,
+                _id: id,
                  EventName : eventname,
                  EventTagline : eventtagline,
                  EventWhen: eventwhen,
@@ -93,30 +97,6 @@ export default function AddEventScreen() {
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
             Add Event </Text>
         </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setEventCode(value)}
-                   value={eventcode}
-                   label="Event Code"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                
         <View style = {styles.TextInput}>
               <View
                     style = {{

@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground ,Alert } from 'react-native'
+import React, { useState , useEffect } from 'react'
 import { BuildingSelection } from '../Assets/constants/constants';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -7,23 +7,73 @@ import { useNavigation } from '@react-navigation/native';
 import { CloseButton } from '../ScreenComponents/Buttons';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import { localDBSuggestionFeedback , SyncSuggestionFeedback } from '../Database/pouchDb';
+import { Picker } from '@react-native-picker/picker';
+import uuid from 'react-native-uuid';
+
 export default function SuggestionsScreen() {
 
   const navigation = useNavigation('');
-  const [checked, setChecked] = useState('first');
+  const [checked, setChecked] = useState('Suggestion');
   const [text, setText] = useState("");
-  const [value, setvalue] = useState();
+  const [value, setvalue] = useState('');
+  const [name, setName] = useState('');
+  const [specify, setSpecify] = useState('');
+
+  const setNewSuggestion = async () => {
+    const id = uuid.v4();
+
+    if(1+1 == 3){
+      console.log('hey')
+    }
+    // if((classname.length == 0) && (subject.length == 0) ) {
+    //   console.log('ilove')}
+   else{
+     try {
+       var NewSuggestion = {
+        _id: id,
+          Message : text,
+         Department : value,
+          Name: name,
+          FeedbackorSuggestion : checked,
+          SpecifySuggestion : specify
+     
+        //  place: place,
+        //  Price : price,
+        //  Preptime : preptime,
+        //  Deliveryfee : deliveryfee,
+        //  Status: status,
+        //  Image: Images
+       }
+    //    console.log(Images)
+    //    console.log('Images')
+    localDBSuggestionFeedback.put(NewSuggestion)
+       .then((response) =>{
+         Alert.alert('Your Schedule has been successfully added!')
+         console.log(response)
+         SyncSuggestionFeedback()
+         navigation.navigate('Student_HomeScreen')
+       })
+       .catch(err=>console.log(err))
+       
+     } catch (error) {
+      console.log(error)
+     }
+     }
+    }
 
 
-  const MessageInput = (props) => {
-    return (
-      <TextInput
-        {...props}
-        editable
-        maxLength={1100}
-      />
-    );
-  }
+
+
+  // const MessageInput = (props) => {
+  //   return (
+  //     <TextInput
+  //       {...props}
+  //       editable
+  //       maxLength={1100}
+  //     />
+  //   );
+  // }
 
   return (
     <ImageBackground  style = {styles.Container} 
@@ -41,19 +91,19 @@ export default function SuggestionsScreen() {
       <View style = {{flexDirection: 'row',}}>
         <View style = {styles.ButtonContainer} >
           <RadioButton
-            value="first"
+            value="Suggestion"
             color='#0f2ed6'
-            status={ checked === 'first' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('first')}
+            status={ checked === 'Suggestion' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('Suggestion')}
           />
           <Text style = {{fontSize: 20,}}>Suggestion</Text>
         </View>
         <View style = {styles.ButtonContainer} >
           <RadioButton
-            value="second"
+            value="Feedback"
             color='#0f2ed6'
-            status={ checked === 'second' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('second')}
+            status={ checked === 'Feedback' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('Feedback')}
           />
           <Text style = {{fontSize: 20,}}>Feedback</Text>
         </View>
@@ -62,33 +112,76 @@ export default function SuggestionsScreen() {
         <Text>Fullname</Text>
         <View style = {styles.TextInput} >
           <TextInput
+            onChangeText={(value) => setName(value)}
+            value={name}
             style = {{marginLeft: 20, fontSize: 20}}
             placeholder = 'e.g, John Doe'
         />
         </View>
       </View>
-      <View style = {{margin: 5}} >
-        <Text>Subject</Text>
+      <View
+                
+                    style = {{
+                        
+                        backgroundColor: '#e2e2e2',
+                        height: 50,
+                        margin: 20,
+                        justifyContent: 'center'
+                    }}> 
+                <Picker
+                        title = 'Select Category'
+                        selectedValue={value}
+                        mode="dropdown"
+                        style={{
+                            transform: [
+                               { scaleX: 1 }, 
+                               { scaleY: 1 },
+                            ],
+                        width: 400,
+                        bottom: 0,
+                        color: '#9e9e9e',
+                    
+                          }}
+                        onValueChange={(itemValue, itemIndex) => setvalue(itemValue)}
+                    >
+                        <Picker.Item label="Select" value="Select" />
+                        <Picker.Item label="Food" value="Food" />
+                        <Picker.Item label="Travel" value="Travel" />
+                        <Picker.Item label="Hotel" value="Hotel" />
+                        <Picker.Item label="Restaurant" value="Restaurant" />
+                        <Picker.Item label="Grocery" value="Grocery" />
+                        <Picker.Item label="Wellness" value="Wellness" />
+                    </Picker>
+                    
+                    </View>
+
+       <View style = {{margin: 5}} >
+        <Text style = {{fontSize: 18,}}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
             style = {{marginLeft: 20, fontSize: 20}}
-            placeholder = 'e.g, name of building, offices, employee, faculty...'
+            placeholder = 'e.g, John Doe or Office'
+            onChangeText={(value) => setSpecify(value)}
+            value={specify}
         />
         </View>
       </View>
       <View style = {{margin: 20}} >
         <Text>Message</Text>
         <View style = {styles.MessageInputtext} >
-          <MessageInput
+          <TextInput
+            onChangeText={(value) => setText(value)}
+            value={text}
             style = {{margin: 20, fontSize: 20}}
             placeholder = 'Write your message here...'   
             multiline
+            maxLength={1100}
         />
         </View>
       </View>
       <TouchableOpacity
          style = {styles.Search}
-        onPress = {{}}
+        onPress = {setNewSuggestion}
         
          >
             <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: '600'}}>

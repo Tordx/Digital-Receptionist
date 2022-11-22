@@ -77,7 +77,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-answers-96.png')}
-      onPress = {() => console.log('Add Class')}
+      onPress = {() => navigation.navigate('AdminReports')}
       title = 'Reports'
       style = {styles.Box}
       titleStyle = {styles.title}

@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 export default function AddFacultyScreen() {
 
@@ -33,13 +34,16 @@ export default function AddFacultyScreen() {
     const [adminpresident, setAdminPresident] = useState('');
     const [adminvicepresident, setAdminVicePresident] = useState('');
     const [adminmembers, setAdminMembers] = useState('');
-    const [admincode, setAdminCode] = useState('');
+    // const [admincode, setAdminCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
      const setNewAdmin = async () => {
+       
+        const id = uuid.v4();
+
         if(1+1 == 3){
           console.log('hey')
         }
@@ -48,7 +52,7 @@ export default function AddFacultyScreen() {
        else{
          try {
            var NewAdmin = {
-            _id: admincode,
+            _id: id,
              AdminName : adminname,
              AdminBuilding : adminbuilding,
              AdminPresident: adminpresident,
@@ -94,30 +98,6 @@ export default function AddFacultyScreen() {
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
             Add Admin </Text>
         </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setAdminCode(value)}
-                   value={admincode}
-                   label="Admin Code"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                
         <View style = {styles.TextInput}>
               <View
                     style = {{
