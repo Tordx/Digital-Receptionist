@@ -21,7 +21,7 @@ export default function AdminLoginScreen() {
         size = {50}
         color = 'black'
         style = {{margin: 20, position: 'absolute', top: 0, left: 0 }}
-        onPress = {() => navigation.goBack('InitialLoginRouting')}
+        onPress = {() => navigation.goBack('InitialRoutingScreen')}
 
         />
         <View style = {styles.container}>
