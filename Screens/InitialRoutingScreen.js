@@ -62,7 +62,7 @@ export default function InitialRoutingScreen() {
           />
             </Pressable>
             <Pressable style = {styles.Box}
-                onPress = {() => navigation.navigate('')}
+                onPress = {() => navigation.navigate('GuestLoginScreen')}
                 android_ripple = {{
       
                     color: '#0f2ed6',

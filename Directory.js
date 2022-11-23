@@ -1,17 +1,15 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
+
+import InitialRoutingScreen from './Screens/InitialRoutingScreen';
+import IdleScreen from './Screens/IdleScreen';
+//Student StackScreens
 import Employee from './Navigations/Employee';
-import VisitorLogin from './Screens/VisitorLoginScreen';
-import EmployeeLogin from './Screens/EmployeeLoginScreen';
 import ClassScreen from './Screens/Navigations/Student/ClassScreen';
 import ReportScreen from './Screens/ReportScreen';
-import IdleScreen from './Screens/IdleScreen'
-import Student_HomeScreen from './Screens/Navigations/Student/StudentHomeScreen';
-import InitialRoutingScreen from './Screens/InitialRoutingScreen';
 import AdminScreen from './Screens/Navigations/Student/AdminScreen';
 import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
 import EventScreen from './Screens/Navigations/Student/EventScreen';
@@ -19,6 +17,8 @@ import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
 import AddClassScreen from './Screens/Navigations/Employee/AddClassScreen';
 import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
+import Student_HomeScreen from './Screens/Navigations/Student/StudentHomeScreen';
+// Admin StackScreen
 import AdminHomeScreen from './Screens/Navigations/Employee/AdminHomeScreen';
 import AdminMainMenu from './Screens/Navigations/Employee/AdminMainMenu';
 import AdminLoginScreen from './Screens/Navigations/Employee/AdminLoginScreen';
@@ -28,7 +28,10 @@ import AddAdminScreen from './Screens/Navigations/Employee/AddAdminScreen';
 import AddEventScreen from './Screens/Navigations/Employee/AddEventScreen';
 import AdminReports from './Screens/Navigations/Employee/AdminReports';
 import AddStudentScreen from './Screens/Navigations/Employee/AddStudentScreen';
+// Guest StackScreen
 
+import GuestHomeScreen from './Screens/Navigations/Guest/GuestHomeScreen';
+import GuestLoginScreen from './Screens/Navigations/Guest/GuestLoginScreen';
 
 export default function Directory() {
   
@@ -149,7 +152,7 @@ export default function Directory() {
                 }}
             />
 
-                {/* Admin Screens */}
+        {/* Admin Screens */}
 
             <Stack.Screen 
             
@@ -236,7 +239,25 @@ export default function Directory() {
                     headerShown: false
                 }}
                />
+        {/* Guest Screen */}
 
+                <Stack.Screen 
+                
+                name = 'GuestLoginScreen'
+                component={GuestLoginScreen}
+                options = {{
+                    headerShown: false
+                }}/>
+
+                <Stack.Screen 
+                
+                name = 'GuestHomeScreen'
+                component={GuestHomeScreen}
+                options = {{
+                    headerShown: false
+                }}/>
+
+                
         </Stack.Navigator>
     </NavigationContainer>
     </Provider>
