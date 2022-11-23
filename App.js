@@ -17,7 +17,6 @@ function App (){
     <Directory/>
     <StatusBar
     hidden = {true}
-    backgroundColor={'#2642da'} 
     />
     </>
  
