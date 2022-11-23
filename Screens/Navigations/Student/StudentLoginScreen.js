@@ -1,15 +1,21 @@
-import { View, Text, ImageBackground, TextInput, StyleSheet, Image } from 'react-native'
+import { View, Text, ImageBackground, TextInput, StyleSheet, Image , Alert } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
 import { useNavigation } from '@react-navigation/native'
 import { remoteDBStudentLogin } from '../../../Database/pouchDb'
+import { useDispatch } from 'react-redux'
+import { setStudentInfo } from '../../../Redux/TaskReducer'
 
 
 export default function StudentLoginScreen() {
 
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+
     const [studentid , setStudentId] = useState('')
     const [birthday , setBirthday] = useState('')
+    // const [compare , setCompare] = useState('')
     
 
     const LoginData = async () => {
@@ -23,44 +29,30 @@ export default function StudentLoginScreen() {
               return item.doc
           });
           let filteredData = modifiedArr.filter(item => {
-              return item.StudentIdNumber === studentid
+              return item.StudentBirthday === birthday
             });
-            if(filteredData) {
+            if(!filteredData.length == 0) {
                 let newFilterData = filteredData.map(item => {
-                    return item.StudentIdNumber
+                    return item
                 })
-                // setAdminData(newFilterData)
-                console.log('newFilterData')
-                console.log(newFilterData)
-                console.log('xxxxxxxxxxx')
+
+                dispatch(setStudentInfo(newFilterData))
+                const Idnumber = newFilterData[0].StudentIdNumber;
+                const Birthdate = newFilterData[0].StudentBirthday
+                
+                if((studentid == Idnumber ) && (birthday == Birthdate) ){
+                    navigation.navigate('Student_HomeScreen')
+              
+                   }else{
+                     Alert.alert('StudentID and Birthdate not match')
+                   }
+            }else{
+                Alert.alert('StudentID and Birthdate not match')
             }
-        }  
-
-
-        // if((username.length == 0) && (password != password) ){
-        //   Alert.alert('Username and password not match')
-        //   console.log('iloveit')
-        // }else{
-        //     try {
-        //       var doc = await remoteDBUser.get(username);
-        //       console.log(doc)
-        //       // Alert.alert("Succesfull Logging in")
-        //       if(doc.Role == 'Seller'){
-        //         navigation.navigate('SellerNav');
-        //       }else if(doc.Role == 'Customer'){
-        //         navigation.navigate('CustomerNav')
-        //       }else if(doc.Role == 'Driver'){
-        //         navigation.navigate('Dri')
-        //       } else {console.log('DriverNav')}
-             
-        //     } catch (err) {
-        //       console.log(err);
-        //       // Alert.alert("Error Logging in")
-        //     }
-        // }
+            
+        }
+       
       }
-
-    const navigation = useNavigation();
 
   return (
     <ImageBackground
@@ -68,9 +60,7 @@ export default function StudentLoginScreen() {
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
         source = {require('../../../Assets/Img/Background_image2.png')}
     >
-     
         <CloseButton
-        
         name = 'close'
         size = {50}
         color = 'black'
