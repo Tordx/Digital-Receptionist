@@ -1,12 +1,15 @@
 import { View, Text, ImageBackground, TextInput, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
 import { useNavigation } from '@react-navigation/native'
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 export default function AdminLoginScreen() {
 
     const navigation = useNavigation();
+
+    const [show, setShow] = useState();
 
   return (
     <View
@@ -26,30 +29,42 @@ export default function AdminLoginScreen() {
         />
         <View style = {styles.container}>
             <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >ADMIN LOGIN </Text>
-            <Text style = {{bottom: 30}}> If passcode is forgotten,  </Text>
+            <Text style = {{bottom: 30}}> Data Configuration  </Text>
          <View style = {{marginTop: 10}}>
         <Text style = {{fontSize: 20}}>Administrator ID</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
-                placeholder='00-LN-0000'
+                placeholder='123456789'
                 style = {{fontSize: 20}}
             />
         </View>
         </View>
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Password</Text>
+        <Text style = {{fontSize: 20}}>Passcode</Text>
         <View style = {styles.loginInput}>
-            <Icon/>
+            
             <TextInput
-                placeholder='mm/dd/yyyy'
+                secureTextEntry = {show}
+                placeholder='********'
                 style = {{fontSize: 20}}
             />
+            <Pressable 
+            style = {{position: 'absolute', right: 0, margin: 10}}
+            onPress = {() => setShow(!show)}>
+            <Icon
+            
+                name = {show? 'visibility' : 'visibility-off'}
+                size = {30}
+                color = 'grey'
+
+            />
+            </Pressable>
         </View>
         </View>
         <ProceedButton
         onPress = {() => navigation.navigate('AdminHomeScreen')}
-        style={[{backgroundColor: '#fddf54', margin: 20}]}
+        style={[{backgroundColor: '#fff', margin: 20}]}
         title = 'Log In'
 
         />

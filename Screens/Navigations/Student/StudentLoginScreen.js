@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TextInput, StyleSheet, Image , Alert } from 'react-native'
+import { View, Text, ImageBackground, TextInput, StyleSheet, ToastAndroid , Alert } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
@@ -19,6 +19,15 @@ export default function StudentLoginScreen() {
     
 
     const LoginData = async () => {
+
+        
+
+        if (studentid.length == 0) {
+            ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
+        }
+        if (birthday.length == 0) {
+            ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
+        }
 
         var result = await remoteDBStudentLogin.allDocs({
             include_docs: true,
@@ -43,11 +52,11 @@ export default function StudentLoginScreen() {
                 if((studentid == Idnumber ) && (birthday == Birthdate) ){
                     navigation.navigate('Student_HomeScreen')
               
-                   }else{
-                     Alert.alert('StudentID and Birthdate not match')
+                   }else if ((studentid != Idnumber) && (birthday != Birthdate)){
+                        
+                    console.log('error')
+                    Alert.alert('StudentID and Birthdate not match')
                    }
-            }else{
-                Alert.alert('StudentID and Birthdate not match')
             }
             
         }
