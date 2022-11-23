@@ -1,78 +1,67 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import { 
     
     View, 
     FlatList, 
     StyleSheet, 
     Text,
-    ImageBackground,  
+    ImageBackground, 
+    TouchableOpacity 
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
+import { remoteDBFaculty } from '../../../Database/pouchDb';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3d]a1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3da11-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-        id: '58694a0f2-3da11-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-32da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-13da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3d6a11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-  ];
-  
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
+   export default function FacultyScreen () {
 
-  export default function FacultyScreen () {
+    const [facultydata , setFacultyData] = useState('')
+
+    useEffect(() => {
+
+      getFacultyData()
+
+    }, []);
 
     const navigation = useNavigation();
 
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-      );
+    const getFacultyData = async() => {
+
+    var result = await remoteDBFaculty.allDocs({
+      include_docs: true,
+      attachments: true
+    });
+    if(result.rows){
+        let modifiedArr = result.rows.map(function(item){
+        return item.doc
+    });
+    let filteredData = modifiedArr.filter(item => {
+        return item;
+      });
+      if(filteredData) {
+          let newFilterData = filteredData.map(item => {
+              return item
+          })
+          setFacultyData(newFilterData)
+      }
+  }  
+
+};
+
+      const renderItem = ({ item }) => {
+
+        return(
+        <TouchableOpacity>
+          <View style = {styles.item}>
+            <Text style = {styles.title}>
+              {item.Facultyname}
+            </Text>
+          </View>
+        </TouchableOpacity>
+        )
+      }
 
       return (
         <ImageBackground style={styles.container}
@@ -98,7 +87,7 @@ const DATA = [
                 <FlatList
                     showsVerticalScrollIndicator = {false}
                     numColumns = '4'
-                    data={DATA}
+                    data={facultydata}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />

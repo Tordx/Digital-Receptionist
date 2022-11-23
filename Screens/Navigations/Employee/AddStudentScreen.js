@@ -13,14 +13,14 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBAdmin , SyncAdmin} from '../../../Database/pouchDb'
+import {localDBStudentLogin , SyncStudentLogin} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
-export default function AddFacultyScreen() {
+export default function AddStudentScreen() {
 
   useEffect(() => {
    
@@ -29,20 +29,20 @@ export default function AddFacultyScreen() {
   
     const navigation = useNavigation('');
 
-    const [adminname, setAdminName] = useState('');
-    const [adminbuilding, setAdminBuilding] = useState('');
-    const [adminpresident, setAdminPresident] = useState('');
-    const [adminvicepresident, setAdminVicePresident] = useState('');
-    const [adminmembers, setAdminMembers] = useState('');
-    // const [admincode, setAdminCode] = useState('');
+    const [studentidnumber, setStudentIdNumber] = useState('');
+    const [studentbirthday, setStudentBirthday] = useState('');
+    // const [facultypresident, setFacultyPresident] = useState('');
+    // const [facultyvicepresident, setFacultyVicePresident] = useState('');
+    // const [facultymembers, setFacultyMembers] = useState('');
+    // const [facultycode, setFacultyCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
-     const setNewAdmin = async () => {
-       
-        const id = uuid.v4();
+     const setNewStudent = async () => {
+      
+      const id = uuid.v4();
 
         if(1+1 == 3){
           console.log('hey')
@@ -51,13 +51,13 @@ export default function AddFacultyScreen() {
         //   console.log('ilove')}
        else{
          try {
-           var NewAdmin = {
+           var NewFaculty = {
             _id: id,
-             AdminName : adminname,
-             AdminBuilding : adminbuilding,
-             AdminPresident: adminpresident,
-             AdminVicePresident : adminvicepresident,
-             AdminMembers : adminmembers,
+             StudentIdNumber : studentidnumber,
+             StudentBirthday : studentbirthday,
+            //  FacultyPresident: facultypresident,
+            //  FacultyVicePresident : facultyvicepresident,
+            //  FacultyMembers : facultymembers,
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -67,11 +67,11 @@ export default function AddFacultyScreen() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBAdmin.put(NewAdmin)
+        localDBStudentLogin.put(NewFaculty)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
-             SyncAdmin()
+             SyncStudentLogin()
              navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
@@ -96,7 +96,7 @@ export default function AddFacultyScreen() {
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Admin </Text>
+            Add Faculty </Text>
         </View>
         <View style = {styles.TextInput}>
               <View
@@ -110,9 +110,9 @@ export default function AddFacultyScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setAdminName(value)}
-                   value={adminname}
-                   label="Admin Name"
+                    onChangeText={(value) => setStudentIdNumber(value)}
+                   value={studentidnumber}
+                   label="Student ID"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -132,11 +132,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminBuilding(value)}
-                value={adminbuilding}
+                onChangeText={(value) => setStudentBirthday(value)}
+                value={studentbirthday}
                 mode ='Outlined'
                 multiline
-                label='Admin Building'
+                label='Birthdate'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -145,7 +145,7 @@ export default function AddFacultyScreen() {
               
                 />
                 </View>
-                <View style = {styles.TextInput}>
+                {/* <View style = {styles.TextInput}>
                   <View
                     style = {{
                     alignContent: 'center',
@@ -156,11 +156,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminPresident(value)}
-                value={adminpresident}
+                onChangeText={(value) => setFacultyPresident(value)}
+                value={facultypresident}
                 mode ='Outlined'
                 multiline
-                label='Admin President'
+                label='Faculty President'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -168,8 +168,8 @@ export default function AddFacultyScreen() {
                   }}
               
                 />
-                </View>
-                <View style = {styles.TextInput}>
+                </View> */}
+                {/* <View style = {styles.TextInput}>
                   <View
                     style = {{
                     alignContent: 'center',
@@ -180,11 +180,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminVicePresident(value)}
-                value={adminvicepresident}
+                onChangeText={(value) => setFacultyVicePresident(value)}
+                value={facultyvicepresident}
                 mode ='Outlined'
                 multiline
-                label='Admin Vice President'
+                label='Faculty Vice President'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -192,8 +192,8 @@ export default function AddFacultyScreen() {
                   }}
               
                 />
-                </View>
-                <View style = {styles.TextInput}>
+                </View> */}
+                {/* <View style = {styles.TextInput}>
               <View
                     style = {{
                     alignContent: 'center',
@@ -205,9 +205,9 @@ export default function AddFacultyScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setAdminMembers(value)}
-                   value={adminmembers}
-                   label="Admin Members"
+                    onChangeText={(value) => setFacultyMembers(value)}
+                   value={facultymembers}
+                   label="Faculty Members"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -215,7 +215,7 @@ export default function AddFacultyScreen() {
                       }}
 
                 />
-                </View>
+                </View> */}
                
              </ScrollView>  
                 <Pressable
@@ -229,12 +229,12 @@ export default function AddFacultyScreen() {
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewAdmin}
+                        onPress={setNewStudent}
                         >
                             <Text
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD ADMIN </Text>
+                            >  ADD CLASS </Text>
               </Pressable>   
     </View>
 

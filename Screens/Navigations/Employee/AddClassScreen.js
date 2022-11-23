@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 export default function AddClassScreen() {
 
@@ -32,13 +33,16 @@ export default function AddClassScreen() {
     const [subject, setSubject] = useState('');
     const [time, setTime] = useState('');
     const [room, setRoom] = useState('');
-    const [classcode, setClassCode] = useState('');
+    // const [classcode, setClassCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
      const setNewSchedule = async () => {
+
+      const id = uuid.v4();
+
         if(1+1 == 3){
           console.log('hey')
         }
@@ -47,7 +51,7 @@ export default function AddClassScreen() {
        else{
          try {
            var NewSchedule = {
-            _id: classcode,
+            _id: id,
              Classname : classname,
              Subject : subject,
              StartTime: time,
@@ -66,7 +70,7 @@ export default function AddClassScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncSchedules()
-             navigation.navigate('AdminScreen')
+             navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
            
@@ -92,29 +96,6 @@ export default function AddClassScreen() {
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
             Add Class </Text>
         </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setClassCode(value)}
-                   value={classcode}
-                   label="Class Code"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
         <View style = {styles.TextInput}>
               <View
                     style = {{
@@ -210,7 +191,9 @@ export default function AddClassScreen() {
               
                 />
                 </View>
-                <Pressable
+                
+     </ScrollView>  
+     <Pressable
             style = {{
                 justifyContent: 'center',
                 alignSelf: 'center',
@@ -228,7 +211,6 @@ export default function AddClassScreen() {
                 style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
                 >  ADD CLASS </Text>
             </Pressable>
-     </ScrollView>     
     </View>
 
   )

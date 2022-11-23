@@ -7,6 +7,7 @@ import {
     Text,  
     TextInput,
     ImageBackground,
+    TouchableOpacity
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,13 +28,13 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
 
     }, []);
 
-    const [itemdata,setItemdata] = useState('')
+    // const [itemdata,setItemdata] = useState('')
     const [nextclass,setNextclass] = useState('')
     const [ongoingclass,setOngoingclass] = useState('')
     const [previousclass,setPreviousclass] = useState('')
-    const [previousclasstime,setPreviousClassTime] = useState('')
-    const [ongoingcclasstime,setOngoingClassTime] = useState('')
-    const [nextclasstime,setNextClassTime] = useState('')
+    // const [previousclasstime,setPreviousClassTime] = useState('')
+    // const [ongoingcclasstime,setOngoingClassTime] = useState('')
+    // const [nextclasstime,setNextClassTime] = useState('')
     
     // var date = new Date();
     // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -195,11 +196,13 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
     const renderItem = ({ item }) => {
 
       return(
-      <View style = {styles.item}>
-        <Text style = {styles.title}>
-          {item.Classname}
-        </Text>
-      </View>
+        <TouchableOpacity>
+          <View style = {styles.item}>
+            <Text style = {styles.title}>
+              {item.Classname}
+            </Text>
+          </View>
+       </TouchableOpacity>
       )
   }
 

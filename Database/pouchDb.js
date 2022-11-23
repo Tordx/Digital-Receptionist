@@ -12,6 +12,7 @@ export const remoteDBSchedules = new PouchDB('http://admin:1234@192.168.0.199:59
    
     localDBSchedules.allDocs({include_docs:true}).then(function(doc){
       console.log(doc)
+      console.log('done syc')
   })
   }).on('error', function (err) {
     console.log(err);
@@ -37,7 +38,7 @@ export const remoteDBFaculty = new PouchDB('http://admin:1234@192.168.0.199:5984
   });
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-export const localDBAdmin = new PouchDB('Faculty', {adapter: 'asyncstorage'})
+export const localDBAdmin = new PouchDB('Admin', {adapter: 'asyncstorage'})
 export const remoteDBAdmin = new PouchDB('http://admin:1234@192.168.0.199:5984/admin')
 
  export const SyncAdmin = () => {  
@@ -48,6 +49,82 @@ export const remoteDBAdmin = new PouchDB('http://admin:1234@192.168.0.199:5984/a
    console.log('start sync')
 
    localDBAdmin.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const localDBEvent = new PouchDB('Event', {adapter: 'asyncstorage'})
+export const remoteDBEvent = new PouchDB('http://admin:1234@192.168.0.199:5984/event')
+
+ export const SyncEvent = () => {  
+  localDBEvent.sync(remoteDBEvent, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBEvent.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const localDBSuggestionFeedback = new PouchDB('SuggestionFeedback', {adapter: 'asyncstorage'})
+export const remoteDBSuggestionFeedback = new PouchDB('http://admin:1234@192.168.0.199:5984/suggestionfeedback')
+
+ export const SyncSuggestionFeedback = () => {  
+  localDBSuggestionFeedback.sync(remoteDBSuggestionFeedback, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBSuggestionFeedback.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const localDBReportBugReport = new PouchDB('ReportBugReport', {adapter: 'asyncstorage'})
+export const remoteDBReportBugReport = new PouchDB('http://admin:1234@192.168.0.199:5984/reportbugreport')
+
+ export const SyncReportBugReport = () => {  
+  localDBReportBugReport.sync(remoteDBReportBugReport, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBReportBugReport.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const localDBStudentLogin = new PouchDB('StudentLogin', {adapter: 'asyncstorage'})
+export const remoteDBStudentLogin = new PouchDB('http://admin:1234@192.168.0.199:5984/studentlogin')
+
+ export const SyncStudentLogin = () => {  
+  localDBStudentLogin.sync(remoteDBStudentLogin, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBStudentLogin.allDocs({include_docs:true}).then(function(doc){
       console.log(doc)
       console.log('done sync')
   })

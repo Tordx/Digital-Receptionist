@@ -13,14 +13,14 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBAdmin , SyncAdmin} from '../../../Database/pouchDb'
+import {localDBEvent , SyncEvent} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 
-export default function AddFacultyScreen() {
+export default function AddEventScreen() {
 
   useEffect(() => {
    
@@ -29,20 +29,20 @@ export default function AddFacultyScreen() {
   
     const navigation = useNavigation('');
 
-    const [adminname, setAdminName] = useState('');
-    const [adminbuilding, setAdminBuilding] = useState('');
-    const [adminpresident, setAdminPresident] = useState('');
-    const [adminvicepresident, setAdminVicePresident] = useState('');
-    const [adminmembers, setAdminMembers] = useState('');
-    // const [admincode, setAdminCode] = useState('');
+    const [eventname, setEventName] = useState('');
+    const [eventtagline, setEventTagline] = useState('');
+    const [eventwhen, setEventWhen] = useState('');
+    const [eventwhere, setEventWhere] = useState('');
+    // const [eventcode, setEventCode] = useState('');
+    // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
-     const setNewAdmin = async () => {
-       
-        const id = uuid.v4();
+     const setNewEvent = async () => {
+      
+      const id = uuid.v4();
 
         if(1+1 == 3){
           console.log('hey')
@@ -51,13 +51,12 @@ export default function AddFacultyScreen() {
         //   console.log('ilove')}
        else{
          try {
-           var NewAdmin = {
-            _id: id,
-             AdminName : adminname,
-             AdminBuilding : adminbuilding,
-             AdminPresident: adminpresident,
-             AdminVicePresident : adminvicepresident,
-             AdminMembers : adminmembers,
+            var NewEvent = {
+                _id: id,
+                 EventName : eventname,
+                 EventTagline : eventtagline,
+                 EventWhen: eventwhen,
+                 EventWhere : eventwhere,
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -67,11 +66,11 @@ export default function AddFacultyScreen() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBAdmin.put(NewAdmin)
+        localDBEvent.put(NewEvent)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
-             SyncAdmin()
+             SyncEvent()
              navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
@@ -96,7 +95,7 @@ export default function AddFacultyScreen() {
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Admin </Text>
+            Add Event </Text>
         </View>
         <View style = {styles.TextInput}>
               <View
@@ -110,9 +109,9 @@ export default function AddFacultyScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setAdminName(value)}
-                   value={adminname}
-                   label="Admin Name"
+                    onChangeText={(value) => setEventName(value)}
+                   value={eventname}
+                   label="Event Name"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -132,11 +131,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminBuilding(value)}
-                value={adminbuilding}
+                onChangeText={(value) => setEventTagline(value)}
+                value={eventtagline}
                 mode ='Outlined'
                 multiline
-                label='Admin Building'
+                label='Event Tagline'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -156,11 +155,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminPresident(value)}
-                value={adminpresident}
+                onChangeText={(value) => setEventWhen(value)}
+                value={eventwhen}
                 mode ='Outlined'
                 multiline
-                label='Admin President'
+                label='The Event will be held on'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -180,11 +179,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setAdminVicePresident(value)}
-                value={adminvicepresident}
+                onChangeText={(value) => setEventWhere(value)}
+                value={eventwhere}
                 mode ='Outlined'
                 multiline
-                label='Admin Vice President'
+                label='The Event will be held at'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -193,7 +192,7 @@ export default function AddFacultyScreen() {
               
                 />
                 </View>
-                <View style = {styles.TextInput}>
+                {/* <View style = {styles.TextInput}>
               <View
                     style = {{
                     alignContent: 'center',
@@ -215,7 +214,7 @@ export default function AddFacultyScreen() {
                       }}
 
                 />
-                </View>
+                </View> */}
                
              </ScrollView>  
                 <Pressable
@@ -229,7 +228,7 @@ export default function AddFacultyScreen() {
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewAdmin}
+                        onPress={setNewEvent}
                         >
                             <Text
                             
