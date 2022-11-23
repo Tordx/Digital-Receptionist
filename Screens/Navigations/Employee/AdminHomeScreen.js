@@ -21,7 +21,7 @@ export default function AdminHomeScreen() {
         size = {25}
         color = 'black'
         style = {{position: 'absolute', left: 0, top: 0, margin: 20, flexDirection: 'row', justifyContent: 'center' }}
-        onPress = {() => navigation.goBack('InitialLoginRouting')}
+        onPress = {() => navigation.goBack('InitialRoutingScreen')}
         title = 'logout'
 
         />

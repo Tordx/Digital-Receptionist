@@ -48,7 +48,7 @@ export default function Student_HomeScreen() {
   if (seconds == 60)
   ToastAndroid.show("Session ending in 60 seconds, Please re-login", ToastAndroid.SHORT) // shows warning time interval 
   if (seconds == 0) 
-  navigation.navigate('InitialLoginRouting')
+  navigation.navigate('InitialRoutingScreen')
    
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
