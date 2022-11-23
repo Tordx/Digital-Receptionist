@@ -113,3 +113,22 @@ export const remoteDBReportBugReport = new PouchDB('http://admin:1234@192.168.0.
     console.log(err);
   });
 }
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+export const localDBStudentLogin = new PouchDB('StudentLogin', {adapter: 'asyncstorage'})
+export const remoteDBStudentLogin = new PouchDB('http://admin:1234@192.168.0.199:5984/studentlogin')
+
+ export const SyncStudentLogin = () => {  
+  localDBStudentLogin.sync(remoteDBStudentLogin, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBStudentLogin.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}

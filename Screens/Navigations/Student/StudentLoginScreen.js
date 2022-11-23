@@ -1,10 +1,64 @@
 import { View, Text, ImageBackground, TextInput, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
 import { useNavigation } from '@react-navigation/native'
+import { remoteDBStudentLogin } from '../../../Database/pouchDb'
+
 
 export default function StudentLoginScreen() {
+
+    const [studentid , setStudentId] = useState('')
+    const [birthday , setBirthday] = useState('')
+    
+
+    const LoginData = async () => {
+
+        var result = await remoteDBStudentLogin.allDocs({
+            include_docs: true,
+            attachments: true
+          });
+          if(result.rows){
+              let modifiedArr = result.rows.map(function(item){
+              return item.doc
+          });
+          let filteredData = modifiedArr.filter(item => {
+              return item.StudentIdNumber === studentid
+            });
+            if(filteredData) {
+                let newFilterData = filteredData.map(item => {
+                    return item.StudentIdNumber
+                })
+                // setAdminData(newFilterData)
+                console.log('newFilterData')
+                console.log(newFilterData)
+                console.log('xxxxxxxxxxx')
+            }
+        }  
+
+
+        // if((username.length == 0) && (password != password) ){
+        //   Alert.alert('Username and password not match')
+        //   console.log('iloveit')
+        // }else{
+        //     try {
+        //       var doc = await remoteDBUser.get(username);
+        //       console.log(doc)
+        //       // Alert.alert("Succesfull Logging in")
+        //       if(doc.Role == 'Seller'){
+        //         navigation.navigate('SellerNav');
+        //       }else if(doc.Role == 'Customer'){
+        //         navigation.navigate('CustomerNav')
+        //       }else if(doc.Role == 'Driver'){
+        //         navigation.navigate('Dri')
+        //       } else {console.log('DriverNav')}
+             
+        //     } catch (err) {
+        //       console.log(err);
+        //       // Alert.alert("Error Logging in")
+        //     }
+        // }
+      }
 
     const navigation = useNavigation();
 
@@ -32,6 +86,8 @@ export default function StudentLoginScreen() {
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
+                 onChangeText={(value) => setStudentId(value)}
+                 value={studentid}
                 placeholder='00-LN-0000'
                 style = {{fontSize: 20}}
             />
@@ -42,13 +98,15 @@ export default function StudentLoginScreen() {
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
+                 onChangeText={(value) => setBirthday(value)}
+                 value={birthday}
                 placeholder='mm/dd/yyyy'
                 style = {{fontSize: 20}}
             />
         </View>
         </View>
         <ProceedButton
-        onPress = {() => navigation.navigate('Student_HomeScreen')}
+        onPress = {LoginData}
         style={[{backgroundColor: '#fddf54', margin: 20}]}
         title = 'Log In'
 

@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
 
     box: {
     
-        height: 200,
-        width: 200,  
+        height: 180,
+        width: 180,  
         borderRadius: 30,
         margin: 20,
         flexDirection: 'column',
