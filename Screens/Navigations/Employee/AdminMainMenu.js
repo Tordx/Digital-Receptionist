@@ -87,16 +87,6 @@ export default function AdminMainMenu() {
 
       <Box
       
-      source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
-      onPress = {() => console.log('Configure Class')}
-      title = 'Admin Data'
-      style = {styles.Box}
-      titleStyle = {styles.title}
-
-      />
-
-      <Box
-      
       source = {require('../../../Assets/Img/icons8-answers-96.png')}
       onPress = {() => navigation.navigate('AdminReports')}
       title = 'Reports'

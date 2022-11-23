@@ -9,10 +9,10 @@ export default function AdminHomeScreen() {
     const navigation = useNavigation();
 
   return (
-    <View style = {{flex: 1, backgroundColor: '#f2f3f7',justifyContent: 'center', alignItems: 'center'}}>
+    <View style = {{flex: 1, backgroundColor: '#fddf54',justifyContent: 'center', alignItems: 'center'}}>
         <Image
         source={require('../../../Assets/Img/psu_logo.png')}
-        style = {{width: 1500, height: 1500, opacity: 0.1, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
+        style = {{width: 1000, height: 1000, opacity: 0.08, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
         />
        
         <CloseButton
