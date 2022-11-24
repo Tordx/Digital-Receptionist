@@ -180,3 +180,23 @@ export const remoteDBLogBook = new PouchDB('http://admin:1234@192.168.0.199:5984
     console.log(err);
   });
 }
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//GUEST
+export const localDBGuest = new PouchDB('Guest', {adapter: 'asyncstorage'})
+export const remoteDBGuest = new PouchDB('http://admin:1234@192.168.0.199:5984/guest')
+
+ export const SyncGuest = () => {  
+  localDBGuest.sync(remoteDBGuest, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBGuest.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}

@@ -20,65 +20,65 @@ export default function StudentLoginScreen() {
     // const [compare , setCompare] = useState('')
     
 
-    const LoginData = async () => {
+    // const LoginData = async () => {
 
         
 
-        if (studentid.length == 0) {
-            ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
-        }
-        if (birthday.length == 0) {
-            ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
-        }
+    //     if (studentid.length == 0) {
+    //         ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
+    //     }
+    //     if (birthday.length == 0) {
+    //         ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
+    //     }
 
-        var result = await remoteDBStudentLogin.allDocs({
-            include_docs: true,
-            attachments: true
-          });
-          if(result.rows){
-              let modifiedArr = result.rows.map(function(item){
-              return item.doc
-          });
-          let filteredData = modifiedArr.filter(item => {
-              return item.StudentBirthday === birthday
-            });
-            if(!filteredData.length == 0) {
-                let newFilterData = filteredData.map(item => {
-                    return item
-                })
+    //     var result = await remoteDBStudentLogin.allDocs({
+    //         include_docs: true,
+    //         attachments: true
+    //       });
+    //       if(result.rows){
+    //           let modifiedArr = result.rows.map(function(item){
+    //           return item.doc
+    //       });
+    //       let filteredData = modifiedArr.filter(item => {
+    //           return item.StudentBirthday === birthday
+    //         });
+    //         if(!filteredData.length == 0) {
+    //             let newFilterData = filteredData.map(item => {
+    //                 return item
+    //             })
 
-                dispatch(setStudentInfo(newFilterData))
-                const Idnumber = newFilterData[0].StudentIdNumber;
-                const Birthdate = newFilterData[0].StudentBirthday
-                try {
-                    var Newlog = {
-                     _id: id,
-                     StudentIdNumber : Idnumber,
-                     StudentBirthday : Birthdate,
-                    }
-                    remoteDBLogBook.put(Newlog)
-                    .then((response) =>{
-                      console.log(response)
-                    })
-                    .catch(err=>console.log(err))
+    //             dispatch(setStudentInfo(newFilterData))
+    //             const Idnumber = newFilterData[0].StudentIdNumber;
+    //             const Birthdate = newFilterData[0].StudentBirthday
+    //             try {
+    //                 var Newlog = {
+    //                  _id: id,
+    //                  StudentIdNumber : Idnumber,
+    //                  StudentBirthday : Birthdate,
+    //                 }
+    //                 remoteDBLogBook.put(Newlog)
+    //                 .then((response) =>{
+    //                   console.log(response)
+    //                 })
+    //                 .catch(err=>console.log(err))
                     
-                  } catch (error) {
-                   console.log(error)
-                  }
+    //               } catch (error) {
+    //                console.log(error)
+    //               }
                 
-                if((studentid == Idnumber ) && (birthday == Birthdate) ){
-                    navigation.navigate('Student_HomeScreen')
+    //             if((studentid == Idnumber ) && (birthday == Birthdate) ){
+    //                 navigation.navigate('Student_HomeScreen')
 
-                   }else{
-                     Alert.alert('StudentID and Birthdate not match')
-                   }
-            }else{
-                Alert.alert('StudentID and Birthdate not match')
-            }
+    //                }else{
+    //                  Alert.alert('StudentID and Birthdate not match')
+    //                }
+    //         }else{
+    //             Alert.alert('StudentID and Birthdate not match')
+    //         }
 
-        }
+    //     }
        
-      }
+    //   }
 
   return (
     <ImageBackground
@@ -122,7 +122,7 @@ export default function StudentLoginScreen() {
         </View>
         </View>
         <ProceedButton
-        onPress = {LoginData}
+        onPress = {() => navigation.navigate('Student_HomeScreen')}
         style={[{backgroundColor: '#fddf54', margin: 20}]}
         title = 'Log In'
 

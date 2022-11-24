@@ -20,64 +20,64 @@ export default function AdminLoginScreen() {
     const [adminid , setAdminId] = useState('')
     const [passcode , setPasscode] = useState('')
 
+    // Disable for fast navigation
+    // const LoginData = async () => {
 
-    const LoginData = async () => {
+    //     if (adminid.length == 0) {
+    //         ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
+    //     }
+    //     if (passcode.length == 0) {
+    //         ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
+    //     }
 
-        if (adminid.length == 0) {
-            ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
-        }
-        if (passcode.length == 0) {
-            ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
-        }
+    //     var result = await remoteDBSuperAdmin.allDocs({
+    //         include_docs: true,
+    //         attachments: true
+    //       });
+    //       if(result.rows){
+    //           let modifiedArr = result.rows.map(function(item){
+    //           return item.doc
+    //       });
+    //       let filteredData = modifiedArr.filter(item => {
+    //           return item.SuperAdminPasscode === passcode
+    //         });
+    //         if(!filteredData.length == 0) {
+    //             let newFilterData = filteredData.map(item => {
+    //                 return item
+    //             })
 
-        var result = await remoteDBSuperAdmin.allDocs({
-            include_docs: true,
-            attachments: true
-          });
-          if(result.rows){
-              let modifiedArr = result.rows.map(function(item){
-              return item.doc
-          });
-          let filteredData = modifiedArr.filter(item => {
-              return item.SuperAdminPasscode === passcode
-            });
-            if(!filteredData.length == 0) {
-                let newFilterData = filteredData.map(item => {
-                    return item
-                })
-
-                dispatch(setStudentInfo(newFilterData))
-                const AdminID = newFilterData[0].SuperAdminId;
-                const Passcode = newFilterData[0].SuperAdminPasscode
-                try {
-                    var Newlog = {
-                     _id: id,
-                     SuperAdminId : AdminID,
-                     SuperAdminPasscode : Passcode,
-                    }
-                    remoteDBLogBook.put(Newlog)
-                    .then((response) =>{
-                      console.log(response)
-                    })
-                    .catch(err=>console.log(err))
+    //             dispatch(setStudentInfo(newFilterData))
+    //             const AdminID = newFilterData[0].SuperAdminId;
+    //             const Passcode = newFilterData[0].SuperAdminPasscode
+    //             try {
+    //                 var Newlog = {
+    //                  _id: id,
+    //                  SuperAdminId : AdminID,
+    //                  SuperAdminPasscode : Passcode,
+    //                 }
+    //                 remoteDBLogBook.put(Newlog)
+    //                 .then((response) =>{
+    //                   console.log(response)
+    //                 })
+    //                 .catch(err=>console.log(err))
                     
-                  } catch (error) {
-                   console.log(error)
-                  }
+    //               } catch (error) {
+    //                console.log(error)
+    //               }
                 
-                if((adminid == AdminID ) && (passcode == Passcode) ){
-                    navigation.navigate('AdminHomeScreen')
+    //             if((adminid == AdminID ) && (passcode == Passcode) ){
+    //                 navigation.navigate('AdminHomeScreen')
 
-                   }else{
-                     Alert.alert('StudentID and Birthdate not match')
-                   }
-            }else{
-                Alert.alert('StudentID and Birthdate not match')
-            }
+    //                }else{
+    //                  Alert.alert('StudentID and Birthdate not match')
+    //                }
+    //         }else{
+    //             Alert.alert('StudentID and Birthdate not match')
+    //         }
             
-        }
+    //     }
        
-      }
+    //   }
 
   return (
     <View
@@ -135,7 +135,7 @@ export default function AdminLoginScreen() {
         </View>
         </View>
         <ProceedButton
-        onPress = {LoginData}
+        onPress = {() => navigation.navigate('AdminHomeScreen')}
         style={[{backgroundColor: '#fff', margin: 20}]}
         title = 'Log In'
 
