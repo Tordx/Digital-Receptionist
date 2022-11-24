@@ -142,10 +142,45 @@ export const Box = (props) => {
   
   } 
 
-  
+  export const OpenCamera = () => {
+
+    return (
+ 
+    <Pressable style = {styles.camera} >
+        <Icon
+        
+            name = 'photo-camera'
+            size = {40}
+            color = '#fff'
+
+        />
+    </Pressable>
+    )
+
+  }
 
 
 const styles = StyleSheet.create({
+
+
+    camera: {
+
+        width: '57%', 
+        height: 50, 
+        backgroundColor: '#0f2ed6', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginRight: 5, 
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
 
     box: {
     
