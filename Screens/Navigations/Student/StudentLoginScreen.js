@@ -3,15 +3,17 @@ import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
 import { useNavigation } from '@react-navigation/native'
-import { remoteDBStudentLogin } from '../../../Database/pouchDb'
+import { remoteDBStudentLogin , remoteDBLogBook } from '../../../Database/pouchDb'
 import { useDispatch } from 'react-redux'
 import { setStudentInfo } from '../../../Redux/TaskReducer'
+import uuid from 'react-native-uuid';
 
 
 export default function StudentLoginScreen() {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const id = uuid.v4();
 
     const [studentid , setStudentId] = useState('')
     const [birthday , setBirthday] = useState('')
@@ -48,17 +50,32 @@ export default function StudentLoginScreen() {
                 dispatch(setStudentInfo(newFilterData))
                 const Idnumber = newFilterData[0].StudentIdNumber;
                 const Birthdate = newFilterData[0].StudentBirthday
+                try {
+                    var Newlog = {
+                     _id: id,
+                     StudentIdNumber : Idnumber,
+                     StudentBirthday : Birthdate,
+                    }
+                    remoteDBLogBook.put(Newlog)
+                    .then((response) =>{
+                      console.log(response)
+                    })
+                    .catch(err=>console.log(err))
+                    
+                  } catch (error) {
+                   console.log(error)
+                  }
                 
                 if((studentid == Idnumber ) && (birthday == Birthdate) ){
                     navigation.navigate('Student_HomeScreen')
-              
-                   }else if ((studentid != Idnumber) && (birthday != Birthdate)){
-                        
-                    console.log('error')
-                    Alert.alert('StudentID and Birthdate not match')
+
+                   }else{
+                     Alert.alert('StudentID and Birthdate not match')
                    }
+            }else{
+                Alert.alert('StudentID and Birthdate not match')
             }
-            
+
         }
        
       }

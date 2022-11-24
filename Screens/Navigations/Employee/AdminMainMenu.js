@@ -68,7 +68,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
-      onPress = {() => console.log('Configure Class')}
+      onPress = {() => navigation.navigate('LogBookScreen')}
       title = 'Log Book'
       style = {styles.Box}
       titleStyle = {styles.title}
@@ -97,7 +97,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-services-96.png')}
-      onPress = {() => console.log('Add Class')}
+      onPress = {() => navigation.navigate('AddSuperAdmin')}
       title = 'Edit Admin'
       style = {styles.Box}
       titleStyle = {styles.title}

@@ -1,15 +1,83 @@
-import { View, Text, ImageBackground, TextInput, StyleSheet, Image } from 'react-native'
+import { View, Text, ImageBackground, TextInput, StyleSheet, Image , Alert , ToastAndroid } from 'react-native'
 import React, {useState} from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
 import { useNavigation } from '@react-navigation/native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
+import { remoteDBSuperAdmin , remoteDBLogBook , SyncLogBook } from '../../../Database/pouchDb'
+import { useDispatch } from 'react-redux'
+import { setStudentInfo } from '../../../Redux/TaskReducer'
+import uuid from 'react-native-uuid';
 
 export default function AdminLoginScreen() {
 
+    const dispatch = useDispatch();
     const navigation = useNavigation();
+    const id = uuid.v4();
 
+    
     const [show, setShow] = useState();
+    const [adminid , setAdminId] = useState('')
+    const [passcode , setPasscode] = useState('')
+
+
+    const LoginData = async () => {
+
+        if (adminid.length == 0) {
+            ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
+        }
+        if (passcode.length == 0) {
+            ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
+        }
+
+        var result = await remoteDBSuperAdmin.allDocs({
+            include_docs: true,
+            attachments: true
+          });
+          if(result.rows){
+              let modifiedArr = result.rows.map(function(item){
+              return item.doc
+          });
+          let filteredData = modifiedArr.filter(item => {
+              return item.SuperAdminPasscode === passcode
+            });
+            if(!filteredData.length == 0) {
+                let newFilterData = filteredData.map(item => {
+                    return item
+                })
+
+                dispatch(setStudentInfo(newFilterData))
+                const AdminID = newFilterData[0].SuperAdminId;
+                const Passcode = newFilterData[0].SuperAdminPasscode
+                try {
+                    var Newlog = {
+                     _id: id,
+                     SuperAdminId : AdminID,
+                     SuperAdminPasscode : Passcode,
+                    }
+                    remoteDBLogBook.put(Newlog)
+                    .then((response) =>{
+                      console.log(response)
+                    })
+                    .catch(err=>console.log(err))
+                    
+                  } catch (error) {
+                   console.log(error)
+                  }
+                
+                if((adminid == AdminID ) && (passcode == Passcode) ){
+                    navigation.navigate('AdminHomeScreen')
+
+                   }else{
+                     Alert.alert('StudentID and Birthdate not match')
+                   }
+            }else{
+                Alert.alert('StudentID and Birthdate not match')
+            }
+            
+        }
+       
+      }
 
   return (
     <View
@@ -35,6 +103,8 @@ export default function AdminLoginScreen() {
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
+                onChangeText={(value) => setAdminId(value)}
+                value={adminid}
                 placeholder='123456789'
                 style = {{fontSize: 20}}
             />
@@ -45,6 +115,8 @@ export default function AdminLoginScreen() {
         <View style = {styles.loginInput}>
             
             <TextInput
+                onChangeText={(value) => setPasscode(value)}
+                value={passcode}
                 secureTextEntry = {show}
                 placeholder='********'
                 style = {{fontSize: 20}}
@@ -63,7 +135,7 @@ export default function AdminLoginScreen() {
         </View>
         </View>
         <ProceedButton
-        onPress = {() => navigation.navigate('AdminHomeScreen')}
+        onPress = {LoginData}
         style={[{backgroundColor: '#fff', margin: 20}]}
         title = 'Log In'
 

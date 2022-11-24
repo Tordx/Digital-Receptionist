@@ -5,11 +5,11 @@
    name: 'items',
    initialState: {
     studentinfo: [],
-    //  taskID: 1,
-    //  Dones:[],
-    //  Images:[],
-    //  orderItems: [],
-    //  SelectedItem:null
+     taskID: 1,
+     Dones:[],
+     Images:[],
+     orderItems: [],
+     SelectedItem:null
    },
    reducers: {
      setStudentInfo: (state , action ) => {
