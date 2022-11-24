@@ -142,16 +142,17 @@ export const Box = (props) => {
   
   } 
 
-  export const OpenCamera = () => {
+  export const OpenCamera = (props) => {
 
     return (
  
-    <Pressable style = {styles.camera} >
+    <Pressable style = {styles.camera} 
+    onPress = {props.onPress}>
         <Icon
         
-            name = 'photo-camera'
+            name = {props.name}
             size = {40}
-            color = '#fff'
+            color = {props.color}
 
         />
     </Pressable>

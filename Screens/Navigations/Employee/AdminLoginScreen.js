@@ -13,7 +13,7 @@ export default function AdminLoginScreen() {
 
   return (
     <View
-    resizeMode='cover'
+    // resizeMode='cover'
         style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fddf54'}}
         // source = {require('../../../Assets/Img/Background_image2.png')}
     >

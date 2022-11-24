@@ -2,8 +2,12 @@ import { View, Image, Text,ImageBackground } from 'react-native'
 import React from 'react'
 import { GuestMainMenu } from './GuestMainMenu'
 import { CloseButton, ReportButton } from '../../../ScreenComponents/Buttons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function GuestHomeScreen() {
+
+  const navigation = useNavigation();
+
   return (
     <ImageBackground
     source={require('../../../Assets/Img/Background_image.png')}
@@ -28,6 +32,7 @@ export default function GuestHomeScreen() {
       <GuestMainMenu/>
             </View>
             <CloseButton
+          onPress  = {() => navigation.navigate('GuestLoginScreen')}
         title =  'logout'
         name = 'logout'
         size = {30}

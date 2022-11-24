@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, TextInput, StyleSheet, ToastAndroid , Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, OpenCamera, ProceedButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -9,12 +9,16 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function GuestLoginScreen() {
 
+
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
     const [fullname, setFullname] = useState();
     const [address, setAddress] = useState();
-    const [value, setvalue] = useState('');
+    const [value, setvalue] = useState('Select');
+
+    const [upload, setUpload] = useState(false);
+
     // const [compare , setCompare] = useState('')
     
 
@@ -65,9 +69,9 @@ export default function GuestLoginScreen() {
 
   return (
     <ImageBackground
-    resizeMode='stretch'
+    resizeMode='cover'
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-        source = {require('../../../Assets/Img/PSU_LCCAMPUS.jpg')}
+        source = {require('../../../Assets/Img/psu_cover.jpg')}
     >
         <CloseButton
         name = 'close'
@@ -78,34 +82,34 @@ export default function GuestLoginScreen() {
 
         />
         <View style = {styles.container}>
-            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >GUEST LOGIN</Text>
-            <Text style = {{bottom: 30}}>Before we proceed, I need few information about you</Text>
-         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Fullname</Text>
+            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold', color: '#fff'}} >GUEST LOGIN</Text>
+            <Text style = {{fontSize: 25,bottom: 30,color: '#fff' }}>Before we proceed, I need few information about you</Text>
+         <View style = {{marginTop: 10,}}>
+        <Text style = {{fontSize: 20, color: '#fff' }}>Fullname</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
                  onChangeText={(value) => setFullname(value)}
                 //  value={studentid}
                 placeholder='e.g. Juan Cruz'
-                style = {{fontSize: 20, color: 'black', marginLeft: 10}}
+                style = {{fontSize: 16, color: 'black', marginLeft: 10}}
             />
         </View>
         </View>
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Address</Text>
+        <Text style = {{fontSize: 20, color: '#fff' }}>Address</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
                  onChangeText={(value) => setAddress(value)}
                 //  value={birthday}
                 placeholder='e.g, Lingayen, Pangasinan'
-                style = {{fontSize: 20, color: 'black', marginLeft: 10}}
+                style = {{fontSize: 16, color: 'black', marginLeft: 10}}
             />
         </View>
         </View>
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Purpose</Text>
+        <Text style = {{fontSize: 20, color: '#fff' }}>Purpose</Text>
         <View
                 
                 style = {styles.picker}>
@@ -139,7 +143,13 @@ export default function GuestLoginScreen() {
                 </View>
                
         <View style = {{flexDirection: 'row', width: '25%', alignItems: 'flex-start', marginTop: 20, justifyContent: 'center'}} >
-        <OpenCamera/>
+        <OpenCamera
+        
+        onPress ={() => setUpload(!upload)}
+        name = {upload?  'done' :'photo-camera' }
+        color = {upload? '#0f0' :'#fff' }
+
+        />
         <ProceedButton
         onPress = {()=> navigation.navigate('GuestHomeScreen')}
         // onPress = {LoginData}
@@ -181,7 +191,7 @@ const styles = StyleSheet.create({
         
         width: 1000, 
         height: 700, 
-        backgroundColor: '#fff',
+        backgroundColor: '#00000059',
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 20,
