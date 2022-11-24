@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, OpenCamera, ProceedButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBStudentLogin } from '../../../Database/pouchDb';
 import { useDispatch } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
+import uuid from 'react-native-uuid';
+import { localDBGuest , SyncGuest , remoteDBLogBook } from '../../../Database/pouchDb';
+
 
 export default function GuestLoginScreen() {
 
@@ -21,51 +23,60 @@ export default function GuestLoginScreen() {
 
     // const [compare , setCompare] = useState('')
     
+  const [guestfullname, setGuestFullName] = useState('')
+  const [guestaddress, setGuestAddress] = useState('')
+  const [purpose, setPurpose] = useState('Select')
+  
 
-    // const LoginData = async () => {
+  const setNewGuest = async () => {
+   
+    const id = uuid.v4();
 
-        
+      if(1 + 1 == 3 ){
+      console.log('hey')
+      }
+      // if((classname.length == 0) && (subject.length == 0) ) {
+      //   console.log('ilove')}
+     else{
+       try {
+         var NewGuest = {
+          _id: id,
+           GuestFullName : guestfullname,
+           GuestAddress : guestaddress,
+           Purpose : purpose
+          //  FacultyPresident: facultypresident,
+          //  FacultyVicePresident : facultyvicepresident,
+          //  FacultyMembers : facultymembers,
+          //  place: place,
+          //  Price : price,
+          //  Preptime : preptime,
+          //  Deliveryfee : deliveryfee,
+          //  Status: status,
+          //  Image: Images
+         }
+      //    console.log(Images)
+      //    console.log('Images')
+         remoteDBLogBook.put(NewGuest)
+         .then((response) =>{
+           console.log(response)
+         })
+         .catch(err=>console.log(err))
 
-    //     if (studentid.length == 0) {
-    //         ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
-    //     }
-    //     if (birthday.length == 0) {
-    //         ToastAndroid.show('Please input your Birthdate', ToastAndroid.SHORT)
-    //     }
+        localDBGuest.put(NewGuest)
+         .then((response) =>{
+           Alert.alert('Your Schedule has been successfully added!')
+           console.log(response)
+           SyncGuest()
+           navigation.navigate('GuestHomeScreen')
+         })
+         .catch(err=>console.log(err))
+         
+       } catch (error) {
+        console.log(error)
+       }
+       }
+      }
 
-    //     var result = await remoteDBStudentLogin.allDocs({
-    //         include_docs: true,
-    //         attachments: true
-    //       });
-    //       if(result.rows){
-    //           let modifiedArr = result.rows.map(function(item){
-    //           return item.doc
-    //       });
-    //       let filteredData = modifiedArr.filter(item => {
-    //           return item.StudentBirthday === birthday
-    //         });
-    //         if(!filteredData.length == 0) {
-    //             let newFilterData = filteredData.map(item => {
-    //                 return item
-    //             })
-
-    //             dispatch(setStudentInfo(newFilterData))
-    //             const Idnumber = newFilterData[0].StudentIdNumber;
-    //             const Birthdate = newFilterData[0].StudentBirthday
-                
-    //             if((studentid == Idnumber ) && (birthday == Birthdate) ){
-    //                 navigation.navigate('Student_HomeScreen')
-              
-    //                }else if ((studentid != Idnumber) && (birthday != Birthdate)){
-                        
-    //                 console.log('error')
-    //                 Alert.alert('StudentID and Birthdate not match')
-    //                }
-    //         }
-            
-    //     }
-       
-    //   }
 
   return (
     <ImageBackground
@@ -89,8 +100,8 @@ export default function GuestLoginScreen() {
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
-                 onChangeText={(value) => setFullname(value)}
-                //  value={studentid}
+                 onChangeText={(value) => setGuestFullName(value)}
+                 value={guestfullname}
                 placeholder='e.g. Juan Cruz'
                 style = {{fontSize: 16, color: 'black', marginLeft: 10}}
             />
@@ -101,8 +112,8 @@ export default function GuestLoginScreen() {
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
-                 onChangeText={(value) => setAddress(value)}
-                //  value={birthday}
+                 onChangeText={(value) => setGuestAddress(value)}
+                 value={guestaddress}
                 placeholder='e.g, Lingayen, Pangasinan'
                 style = {{fontSize: 16, color: 'black', marginLeft: 10}}
             />
@@ -115,7 +126,7 @@ export default function GuestLoginScreen() {
                 style = {styles.picker}>
             <Picker
                     title = 'Select Category'
-                    selectedValue={value}
+                    selectedValue={purpose}
                     mode="dropdown"
                     style={{
                         transform: [
@@ -129,19 +140,19 @@ export default function GuestLoginScreen() {
                 
                       }}
                       ViewStyleProp = {{fontSize: 20}} 
-                    onValueChange={(itemValue, itemIndex) => setvalue(itemValue)}
+                    onValueChange={(itemValue, itemIndex) => setPurpose(itemValue)}
                 >
                     <Picker.Item  label="Select" value="Select" />
-                    <Picker.Item label="Check Admin" value="CA" />
-                    <Picker.Item label="Check Faculty" value="CF" />
-                    <Picker.Item label="Suggest changes" value="SC" />
-                    <Picker.Item label="Submit feedback" value="SF" />
-                    <Picker.Item label="Check Events" value="CE" />
-                    <Picker.Item label="Report" value="R" />
+                    <Picker.Item label="Check Admin" value="Check Admin" />
+                    <Picker.Item label="Check Faculty" value="Check Faculty" />
+                    <Picker.Item label="Suggest changes" value="Suggest changes" />
+                    <Picker.Item label="Submit feedback" value="Submit feedback" />
+                    <Picker.Item label="Check Events" value="Check Events" />
+                    <Picker.Item label="Report" value="Report" />
                 </Picker>
                 </View>
                 </View>
-               
+              
         <View style = {{flexDirection: 'row', width: '25%', alignItems: 'flex-start', marginTop: 20, justifyContent: 'center'}} >
         <OpenCamera
         
@@ -151,7 +162,7 @@ export default function GuestLoginScreen() {
 
         />
         <ProceedButton
-        onPress = {()=> navigation.navigate('GuestHomeScreen')}
+        onPress={ () => {guestfullname === '' ? Alert.alert('Enter Name') : (guestaddress === '' ? Alert.alert('Enter Address') : purpose === 'Select' ? Alert.alert('Pls select option') : setNewGuest())}}
         // onPress = {LoginData}
         style={[{backgroundColor: '#fddf54', width: '100%', borderRadius: 5, marginLeft: 5}]}
         title = 'Log In'

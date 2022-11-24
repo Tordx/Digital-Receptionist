@@ -28,6 +28,8 @@ import AddAdminScreen from './Screens/Navigations/Employee/AddAdminScreen';
 import AddEventScreen from './Screens/Navigations/Employee/AddEventScreen';
 import AdminReports from './Screens/Navigations/Employee/AdminReports';
 import AddStudentScreen from './Screens/Navigations/Employee/AddStudentScreen';
+import AddSuperAdmin from './Screens/Navigations/Employee/AddSuperAdmin';
+import LogBookScreen from './Screens/Navigations/Employee/LogBookScreen';
 // Guest StackScreen
 
 import GuestHomeScreen from './Screens/Navigations/Guest/GuestHomeScreen';
@@ -253,6 +255,20 @@ export default function Directory() {
                 
                 name = 'GuestHomeScreen'
                 component={GuestHomeScreen}
+                options = {{
+                    headerShown: false
+                }}/>
+                <Stack.Screen 
+                
+                name = 'AddSuperAdmin'
+                component={AddSuperAdmin}
+                options = {{
+                    headerShown: false
+                }}/>
+                 <Stack.Screen 
+                
+                name = 'LogBookScreen'
+                component={LogBookScreen}
                 options = {{
                     headerShown: false
                 }}/>
