@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import {View, Image} from 'react-native'
-import { RNCamera, FaceDetector } from 'react-native-camera'; //Depricated a bit complicated to setup
+import {View, Text, Pressable} from 'react-native'
+import { RNCamera, FaceDetector } from 'react-native-camera'; //Depricated and bit complicated to setup
 import {launchCamera, cameraType} from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import { BackHandler } from 'react-native';
 
 
 export default function Camera() {
@@ -13,18 +14,30 @@ export default function Camera() {
 
   useEffect(() => {
     OpenCamera()
+    disableBackbutton()
 
-  },)
+  },[])
+
+  const disableBackbutton = () => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      return () => backHandler.remove()
+    
+  }
 
   const OpenCamera = () => {
 
-    // saving the photo you have, PS: Camera type not working but saving the file does modify mo ayang
+    // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
+    
+
     const option = {
      
-        path: image,
         mediaType: 'photo',
         cameraType: 'front',
         inlcudeBase64: true,
+        uri: 'thisimage.jpg',
+        storageOption: {
+          path: 'image',
+        }
     }
     
     launchCamera(option, response => {
@@ -37,23 +50,26 @@ export default function Camera() {
         console.log('Error Message');
       } else if (response.assets){
         console.log('Assets')
-        // navigation.navigate('GuestLoginScreen')
+        navigation.navigate('GuestLoginScreen')
       }
+    }).then(image => {
+      console.log(image)
+      setImage(image.path);
+      
     });
-    
-    return(
-
-      <View>
-        <Image
-        
-        source={Image}
-        style = {{width: 100, height: 100}}
-        />
-      </View>
-
-    )
 
 }
+
+return (
+    <Pressable
+    style  = {{flex: 1, backgroundColor: 'orange', justifyContent: 'center', alignItems: 'center',}}
+    onPress={OpenCamera}
+    >
+      <Text>{image}</Text>
+      <Text style = {{fontSize: 50}}>OPEN CAMERA</Text>
+    </Pressable>
+)
+
 }
 
 

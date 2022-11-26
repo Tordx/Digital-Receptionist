@@ -216,6 +216,7 @@ export default function GuestLoginScreen() {
         <OpenCamera
         
         onPress ={CameraOpened}
+        // disables the button when photo has been taken, cancellation of camera should be remove
         disabled = {upload? true : false }
         name = {upload?  'done' :'photo-camera' }
         color = {upload? '#0f0' :'#fff' }
