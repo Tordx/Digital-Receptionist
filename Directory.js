@@ -34,6 +34,7 @@ import LogBookScreen from './Screens/Navigations/Employee/LogBookScreen';
 
 import GuestHomeScreen from './Screens/Navigations/Guest/GuestHomeScreen';
 import GuestLoginScreen from './Screens/Navigations/Guest/GuestLoginScreen';
+import Camera from './ScreenComponents/Camera';
 
 export default function Directory() {
   
@@ -258,6 +259,7 @@ export default function Directory() {
                 options = {{
                     headerShown: false
                 }}/>
+
                 <Stack.Screen 
                 
                 name = 'AddSuperAdmin'
@@ -269,6 +271,14 @@ export default function Directory() {
                 
                 name = 'LogBookScreen'
                 component={LogBookScreen}
+                options = {{
+                    headerShown: false
+                }}/>
+
+                <Stack.Screen 
+                
+                name = 'Camera'
+                component={Camera}
                 options = {{
                     headerShown: false
                 }}/>

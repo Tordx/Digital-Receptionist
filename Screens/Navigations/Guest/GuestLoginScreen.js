@@ -7,9 +7,17 @@ import { useDispatch } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 import { localDBGuest , SyncGuest , remoteDBLogBook } from '../../../Database/pouchDb';
+import {location} from '../../../Assets/constants/Locations'
 
 
 export default function GuestLoginScreen() {
+
+  const CameraOpened = () => {
+    setUpload(!upload)
+    navigation.navigate('Camera')
+
+
+  }
 
 
     const dispatch = useDispatch();
@@ -18,14 +26,14 @@ export default function GuestLoginScreen() {
     const [fullname, setFullname] = useState();
     const [address, setAddress] = useState();
     const [value, setvalue] = useState('Select');
-
+        
     const [upload, setUpload] = useState(false);
 
     // const [compare , setCompare] = useState('')
     
-  const [guestfullname, setGuestFullName] = useState('')
-  const [guestaddress, setGuestAddress] = useState('')
-  const [purpose, setPurpose] = useState('Select')
+  const [guestfullname, setGuestFullName] = useState('');
+  const [guestaddress, setGuestAddress] = useState('');
+  const [purpose, setPurpose] = useState('');
   
 
   const setNewGuest = async () => {
@@ -77,6 +85,18 @@ export default function GuestLoginScreen() {
        }
       }
 
+      //user location selector
+
+
+
+      // login Button
+      const login =  () => {
+        
+        guestfullname === '' ? Alert.alert('Please Enter your Full name') : 
+        (guestaddress === '' ? Alert.alert('Please Enter Address') : 
+        purpose === 'Select' ? Alert.alert('Please select option') : 
+        setNewGuest())
+    }
 
   return (
     <ImageBackground
@@ -93,10 +113,10 @@ export default function GuestLoginScreen() {
 
         />
         <View style = {styles.container}>
-            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold', color: '#fff'}} >GUEST LOGIN</Text>
-            <Text style = {{fontSize: 25,bottom: 30,color: '#fff' }}>Before we proceed, I need few information about you</Text>
+            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold', color: '#000'}} >GUEST LOGIN</Text>
+            <Text style = {{fontSize: 15,bottom: 30,color: '#000' }}>Before we proceed, I need few information about you</Text>
          <View style = {{marginTop: 10,}}>
-        <Text style = {{fontSize: 20, color: '#fff' }}>Fullname</Text>
+        <Text style = {{fontSize: 20, color: '#000' }}>Fullname</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
@@ -107,8 +127,8 @@ export default function GuestLoginScreen() {
             />
         </View>
         </View>
-        <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20, color: '#fff' }}>Address</Text>
+        {/* <View style = {{marginTop: 10}}>
+        <Text style = {{fontSize: 20, color: '#000' }}>Address</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
@@ -118,9 +138,48 @@ export default function GuestLoginScreen() {
                 style = {{fontSize: 16, color: 'black', marginLeft: 10}}
             />
         </View>
-        </View>
+        </View> */}
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20, color: '#fff' }}>Purpose</Text>
+        <Text style = {{fontSize: 20, color: '#000' }}>Address</Text>
+        <View
+                
+                style = {styles.picker}>
+            <Picker
+                    title = 'Select Category'
+                    selectedValue={guestaddress}
+                    mode="dropdown"
+                    style={{
+                        transform: [
+                           { scaleX: 1 }, 
+                           { scaleY: 1 },
+                        ],
+                    width: 400,
+                    bottom: 0,
+                    color: 'black',
+                    
+                
+                      }}
+                      ViewStyleProp = {{fontSize: 20}} 
+                    onValueChange={(itemValue, itemIndex) => setGuestAddress(itemValue)}
+                    
+                >
+                    {location.map((item, index) => {
+                      return (
+                        
+                        <Picker.Item 
+                        
+                          label={item} 
+                          value={index} 
+                          key={index}
+                          />
+                      )      
+                      
+                      })}
+
+                </Picker>
+                </View>
+                </View><View style = {{marginTop: 10}}>
+        <Text style = {{fontSize: 20, color: '#000' }}>Purpose</Text>
         <View
                 
                 style = {styles.picker}>
@@ -131,7 +190,7 @@ export default function GuestLoginScreen() {
                     style={{
                         transform: [
                            { scaleX: 1 }, 
-                           { scaleY: 1 },
+                           { scaleY: 1.1 },
                         ],
                     width: 400,
                     bottom: 0,
@@ -156,13 +215,15 @@ export default function GuestLoginScreen() {
         <View style = {{flexDirection: 'row', width: '25%', alignItems: 'flex-start', marginTop: 20, justifyContent: 'center'}} >
         <OpenCamera
         
-        onPress ={() => setUpload(!upload)}
+        onPress ={CameraOpened}
+        disabled = {upload? true : false }
         name = {upload?  'done' :'photo-camera' }
         color = {upload? '#0f0' :'#fff' }
+        
 
         />
         <ProceedButton
-        onPress={ () => {guestfullname === '' ? Alert.alert('Enter Name') : (guestaddress === '' ? Alert.alert('Enter Address') : purpose === 'Select' ? Alert.alert('Pls select option') : setNewGuest())}}
+        onPress={login}
         // onPress = {LoginData}
         style={[{backgroundColor: '#fddf54', width: '100%', borderRadius: 5, marginLeft: 5}]}
         title = 'Log In'
@@ -202,7 +263,7 @@ const styles = StyleSheet.create({
         
         width: 1000, 
         height: 700, 
-        backgroundColor: '#00000059',
+        backgroundColor: '#fff',
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 20,
