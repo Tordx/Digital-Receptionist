@@ -3,22 +3,41 @@ import {
     View,
     Text, 
     StyleSheet,
-    Pressable,
-    ScrollView,
     TouchableOpacity,
     Alert,
+    TextInput,
 
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {localDBSchedules , remoteDBSchedules , SyncSchedules} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { AddButton, CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+
+const CustomInput = (props) => {
+
+  return (
+  <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <View  style = {{width: '35%'}}>
+    <Text style = {{textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
+    </View>
+    <View style  = {styles.TextInput} >
+      <View style = {{marginLeft: 5}}>
+      <TextInput
+        placeholder= {props.placeholder}
+        onChangeText={props.onChangeText}
+        value={props.value}
+        style = {props.inputstyle}
+      />
+      </View>
+    </View>
+  </View>
+  )
+}
 
 export default function AddClassScreen() {
 
@@ -80,137 +99,67 @@ export default function AddClassScreen() {
          }
         }
 
+       
+
 
   return (
     
     <View style={styles.container}>
-        <ScrollView>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      <CloseButton
+      <View style={{justifyContent: 'center', alignItems: 'center', width: '100%',}}>
+            <Text
+            style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20,}}> 
+            Add Class </Text>
+       
+       
+              <CustomInput
+                onChangeText={(value) => setClassName(value)}
+                value={classname}
+                placeholder = 'e.g. IV BSCS A'
+                title = 'Class Name'
+              />
+              
+              <CustomInput
+                onChangeText={(value) => setSubject(value)}
+                value={subject}
+                placeholder = 'e.g. Introduction to Programming'
+                title = 'Subject'
+
+              />
+              <CustomInput
+
+                onChangeText={(value) => setTime(value)}
+                value={time}
+                placeholder = 'e.g. 07:00 AM'
+                title = 'Class Time'
+
+              />
+                
+                <CustomInput
+                onChangeText={(value) => setRoom(value)}
+                value={room}
+                placeholder = 'CS Room 5'
+                title = 'Class Room'
+                />
+      </View>
+
+     <ProceedButton
+     style = {[{justifyContent: 'center',
+     align: 'center',
+     height: 50,
+     width: 200  ,
+     backgroundColor: '#fddf54',
+     borderRadius: 5,
+     margin: 50}]}
+     onPress = {setNewSchedule}
+     title = 'Add Class'
+     
+     />
+            <CloseButton
                     onPress = {() => navigation.goBack('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
-            <Text
-            style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Class </Text>
-        </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setClassName(value)}
-                   value={classname}
-                   label="Class name"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setSubject(value)}
-                value={subject}
-                mode ='Outlined'
-                multiline
-                label='Subject'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setTime(value)}
-                value={time}
-                mode ='Outlined'
-                multiline
-                label='StartTime'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setRoom(value)}
-                value={room}
-                mode ='Outlined'
-                multiline
-                label='Room'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                
-     </ScrollView>  
-     <Pressable
-            style = {{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                height: 50,
-                width: 500,
-                backgroundColor: '#225',
-                borderRadius: 20,
-                position: 'absolute',
-                bottom: 0,
-            }}
-            onPress={setNewSchedule}
-            >
-                <Text
-                
-                style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                >  ADD CLASS </Text>
-            </Pressable>
     </View>
 
   )
@@ -220,19 +169,29 @@ const styles = StyleSheet.create({
     
     TextInput: {
 
-        margin: 25,
-        width: 400,
-        height: 40  ,
-        borderRadius: 20,
-        backgroundColor: 'red',
-        alignSelf: 'center',
-        justifyContent: 'center',
+      backgroundColor: '#f2f3f7',
+      width: '35%',
+      borderWidth: 0.9,
+      borderRadius: 5,
+      height: 50,
+      marginTop: 10,
+      alignItems: 'center',
+      flexDirection: 'row',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 1,
+        height: 2,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 1,
+      elevation: 3,
+  
     },
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignContent: 'center',
-        backgroundColor: '#e2e2e2',
+        alignItems: 'center',
+        backgroundColor: '#f2f3f7',
     },
     
 })

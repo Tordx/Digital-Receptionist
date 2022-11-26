@@ -84,7 +84,7 @@ export const ProceedButton = (props) => {
         onPress = {props.onPress}
         
          >
-            <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: '500'}}>
+            <Text style = {[styles.proceedtextstyle, props.titlestyle]}>
                 {props.title}
             </Text>
         </TouchableOpacity>
@@ -126,8 +126,8 @@ export const Box = (props) => {
     android_ripple = {{
   
         color: '#fddf54',
-        radius: 130,
-        borderless: 25,
+        radius: 115,
+        borderless: 100,
   
     }}
     >
@@ -147,7 +147,8 @@ export const Box = (props) => {
     return (
  
     <Pressable style = {styles.camera} 
-    onPress = {props.onPress}>
+    onPress = {props.onPress}
+    disabled ={props.disabled}>
         <Icon
         
             name = {props.name}
@@ -162,6 +163,12 @@ export const Box = (props) => {
 
 
 const styles = StyleSheet.create({
+
+    proceedtextstyle: {
+        textAlign: 'center', 
+        color: '#0f2ed6', 
+        fontSize: 20, fontWeight: '500'
+    },
 
 
     camera: {

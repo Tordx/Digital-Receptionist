@@ -109,25 +109,23 @@ export default function SuggestionsScreen() {
         </View>
       </View>
       <View style = {{margin: 5}} >
-        <Text>Fullname</Text>
+        <Text style = {{fontSize: 17,}}>Fullname</Text>
         <View style = {styles.TextInput} >
           <TextInput
             onChangeText={(value) => setName(value)}
             value={name}
-            style = {{marginLeft: 20, fontSize: 20}}
+            style = {{marginLeft: 20, fontSize: 17}}
             placeholder = 'e.g, John Doe'
         />
         </View>
       </View>
+      <View style = {{justifyContent: 'flex-start', margin: 5}}>
+      <Text style = {{fontSize: 17, textAlign: 'left'}}>Subject</Text>
+      
       <View
                 
-                    style = {{
-                        
-                        backgroundColor: '#e2e2e2',
-                        height: 50,
-                        margin: 20,
-                        justifyContent: 'center'
-                    }}> 
+                    style = {styles.TextInput}> 
+                    
                 <Picker
                         title = 'Select Category'
                         selectedValue={value}
@@ -137,7 +135,7 @@ export default function SuggestionsScreen() {
                                { scaleX: 1 }, 
                                { scaleY: 1 },
                             ],
-                        width: 400,
+                        width: 600  ,
                         bottom: 0,
                         color: '#9e9e9e',
                     
@@ -145,21 +143,22 @@ export default function SuggestionsScreen() {
                         onValueChange={(itemValue, itemIndex) => setvalue(itemValue)}
                     >
                         <Picker.Item label="Select" value="Select" />
-                        <Picker.Item label="Food" value="Food" />
-                        <Picker.Item label="Travel" value="Travel" />
-                        <Picker.Item label="Hotel" value="Hotel" />
-                        <Picker.Item label="Restaurant" value="Restaurant" />
-                        <Picker.Item label="Grocery" value="Grocery" />
-                        <Picker.Item label="Wellness" value="Wellness" />
+                        <Picker.Item label="Campus" value="CA" />
+                        <Picker.Item label="Building" value="BU" />
+                        <Picker.Item label="Faculty" value="FA" />
+                        <Picker.Item label="Colleges" value="CO" />
+                        <Picker.Item label="Organization" value="OR" />
+                        <Picker.Item label="Others" value="OT" />
                     </Picker>
                     
                     </View>
+        </View>
 
        <View style = {{margin: 5}} >
-        <Text style = {{fontSize: 18,}}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
+        <Text style = {{fontSize: 17,}}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
-            style = {{marginLeft: 20, fontSize: 20}}
+            style = {{marginLeft: 20, fontSize: 17 }}
             placeholder = 'e.g, John Doe or Office'
             onChangeText={(value) => setSpecify(value)}
             value={specify}
