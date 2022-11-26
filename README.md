@@ -6,7 +6,7 @@ This is a thesis Project being developed by BSCS A students
 ## Get Started
 To begin with, check the installation guide of [React Native Development Environment Setup](https://reactnative.dev/docs/environment-setup)
 
-After making the  everything works fine and followed the instruction, we may now proceed to the next step.
+After following the instructions and making sure everything works fine, we may now proceed to the next step.
 
 ## Installation 
 
@@ -32,7 +32,7 @@ $ cd android && ./gradlew clean && cd..
 
 ## Start Coding
 
-Make sure you are running an Android Emulator with SDKVersion 29, preferably Pixel C.
+Make sure you are running the Emulator with SDKVersion 29, preferably Pixel C.
 
 Run your code using the same [PowerShell]() by running this command:
 
