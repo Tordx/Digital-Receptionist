@@ -22,7 +22,7 @@ Run [PowerShell]() as Administrator and direct to your repository folder.
 Make sure to install all its dependency by running install.
 
 ```bash
-yarn install
+$ yarn install
 ```
 Clean android gradle by going to android folder and running command:
 
