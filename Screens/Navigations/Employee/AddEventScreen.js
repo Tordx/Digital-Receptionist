@@ -7,6 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
+    Image
 
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
@@ -19,6 +20,7 @@ import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function AddEventScreen() {
 
@@ -33,12 +35,36 @@ export default function AddEventScreen() {
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
+    const [image, setImage] = useState('');
     // const [eventcode, setEventCode] = useState('');
     // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
+
+    const OpenGallary = async() => {
+
+      // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
+      
+  
+      launchImageLibrary({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
+        
+        console.log(response)
+  
+        // navigation.navigate('GuestLoginScreen')
+  
+      }).then(image => {
+        console.log('yyyyyyyyyyyyy')
+        console.log(image.assets[0].uri)
+        console.log('xxxxxxxxxxxx')
+        setImage(image.assets[0].uri)
+        // setImage(image.assets[0].uri); 
+        // dispatch(setImages(image.assets[0].uri))
+        // uploadImage()
+      });
+  
+  }
 
      const setNewEvent = async () => {
       
@@ -192,6 +218,17 @@ export default function AddEventScreen() {
               
                 />
                 </View>
+               <View>
+                <Image
+                
+                />
+
+                
+               </View>
+           
+                
+                
+                
                 {/* <View style = {styles.TextInput}>
               <View
                     style = {{
@@ -216,13 +253,34 @@ export default function AddEventScreen() {
                 />
                 </View> */}
                
-             </ScrollView>  
+             </ScrollView> 
+             
+             <Pressable
+                        style = {{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 400,
+                            backgroundColor: '#225',
+                            borderRadius: 20,
+                            position: 'absolute',
+                            bottom: 100,
+                            backgroundColor: 'green',
+                            margin: 80
+                        }}
+                        onPress={OpenGallary}
+                        >
+                            <Text
+                            
+                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
+                            >  ADD IMAGE </Text>
+              </Pressable>   
                 <Pressable
                         style = {{
                             justifyContent: 'center',
                             alignSelf: 'center',
                             height: 50,
-                            width: 500,
+                            width: 400,
                             backgroundColor: '#225',
                             borderRadius: 20,
                             position: 'absolute',
@@ -234,7 +292,8 @@ export default function AddEventScreen() {
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
                             >  ADD ADMIN </Text>
-              </Pressable>   
+              </Pressable> 
+              
     </View>
 
   )

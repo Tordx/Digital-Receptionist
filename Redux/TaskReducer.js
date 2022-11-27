@@ -28,11 +28,11 @@
     //  setDones: (state , action)  => {
     //    state.Dones = action.payload
     //  },
-    //   setImages: (state , action)  => {
-    //   state.Images = action.payload
-    //   console.log(action)
-    //   console.log('action')
-    //   },
+      setImages: (state , action)  => {
+      state.Images = action.payload
+      console.log(action)
+      console.log('action')
+      },
     //   setSelectedItem: (state , action)  => {
     //     state.SelectedItem = action.payload
     //     console.log(action)
@@ -47,7 +47,7 @@
    setStudentInfo ,
   //  setTaskId , 
   //  setDones, 
-  //  setImages, 
+   setImages, 
   //  setSelectedItem , 
   //  setOrders
   } = taskReducers.actions

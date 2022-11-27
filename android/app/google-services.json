@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017823767307",
+    "project_id": "digital-receptionist-5c6bb",
+    "storage_bucket": "digital-receptionist-5c6bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017823767307:android:3c0eb18a28a3849852100e",
+        "android_client_info": {
+          "package_name": "com.digitalreceptionist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017823767307-shffmrj5e6fgel1q0m84i2qds1b4q2it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuPJaInEHkqGkSF_yT8bzjpEWpI5IN_3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017823767307-shffmrj5e6fgel1q0m84i2qds1b4q2it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

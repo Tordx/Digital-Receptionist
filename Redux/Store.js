@@ -6,7 +6,7 @@ export default configureStore({
     studentinfo: taskReducers,
     // taskID: taskReducers,
     // Dones: taskReducers,
-    // Images: taskReducers,
+    Images: taskReducers,
     // SelectedItem:taskReducers,
     // orderItems: taskReducers
     
