@@ -10,7 +10,7 @@ import {
     Image
 
 } from 'react-native';
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useMemo} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -21,21 +21,28 @@ import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import { useDispatch } from 'react-redux';
+import { setImages } from '../../../Redux/TaskReducer';
 
 export default function AddEventScreen() {
 
   useEffect(() => {
-   
+    
   }, []);
+
+  // useMemo(() => uploadImage(image), [image]);
 
   
     const navigation = useNavigation('');
+    const dispatch = useDispatch()
 
     const [eventname, setEventName] = useState('');
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
+    const [transferred, setTransferred] = useState(0);
     // const [eventcode, setEventCode] = useState('');
     // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
@@ -60,13 +67,50 @@ export default function AddEventScreen() {
         console.log('xxxxxxxxxxxx')
         setImage(image.assets[0].uri)
         // setImage(image.assets[0].uri); 
-        // dispatch(setImages(image.assets[0].uri))
+        dispatch(setImages(image.assets[0].uri))
         // uploadImage()
       });
   
   }
 
+  // const uploadImage = async (image) => {
+
+      
+  //   };
+
      const setNewEvent = async () => {
+
+      console.log('Images')
+      console.log(image)
+      console.log('Images')
+      const  uri  = image;
+      const filename = uri.substring(uri.lastIndexOf('/') + 1);
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+      setTransferred(0);
+      const task = storage()
+        .ref(filename)
+        .putFile(uploadUri);
+      // set progress state
+      task.on('state_changed', snapshot => {
+        setTransferred(
+          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+        );
+      });
+      try {
+        await task;
+      } catch (e) {
+        console.error(e);
+      }
+      Alert.alert(
+        'Successfully added Photo!'
+      );  
+      setImage(null);
+      const url = await storage().ref(filename).getDownloadURL();
+      // dispatch(setImages(url));
+      setImage(url)
+      console.log(url)
+      console.log('url')
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       
       const id = uuid.v4();
 
@@ -83,6 +127,7 @@ export default function AddEventScreen() {
                  EventTagline : eventtagline,
                  EventWhen: eventwhen,
                  EventWhere : eventwhere,
+                 EventImage : url
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -218,8 +263,9 @@ export default function AddEventScreen() {
               
                 />
                 </View>
-               <View>
+               <View style={{alignSelf: 'center' , marginBottom: 50}}>
                 <Image
+                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
                 
                 />
 
@@ -291,9 +337,8 @@ export default function AddEventScreen() {
                             <Text
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD ADMIN </Text>
-              </Pressable> 
-              
+                            >  ADD EVENT </Text>
+              </Pressable>  
     </View>
 
   )

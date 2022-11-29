@@ -5,11 +5,12 @@
    name: 'items',
    initialState: {
     studentinfo: [],
-     taskID: 1,
-     Dones:[],
+    //  taskID: 1,
+    //  Dones:[],
      Images:[],
-     orderItems: [],
-     SelectedItem:null
+    //  orderItems: [],
+    //  SelectedItem:null,
+    //  isOpen: false
    },
    reducers: {
      setStudentInfo: (state , action ) => {
@@ -38,6 +39,12 @@
     //     console.log(action)
     //     console.log('action')
     //     },
+      // openModal: (state , action) => {
+      //   state.isOpen = true;
+      // },
+      // closeModal: (state , action) => {
+      //   state.isOpen = false;
+      // },
  
    }
  })
@@ -50,6 +57,8 @@
    setImages, 
   //  setSelectedItem , 
   //  setOrders
+    openModal,
+    // closeModal
   } = taskReducers.actions
  
  export default taskReducers.reducer
