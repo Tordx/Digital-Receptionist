@@ -6,11 +6,12 @@ import { remoteDBEvent } from '../../../Database/pouchDb';
 import EventModal from '../../../Modal/EventModal';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { openModal } from '../../../Redux/ModalSlice';
-import { setEventData } from '../../../Redux/ModalSlice';
+import { openEventModal } from '../../../Redux/EventSlice';
+import { setEventData } from '../../../Redux/EventSlice';
 
 export default function EventScreen() {
 
+  const user = useSelector(state => state.essensials.user)
   const dispatch = useDispatch()
   const [EventData , setEventDatas] = useState('')
   // const {isOpen} = useSelector((store) => store.modal)
@@ -41,19 +42,25 @@ export default function EventScreen() {
               return item
           })
           setEventDatas(newFilterData)
-         
-          
+           
       }
   }  
-
 };
+      const back = () => {
+        if(user == 'STUDENT'){
+          navigation.navigate('Student_HomeScreen')
+        }else{
+          navigation.navigate('GuestHomeScreen')
+        }
+      }
+
 
       const renderItem = ({ item }) => {
           // console.log(item.EventImage)
           // console.log('item.EventImage')
         return(
         <TouchableOpacity onPress={() => {
-          dispatch(openModal()) ; dispatch(setEventData(item))
+          dispatch(openEventModal()) ; dispatch(setEventData(item))
         }} >
           <View style = {styles.item}>
             <Text style = {styles.title}>
@@ -80,7 +87,7 @@ export default function EventScreen() {
 
         <CloseButton
           
-          onPress = {() => navigation.navigate('Student_HomeScreen')}
+          onPress = {back}
           name = 'arrow-back'
           size = {50}
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}

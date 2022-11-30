@@ -19,10 +19,22 @@ import { useFocusEffect ,useNavigation } from '@react-navigation/native';
 import { AppName, Version, WCT, TagLine, Report } from '../Assets/constants/constants';
 import {ReportButton} from '../ScreenComponents/Buttons';
 import BackgroundTimer from 'react-native-background-timer';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../Redux/TaskReducer';
 
 export default function InitialRoutingScreen() {
 
+    const dispatch = useDispatch()
     const navigation = useNavigation();
+
+    const student = () => {
+         dispatch(setUser('STUDENT'))
+         navigation.navigate('StudentLoginScreen')
+    }
+    const guest = () => {
+         navigation.navigate('GuestLoginScreen')
+         dispatch(setUser('GUEST'))
+    }
 
   return (
     <ImageBackground 
@@ -37,7 +49,7 @@ export default function InitialRoutingScreen() {
         <ReportButton/>
         <View style = {{flexDirection: 'row'}}>
             <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}
-                onPress = {() => navigation.navigate('StudentLoginScreen')}
+                onPress = {() => student()}
                 android_ripple = {{
       
                     color: '#fddf54',
@@ -62,7 +74,7 @@ export default function InitialRoutingScreen() {
           />
             </Pressable>
             <Pressable style = {styles.Box}
-                onPress = {() => navigation.navigate('GuestLoginScreen')}
+                onPress = {() => guest()}
                 android_ripple = {{
       
                     color: '#0f2ed6',

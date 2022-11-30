@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View , Image } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { closeEventModal } from "../Redux/EventSlice";
+import { closeFacultyModal } from "../Redux/FacultySlice";
 
 
-export default function EventModal() {
+
+export default function FacultyModal() {
 
     const dispatch = useDispatch();
-    const {isOpen} = useSelector((store) => store.eventmodal)
-    const {eventData} = useSelector((store) => store.eventmodal)
+    const {isOpen} = useSelector((store) => store.facultymodal)
+    const {facultyData} = useSelector((store) => store.facultymodal)
     
     // const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,18 +22,18 @@ export default function EventModal() {
             transparent={true}
             visible={isOpen}
             onRequestClose={() => {
-                dispatch(closeEventModal())
+                dispatch(closeFacultyModal())
             }}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>{'EventName:  ' + eventData.EventName}</Text>
-                <Text style={styles.modalText}>{'EventTagline:  ' + eventData.EventTagline}</Text>
-                <Text style={styles.modalText}>{'EventWhere:  ' + eventData.EventWhere}</Text>
-                <Text style={styles.modalText}>{'EventWhen:  ' + eventData.EventWhen}</Text>
-                <Image
+                <Text style={styles.modalText}>{'Facultyname:  ' + facultyData.Facultyname}</Text>
+                <Text style={styles.modalText}>{'FacultyBuilding:  ' + facultyData.FacultyBuilding}</Text>
+                <Text style={styles.modalText}>{'FacultyPresident:  ' + facultyData.FacultyPresident}</Text>
+                <Text style={styles.modalText}>{'FacultyVicePresident:  ' + facultyData.FacultyVicePresident}</Text>
+                {/* <Image
                     resizeMode="contain" style={{width: 600, height: 500}} source={{uri:eventData.EventImage}}
-                />
+                /> */}
                 {/* <Pressable
                   style={[styles.button, styles.buttonClose]}
                 //   onPress={() => setModalVisible(!modalVisible)}

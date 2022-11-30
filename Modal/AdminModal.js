@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View , Image } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { closeEventModal } from "../Redux/EventSlice";
+import { closeAdminModal } from "../Redux/AdminSlice";
 
 
-export default function EventModal() {
+export default function AdminModal() {
 
     const dispatch = useDispatch();
-    const {isOpen} = useSelector((store) => store.eventmodal)
-    const {eventData} = useSelector((store) => store.eventmodal)
+    const {isOpen} = useSelector((store) => store.adminmodal)
+    const {adminData} = useSelector((store) => store.adminmodal)
     
     // const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,18 +21,18 @@ export default function EventModal() {
             transparent={true}
             visible={isOpen}
             onRequestClose={() => {
-                dispatch(closeEventModal())
+                dispatch(closeAdminModal())
             }}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>{'EventName:  ' + eventData.EventName}</Text>
-                <Text style={styles.modalText}>{'EventTagline:  ' + eventData.EventTagline}</Text>
-                <Text style={styles.modalText}>{'EventWhere:  ' + eventData.EventWhere}</Text>
-                <Text style={styles.modalText}>{'EventWhen:  ' + eventData.EventWhen}</Text>
-                <Image
-                    resizeMode="contain" style={{width: 600, height: 500}} source={{uri:eventData.EventImage}}
-                />
+                <Text style={styles.modalText}>{'AdminName:  ' + adminData.AdminName}</Text>
+                <Text style={styles.modalText}>{'AdminBuilding:  ' + adminData.AdminBuilding}</Text>
+                <Text style={styles.modalText}>{'AdminPresident:  ' + adminData.AdminPresident}</Text>
+                <Text style={styles.modalText}>{'AdminVicePresident:  ' + adminData.AdminVicePresident}</Text>
+                {/* <Image
+                    resizeMode="contain" style={{width: 600, height: 500}} source={{uri:adminData.EventImage}}
+                /> */}
                 {/* <Pressable
                   style={[styles.button, styles.buttonClose]}
                 //   onPress={() => setModalVisible(!modalVisible)}

@@ -14,10 +14,17 @@ import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 import { remoteDBFaculty } from '../../../Database/pouchDb';
+import FacultyModal from '../../../Modal/FacultyModal';
+import { openFacultyModal } from '../../../Redux/FacultySlice';
+import { setFacultyData } from '../../../Redux/FacultySlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
    export default function FacultyScreen () {
 
-    const [facultydata , setFacultyData] = useState('')
+    const user = useSelector(state => state.essensials.user)
+    const dispatch = useDispatch();
+    const [facultydata , setFacultyDatas] = useState('');
 
     useEffect(() => {
 
@@ -44,16 +51,26 @@ import { remoteDBFaculty } from '../../../Database/pouchDb';
           let newFilterData = filteredData.map(item => {
               return item
           })
-          setFacultyData(newFilterData)
+          setFacultyDatas(newFilterData)
       }
   }  
 
 };
+      const back = () => {
+        if(user == 'STUDENT'){
+          navigation.navigate('Student_HomeScreen')
+        }else{
+          navigation.navigate('GuestHomeScreen')
+        }
+      }
+
 
       const renderItem = ({ item }) => {
 
         return(
-        <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            dispatch(openFacultyModal()) ; dispatch(setFacultyData(item))
+          }} >
           <View style = {styles.item}>
             <Text style = {styles.title}>
               {item.Facultyname}
@@ -78,7 +95,7 @@ import { remoteDBFaculty } from '../../../Database/pouchDb';
                     style={{top: 75}}
                 />
                 <CloseButton
-                    onPress = {() => navigation.navigate('Student_HomeScreen')}
+                    onPress = {back}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
@@ -100,6 +117,7 @@ import { remoteDBFaculty } from '../../../Database/pouchDb';
                     style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
               /> */}
             </SafeAreaView>
+            <FacultyModal/>
         </ImageBackground>
       );
     

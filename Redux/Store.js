@@ -1,6 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  taskReducers from "../Redux/TaskReducer"
-import ModalSlice from './ModalSlice'
+import EventSlice from './EventSlice'
+import AdminSlice from './AdminSlice'
+import FacultySlice from './FacultySlice'
+import ClassSlice from './ClassSlice'
 
 
 export default configureStore({
@@ -11,9 +14,11 @@ export default configureStore({
     // Images: taskReducers,
     // SelectedItem:taskReducers,
     // orderItems: taskReducers
-    isOpen: taskReducers,
-    modal: ModalSlice,
-
+    essensials: taskReducers,
+    eventmodal: EventSlice,
+    adminmodal: AdminSlice,
+    facultymodal: FacultySlice,
+    classmodal: ClassSlice
   }
   
 })

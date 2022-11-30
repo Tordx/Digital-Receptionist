@@ -30,74 +30,74 @@ export default function GuestLoginScreen() {
   const [purpose, setPurpose] = useState('');
 
 
-  const setNewGuest = async () => {
-        navigation.navigate('GuestHomeScreen')
-        const id = uuid.v4();
-        const  uri  =  image;
-        const filename = uri.substring(uri.lastIndexOf('/') + 1);
-        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-        setTransferred(0);
-        const task = storage()
-          .ref(filename)
-          .putFile(uploadUri);
-        // set progress state
-        task.on('state_changed', snapshot => {
-          setTransferred(
-            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
-          );
-        });
-        try {
-          await  task;
-        } catch (e) {
-          console.error(e);
-        }
-        const firebasedata = await storage().ref(filename).getDownloadURL();
-        // dispatch(setImages(url));
-        setImage(firebasedata)
+  // const setNewGuest = async () => {
+  //       navigation.navigate('GuestHomeScreen')
+  //       const id = uuid.v4();
+  //       const  uri  =  image;
+  //       const filename = uri.substring(uri.lastIndexOf('/') + 1);
+  //       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+  //       setTransferred(0);
+  //       const task = storage()
+  //         .ref(filename)
+  //         .putFile(uploadUri);
+  //       // set progress state
+  //       task.on('state_changed', snapshot => {
+  //         setTransferred(
+  //           Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+  //         );
+  //       });
+  //       try {
+  //         await  task;
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+  //       const firebasedata = await storage().ref(filename).getDownloadURL();
+  //       // dispatch(setImages(url));
+  //       setImage(firebasedata)
 
 
-      if(1 + 1 == 3 ){
-      console.log('hey')
-      }
-     else{
-       try {
-         var NewGuest = {
-          _id: id,
-           GuestFullName : guestfullname,
-           GuestAddress : guestaddress,
-           Purpose : purpose,
-           GuestImage : firebasedata
-          //  FacultyPresident: facultypresident,
-          //  FacultyVicePresident : facultyvicepresident,
-          //  FacultyMembers : facultymembers,
-          //  place: place,
-          //  Price : price,
-          //  Preptime : preptime,
-          //  Deliveryfee : deliveryfee,
-          //  Status: status,
-          //  Image: Images
-         }
-      //    console.log(Images)
-      //    console.log('Images')
-         remoteDBLogBook.put(NewGuest)
-         .then((response) =>{
-           console.log(response)
-         })
-         .catch(err=>console.log(err))
+  //     if(1 + 1 == 3 ){
+  //     console.log('hey')
+  //     }
+  //    else{
+  //      try {
+  //        var NewGuest = {
+  //         _id: id,
+  //          GuestFullName : guestfullname,
+  //          GuestAddress : guestaddress,
+  //          Purpose : purpose,
+  //          GuestImage : firebasedata
+  //         //  FacultyPresident: facultypresident,
+  //         //  FacultyVicePresident : facultyvicepresident,
+  //         //  FacultyMembers : facultymembers,
+  //         //  place: place,
+  //         //  Price : price,
+  //         //  Preptime : preptime,
+  //         //  Deliveryfee : deliveryfee,
+  //         //  Status: status,
+  //         //  Image: Images
+  //        }
+  //     //    console.log(Images)
+  //     //    console.log('Images')
+  //        remoteDBLogBook.put(NewGuest)
+  //        .then((response) =>{
+  //          console.log(response)
+  //        })
+  //        .catch(err=>console.log(err))
 
-        localDBGuest.put(NewGuest)
-         .then((response) =>{
-           console.log(response)
-          //  navigation.navigate('GuestHomeScreen')
-           SyncGuest()
-         })
-         .catch(err=>console.log(err))
+  //       localDBGuest.put(NewGuest)
+  //        .then((response) =>{
+  //          console.log(response)
+  //         //  navigation.navigate('GuestHomeScreen')
+  //          SyncGuest()
+  //        })
+  //        .catch(err=>console.log(err))
          
-       } catch (error) {
-        console.log(error)
-       }
-       }
-      }
+  //      } catch (error) {
+  //       console.log(error)
+  //      }
+  //      }
+  //     }
 
       //user location selector
       const OpenCameras = async() => {
@@ -128,52 +128,15 @@ export default function GuestLoginScreen() {
         
     }
 
-    // const uploadImage = async () => {
-
-    //   console.log('Images')
-    //   console.log(image)
-    //   console.log('Images')
-    //   const  uri  = image;
-    //   const filename = uri.substring(uri.lastIndexOf('/') + 1);
-    //   const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    //   setUploading(true);
-    //   setTransferred(0);
-    //   const task = storage()
-    //     .ref(filename)
-    //     .putFile(uploadUri);
-    //   // set progress state
-    //   task.on('state_changed', snapshot => {
-    //     setTransferred(
-    //       Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
-    //     );
-    //   });
-    //   try {
-    //     await task;
-    //   } catch (e) {
-    //     console.error(e);
-    //   }
-    //   setUploading(false);
-    //   Alert.alert(
-    //     'Successfully added Photo!'
-    //   );  
-    //   setImage(null);
-    //   const url = await storage().ref(filename).getDownloadURL();
-    //   // dispatch(setImages(url));
-    //   setImage(url)
-    //   console.log(url)
-    //   console.log('url')
-    // };
-
-
       // login Button
-      const login =  () => {
+    //   const login =  () => {
         
-        guestfullname === '' ? Alert.alert('Please Enter your Full name') : 
-        (guestaddress === '' ? Alert.alert('Please Enter Address') : 
-        purpose === '' ? Alert.alert('Please select Purpose') : 
-        image === '' ? Alert.alert('Please Add Image') : 
-        setNewGuest())
-    }
+    //     guestfullname === '' ? Alert.alert('Please Enter your Full name') : 
+    //     (guestaddress === '' ? Alert.alert('Please Enter Address') : 
+    //     purpose === '' ? Alert.alert('Please select Purpose') : 
+    //     image === '' ? Alert.alert('Please Add Image') : 
+    //     setNewGuest())
+    // }
 
   return (
     <ImageBackground
@@ -311,7 +274,7 @@ export default function GuestLoginScreen() {
 
         /> */}
         <ProceedButton
-        onPress={login}
+        onPress={() => {navigation.navigate('GuestHomeScreen')}}
         // onPress = {LoginData}
         style={[{backgroundColor: '#fddf54', borderRadius: 5, width :300}]}
         title = 'Log In'

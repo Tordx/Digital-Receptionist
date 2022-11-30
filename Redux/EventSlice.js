@@ -1,17 +1,17 @@
 
  import { createSlice } from '@reduxjs/toolkit'
 
- export const modalSlice = createSlice({
-   name: 'modal',
+ export const EventSlice = createSlice({
+   name: 'eventmodal',
    initialState: {
     isOpen: false,
     eventData: []
    },
    reducers: {
-      openModal: (state , action) => {
+      openEventModal: (state , action) => {
         state.isOpen = true
       },
-      closeModal: (state , action) => {
+      closeEventModal: (state , action) => {
         state.isOpen = false
       },
       setEventData: (state , action ) => {
@@ -24,6 +24,6 @@
  })
  
  // Action creators are generated for each case reducer function
- export const {openModal , closeModal , setEventData} = modalSlice.actions
+ export const {openEventModal , closeEventModal , setEventData} = EventSlice.actions
  
- export default modalSlice.reducer
+ export default EventSlice.reducer

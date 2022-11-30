@@ -14,10 +14,17 @@ import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 import { remoteDBAdmin } from '../../../Database/pouchDb';
+import AdminModal from '../../../Modal/AdminModal';
+import { useDispatch } from 'react-redux';
+import { openAdminModal } from '../../../Redux/AdminSlice';
+import { setAdminData } from '../../../Redux/AdminSlice';
+import { useSelector } from 'react-redux';
 
   export default function AdminScreen () {
-
-    const [admindata , setAdminData] = useState('')
+    
+    const user = useSelector(state => state.essensials.user)
+    const dispatch = useDispatch()
+    const [admindata , setAdminDatas] = useState('')
 
     useEffect(() => {
 
@@ -44,16 +51,25 @@ import { remoteDBAdmin } from '../../../Database/pouchDb';
           let newFilterData = filteredData.map(item => {
               return item
           })
-          setAdminData(newFilterData)
+          setAdminDatas(newFilterData)
       }
   }  
 
 }
+    const back = () => {
+      if(user == 'STUDENT'){
+        navigation.navigate('Student_HomeScreen')
+      }else{
+        navigation.navigate('GuestHomeScreen')
+      }
+    }
 
     const renderItem = ({ item }) => {
  
       return(
-      <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          dispatch(openAdminModal()) ; dispatch(setAdminData(item))
+        }} >
         <View style = {styles.item}>
           <Text style = {styles.title}>
             {item.AdminName}
@@ -88,7 +104,7 @@ import { remoteDBAdmin } from '../../../Database/pouchDb';
                 />
             </View>
             <CloseButton
-                    onPress = {() => navigation.navigate('Student_HomeScreen')}
+                    onPress = {back}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
@@ -101,6 +117,7 @@ import { remoteDBAdmin } from '../../../Database/pouchDb';
                     style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
               /> */}
             </SafeAreaView>
+            <AdminModal/>
         </ImageBackground>
       );
     

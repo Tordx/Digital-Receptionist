@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
+import { useSelector } from 'react-redux';
 
 const DATA = [
     {
@@ -65,10 +66,21 @@ const DATA = [
       <Text style={styles.title}>{title}</Text>
     </View>
   );
+  
 
   export default function BuildingScreen () {
 
+    const user = useSelector(state => state.essensials.user)
     const navigation = useNavigation();
+
+    const back = () => {
+      if(user == 'STUDENT'){
+        navigation.navigate('Student_HomeScreen')
+      }else{
+        navigation.navigate('GuestHomeScreen')
+      }
+    }
+
 
     const renderItem = ({ item }) => (
         <Item title={item.title} />
@@ -89,7 +101,7 @@ const DATA = [
                     style={{top: 75}}
                 />
                 <CloseButton
-                    onPress = {() => navigation.navigate('Student_HomeScreen')}
+                    onPress = {back}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}

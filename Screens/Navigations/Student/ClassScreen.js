@@ -16,16 +16,16 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Button } from 'react-native-paper';
 import { remoteDBSchedules } from '../../../Database/pouchDb';
+import ClassModal from '../../../Modal/ClassModal';
+import { useDispatch } from 'react-redux';
+import { openClassModal, setClassData } from '../../../Redux/ClassSlice';
 
   export const ClassScreen = () => {
 
     useEffect(() => {
-
       Nextclass()
       Ongoingclass()
       PreviousClass()
-
-
     }, []);
 
     // const [itemdata,setItemdata] = useState('')
@@ -35,41 +35,7 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
     // const [previousclasstime,setPreviousClassTime] = useState('')
     // const [ongoingcclasstime,setOngoingClassTime] = useState('')
     // const [nextclasstime,setNextClassTime] = useState('')
-    
-    // var date = new Date();
-    // var time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    // time = time.split(':');// here the time is like "16:14"
-    // let meridiemTime = time[0] >= 12 && (time[0]-12 || 12) + ':' + '00' + ' PM' || (Number(time[0]) || 12) + ':' + '00' + ' AM';
-    // console.log(meridiemTime)
-    // setOngoingClassTime(meridiemTime)
-    
-    //Previous Class
-    // function subtractHours(numOfHours, date = new Date()) {
-    //   date.setHours(date.getHours() - numOfHours);
-    
-    //   return date;
-    // }
-    // const newsubtracted = (subtractHours(1, date));
-    // var xxxx = newsubtracted.getHours() + ":" + newsubtracted.getMinutes() + ":" + newsubtracted.getSeconds();
-    // xxxx = xxxx.split(':');// here the time is like "16:14"
-    // let meridiemTimex = xxxx[0] >= 12 && (xxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxx[0]) || 12) + ':' + '00' + ' AM';
-    // console.log(meridiemTimex)
-    // setPreviousClassTime(meridiemTimex)
-
-    //Next Class
-    // function addHours(numOfHours, date = new Date()) {
-    //   date.setHours(date.getHours() + numOfHours);
-    
-    //   return date;
-    // }
-    // const newadd = (addHours(2, date));
-    // var xxxxx = newadd.getHours() + ":" + newadd.getMinutes() + ":" + newadd.getSeconds();
-    // xxxxx = xxxxx.split(':');// here the time is like "16:14"
-    // let newadds = xxxxx[0] >= 12 && (xxxxx[0]-12 || 12) + ':' + '00' + ' PM' || (Number(xxxxx[0]) || 12) + ':' + '00' + ' AM';
-    // console.log(newadds)
-    // setNextClassTime(newadds)
-
-  
+   
     const Nextclass = async() => {
 
       var date = new Date();
@@ -169,34 +135,17 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
       }  
       }
 
-  //   const getData = async() => {
-        
-  //     var result = await remoteDBSchedules.allDocs({
-  //       include_docs: true,
-  //       attachments: true
-  //     });
-  //      if(result.rows){
-  //       let modifiedArr = result.rows.map(function(item){
-  //         return item.doc
-  //       })
-  //     setItemdata(modifiedArr)
-  //     console.log(modifiedArr)
-  //     console.log("modifiedArr")
-  //      }
-  // }
-  // var today = new Date();
-  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  // console.log('time')
-  // console.log(time)
-  // console.log('time')
-
-
+    
     const navigation = useNavigation();
-
+    
+    const dispatch = useDispatch();
     const renderItem = ({ item }) => {
 
       return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          dispatch(openClassModal()) ; dispatch(setClassData(item))
+        }} >
+          
           <View style = {styles.item}>
             <Text style = {styles.title}>
               {item.Classname}
@@ -268,6 +217,7 @@ import { remoteDBSchedules } from '../../../Database/pouchDb';
           size = {50}
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
         />
+        <ClassModal/>
         </ImageBackground>
       );
     

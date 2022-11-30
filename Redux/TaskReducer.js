@@ -8,6 +8,7 @@
     //  taskID: 1,
     //  Dones:[],
      Images:[],
+     user:[],
     //  orderItems: [],
     //  SelectedItem:null,
     //  isOpen: false
@@ -18,6 +19,11 @@
        console.log(action)
        console.log('action')
      },
+     setUser: (state , action ) => {
+      state.user = action.payload
+      console.log(action)
+      console.log('action')
+    },
     //  setOrders: (state , action ) => {
     //   state.orderItems = action.payload
     //   console.log(action)
@@ -57,7 +63,7 @@
    setImages, 
   //  setSelectedItem , 
   //  setOrders
-    openModal,
+    setUser,
     // closeModal
   } = taskReducers.actions
  
