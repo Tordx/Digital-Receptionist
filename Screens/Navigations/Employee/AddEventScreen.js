@@ -50,6 +50,17 @@ export default function AddEventScreen() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewEvent =  () => {
+        
+      eventname === '' ? Alert.alert('Please Enter Event Name') : 
+      (eventtagline === '' ? Alert.alert('Please Enter Event Tagline') : 
+      eventwhen === '' ? Alert.alert('Please Enter Whene is the Event ') : 
+      eventwhere === '' ? Alert.alert('Please Enter Where is Event ') :
+      image === null ? Alert.alert('Please Add Image') : 
+      setNewEvent())
+  }
+
+
     const OpenGallary = async() => {
 
       // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
@@ -80,6 +91,7 @@ export default function AddEventScreen() {
 
      const setNewEvent = async () => {
 
+      navigation.navigate('AdminHomeScreen')
       console.log('Images')
       console.log(image)
       console.log('Images')
@@ -332,7 +344,7 @@ export default function AddEventScreen() {
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewEvent}
+                        onPress={AddNewEvent}
                         >
                             <Text
                             

@@ -58,10 +58,20 @@ export default function AddClassScreen() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewSchedule =  () => {
+        
+      classname === '' ? Alert.alert('Please Enter Class Name') : 
+      (subject === '' ? Alert.alert('Please Enter Subject') : 
+      time === '' ? Alert.alert('Please Enter Time') :
+      room === '' ? Alert.alert('Please Enter Class Room') :
+      setNewSchedule())
+  }
+
      const setNewSchedule = async () => {
 
+      navigation.navigate('AdminHomeScreen')
       const id = uuid.v4();
-
+      
         if(1+1 == 3){
           console.log('hey')
         }
@@ -150,7 +160,7 @@ export default function AddClassScreen() {
      backgroundColor: '#fddf54',
      borderRadius: 5,
      margin: 50}]}
-     onPress = {setNewSchedule}
+     onPress = {AddNewSchedule}
      title = 'Add Class'
      
      />

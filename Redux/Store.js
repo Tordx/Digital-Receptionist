@@ -4,6 +4,7 @@ import EventSlice from './EventSlice'
 import AdminSlice from './AdminSlice'
 import FacultySlice from './FacultySlice'
 import ClassSlice from './ClassSlice'
+import BuildingSlice from './BuildingSlice'
 
 
 export default configureStore({
@@ -18,7 +19,8 @@ export default configureStore({
     eventmodal: EventSlice,
     adminmodal: AdminSlice,
     facultymodal: FacultySlice,
-    classmodal: ClassSlice
+    classmodal: ClassSlice,
+    buildingmodal:BuildingSlice
   }
   
 })

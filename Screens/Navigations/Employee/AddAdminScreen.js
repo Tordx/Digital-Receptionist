@@ -48,6 +48,17 @@ export default function AddFacultyScreen() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewAdmin =  () => {
+        
+      adminname === '' ? Alert.alert('Please Enter Admin Name') : 
+      (adminbuilding === '' ? Alert.alert('Please Enter Admin Building') : 
+      adminpresident === '' ? Alert.alert('Please Enter Admin President') : 
+      adminvicepresident === '' ? Alert.alert('Please Enter Admin VicePresident') :
+      adminmembers === '' ? Alert.alert('Please Enter Admin Member') :
+      image === null ? Alert.alert('Please Add Image') : 
+      setNewAdmin())
+  }
+
     const OpenGallary = async() => {
 
       // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
@@ -73,6 +84,7 @@ export default function AddFacultyScreen() {
 
      const setNewAdmin = async () => {
 
+      navigation.navigate('AdminHomeScreen')
       console.log('Images')
       console.log(image)
       console.log('Images')
@@ -136,7 +148,6 @@ export default function AddFacultyScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncAdmin()
-             navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
            
@@ -145,7 +156,6 @@ export default function AddFacultyScreen() {
          }
          }
         }
-
 
   return (
     
@@ -317,7 +327,7 @@ export default function AddFacultyScreen() {
                             position: 'absolute',
                             bottom: 10,
                         }}
-                        onPress={setNewAdmin}
+                        onPress={AddNewAdmin}
                         >
                             <Text
                             

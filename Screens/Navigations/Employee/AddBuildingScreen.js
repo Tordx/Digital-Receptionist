@@ -8,54 +8,54 @@ import {
     TouchableOpacity,
     Alert,
     Image
+
 } from 'react-native';
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useMemo} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBFaculty , remoteDBSchedules , SyncFaculty} from '../../../Database/pouchDb'
+import {localDBBuilding , SyncBuilding} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { setImages } from '../../../Redux/TaskReducer';
-import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
+import { useDispatch } from 'react-redux';
+import { setImages } from '../../../Redux/TaskReducer';
 
-export default function AddFacultyScreen() {
+export default function AddBuildingScreen() {
 
   useEffect(() => {
-   
+    
   }, []);
 
-    const dispatch = useDispatch();
+  // useMemo(() => uploadImage(image), [image]);
+
+  
     const navigation = useNavigation('');
+    const dispatch = useDispatch()
 
-    const [facultyname, setFacultysName] = useState('');
-    const [facultybuilding, setFacultyBuilding] = useState('');
-    const [facultypresident, setFacultyPresident] = useState('');
-    const [facultyvicepresident, setFacultyVicePresident] = useState('');
-    const [facultymembers, setFacultyMembers] = useState('');
-    const [image, setImage] = useState(null)
-
+    const [buildingname, setBuildingName] = useState('');
+    const [buildinglocation, setBuildingLocation] = useState('');
+    // const [eventwhen, setEventWhen] = useState('');
+    // const [eventwhere, setEventWhere] = useState('');
+    const [image, setImage] = useState(null);
     const [transferred, setTransferred] = useState(0);
-    // const [facultycode, setFacultyCode] = useState('');
+    // const [eventcode, setEventCode] = useState('');
+    // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
-    const AddNewFaculty =  () => {
+    const AddNewBuilding =  () => {
         
-      facultyname === '' ? Alert.alert('Please Enter Faculty Name') : 
-      (facultybuilding === '' ? Alert.alert('Please Enter Faculty Building') : 
-      facultypresident === '' ? Alert.alert('Please Enter Faculty President') : 
-      facultyvicepresident === '' ? Alert.alert('Please Enter Faculty VicePresident') :
-      facultymembers === '' ? Alert.alert('Please Enter Faculty Member') :
-      image === null ? Alert.alert('Please Add Image') : 
-      setNewFaculty())
+      buildingname === '' ? Alert.alert('Please Enter Building Name') : 
+      (buildinglocation === '' ? Alert.alert('Please Enter Building Location') : 
+      image === null ? Alert.alert('Please  Add Image') : 
+      setNewBuilding())
   }
 
     const OpenGallary = async() => {
@@ -81,8 +81,14 @@ export default function AddFacultyScreen() {
   
   }
 
-     const setNewFaculty = async () => {
+  // const uploadImage = async (image) => {
+
       
+  //   };
+
+     const setNewBuilding = async () => {
+
+      navigation.navigate('AdminHomeScreen')
       console.log('Images')
       console.log(image)
       console.log('Images')
@@ -114,7 +120,7 @@ export default function AddFacultyScreen() {
       console.log(url)
       console.log('url')
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-
+      
       const id = uuid.v4();
 
         if(1+1 == 3){
@@ -124,14 +130,13 @@ export default function AddFacultyScreen() {
         //   console.log('ilove')}
        else{
          try {
-           var NewFaculty = {
-            _id: id,
-             Facultyname : facultyname,
-             FacultyBuilding : facultybuilding,
-             FacultyPresident: facultypresident,
-             FacultyVicePresident : facultyvicepresident,
-             FacultyMembers : facultymembers,
-             FacultyImage: url
+            var NewEvent = {
+                _id: id,
+                 BuildingName : buildingname,
+                 BuildingLocation : buildinglocation,
+                //  EventWhen: eventwhen,
+                //  EventWhere : eventwhere,
+                 BuildingPicture : url
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -141,12 +146,11 @@ export default function AddFacultyScreen() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBFaculty.put(NewFaculty)
+        localDBBuilding.put(NewEvent)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
-             SyncFaculty()
-             navigation.navigate('AdminHomeScreen')
+             SyncBuilding()
            })
            .catch(err=>console.log(err))
            
@@ -170,7 +174,7 @@ export default function AddFacultyScreen() {
         />
             <Text
             style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Faculty </Text>
+            Add Building </Text>
         </View>
         <View style = {styles.TextInput}>
               <View
@@ -184,9 +188,9 @@ export default function AddFacultyScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setFacultysName(value)}
-                   value={facultyname}
-                   label="Faculty Name"
+                    onChangeText={(value) => setBuildingName(value)}
+                   value={buildingname}
+                   label="Building Name"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -206,11 +210,35 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setFacultyBuilding(value)}
-                value={facultybuilding}
+                onChangeText={(value) => setBuildingLocation(value)}
+                value={buildinglocation}
                 mode ='Outlined'
                 multiline
-                label='Faculty Building'
+                label='Building Location'
+                theme={{    
+                    colors: {
+                      primary: '#225'
+                    }
+                  }}
+              
+                />
+                </View>
+                {/* <View style = {styles.TextInput}>
+                  <View
+                    style = {{
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    margin: 5,
+                  }}
+        
+                    >
+                </View>
+                <TextInput
+                onChangeText={(value) => setEventWhen(value)}
+                value={eventwhen}
+                mode ='Outlined'
+                multiline
+                label='The Event will be held on'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -230,11 +258,11 @@ export default function AddFacultyScreen() {
                     >
                 </View>
                 <TextInput
-                onChangeText={(value) => setFacultyPresident(value)}
-                value={facultypresident}
+                onChangeText={(value) => setEventWhere(value)}
+                value={eventwhere}
                 mode ='Outlined'
                 multiline
-                label='Faculty President'
+                label='The Event will be held at'
                 theme={{    
                     colors: {
                       primary: '#225'
@@ -242,32 +270,20 @@ export default function AddFacultyScreen() {
                   }}
               
                 />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyVicePresident(value)}
-                value={facultyvicepresident}
-                mode ='Outlined'
-                multiline
-                label='Faculty Vice President'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
+                </View> */}
+               <View style={{alignSelf: 'center' , marginBottom: 50}}>
+                <Image
+                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
+                
                 />
-                </View>
-                <View style = {styles.TextInput}>
+
+                
+               </View>
+           
+                
+                
+                
+                {/* <View style = {styles.TextInput}>
               <View
                     style = {{
                     alignContent: 'center',
@@ -279,9 +295,9 @@ export default function AddFacultyScreen() {
             
                 </View>
                 <TextInput
-                    onChangeText={(value) => setFacultyMembers(value)}
-                   value={facultymembers}
-                   label="Faculty Members"
+                    onChangeText={(value) => setAdminMembers(value)}
+                   value={adminmembers}
+                   label="Admin Members"
                     theme={{    
                         colors: {
                           primary: '#225'
@@ -289,51 +305,48 @@ export default function AddFacultyScreen() {
                       }}
 
                 />
-                </View>
-                <View style={{alignSelf: 'center' , marginBottom: 50}}>
-                <Image
-                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
-                
-                />
-               </View>
+                </View> */}
                
-             </ScrollView>
+             </ScrollView> 
+             
              <Pressable
                         style = {{
                             justifyContent: 'center',
                             alignSelf: 'center',
                             height: 50,
-                            width: 500,
-                            backgroundColor: 'green',
+                            width: 400,
+                            backgroundColor: '#225',
                             borderRadius: 20,
                             position: 'absolute',
                             bottom: 100,
+                            backgroundColor: 'green',
+                            margin: 80
                         }}
                         onPress={OpenGallary}
                         >
                             <Text
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD CLASS </Text>
+                            >  ADD IMAGE </Text>
               </Pressable>   
                 <Pressable
                         style = {{
                             justifyContent: 'center',
                             alignSelf: 'center',
                             height: 50,
-                            width: 500,
+                            width: 400,
                             backgroundColor: '#225',
                             borderRadius: 20,
                             position: 'absolute',
-                            bottom: 10,
+                            bottom: 100,
                         }}
-                        onPress={AddNewFaculty}
+                        onPress={AddNewBuilding}
                         >
                             <Text
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD CLASS </Text>
-              </Pressable>   
+                            >  ADD EVENT </Text>
+              </Pressable>  
     </View>
 
   )
@@ -343,7 +356,7 @@ const styles = StyleSheet.create({
     
     TextInput: {
 
-        margin: 20,
+        margin: 25,
         width: 400,
         height: 40  ,
         borderRadius: 10,

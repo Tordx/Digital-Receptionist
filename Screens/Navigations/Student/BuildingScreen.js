@@ -1,11 +1,13 @@
-import React from 'react';
+import React , {useEffect , useState} from 'react';
 import { 
     
     View, 
     FlatList, 
     StyleSheet, 
     Text,
-    ImageBackground,  
+    ImageBackground,
+    TouchableOpacity,
+    Image  
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,65 +15,51 @@ import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../ScreenComponents/SearchBar';
 import { useSelector } from 'react-redux';
+import { remoteDBBuilding } from '../../../Database/pouchDb';
+import { useDispatch } from 'react-redux';
+import { openBuildingModal , setBuildingData } from '../../../Redux/BuildingSlice';
+import BuildingModal from '../../../Modal/BuildingModal';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3d]a1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: '58694a0f-3da11-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-        id: '58694a0f2-3da11-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-32da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-13da11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3d6a11-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-      {
-        id: '58694a0f-3da131-471f3-bd96-145571e29d72',
-        title: 'Third Item',
-      },
-  ];
-  
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-  
 
   export default function BuildingScreen () {
 
+    const dispatch = useDispatch()
     const user = useSelector(state => state.essensials.user)
     const navigation = useNavigation();
+
+    // const dispatch = useDispatch()
+    const [buidlingdata , setBuildingDatas] = useState('')
+  // const {isOpen} = useSelector((store) => store.modal)
+
+    useEffect(() => {
+
+      getEventData()
+
+    }, []);
+
+
+    const getEventData = async() => {
+
+    var result = await remoteDBBuilding.allDocs({
+      include_docs: true,
+      attachments: true
+    });
+    if(result.rows){
+        let modifiedArr = result.rows.map(function(item){
+        return item.doc
+    });
+    let filteredData = modifiedArr.filter(item => {
+        return item;
+      });
+      if(filteredData) {
+          let newFilterData = filteredData.map(item => {
+              return item
+          })
+          setBuildingDatas(newFilterData)
+           
+      }
+  }  
+};
 
     const back = () => {
       if(user == 'STUDENT'){
@@ -81,10 +69,30 @@ const DATA = [
       }
     }
 
+    const renderItem = ({ item }) => {
+      // console.log(item.EventImage)
+      // console.log('item.EventImage')
+    return(
+      <TouchableOpacity onPress={() => {
+        dispatch(openBuildingModal()) ; dispatch(setBuildingData(item))
+      }} >
+      <View style = {styles.item}>
+        <Text style = {styles.title}>
+          {item.BuildingName}
+        </Text>
+        <Image
+            resizeMode="cover" style={{width: 550, height: 300}} source={{uri:item.BuildingPicture}}
+            
+            />
+      </View>
+    </TouchableOpacity>
+    )
+  }
 
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-      );
+
+    // const renderItem = ({ item }) => (
+    //     <Item title={item.title} />
+    //   );
 
       return (
         <ImageBackground style={styles.container}
@@ -110,12 +118,13 @@ const DATA = [
                 <FlatList
                     showsVerticalScrollIndicator = {false}
                     numColumns = '2'
-                    data={DATA}
+                    data={buidlingdata}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
             </View>
             </SafeAreaView>
+            <BuildingModal/>
         </ImageBackground>
       );
     

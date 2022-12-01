@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View , Image } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { closeClassModal } from "../Redux/ClassSlice";
+import { closeBuildingModal } from "../Redux/BuildingSlice";
 
 
-export default function ClassModal() {
+export default function BuildingModal() {
 
     const dispatch = useDispatch();
-    const {isOpen} = useSelector((store) => store.classmodal)
-    const {classData} = useSelector((store) => store.classmodal)
+    const {isOpen} = useSelector((store) => store.buildingmodal)
+    const {buildingData} = useSelector((store) => store.buildingmodal)
     
     // const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,18 +21,18 @@ export default function ClassModal() {
             transparent={true}
             visible={isOpen}
             onRequestClose={() => {
-                dispatch(closeClassModal())
+                dispatch(closeBuildingModal())
             }}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>{'Classname:  ' + classData.Classname}</Text>
-                <Text style={styles.modalText}>{'Subject:  ' + classData.Subject}</Text>
-                <Text style={styles.modalText}>{'StartTime:  ' + classData.StartTime}</Text>
-                <Text style={styles.modalText}>{'Room:  ' + classData.Room}</Text>
-                {/* <Image
-                    resizeMode="contain" style={{width: 600, height: 500}} source={{uri:adminData.EventImage}}
-                /> */}
+                <Text style={styles.modalText}>{'BuildingName:  ' + buildingData.BuildingName}</Text>
+                <Text style={styles.modalText}>{'BuildingLocation:  ' + buildingData.BuildingLocation}</Text>
+                {/* <Text style={styles.modalText}>{'AdminPresident:  ' + buildingData.AdminPresident}</Text>
+                <Text style={styles.modalText}>{'AdminVicePresident:  ' + buildingData.AdminVicePresident}</Text> */}
+                <Image
+                    resizeMode="contain" style={{width: 600, height: 500}} source={{uri:buildingData.BuildingPicture}}
+                />
                 {/* <Pressable
                   style={[styles.button, styles.buttonClose]}
                 //   onPress={() => setModalVisible(!modalVisible)}
@@ -44,7 +44,7 @@ export default function ClassModal() {
           </Modal>
           {/* <Pressable
             style={[styles.button, styles.buttonOpen]}
-            onPress={console.log('dsd')}
+            // onPress={() => setModalVisible(true)}
           >
             <Text style={styles.textStyle}>Show Modal</Text>
           </Pressable> */}

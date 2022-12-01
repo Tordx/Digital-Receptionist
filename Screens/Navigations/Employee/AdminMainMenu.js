@@ -53,7 +53,7 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-building-settings-96.png')}
-      onPress = {() => navigation.navigate('Admin')}
+      onPress = {() => navigation.navigate('AddBuildingScreen')}
       title = 'Buildings'
       style = {styles.Box}
       titleStyle = {styles.title}
