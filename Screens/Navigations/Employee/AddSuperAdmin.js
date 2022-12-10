@@ -40,8 +40,16 @@ export default function AddSuperAdmin() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewSuperAdmin =  () => {
+        
+      adminid === '' ? Alert.alert('Please Enter SuperAdmin ID') : 
+      (passcode === '' ? Alert.alert('Please Enter Passcode') : 
+      setNewSuperAdmin())
+  }
+
      const setNewSuperAdmin = async () => {
       
+      navigation.navigate('AdminHomeScreen')
       const id = uuid.v4();
 
         if(1+1 == 3){
@@ -229,7 +237,7 @@ export default function AddSuperAdmin() {
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewSuperAdmin}
+                        onPress={AddNewSuperAdmin}
                         >
                             <Text
                             

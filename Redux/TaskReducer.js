@@ -5,11 +5,13 @@
    name: 'items',
    initialState: {
     studentinfo: [],
-     taskID: 1,
-     Dones:[],
+    //  taskID: 1,
+    //  Dones:[],
      Images:[],
-     orderItems: [],
-     SelectedItem:null
+     user:[],
+    //  orderItems: [],
+    //  SelectedItem:null,
+    //  isOpen: false
    },
    reducers: {
      setStudentInfo: (state , action ) => {
@@ -17,6 +19,11 @@
        console.log(action)
        console.log('action')
      },
+     setUser: (state , action ) => {
+      state.user = action.payload
+      console.log(action)
+      console.log('action')
+    },
     //  setOrders: (state , action ) => {
     //   state.orderItems = action.payload
     //   console.log(action)
@@ -28,16 +35,22 @@
     //  setDones: (state , action)  => {
     //    state.Dones = action.payload
     //  },
-    //   setImages: (state , action)  => {
-    //   state.Images = action.payload
-    //   console.log(action)
-    //   console.log('action')
-    //   },
+      setImages: (state , action)  => {
+      state.Images = action.payload
+      console.log(action)
+      console.log('action')
+      },
     //   setSelectedItem: (state , action)  => {
     //     state.SelectedItem = action.payload
     //     console.log(action)
     //     console.log('action')
     //     },
+      // openModal: (state , action) => {
+      //   state.isOpen = true;
+      // },
+      // closeModal: (state , action) => {
+      //   state.isOpen = false;
+      // },
  
    }
  })
@@ -47,9 +60,11 @@
    setStudentInfo ,
   //  setTaskId , 
   //  setDones, 
-  //  setImages, 
+   setImages, 
   //  setSelectedItem , 
   //  setOrders
+    setUser,
+    // closeModal
   } = taskReducers.actions
  
  export default taskReducers.reducer

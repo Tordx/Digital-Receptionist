@@ -40,8 +40,16 @@ export default function AddStudentScreen() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewStudent =  () => {
+        
+      studentidnumber === '' ? Alert.alert('Please Enter Student Name') : 
+      (studentbirthday === '' ? Alert.alert('Please Enter Student Birthday') : 
+      setNewStudent())
+  }
+
      const setNewStudent = async () => {
       
+      navigation.navigate('AdminHomeScreen')
       const id = uuid.v4();
 
         if(1+1 == 3){
@@ -72,7 +80,7 @@ export default function AddStudentScreen() {
              Alert.alert('Your Schedule has been successfully added!')
              console.log(response)
              SyncStudentLogin()
-             navigation.navigate('AdminHomeScreen')
+            
            })
            .catch(err=>console.log(err))
            
@@ -229,7 +237,7 @@ export default function AddStudentScreen() {
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewStudent}
+                        onPress={AddNewStudent}
                         >
                             <Text
                             

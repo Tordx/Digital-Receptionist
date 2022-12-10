@@ -1,12 +1,20 @@
-import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity , Image } from 'react-native'
 import React , {useState , useEffect} from 'react';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { remoteDBEvent } from '../../../Database/pouchDb';
+import EventModal from '../../../Modal/EventModal';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { openEventModal } from '../../../Redux/EventSlice';
+import { setEventData } from '../../../Redux/EventSlice';
 
 export default function EventScreen() {
 
-  const [EventData , setEventData] = useState('')
+  const user = useSelector(state => state.essensials.user)
+  const dispatch = useDispatch()
+  const [EventData , setEventDatas] = useState('')
+  // const {isOpen} = useSelector((store) => store.modal)
 
     useEffect(() => {
 
@@ -33,20 +41,35 @@ export default function EventScreen() {
           let newFilterData = filteredData.map(item => {
               return item
           })
-          setEventData(newFilterData)
+          setEventDatas(newFilterData)
+           
       }
   }  
-
 };
+      const back = () => {
+        if(user == 'STUDENT'){
+          navigation.navigate('Student_HomeScreen')
+        }else{
+          navigation.navigate('GuestHomeScreen')
+        }
+      }
+
 
       const renderItem = ({ item }) => {
-
+          // console.log(item.EventImage)
+          // console.log('item.EventImage')
         return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          dispatch(openEventModal()) ; dispatch(setEventData(item))
+        }} >
           <View style = {styles.item}>
             <Text style = {styles.title}>
               {item.EventName}
             </Text>
+            <Image
+                resizeMode="cover" style={{width: 550, height: 700}} source={{uri:item.EventImage}}
+                
+                />
           </View>
         </TouchableOpacity>
         )
@@ -54,7 +77,7 @@ export default function EventScreen() {
 
     return (
       <SafeAreaView style={styles.container}>
-          
+        
         <FlatList
           horizontal
           data={EventData}
@@ -64,12 +87,13 @@ export default function EventScreen() {
 
         <CloseButton
           
-          onPress = {() => navigation.navigate('Student_HomeScreen')}
+          onPress = {back}
           name = 'arrow-back'
           size = {50}
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 
         />
+        <EventModal/>
       </SafeAreaView>
     );
   

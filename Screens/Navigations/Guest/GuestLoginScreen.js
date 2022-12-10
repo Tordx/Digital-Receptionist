@@ -8,95 +8,135 @@ import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 import { localDBGuest , SyncGuest , remoteDBLogBook } from '../../../Database/pouchDb';
 import {location} from '../../../Assets/constants/Locations'
-
+import { useSelector } from 'react-redux';
+import { launchCamera } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 export default function GuestLoginScreen() {
 
-  const CameraOpened = () => {
-    setUpload(!upload)
-    navigation.navigate('Camera')
-
-
-  }
-
-
+  
     const dispatch = useDispatch();
     const navigation = useNavigation();
-
-    const [fullname, setFullname] = useState();
-    const [address, setAddress] = useState();
-    const [value, setvalue] = useState('Select');
-        
-    const [upload, setUpload] = useState(false);
+    const [transferred, setTransferred] = useState(0);
+    const [image, setImage] = useState('');
+    // const [address, setAddress] = useState();
+    // const [value, setvalue] = useState('Select');
+    // const [upload, setUpload] = useState(false);
 
     // const [compare , setCompare] = useState('')
     
   const [guestfullname, setGuestFullName] = useState('');
   const [guestaddress, setGuestAddress] = useState('');
   const [purpose, setPurpose] = useState('');
-  
 
-  const setNewGuest = async () => {
-   
-    const id = uuid.v4();
 
-      if(1 + 1 == 3 ){
-      console.log('hey')
-      }
-      // if((classname.length == 0) && (subject.length == 0) ) {
-      //   console.log('ilove')}
-     else{
-       try {
-         var NewGuest = {
-          _id: id,
-           GuestFullName : guestfullname,
-           GuestAddress : guestaddress,
-           Purpose : purpose
-          //  FacultyPresident: facultypresident,
-          //  FacultyVicePresident : facultyvicepresident,
-          //  FacultyMembers : facultymembers,
-          //  place: place,
-          //  Price : price,
-          //  Preptime : preptime,
-          //  Deliveryfee : deliveryfee,
-          //  Status: status,
-          //  Image: Images
-         }
-      //    console.log(Images)
-      //    console.log('Images')
-         remoteDBLogBook.put(NewGuest)
-         .then((response) =>{
-           console.log(response)
-         })
-         .catch(err=>console.log(err))
+  // const setNewGuest = async () => {
+  //       navigation.navigate('GuestHomeScreen')
+  //       const id = uuid.v4();
+  //       const  uri  =  image;
+  //       const filename = uri.substring(uri.lastIndexOf('/') + 1);
+  //       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+  //       setTransferred(0);
+  //       const task = storage()
+  //         .ref(filename)
+  //         .putFile(uploadUri);
+  //       // set progress state
+  //       task.on('state_changed', snapshot => {
+  //         setTransferred(
+  //           Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+  //         );
+  //       });
+  //       try {
+  //         await  task;
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+  //       const firebasedata = await storage().ref(filename).getDownloadURL();
+  //       // dispatch(setImages(url));
+  //       setImage(firebasedata)
 
-        localDBGuest.put(NewGuest)
-         .then((response) =>{
-           Alert.alert('Your Schedule has been successfully added!')
-           console.log(response)
-           SyncGuest()
-           navigation.navigate('GuestHomeScreen')
-         })
-         .catch(err=>console.log(err))
+
+  //     if(1 + 1 == 3 ){
+  //     console.log('hey')
+  //     }
+  //    else{
+  //      try {
+  //        var NewGuest = {
+  //         _id: id,
+  //          GuestFullName : guestfullname,
+  //          GuestAddress : guestaddress,
+  //          Purpose : purpose,
+  //          GuestImage : firebasedata
+  //         //  FacultyPresident: facultypresident,
+  //         //  FacultyVicePresident : facultyvicepresident,
+  //         //  FacultyMembers : facultymembers,
+  //         //  place: place,
+  //         //  Price : price,
+  //         //  Preptime : preptime,
+  //         //  Deliveryfee : deliveryfee,
+  //         //  Status: status,
+  //         //  Image: Images
+  //        }
+  //     //    console.log(Images)
+  //     //    console.log('Images')
+  //        remoteDBLogBook.put(NewGuest)
+  //        .then((response) =>{
+  //          console.log(response)
+  //        })
+  //        .catch(err=>console.log(err))
+
+  //       localDBGuest.put(NewGuest)
+  //        .then((response) =>{
+  //          console.log(response)
+  //         //  navigation.navigate('GuestHomeScreen')
+  //          SyncGuest()
+  //        })
+  //        .catch(err=>console.log(err))
          
-       } catch (error) {
-        console.log(error)
-       }
-       }
-      }
+  //      } catch (error) {
+  //       console.log(error)
+  //      }
+  //      }
+  //     }
 
       //user location selector
+      const OpenCameras = async() => {
 
-
+        // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
+        
+    
+        launchCamera({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
+          
+          console.log(response)
+    
+          navigation.navigate('GuestLoginScreen')
+    
+        }).then(image => {
+          console.log('yyyyyyyyyyyyy')
+          console.log(image.assets[0].uri)
+          console.log(image.assets[0].fileName)
+          console.log('xxxxxxxxxxxx')
+          setImage(image.assets[0].uri); 
+        //   console.log('Images')
+        // console.log(image)
+        // console.log('Images')
+      
+    
+          // dispatch(setImages(image.assets[0].uri))
+          // uploadImage()
+        });
+        
+    }
 
       // login Button
-      const login =  () => {
+    //   const login =  () => {
         
-        guestfullname === '' ? Alert.alert('Please Enter your Full name') : 
-        (guestaddress === '' ? Alert.alert('Please Enter Address') : 
-        purpose === 'Select' ? Alert.alert('Please select option') : 
-        setNewGuest())
-    }
+    //     guestfullname === '' ? Alert.alert('Please Enter your Full name') : 
+    //     (guestaddress === '' ? Alert.alert('Please Enter Address') : 
+    //     purpose === '' ? Alert.alert('Please select Purpose') : 
+    //     image === '' ? Alert.alert('Please Add Image') : 
+    //     setNewGuest())
+    // }
 
   return (
     <ImageBackground
@@ -215,18 +255,28 @@ export default function GuestLoginScreen() {
         <View style = {{flexDirection: 'row', width: '25%', alignItems: 'flex-start', marginTop: 20, justifyContent: 'center'}} >
         <OpenCamera
         
-        onPress ={CameraOpened}
+        onPress ={OpenCameras}
         // disables the button when photo has been taken, cancellation of camera should be remove
-        disabled = {upload? true : false }
-        name = {upload?  'done' :'photo-camera' }
-        color = {upload? '#0f0' :'#fff' }
-        
+        // disabled = {upload? true : false }
+        name = {image ? 'done': 'photo-camera' }
+        color = {'#fff'}
+        backgroundColor = {image ? '#2ade2a' : 'blue'}
 
         />
+        {/* <OpenCamera
+        
+        onPress ={uploadImage}
+        // disables the button when photo has been taken, cancellation of camera should be remove
+        // disabled = {upload? true : false }
+        name = {'done' }
+        color = {'#fff' }
+        backgroundColor = {'green'}
+
+        /> */}
         <ProceedButton
-        onPress={login}
+        onPress={() => {navigation.navigate('GuestHomeScreen')}}
         // onPress = {LoginData}
-        style={[{backgroundColor: '#fddf54', width: '100%', borderRadius: 5, marginLeft: 5}]}
+        style={[{backgroundColor: '#fddf54', borderRadius: 5, width :300}]}
         title = 'Log In'
 
         />

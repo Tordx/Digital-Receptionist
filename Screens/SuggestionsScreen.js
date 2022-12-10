@@ -10,10 +10,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { localDBSuggestionFeedback , SyncSuggestionFeedback } from '../Database/pouchDb';
 import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
+import { useSelector } from 'react-redux';
 
 export default function SuggestionsScreen() {
 
+  const user = useSelector(state => state.essensials.user)
   const navigation = useNavigation('');
+
   const [checked, setChecked] = useState('Suggestion');
   const [text, setText] = useState("");
   const [value, setvalue] = useState('');
@@ -62,18 +65,13 @@ export default function SuggestionsScreen() {
      }
     }
 
-
-
-
-  // const MessageInput = (props) => {
-  //   return (
-  //     <TextInput
-  //       {...props}
-  //       editable
-  //       maxLength={1100}
-  //     />
-  //   );
-  // }
+    const back = () => {
+      if(user == 'STUDENT'){
+        navigation.navigate('Student_HomeScreen')
+      }else{
+        navigation.navigate('GuestHomeScreen')
+      }
+    }
 
   return (
     <ImageBackground  style = {styles.Container} 
@@ -82,7 +80,7 @@ export default function SuggestionsScreen() {
       <CloseButton
       
         name = "arrow-back"
-        onPress = {() => navigation.navigate('Student_HomeScreen')}
+        onPress = {back}
         size = {50}
         style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 

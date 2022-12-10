@@ -7,9 +7,10 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
+    Image
 
 } from 'react-native';
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useMemo} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -19,20 +20,29 @@ import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import { useDispatch } from 'react-redux';
+import { setImages } from '../../../Redux/TaskReducer';
 
 export default function AddEventScreen() {
 
   useEffect(() => {
-   
+    
   }, []);
+
+  // useMemo(() => uploadImage(image), [image]);
 
   
     const navigation = useNavigation('');
+    const dispatch = useDispatch()
 
     const [eventname, setEventName] = useState('');
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
+    const [image, setImage] = useState(null);
+    const [transferred, setTransferred] = useState(0);
     // const [eventcode, setEventCode] = useState('');
     // const [eventposter, setEventPoster] = useState('');
     // const [preptime, setPreptime] = useState('');
@@ -40,7 +50,79 @@ export default function AddEventScreen() {
     // const [place, setPlace] = useState('');
     // const [status , setStatus] = useState('')
 
+    const AddNewEvent =  () => {
+        
+      eventname === '' ? Alert.alert('Please Enter Event Name') : 
+      (eventtagline === '' ? Alert.alert('Please Enter Event Tagline') : 
+      eventwhen === '' ? Alert.alert('Please Enter Whene is the Event ') : 
+      eventwhere === '' ? Alert.alert('Please Enter Where is Event ') :
+      image === null ? Alert.alert('Please Add Image') : 
+      setNewEvent())
+  }
+
+
+    const OpenGallary = async() => {
+
+      // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
+      
+  
+      launchImageLibrary({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
+        
+        console.log(response)
+  
+        // navigation.navigate('GuestLoginScreen')
+  
+      }).then(image => {
+        console.log('yyyyyyyyyyyyy')
+        console.log(image.assets[0].uri)
+        console.log('xxxxxxxxxxxx')
+        setImage(image.assets[0].uri)
+        // setImage(image.assets[0].uri); 
+        dispatch(setImages(image.assets[0].uri))
+        // uploadImage()
+      });
+  
+  }
+
+  // const uploadImage = async (image) => {
+
+      
+  //   };
+
      const setNewEvent = async () => {
+
+      navigation.navigate('AdminHomeScreen')
+      console.log('Images')
+      console.log(image)
+      console.log('Images')
+      const  uri  = image;
+      const filename = uri.substring(uri.lastIndexOf('/') + 1);
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+      setTransferred(0);
+      const task = storage()
+        .ref(filename)
+        .putFile(uploadUri);
+      // set progress state
+      task.on('state_changed', snapshot => {
+        setTransferred(
+          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+        );
+      });
+      try {
+        await task;
+      } catch (e) {
+        console.error(e);
+      }
+      Alert.alert(
+        'Successfully added Photo!'
+      );  
+      setImage(null);
+      const url = await storage().ref(filename).getDownloadURL();
+      // dispatch(setImages(url));
+      setImage(url)
+      console.log(url)
+      console.log('url')
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       
       const id = uuid.v4();
 
@@ -57,6 +139,7 @@ export default function AddEventScreen() {
                  EventTagline : eventtagline,
                  EventWhen: eventwhen,
                  EventWhere : eventwhere,
+                 EventImage : url
             //  place: place,
             //  Price : price,
             //  Preptime : preptime,
@@ -192,6 +275,18 @@ export default function AddEventScreen() {
               
                 />
                 </View>
+               <View style={{alignSelf: 'center' , marginBottom: 50}}>
+                <Image
+                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
+                
+                />
+
+                
+               </View>
+           
+                
+                
+                
                 {/* <View style = {styles.TextInput}>
               <View
                     style = {{
@@ -216,25 +311,46 @@ export default function AddEventScreen() {
                 />
                 </View> */}
                
-             </ScrollView>  
+             </ScrollView> 
+             
+             <Pressable
+                        style = {{
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            height: 50,
+                            width: 400,
+                            backgroundColor: '#225',
+                            borderRadius: 20,
+                            position: 'absolute',
+                            bottom: 100,
+                            backgroundColor: 'green',
+                            margin: 80
+                        }}
+                        onPress={OpenGallary}
+                        >
+                            <Text
+                            
+                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
+                            >  ADD IMAGE </Text>
+              </Pressable>   
                 <Pressable
                         style = {{
                             justifyContent: 'center',
                             alignSelf: 'center',
                             height: 50,
-                            width: 500,
+                            width: 400,
                             backgroundColor: '#225',
                             borderRadius: 20,
                             position: 'absolute',
                             bottom: 100,
                         }}
-                        onPress={setNewEvent}
+                        onPress={AddNewEvent}
                         >
                             <Text
                             
                             style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD ADMIN </Text>
-              </Pressable>   
+                            >  ADD EVENT </Text>
+              </Pressable>  
     </View>
 
   )
