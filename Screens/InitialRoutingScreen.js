@@ -35,7 +35,7 @@ export default function InitialRoutingScreen() {
    >
         <Text style = {{bottom: 50, position: 'absolute', margin:20}}>DKHDR {Version}</Text>
         <ReportButton/>
-        <View style = {{flexDirection: 'row'}}>
+        <View style = {{flexDirection: 'row', width: '80%', height: '80%', justifyContent: 'center', alignItem: 'center'}}>
             <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}
                 onPress = {() => navigation.navigate('StudentLoginScreen')}
                 android_ripple = {{
@@ -97,12 +97,13 @@ const styles = StyleSheet.create({
 
     Box: {
 
-        width: 350,
-        height: 450,
-        borderRadius: 30,
+        width: '35%',
+        height: '65%',
+        borderRadius: 10,
         margin: 20,
         flexDirection: 'column',
         justifyContent: 'center',
+        alignSelf: 'center',
         alignItems: 'center',
         backgroundColor: '#fddf54',
         shadowColor: "#000",
