@@ -18,7 +18,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import psu_logo from '../../../Assets/Img/psu_logo.png'
 import {StudentMainMenu} from './StudentMainMenu';
 
-export default function Student_HomeScreen() {
+export default function StudentHomeScreen() {
 
   const navigation = useNavigation();
 
@@ -56,19 +56,8 @@ export default function Student_HomeScreen() {
     }, [])
 
     
-    // let n = t
-    // let t =  n
-    // if (seconds > 0) {
-
-    //   t = n + 1
-
-    // } if (t == 60) {
-
-    //   t = 0
-
-    // } console.log(t)
-
-   const confirmLogout = () => { //Logout Navigation to IntialRoutingScreen
+ //Logout Navigation to IntialRoutingScreen
+   const confirmLogout = () => {
 
     Alert.alert(
         'Confirm logout',
@@ -79,7 +68,7 @@ export default function Student_HomeScreen() {
             onPress: () => console.log('Cancel Pressed'),
             style: "cancel"
           },
-          { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen')}
+          { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen') }
         ]
       );
 

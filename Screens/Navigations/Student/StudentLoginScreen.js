@@ -84,7 +84,7 @@ export default function StudentLoginScreen() {
     <ImageBackground
     resizeMode='cover'
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-        source = {require('../../../Assets/Img/Background_image2.png')}
+        source = {require('../../../Assets/Img/Background_image.png')}
     >
         <CloseButton
         name = 'close'
@@ -95,7 +95,7 @@ export default function StudentLoginScreen() {
 
         />
         <View style = {styles.container}>
-            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >LOGIN</Text>
+            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >STUDENT LOGIN</Text>
             <Text style = {{bottom: 30}}> If you don't know your student ID, please use the guest login </Text>
          <View style = {{marginTop: 10}}>
         <Text style = {{fontSize: 20}}>Student ID</Text>
@@ -122,8 +122,8 @@ export default function StudentLoginScreen() {
         </View>
         </View>
         <ProceedButton
-        onPress = {() => navigation.navigate('Student_HomeScreen')}
-        style={[{backgroundColor: '#fddf54', margin: 20}]}
+        onPress = {() => navigation.navigate('StudentHomeScreen')}
+        style={[{backgroundColor: '#fddf54', margin: 30, width: 400, borderRadius: 5}]}
         title = 'Log In'
 
         />
@@ -136,9 +136,9 @@ const styles = StyleSheet.create({
 
     container: {
         
-        width: 1000, 
-        height: 700, 
-        backgroundColor: '#00000009', 
+        width: '80%', 
+        height: '80%', 
+        backgroundColor: '#00000019', 
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 20,

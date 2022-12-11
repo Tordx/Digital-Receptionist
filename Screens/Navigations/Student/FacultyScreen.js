@@ -58,7 +58,7 @@ import { useSelector } from 'react-redux';
 };
       const back = () => {
         if(user == 'STUDENT'){
-          navigation.navigate('Student_HomeScreen')
+          navigation.navigate('StudentHomeScreen')
         }else{
           navigation.navigate('GuestHomeScreen')
         }
@@ -94,12 +94,7 @@ import { useSelector } from 'react-redux';
                     placeholder = 'Search Faculty'
                     style={{top: 75}}
                 />
-                <CloseButton
-                    onPress = {back}
-                    name = 'arrow-back'
-                    size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-/>
+                
             <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
                 <FlatList
                     showsVerticalScrollIndicator = {false}
@@ -117,6 +112,12 @@ import { useSelector } from 'react-redux';
                     style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
               /> */}
             </SafeAreaView>
+            <CloseButton
+                    onPress = {back}
+                    name = 'arrow-back'
+                    size = {50}
+                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+            />
             <FacultyModal/>
         </ImageBackground>
       );
