@@ -21,6 +21,7 @@ import {ReportButton} from '../ScreenComponents/Buttons';
 import BackgroundTimer from 'react-native-background-timer';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Redux/TaskReducer';
+import { FlipLogo } from '../ScreenComponents/FlipLogo';
 
 export default function InitialRoutingScreen() {
 
@@ -47,13 +48,13 @@ export default function InitialRoutingScreen() {
    >
         <Text style = {{bottom: 50, position: 'absolute', margin:20}}>DKHDR {Version}</Text>
         <ReportButton/>
-        <View style = {{flexDirection: 'row', width: '80%', height: '80%', justifyContent: 'center', alignItem: 'center'}}>
+        <View style = {{flexDirection: 'row', width: '80%', height: '90%', justifyContent: 'center', alignItem: 'center'}}>
             <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}
                 onPress = {() => student()}
                 android_ripple = {{
       
-                    color: '#fddf54',
-                    radius: 275,
+                    color: '#fff',
+                    radius: 300,
       
                 }}
             >
@@ -65,20 +66,20 @@ export default function InitialRoutingScreen() {
           <Text style = {[styles.text, {color: '#fddf54'}]}>STUDENT</Text>
 
             </Pressable>
-            <Pressable style = {{justifyContent: 'center', marginHorizontal: 20, }}
+            <Pressable 
+                style = {{justifyContent: 'center', marginHorizontal: 20, }}
                 onLongPress = {() => navigation.navigate('AdminLoginScreen')}
+                delayLongPress = {3000}
             >
-                <Image
-                    source={require("../Assets/Img/psu_logo.png")}
-                    style = {{width: 200, height: 200}}
-          />
+                <FlipLogo/>
             </Pressable>
-            <Pressable style = {styles.Box}
+            <Pressable 
+                style = {styles.Box}
                 onPress = {() => guest()}
                 android_ripple = {{
       
-                    color: '#0f2ed6',
-                    radius: 275,
+                    color: '#fff',
+                    radius: 300,
       
                 }}
             >
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
 
         width: '35%',
         height: '65%',
-        borderRadius: 10,
+        borderRadius: 15,
         margin: 20,
         flexDirection: 'column',
         justifyContent: 'center',

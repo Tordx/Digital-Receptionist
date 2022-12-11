@@ -146,16 +146,15 @@ export const Box = (props) => {
 
     return (
  
-    <Pressable style = {styles.camera} 
+    <Pressable style = {[styles.camera, props.style]} 
     onPress = {props.onPress}
     disabled ={props.disabled}
-    backgroundColor = {props.backgroundColor}
     >
     
         <Icon
         
             name = {props.name}
-            size = {40}
+            size = {35}
             color = {props.color}
 
         />
@@ -178,10 +177,10 @@ const styles = StyleSheet.create({
 
         width: 100, 
         height: 50, 
-        // backgroundColor: '#0f2ed6', 
+        backgroundColor: '#0f2ed6', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        marginRight: 3, 
+        marginRight: 5, 
         borderRadius: 8,
         shadowColor: "#000",
         shadowOffset: {
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
     },
 
     box: {
-    
+        
         height: 180,
         width: 180,  
         borderRadius: 30,
