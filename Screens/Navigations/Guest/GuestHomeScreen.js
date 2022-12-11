@@ -1,14 +1,35 @@
-import { View, Image, Text,ImageBackground } from 'react-native'
-import React , { useState} from 'react'
+import { View, Image, Text,ImageBackground, Alert } from 'react-native'
+import React , { useState } from 'react'
 import { GuestMainMenu } from './GuestMainMenu'
 import { CloseButton, ReportButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 
+ //Logout Navigation to IntialRoutingScreen
+
+      
 
 export default function GuestHomeScreen() {
 
   
-  const navigation = useNavigation()
+  
+  const navigation = useNavigation();
+  
+  const confirmLogout = () => {
+
+    Alert.alert(
+        'Confirm logout',
+        'Are you sure?',
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log('Cancel Pressed'),
+            style: "cancel"
+          },
+          { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen') }
+        ]
+      );
+  
+   }
 
   return (
     <ImageBackground
@@ -34,7 +55,7 @@ export default function GuestHomeScreen() {
       <GuestMainMenu/>
             </View>
             <CloseButton
-          onPress  = {() => navigation.navigate('GuestLoginScreen')}
+          onPress  = {confirmLogout}
         title =  'logout'
         name = 'logout'
         size = {30}

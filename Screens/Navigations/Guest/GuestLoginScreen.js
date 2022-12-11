@@ -11,6 +11,8 @@ import {location} from '../../../Assets/constants/Locations'
 import { useSelector } from 'react-redux';
 import { launchCamera } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function GuestLoginScreen() {
 
@@ -27,10 +29,30 @@ export default function GuestLoginScreen() {
     
   const [guestfullname, setGuestFullName] = useState('');
   const [guestaddress, setGuestAddress] = useState('');
-  const [purpose, setPurpose] = useState('');
+  const [purpose, setPurpose] = useState('Select');
 
 
-  // const setNewGuest = async () => {
+  const setNewGuest = async () => {
+
+        if (guestfullname.length === 0){
+
+          Alert.alert('Please input your name');
+          console.log('this');
+
+          } if (purpose === 'Select')  {
+          
+              Alert.alert("What's your purpose of the use?");
+
+            } if (image.length === 0) {
+              Alert.alert("Please upload a selfie")
+              
+                }else {
+
+                  navigation.navigate('GuestHomeScreen');
+                  console.log('this');
+              }
+
+
   //       navigation.navigate('GuestHomeScreen')
   //       const id = uuid.v4();
   //       const  uri  =  image;
@@ -97,7 +119,7 @@ export default function GuestLoginScreen() {
   //       console.log(error)
   //      }
   //      }
-  //     }
+      }
 
       //user location selector
       const OpenCameras = async() => {
@@ -112,10 +134,10 @@ export default function GuestLoginScreen() {
           navigation.navigate('GuestLoginScreen')
     
         }).then(image => {
-          console.log('yyyyyyyyyyyyy')
+          console.log('First Process')
           console.log(image.assets[0].uri)
           console.log(image.assets[0].fileName)
-          console.log('xxxxxxxxxxxx')
+          console.log('Sucess upload')
           setImage(image.assets[0].uri); 
         //   console.log('Images')
         // console.log(image)
@@ -153,17 +175,17 @@ export default function GuestLoginScreen() {
 
         />
         <View style = {styles.container}>
-            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold', color: '#000'}} >GUEST LOGIN</Text>
-            <Text style = {{fontSize: 15,bottom: 30,color: '#000' }}>Before we proceed, I need few information about you</Text>
+            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold'}} >GUEST LOGIN</Text>
+            <Text style = {{fontSize: 15,bottom: 30}}>Before we proceed, I need few information about you</Text>
          <View style = {{marginTop: 10,}}>
-        <Text style = {{fontSize: 20, color: '#000' }}>Fullname</Text>
+        <Text style = {{fontSize: 20}}>Fullname</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
                  onChangeText={(value) => setGuestFullName(value)}
                  value={guestfullname}
                 placeholder='e.g. Juan Cruz'
-                style = {{fontSize: 16, color: 'black', marginLeft: 10}}
+                style = {{fontSize: 16, marginLeft: 10}}
             />
         </View>
         </View>
@@ -180,7 +202,7 @@ export default function GuestLoginScreen() {
         </View>
         </View> */}
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20, color: '#000' }}>Address</Text>
+        <Text style = {{fontSize: 20}}>Address</Text>
         <View
                 
                 style = {styles.picker}>
@@ -219,7 +241,7 @@ export default function GuestLoginScreen() {
                 </Picker>
                 </View>
                 </View><View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20, color: '#000' }}>Purpose</Text>
+        <Text style = {{fontSize: 20}}>Purpose</Text>
         <View
                 
                 style = {styles.picker}>
@@ -257,29 +279,28 @@ export default function GuestLoginScreen() {
         
         onPress ={OpenCameras}
         // disables the button when photo has been taken, cancellation of camera should be remove
-        // disabled = {upload? true : false }
+        disabled = {image? true : false }
         name = {image ? 'done': 'photo-camera' }
-        color = {'#fff'}
-        backgroundColor = {image ? '#2ade2a' : 'blue'}
+        color = {image ? '#2ade2a' : '#fff'}
+        style = {image? styles.opencamera : null}
 
         />
-        {/* <OpenCamera
-        
-        onPress ={uploadImage}
-        // disables the button when photo has been taken, cancellation of camera should be remove
-        // disabled = {upload? true : false }
-        name = {'done' }
-        color = {'#fff' }
-        backgroundColor = {'green'}
-
-        /> */}
         <ProceedButton
-        onPress={() => {navigation.navigate('GuestHomeScreen')}}
+        onPress={setNewGuest}
         // onPress = {LoginData}
-        style={[{backgroundColor: '#fddf54', borderRadius: 5, width :300}]}
+        style={[{backgroundColor: '#fddf54', borderRadius: 5, width :300,}]}
         title = 'Log In'
 
         />
+        </View>
+        <View style = {{bottom: 20, position: 'absolute', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}} >
+          <Text>Using this system means you agree to our </Text>
+          <TouchableOpacity style = {{justifyContent: 'center'}}
+            onPress = {() => navigation.navigate('TCScreen')}
+          >
+            <Text  style = {{color: 'green'}}> Terms of use & Conditions
+            </Text>
+            </TouchableOpacity>
         </View>
         </View>
     </ImageBackground>
@@ -287,6 +308,20 @@ export default function GuestLoginScreen() {
 }
 
 const styles = StyleSheet.create({
+
+  opencamera: {
+
+    backgroundColor: '#eeeeef',
+    shadowColor: "#fff",
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+
+  },
 
     picker: {
                     
@@ -318,6 +353,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 20,
+        shadowColor: "#eeeeef",
+        shadowOffset: {
+        width: 1,
+        height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 1,
+        elevation: 3,
     
     },
 
