@@ -133,7 +133,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         elevation: 3,
         shadowOpacity: 1,
-        borderRadius: 9,
+        borderRadius: 1,
+        marginVertical: 20,
+        margin: 3,
 
 
     }

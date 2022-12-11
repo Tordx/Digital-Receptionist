@@ -136,7 +136,7 @@ export default function AdminLoginScreen() {
         </View>
         <ProceedButton
         onPress = {() => navigation.navigate('AdminHomeScreen')}
-        style={[{backgroundColor: '#fff', margin: 20}]}
+        style={[{backgroundColor: '#fff', margin: 20, width: 400, borderRadius: 5, }]}
         title = 'Log In'
 
         />

@@ -103,20 +103,14 @@ import { useSelector } from 'react-redux';
                     keyExtractor={item => item.id}
                 />
             </View>
+            </SafeAreaView>
+            
             <CloseButton
                     onPress = {back}
                     name = 'arrow-back'
                     size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-/>
-              {/* <AddButton
-                    onPress = {() => navigation.navigate('AddClassScreen')}
-                    name = 'add'
-                    color = 'green'
-                    size = {100}
-                    style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
-              /> */}
-            </SafeAreaView>
+                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
+            />
             <AdminModal/>
         </ImageBackground>
       );

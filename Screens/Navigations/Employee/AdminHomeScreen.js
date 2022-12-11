@@ -9,7 +9,7 @@ export default function AdminHomeScreen() {
     const navigation = useNavigation();
 
   return (
-    <View style = {{flex: 1, backgroundColor: '#fddf54',justifyContent: 'center', alignItems: 'center'}}>
+    <View style = {{flex: 1, backgroundColor: '#fff',justifyContent: 'center', alignItems: 'center'}}>
         <Image
         source={require('../../../Assets/Img/psu_logo.png')}
         style = {{width: 1000, height: 1000, opacity: 0.08, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
