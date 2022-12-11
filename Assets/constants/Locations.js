@@ -1,5 +1,6 @@
 export const location = [
 
+    "Others",
     "Agno, Pangasinan",
     "Aguilar, Pangasinan",
     "Alcala, Pangasinan",
