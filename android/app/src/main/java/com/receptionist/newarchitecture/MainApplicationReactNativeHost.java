@@ -1,4 +1,4 @@
-package com.receptionist.newarchitecture;
+package com.digitalreceptionist.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.receptionist.BuildConfig;
-import com.receptionist.newarchitecture.components.MainComponentsRegistry;
-import com.receptionist.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.digitalreceptionist.BuildConfig;
+import com.digitalreceptionist.newarchitecture.components.MainComponentsRegistry;
+import com.digitalreceptionist.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

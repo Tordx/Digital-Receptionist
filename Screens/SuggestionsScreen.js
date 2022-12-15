@@ -55,7 +55,7 @@ export default function SuggestionsScreen() {
          Alert.alert('Your Schedule has been successfully added!')
          console.log(response)
          SyncSuggestionFeedback()
-         navigation.navigate('Student_HomeScreen')
+         navigation.navigate('StudentHomeScreen')
        })
        .catch(err=>console.log(err))
        
@@ -67,7 +67,7 @@ export default function SuggestionsScreen() {
 
     const back = () => {
       if(user == 'STUDENT'){
-        navigation.navigate('Student_HomeScreen')
+        navigation.navigate('StudentHomeScreen')
       }else{
         navigation.navigate('GuestHomeScreen')
       }

@@ -212,7 +212,7 @@ import { openClassModal, setClassData } from '../../../Redux/ClassSlice';
         </View>
         <CloseButton
 
-          onPress = {() => navigation.navigate('Student_HomeScreen')}
+          onPress = {() => navigation.navigate('StudentHomeScreen')}
           name = 'arrow-back'
           size = {50}
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
