@@ -48,7 +48,7 @@ export default function EventScreen() {
 };
       const back = () => {
         if(user == 'STUDENT'){
-          navigation.navigate('Student_HomeScreen')
+          navigation.navigate('StudentHomeScreen')
         }else{
           navigation.navigate('GuestHomeScreen')
         }

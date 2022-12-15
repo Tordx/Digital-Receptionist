@@ -63,7 +63,7 @@ import BuildingModal from '../../../Modal/BuildingModal';
 
     const back = () => {
       if(user == 'STUDENT'){
-        navigation.navigate('Student_HomeScreen')
+        navigation.navigate('StudentHomeScreen')
       }else{
         navigation.navigate('GuestHomeScreen')
       }

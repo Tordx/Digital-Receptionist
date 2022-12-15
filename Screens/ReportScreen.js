@@ -58,9 +58,6 @@ export default function SuggestionsScreen() {
      }
     }
 
-
-  
-
   return (
     <ImageBackground  style = {styles.Container} 
     resizeMode = 'cover'
@@ -133,12 +130,12 @@ export default function SuggestionsScreen() {
                         onValueChange={(itemValue, itemIndex) => setvalue(itemValue)}
                     >
                         <Picker.Item label="Select" value="Select" />
-                        <Picker.Item label="Food" value="Food" />
-                        <Picker.Item label="Travel" value="Travel" />
-                        <Picker.Item label="Hotel" value="Hotel" />
-                        <Picker.Item label="Restaurant" value="Restaurant" />
-                        <Picker.Item label="Grocery" value="Grocery" />
-                        <Picker.Item label="Wellness" value="Wellness" />
+                        <Picker.Item label="Campus" value="CA" />
+                        <Picker.Item label="Building" value="BU" />
+                        <Picker.Item label="Faculty" value="FA" />
+                        <Picker.Item label="Colleges" value="CO" />
+                        <Picker.Item label="Organization" value="OR" />
+                        <Picker.Item label="Others" value="OT" />
                     </Picker>
                     
                     </View>
