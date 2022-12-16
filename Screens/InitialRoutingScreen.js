@@ -67,10 +67,9 @@ export default function InitialRoutingScreen() {
 
             </Pressable>
             <Pressable 
-                style = {{justifyContent: 'center', marginHorizontal: 20, }}
+                style = {{justifyContent: 'center', alignItems: 'center',marginHorizontal: 20, width: '20%'}}
                 onLongPress = {() => navigation.navigate('AdminLoginScreen')}
-                delayLongPress = {3000}
-            >
+                delayLongPress = {1500}>
                 <FlipLogo/>
             </Pressable>
             <Pressable 

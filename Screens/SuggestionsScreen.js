@@ -82,6 +82,7 @@ export default function SuggestionsScreen() {
         name = "arrow-back"
         onPress = {back}
         size = {50}
+        color = '#808080'
         style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 
       />
@@ -186,7 +187,7 @@ export default function SuggestionsScreen() {
             </Text>
       </TouchableOpacity>
     </View>
-      <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 20, }}>Submit a suggestion or feedback</Text>
+      <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 25, fontWeight: '500', color: '#808080' }}>Submit a suggestion or feedback</Text>
     </ImageBackground>
   )
 };
@@ -265,10 +266,9 @@ const styles = StyleSheet.create({
 
   BoxContainer: {
 
-    width: 1000, 
-    height: 700, 
-    backgroundColor: '#00000019', 
-    marginTop: 70, 
+    width: '80%', 
+    height: '85%', 
+    backgroundColor: '#00000019',
     borderRadius: 20, 
     justifyContent: 'center', 
     alignItems: 'center'

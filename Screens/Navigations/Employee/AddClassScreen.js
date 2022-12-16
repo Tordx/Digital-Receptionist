@@ -115,7 +115,7 @@ export default function AddClassScreen() {
   return (
     
     <View style={styles.container}>
-      <View style={{justifyContent: 'center', alignItems: 'center', width: '100%',}}>
+      <View style={{justifyContent: 'flex-start', alignItems: 'center', width: '100%',}}>
             <Text
             style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20,}}> 
             Add Class </Text>

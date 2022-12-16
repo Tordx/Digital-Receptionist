@@ -104,15 +104,11 @@ export default function SuggestionsScreen() {
         />
         </View>
       </View>
-      <View
+      <View style = {{margin: 5}} >
+        <Text style = {{fontSize: 18, textAlign: 'left'}}>Subject</Text>
+        <View
                 
-                    style = {{
-                        
-                        backgroundColor: '#e2e2e2',
-                        height: 50,
-                        margin: 20,
-                        justifyContent: 'center'
-                    }}> 
+                style = {styles.TextInput}> 
                 <Picker
                         title = 'Select Category'
                         selectedValue={value}
@@ -122,7 +118,7 @@ export default function SuggestionsScreen() {
                                { scaleX: 1 }, 
                                { scaleY: 1 },
                             ],
-                        width: 400,
+                        width: 600,
                         bottom: 0,
                         color: '#9e9e9e',
                     
@@ -138,7 +134,8 @@ export default function SuggestionsScreen() {
                         <Picker.Item label="Others" value="OT" />
                     </Picker>
                     
-                    </View>
+        </View>
+      </View>
        <View style = {{margin: 5}} >
         <Text style = {{fontSize: 18,}}>Specify Complaint <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
@@ -253,10 +250,9 @@ const styles = StyleSheet.create({
 
   BoxContainer: {
 
-    width: 1000, 
-    height: 700, 
+    width: '80%', 
+    height: '85%', 
     backgroundColor: '#fff', 
-    marginTop: 70, 
     borderRadius: 20, 
     justifyContent: 'center', 
     alignItems: 'center'
