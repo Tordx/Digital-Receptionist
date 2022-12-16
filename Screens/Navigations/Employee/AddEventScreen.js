@@ -7,90 +7,102 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
-    Image
+    Image,
+    TextInput,
+    ImageBackground
 
 } from 'react-native';
-import React , {useState , useEffect , useMemo} from 'react'
-import {TextInput} from 'react-native-paper'; 
+import React , {useState , useEffect , useMemo} from 'react'; 
 import { Modal_apsg } from '../Components/Modalapsg';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {localDBEvent , SyncEvent} from '../../../Database/pouchDb'
-import { useSelector } from 'react-redux';
-import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import { useDispatch } from 'react-redux';
-import { setImages } from '../../../Redux/TaskReducer';
+import { setImages } from '../../../Redux/TaskReducer';;
+
+const CustomInput = (props) => {
+
+  return (
+  <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <View  style = {{width: '80%'}}>
+    <Text style = {{textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
+    </View>
+    <View style  = {styles.TextInput} >
+      <View style = {{marginLeft: 5}}>
+      <TextInput
+        placeholder= {props.placeholder}
+        onChangeText={props.onChangeText}
+        value={props.value}
+        style = {props.inputstyle}
+      />
+      </View>
+    </View>
+  </View>
+  )
+}
 
 export default function AddEventScreen() {
 
   useEffect(() => {
     
   }, []);
-
-  // useMemo(() => uploadImage(image), [image]);
-
   
     const navigation = useNavigation('');
     const dispatch = useDispatch()
 
+    const [next, setNext] = useState(true);
     const [eventname, setEventName] = useState('');
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/1160/1160358.png');
     const [transferred, setTransferred] = useState(0);
-    // const [eventcode, setEventCode] = useState('');
-    // const [eventposter, setEventPoster] = useState('');
-    // const [preptime, setPreptime] = useState('');
-    // const [deliveryfee, setDeliveryfee] = useState('');
-    // const [place, setPlace] = useState('');
-    // const [status , setStatus] = useState('')
 
     const AddNewEvent =  () => {
         
-      eventname === '' ? Alert.alert('Please Enter Event Name') : 
-      (eventtagline === '' ? Alert.alert('Please Enter Event Tagline') : 
-      eventwhen === '' ? Alert.alert('Please Enter Whene is the Event ') : 
-      eventwhere === '' ? Alert.alert('Please Enter Where is Event ') :
-      image === null ? Alert.alert('Please Add Image') : 
-      setNewEvent())
+      if (eventname.length === 0) {
+        Alert.alert('Please Enter Event Name') 
+      } else if (eventtagline.length === 0) {
+        Alert.alert('Please Enter Event Tagline') 
+      } else if (eventwhen.length === 0) {
+        Alert.alert('Please Enter Whene is the Event ') 
+      } else if (eventwhere.length === 0) {
+        Alert.alert('Please Enter Where is Event ') 
+      } else {
+      setNext(false)
+      }
+      
+
+     
   }
 
 
-    const OpenGallary = async() => {
-
-      // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
-      
+    const OpenGallery = async() => {
   
       launchImageLibrary({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
         
         console.log(response)
   
-        // navigation.navigate('GuestLoginScreen')
-  
       }).then(image => {
-        console.log('yyyyyyyyyyyyy')
         console.log(image.assets[0].uri)
-        console.log('xxxxxxxxxxxx')
+        console.log('photo uri generated')
         setImage(image.assets[0].uri)
-        // setImage(image.assets[0].uri); 
         dispatch(setImages(image.assets[0].uri))
-        // uploadImage()
       });
   
   }
 
-  // const uploadImage = async (image) => {
-
-      
-  //   };
-
      const setNewEvent = async () => {
 
+      
+      if (image === 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png') { 
+        Alert.alert('Please Add Image')
+        console.log('Error Upload')
+      } else {  
       navigation.navigate('AdminHomeScreen')
       console.log('Images')
       console.log(image)
@@ -118,19 +130,14 @@ export default function AddEventScreen() {
       );  
       setImage(null);
       const url = await storage().ref(filename).getDownloadURL();
-      // dispatch(setImages(url));
       setImage(url)
       console.log(url)
-      console.log('url')
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       
       const id = uuid.v4();
 
         if(1+1 == 3){
           console.log('hey')
         }
-        // if((classname.length == 0) && (subject.length == 0) ) {
-        //   console.log('ilove')}
        else{
          try {
             var NewEvent = {
@@ -140,15 +147,7 @@ export default function AddEventScreen() {
                  EventWhen: eventwhen,
                  EventWhere : eventwhere,
                  EventImage : url
-            //  place: place,
-            //  Price : price,
-            //  Preptime : preptime,
-            //  Deliveryfee : deliveryfee,
-            //  Status: status,
-            //  Image: Images
            }
-        //    console.log(Images)
-        //    console.log('Images')
         localDBEvent.put(NewEvent)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
@@ -163,216 +162,169 @@ export default function AddEventScreen() {
          }
          }
         }
+        }
 
 
   return (
     
     <View style={styles.container}>
-        <ScrollView>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      <CloseButton
-                    onPress = {() => navigation.navigate('AdminHomeScreen')}
-                    name = 'arrow-back'
-                    size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-        />
-            <Text
-            style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Event </Text>
-        </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setEventName(value)}
+      <View style={styles.contentcontainer}>
+        {next? 
+          <View style={styles.inputcontainer}>
+            <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#808080'}}> ADD EVENT</Text>
+                <CustomInput
+                  onChangeText={(value) => setEventName(value)}
                    value={eventname}
-                   label="Event Name"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
+                   title = 'Event Name'
+                   placeholder="e.g. Year-end Party 2022"
                 />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setEventTagline(value)}
-                value={eventtagline}
-                mode ='Outlined'
-                multiline
-                label='Event Tagline'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
+                <CustomInput
+                  onChangeText={(value) => setEventTagline(value)}
+                  value={eventtagline}
+                  multiline
+                  title='Event Tagline'
+                  placeholder="e.g. guidelines and other info"
               
                 />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setEventWhen(value)}
-                value={eventwhen}
-                mode ='Outlined'
-                multiline
-                label='The Event will be held on'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
+                <CustomInput
+                  onChangeText={(value) => setEventWhen(value)}
+                  value={eventwhen}
+                  multiline
+                  title = 'Event Date'
+                  placeholder='The Event will be held on'
               
                 />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setEventWhere(value)}
-                value={eventwhere}
-                mode ='Outlined'
-                multiline
-                label='The Event will be held at'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
+                <CustomInput
+                  onChangeText={(value) => setEventWhere(value)}
+                  value={eventwhere}
+                  multiline
+                  title = 'Event Place'
+                  placeholder='The Event will be held at'
                 />
-                </View>
-               <View style={{alignSelf: 'center' , marginBottom: 50}}>
-                <Image
-                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
-                
-                />
-
-                
-               </View>
-           
-                
-                
-                
-                {/* <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setAdminMembers(value)}
-                   value={adminmembers}
-                   label="Admin Members"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View> */}
-               
-             </ScrollView> 
-             
-             <Pressable
-                        style = {{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 400,
-                            backgroundColor: '#225',
-                            borderRadius: 20,
-                            position: 'absolute',
-                            bottom: 100,
-                            backgroundColor: 'green',
-                            margin: 80
-                        }}
-                        onPress={OpenGallary}
-                        >
-                            <Text
-                            
-                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD IMAGE </Text>
-              </Pressable>   
+               <TouchableOpacity
+                onPress={AddNewEvent}
+                style = {[styles.nextbutton,{bottom: 0, position: 'absolute'}]}>
+                  <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: 'bold'}} >NEXT</Text>
+                </TouchableOpacity>
+              </View>
+        :     
+          <View style = {styles.inputcontainer}>
+              <ImageBackground
+                  resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
                 <Pressable
-                        style = {{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 400,
-                            backgroundColor: '#225',
-                            borderRadius: 20,
-                            position: 'absolute',
-                            bottom: 100,
-                        }}
-                        onPress={AddNewEvent}
-                        >
-                            <Text
-                            
-                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD EVENT </Text>
-              </Pressable>  
+                  style = {[styles.nextbutton, {backgroundColor: '#0f2ed6', position: 'absolute'}]} 
+                  onPress = {OpenGallery}>
+                  <Text style = {{color: '#fddf54', fontWeight: '900', textAlign: 'center'}}>ADD IMAGE</Text>
+                </Pressable>
+              </ImageBackground>
+                <TouchableOpacity
+                  onPress={setNewEvent}
+                  style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
+                  <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                </TouchableOpacity>
+          </View>
+        }
+          <View style={styles.eventcontainer}>
+               
+          </View>
+      </View>
+      <CloseButton
+          onPress = {() => navigation.navigate('AdminHomeScreen')}
+          name = 'arrow-back'
+          size = {50}
+          style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+      />
     </View>
 
   )
 }
 
 const styles = StyleSheet.create({
-    
-    TextInput: {
 
-        margin: 25,
-        width: 400,
-        height: 40  ,
-        borderRadius: 10,
-        backgroundColor: 'red',
-        alignSelf: 'center',
-        justifyContent: 'center',
+  eventcontainer: {
+    
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    width: '50%'
+  
+  },
+
+  imagecontainer: {
+    
+    borderRadius: 20,
+    width: 500, 
+    height: 500, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+  
+  },
+
+  inputcontainer:{
+    
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '50%',
+    height: '100%',
+    borderRightWidth: 3 
+  
+  },
+
+  contentcontainer: {
+    
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '100%',
+    flexDirection: 'row'
+  
+  },
+
+  TextInput: {
+
+    backgroundColor: '#f2f3f7',
+    width: '80%',
+    borderWidth: 0.9,
+    borderRadius: 5,
+    height: 50,
+    marginTop: 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 2,
     },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
-        backgroundColor: '#e2e2e2',
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 3,
+
+  },
+
+  nextbutton: {
+    
+    backgroundColor: '#fddf54',
+    width: '50%', 
+    borderRadius: 5,
+    height: 50,
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 2,
     },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 3,
+  
+  },
+
+  container: {
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#f2f3f7',
+  },
     
 })

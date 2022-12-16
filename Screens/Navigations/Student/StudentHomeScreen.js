@@ -18,11 +18,13 @@ import BackgroundTimer from 'react-native-background-timer';
 import psu_logo from '../../../Assets/Img/psu_logo.png'
 import {StudentMainMenu} from './StudentMainMenu';
 
+
+
 export default function StudentHomeScreen() {
 
   const navigation = useNavigation();
 
-  const [seconds, setSeconds] = useState(600); // Set time limit to 10 mins [by seconds], (if possible can be set by admin)
+  const [seconds, setSeconds] = useState(600); // Set time limit to 10 mins [by seconds], (if possible can be set by admin) 
   
   
   useEffect(() => {
@@ -52,28 +54,28 @@ export default function StudentHomeScreen() {
    
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-      return () => backHandler.remove()
+      return () => backHandler.removeEventListener()
     }, [])
 
     
  //Logout Navigation to IntialRoutingScreen
-   const confirmLogout = () => {
+ const confirmLogout = () => {
 
-    Alert.alert(
-        'Confirm logout',
-        'Are you sure?',
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log('Cancel Pressed'),
-            style: "cancel"
-          },
-          { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen') }
-        ]
-      );
+  Alert.alert(
+      'Confirm logout',
+      'Are you sure?',
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log('Cancel Pressed'),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => navigation.navigate('InitialRoutingScreen') }
+      ]
+    );
 
-   }
-        
+ }
+      
 
    
 
