@@ -7,7 +7,8 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
-    Image
+    Image,
+    ImageBackground
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 

@@ -29,7 +29,7 @@ const CustomInput = (props) => {
   return (
   <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
     <View  style = {{width: '80%'}}>
-    <Text style = {{textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
+    <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
     </View>
     <View style  = {styles.TextInput} >
       <View style = {{marginLeft: 5}}>
@@ -59,22 +59,22 @@ export default function AddEventScreen() {
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
-    const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/512/1160/1160358.png');
+    const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png');
     const [transferred, setTransferred] = useState(0);
 
     const AddNewEvent =  () => {
         
       if (eventname.length === 0) {
         Alert.alert('Please Enter Event Name') 
-      } else if (eventtagline.length === 0) {
-        Alert.alert('Please Enter Event Tagline') 
-      } else if (eventwhen.length === 0) {
-        Alert.alert('Please Enter Whene is the Event ') 
-      } else if (eventwhere.length === 0) {
-        Alert.alert('Please Enter Where is Event ') 
-      } else {
-      setNext(false)
-      }
+        } else if (eventtagline.length === 0) {
+            Alert.alert('Please Enter Event Tagline') 
+          } else if (eventwhen.length === 0) {
+              Alert.alert('Please Enter Whene is the Event ') 
+            } else if (eventwhere.length === 0) {
+                Alert.alert('Please Enter Where is Event ') 
+              } else {
+                setNext(false)
+                }
       
 
      
@@ -170,8 +170,12 @@ export default function AddEventScreen() {
     <View style={styles.container}>
       <View style={styles.contentcontainer}>
         {next? 
-          <View style={styles.inputcontainer}>
-            <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#808080'}}> ADD EVENT</Text>
+          <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+            <ImageBackground
+          style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
+          resizeMode = 'cover'
+          source = {require('../../../Assets/Img/announcement-image.png')}>
+            <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}> ADD EVENT</Text>
                 <CustomInput
                   onChangeText={(value) => setEventName(value)}
                    value={eventname}
@@ -203,25 +207,31 @@ export default function AddEventScreen() {
                 />
                <TouchableOpacity
                 onPress={AddNewEvent}
-                style = {[styles.nextbutton,{bottom: 0, position: 'absolute'}]}>
-                  <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: 'bold'}} >NEXT</Text>
+                style = {styles.nextbutton}>
+                  <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >NEXT</Text>
                 </TouchableOpacity>
+                </ImageBackground>
               </View>
         :     
-          <View style = {styles.inputcontainer}>
+          <View style = {[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
               <ImageBackground
                   resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
                 <Pressable
-                  style = {[styles.nextbutton, {backgroundColor: '#0f2ed6', position: 'absolute'}]} 
+                  style = {styles.imagebutton} 
                   onPress = {OpenGallery}>
-                  <Text style = {{color: '#fddf54', fontWeight: '900', textAlign: 'center'}}>ADD IMAGE</Text>
+                  <Icon
+                    name={image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png' ? null : 'done'}
+                    size={100}
+                    color = {image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png' ? '#fff' : '#2ade2a'}
+                  />
                 </Pressable>
               </ImageBackground>
                 <TouchableOpacity
                   onPress={setNewEvent}
                   style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
-                  <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                  <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
                 </TouchableOpacity>
+                
           </View>
         }
           <View style={styles.eventcontainer}>
@@ -231,7 +241,8 @@ export default function AddEventScreen() {
       <CloseButton
           onPress = {() => navigation.navigate('AdminHomeScreen')}
           name = 'arrow-back'
-          size = {50}
+          size = {35}
+          color = '#000'
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
       />
     </View>
@@ -265,7 +276,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     width: '50%',
     height: '100%',
-    borderRightWidth: 3 
   
   },
 
@@ -274,6 +284,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
     width: '100%',
+    height: '100%',
     flexDirection: 'row'
   
   },
@@ -282,7 +293,6 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#f2f3f7',
     width: '80%',
-    borderWidth: 0.9,
     borderRadius: 5,
     height: 50,
     marginTop: 10,
@@ -301,25 +311,30 @@ const styles = StyleSheet.create({
 
   nextbutton: {
     
-    backgroundColor: '#fddf54',
-    width: '50%', 
-    borderRadius: 5,
-    height: 50,
-    marginTop: 10,
+    backgroundColor: '#0f2ed6',
+    width: '100%',
+    height: 75,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 1,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    elevation: 3,
-  
+    borderRightWidth: 3,
+    bottom: 0,
+    position: 'absolute'
+
+  },
+
+  imagebutton: {
+
+    width: '50%',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    borderRadius: 10,
+
   },
 
   container: {
+
       width: '100%',
       height: '100%',
       justifyContent: 'center',

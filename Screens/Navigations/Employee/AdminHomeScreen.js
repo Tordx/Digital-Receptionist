@@ -3,16 +3,17 @@ import React from 'react'
 import AdminMainMenu from './AdminMainMenu'
 import { useNavigation } from '@react-navigation/native'
 import { CloseButton } from '../../../ScreenComponents/Buttons'
+import { Version } from '../../../Assets/constants/constants'
 
 export default function AdminHomeScreen() {
 
     const navigation = useNavigation();
 
   return (
-    <View style = {{flex: 1, backgroundColor: '#fff',justifyContent: 'center', alignItems: 'center'}}>
+    <View style = {{flex: 1, backgroundColor: '#fddf54',justifyContent: 'center', alignItems: 'center'}}>
         <Image
         source={require('../../../Assets/Img/psu_logo.png')}
-        style = {{width: 1000, height: 1000, opacity: 0.08, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
+        style = {{width: 1000, height: 1000, opacity: 0.5, justifyContent: 'center', position: 'absolute',alignItems: 'center'}}
         />
        
         <CloseButton
@@ -26,6 +27,7 @@ export default function AdminHomeScreen() {
 
         />
       <AdminMainMenu/>
+      <Text style = {{position: 'absolute', bottom: 10, left: 10}} > DKHDR {Version}</Text>
     </View>
   )
 }

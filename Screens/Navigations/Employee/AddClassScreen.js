@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Alert,
     TextInput,
+    ImageBackground,
 
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
@@ -22,8 +23,8 @@ const CustomInput = (props) => {
 
   return (
   <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-    <View  style = {{width: '35%'}}>
-    <Text style = {{textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
+    <View  style = {{width: '80%'}}>
+    <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
     </View>
     <View style  = {styles.TextInput} >
       <View style = {{marginLeft: 5}}>
@@ -115,7 +116,12 @@ export default function AddClassScreen() {
   return (
     
     <View style={styles.container}>
-      <View style={{justifyContent: 'flex-start', alignItems: 'center', width: '100%',}}>
+      <View style={styles.contentcontainer}>
+        <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+          <ImageBackground
+            style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
+            resizeMode = 'cover'
+            source = {require('../../../Assets/Img/class-image.png')}>
             <Text
             style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20,}}> 
             Add Class </Text>
@@ -150,24 +156,26 @@ export default function AddClassScreen() {
                 placeholder = 'CS Room 5'
                 title = 'Class Room'
                 />
-      </View>
+                
 
-     <ProceedButton
-     style = {[{justifyContent: 'center',
-     align: 'center',
-     height: 50,
-     width: 200  ,
-     backgroundColor: '#fddf54',
-     borderRadius: 5,
-     margin: 50}]}
-     onPress = {AddNewSchedule}
-     title = 'Add Class'
-     
-     />
+                <TouchableOpacity
+                  onPress={AddNewSchedule}
+                  style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
+                  <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD CLASS</Text>
+                </TouchableOpacity>
+     </ImageBackground>
+     </View>
+      <View style={styles.eventcontainer}>
+               
+          
+          
+      </View>
+      </View>
             <CloseButton
                     onPress = {() => navigation.goBack('AdminHomeScreen')}
                     name = 'arrow-back'
-                    size = {50}
+                    color = '#000'
+                    size = {35}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
     </View>
@@ -176,12 +184,41 @@ export default function AddClassScreen() {
 }
 
 const styles = StyleSheet.create({
+
+  nextbutton: {
+    
+    backgroundColor: '#0f2ed6',
+    width: '100.5%',
+    height: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    position: 'absolute'
+
+  },
+
+
+  inputcontainer:{
+    
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '50%',
+    height: '100%',
+  
+  },
+
+    eventcontainer: {
+    
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      width: '50%'
+  
+    },
     
     TextInput: {
 
       backgroundColor: '#f2f3f7',
-      width: '35%',
-      borderWidth: 0.9,
+      width: '80%',
       borderRadius: 5,
       height: 50,
       marginTop: 10,
@@ -197,6 +234,17 @@ const styles = StyleSheet.create({
       elevation: 3,
   
     },
+
+    contentcontainer: {
+    
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      width: '100%',
+      height: '100%',
+      flexDirection: 'row'
+    
+    },
+
     container: {
         flex: 1,
         justifyContent: 'center',

@@ -168,8 +168,8 @@ export default function GuestLoginScreen() {
     >
         <CloseButton
         name = 'close'
-        size = {50}
-        color = 'black'
+        size = {35}
+        color = '#000'
         style = {{margin: 20, position: 'absolute', top: 0, left: 0 }}
         onPress = {() => navigation.goBack('InitialRoutingScreen')}
 

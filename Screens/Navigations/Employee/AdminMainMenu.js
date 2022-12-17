@@ -11,7 +11,7 @@ export default function AdminMainMenu() {
   return (
     <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
         
-        <Text style = {{fontSize: 30, fontWeight: 'bold'}} >Static Data Configuration</Text>
+        <Text style = {{fontSize: 30, fontWeight: 'bold', color: 'black'}} >Static Data Configuration</Text>
         <Text style = {{fontSize: 15, fontWeight: '300', color: 'black'}} >Add / Edit / Delete</Text>
         <View style = {{flexDirection: 'row'}}>
       <Box
@@ -60,7 +60,7 @@ export default function AdminMainMenu() {
 
       />
       </View>
-      <Text style = {{fontSize: 30, fontWeight: 'bold'}} >Gathered Data and Settings</Text>
+      <Text style = {{fontSize: 30, fontWeight: 'bold', color: 'black'}} >Gathered Data and Settings</Text>
         <Text style = {{fontSize: 15, fontWeight: '300', color: 'black'}} > Review / Distribute / Improve </Text>
       <View style = {{flexDirection: 'row'}}>
       
@@ -113,7 +113,7 @@ export default function AdminMainMenu() {
 
       />
       </View>
-      <Text> DKHDR {Version}</Text>
+      
     </View>
   )
 }
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
     title: {
 
-        color: 'grey',
+        color: '#00f',
         marginTop: 5,
         fontWeight: '700'
 
@@ -133,9 +133,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         elevation: 3,
         shadowOpacity: 1,
-        borderRadius: 1,
+        borderRadius: 5,
         marginVertical: 20,
-        margin: 3,
+        margin: 1,
+        borderWidth: 0,
 
 
     }

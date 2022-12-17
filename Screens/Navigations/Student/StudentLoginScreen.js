@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TextInput, StyleSheet, ToastAndroid , Alert } from 'react-native'
+import { View, Text, ImageBackground, TextInput, StyleSheet, ToastAndroid , Alert, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
@@ -88,8 +88,8 @@ export default function StudentLoginScreen() {
     >
         <CloseButton
         name = 'close'
-        size = {50}
-        color = 'black'
+        size = {35}
+        color = '#000'
         style = {{margin: 20, position: 'absolute', top: 0, left: 0 }}
         onPress = {() => navigation.goBack('InitialRoutingScreen')}
 
@@ -127,7 +127,17 @@ export default function StudentLoginScreen() {
         title = 'Log In'
 
         />
+         <View style = {{bottom: 20, position: 'absolute', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}} >
+          <Text>Using this system means you agree to our </Text>
+          <TouchableOpacity style = {{justifyContent: 'center'}}
+            onPress = {() => navigation.navigate('TCScreen')}
+          >
+            <Text  style = {{color: 'green'}}> Terms of use & Conditions
+            </Text>
+            </TouchableOpacity>
         </View>
+        </View>
+        
     </ImageBackground>
   )
 }
