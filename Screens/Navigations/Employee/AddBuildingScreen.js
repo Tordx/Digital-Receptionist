@@ -80,28 +80,19 @@ export default function AddBuildingScreen() {
         // navigation.navigate('GuestLoginScreen')
   
       }).then(image => {
-        console.log('yyyyyyyyyyyyy')
         console.log(image.assets[0].uri)
-        console.log('xxxxxxxxxxxx')
+        console.log('uri readed')
         setImage(image.assets[0].uri)
-        // setImage(image.assets[0].uri); 
         dispatch(setImages(image.assets[0].uri))
-        // uploadImage()
       });
   
   }
-
-  // const uploadImage = async (image) => {
-
-      
-  //   };
 
      const setNewBuilding = async () => {
 
       navigation.navigate('AdminHomeScreen')
       console.log('Images')
       console.log(image)
-      console.log('Images')
       const  uri  = image;
       const filename = uri.substring(uri.lastIndexOf('/') + 1);
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -120,42 +111,27 @@ export default function AddBuildingScreen() {
       } catch (e) {
         console.error(e);
       }
-      Alert.alert(
-        'Successfully added Photo!'
-      );  
+      console.log('Image Uploaded')
       setImage(null);
       const url = await storage().ref(filename).getDownloadURL();
       // dispatch(setImages(url));
       setImage(url)
       console.log(url)
-      console.log('url')
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+      console.log('url uploaded')
       
       const id = uuid.v4();
 
-        if(1+1 == 3){
-          console.log('hey')
-        }
-        // if((classname.length == 0) && (subject.length == 0) ) {
-        //   console.log('ilove')}
-       else{
+        if(image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png'){
+          Alert.alert('Please upload building image')
+          console.log('No image uploaded')
+        } else{
          try {
             var NewEvent = {
                 _id: id,
                  BuildingName : buildingname,
                  BuildingLocation : buildinglocation,
-                //  EventWhen: eventwhen,
-                //  EventWhere : eventwhere,
                  BuildingPicture : url
-            //  place: place,
-            //  Price : price,
-            //  Preptime : preptime,
-            //  Deliveryfee : deliveryfee,
-            //  Status: status,
-            //  Image: Images
            }
-        //    console.log(Images)
-        //    console.log('Images')
         localDBBuilding.put(NewEvent)
            .then((response) =>{
              Alert.alert('Your Schedule has been successfully added!')
