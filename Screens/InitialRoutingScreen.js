@@ -22,6 +22,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Redux/TaskReducer';
 import { FlipLogo } from '../ScreenComponents/FlipLogo';
+import UniversityMap from './UniversityMap';
 
 export default function InitialRoutingScreen() {
 
@@ -37,6 +38,14 @@ export default function InitialRoutingScreen() {
          dispatch(setUser('GUEST'))
     }
 
+    const this1 = () => {
+
+        console.log('This was pressed')
+         navigation.navigate('UniversityMap')
+        console.log('Error')
+
+    }
+
   return (
     <ImageBackground 
     source={require('../Assets/Img/Background_image.png')}
@@ -46,7 +55,12 @@ export default function InitialRoutingScreen() {
       alignItems: 'center',
       justifyContent: 'center',}}
    >
-        <Text style = {{bottom: 50, position: 'absolute', margin:20}}>DKHDR {Version}</Text>
+    <Pressable style = {{bottom: 50, left: 50, position: 'absolute', margin:20}} 
+    onPress = {() => navigation.navigate('UniversityMap')}>
+        <Text 
+        // style = {{bottom: 50, position: 'absolute', margin:20}}
+        >DKHDR {Version}</Text>
+        </Pressable>
         <ReportButton/>
         <View style = {{flexDirection: 'row', width: '80%', height: '90%', justifyContent: 'center', alignItem: 'center'}}>
             <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}

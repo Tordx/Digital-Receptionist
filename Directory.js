@@ -8,6 +8,7 @@ import InitialRoutingScreen from './Screens/InitialRoutingScreen';
 import IdleScreen from './Screens/IdleScreen';
 import ReportScreen from './Screens/ReportScreen';
 import TCScreen from './Screens/TCScreen';
+import UniversityMap from './Screens/UniversityMap';
 //Student StackScreens
 import Employee from './Navigations/Employee';
 import ClassScreen from './Screens/Navigations/Student/ClassScreen';
@@ -46,7 +47,9 @@ export default function Directory() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName='IntialRoutingScreen'>
 
+                
                 <Stack.Screen name = 'InitialRoutingScreen' component={InitialRoutingScreen} options = {{ headerShown: false }}/>
+                <Stack.Screen name = 'UniversityMap' component={UniversityMap} options = {{headerShown: false}}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'Employee' component = {Employee} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ReportScreen' component={ReportScreen} options = {{ headerShown: false }} />
