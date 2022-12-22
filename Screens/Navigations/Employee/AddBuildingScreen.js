@@ -88,63 +88,61 @@ export default function AddBuildingScreen() {
   
   }
 
-     const setNewBuilding = async () => {
-
-      navigation.navigate('AdminHomeScreen')
-      console.log('Images')
-      console.log(image)
-      const  uri  = image;
-      const filename = uri.substring(uri.lastIndexOf('/') + 1);
-      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-      setTransferred(0);
-      const task = storage()
-        .ref(filename)
-        .putFile(uploadUri);
-      // set progress state
-      task.on('state_changed', snapshot => {
-        setTransferred(
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
-        );
-      });
+  const setNewBuilding = async () => {
+    navigation.navigate('AdminHomeScreen');
+    console.log('Images');
+    console.log(image);
+    const uri = image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    setTransferred(0);
+    const task = storage().ref(filename).putFile(uploadUri);
+    // set progress state
+    task.on('state_changed', (snapshot) => {
+      setTransferred(
+        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 10000)
+      );
+    });
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    console.log('Image Uploaded');
+    setImage(null);
+    const url = await storage().ref(filename).getDownloadURL();
+    // dispatch(setImages(url));
+    setImage(url);
+    console.log(url);
+    console.log('url uploaded');
+  
+    const id = uuid.v4();
+  
+    if (image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png') {
+      Alert.alert('Please upload building image');
+      console.log('No image uploaded');
+    } else {
       try {
-        await task;
-      } catch (e) {
-        console.error(e);
+        const newEvent = {
+          _id: id,
+          BuildingName: buildingname,
+          BuildingLocation: buildinglocation,
+          BuildingPicture: url,
+        };
+        localDBBuilding
+          .put(newEvent)
+          .then((response) => {
+            navigation.navigate('AdminHomeScreen');
+            Alert.alert('Your Schedule has been successfully added!');
+            console.log(response);
+            SyncBuilding();
+          })
+          .catch((err) => console.log(err));
+      } catch (error) {
+        console.log(error);
       }
-      console.log('Image Uploaded')
-      setImage(null);
-      const url = await storage().ref(filename).getDownloadURL();
-      // dispatch(setImages(url));
-      setImage(url)
-      console.log(url)
-      console.log('url uploaded')
-      
-      const id = uuid.v4();
-
-        if(image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png'){
-          Alert.alert('Please upload building image')
-          console.log('No image uploaded')
-        } else{
-         try {
-            var NewEvent = {
-                _id: id,
-                 BuildingName : buildingname,
-                 BuildingLocation : buildinglocation,
-                 BuildingPicture : url
-           }
-        localDBBuilding.put(NewEvent)
-           .then((response) =>{
-             Alert.alert('Your Schedule has been successfully added!')
-             console.log(response)
-             SyncBuilding()
-           })
-           .catch(err=>console.log(err))
-           
-         } catch (error) {
-          console.log(error)
-         }
-         }
-        }
+    }
+  };
 
 
         return (
