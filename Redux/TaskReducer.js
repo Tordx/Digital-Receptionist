@@ -5,13 +5,8 @@
    name: 'items',
    initialState: {
     studentinfo: [],
-    //  taskID: 1,
-    //  Dones:[],
      Images:[],
      user:[],
-    //  orderItems: [],
-    //  SelectedItem:null,
-    //  isOpen: false
    },
    reducers: {
      setStudentInfo: (state , action ) => {
@@ -24,47 +19,19 @@
       console.log(action)
       console.log('action')
     },
-    //  setOrders: (state , action ) => {
-    //   state.orderItems = action.payload
-    //   console.log(action)
-    //   console.log('action')
-    // },
-    //  setTaskId: (state , action)  => {
-    //      state.taskID = action.payload
-    //  },
-    //  setDones: (state , action)  => {
-    //    state.Dones = action.payload
-    //  },
       setImages: (state , action)  => {
       state.Images = action.payload
       console.log(action)
       console.log('action')
       },
-    //   setSelectedItem: (state , action)  => {
-    //     state.SelectedItem = action.payload
-    //     console.log(action)
-    //     console.log('action')
-    //     },
-      // openModal: (state , action) => {
-      //   state.isOpen = true;
-      // },
-      // closeModal: (state , action) => {
-      //   state.isOpen = false;
-      // },
- 
    }
  })
  
  // Action creators are generated for each case reducer function
  export const {
    setStudentInfo ,
-  //  setTaskId , 
-  //  setDones, 
    setImages, 
-  //  setSelectedItem , 
-  //  setOrders
     setUser,
-    // closeModal
   } = taskReducers.actions
  
  export default taskReducers.reducer
