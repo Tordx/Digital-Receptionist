@@ -1,6 +1,6 @@
 # Digital Help Desk Receptionist
 
-This is a thesis Project being developed by BSCS A students
+This is a thesis Project currently under development by BSCS A students, Please refer to our copyright policy for usage.
 
 
 ## Get Started
@@ -32,7 +32,7 @@ $ cd android && ./gradlew clean && cd..
 
 ## Start Coding
 
-Make sure you are running the Emulator with SDKVersion 29, preferably Pixel C.
+Make sure you are running the Emulator with SDKVersion 29, preferably Pixel C, if not your tablet device would do the work(android 7.0 up)
 
 Run your code using the same [PowerShell]() by running this command:
 
@@ -42,11 +42,6 @@ $ npx react-native run-android
 or
 ```bash
 $ yarn run android
-```
-
-if [yarn run android]() is not recognized by your CLI, please run this command first:
-```bash
-$ set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
 ## Contributing
