@@ -9,12 +9,6 @@ import BuildingSlice from './BuildingSlice'
 
 export default configureStore({
   reducer: {
-    // studentinfo: taskReducers,
-    // taskID: taskReducers,
-    // Dones: taskReducers,
-    // Images: taskReducers,
-    // SelectedItem:taskReducers,
-    // orderItems: taskReducers
     essensials: taskReducers,
     eventmodal: EventSlice,
     adminmodal: AdminSlice,

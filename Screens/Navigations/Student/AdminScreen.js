@@ -22,6 +22,8 @@ import { useSelector } from 'react-redux';
 
   export default function AdminScreen () {
     
+    
+
     const user = useSelector(state => state.essensials.user)
     const dispatch = useDispatch()
     const [admindata , setAdminDatas] = useState('')
