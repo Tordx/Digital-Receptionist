@@ -18,6 +18,9 @@ import { Picker } from '@react-native-picker/picker';
 import { AddButton, CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import { setClassData } from '../../../Redux/ClassSlice';
 
 const CustomInput = (props) => {
 
@@ -43,16 +46,18 @@ const CustomInput = (props) => {
 export default function AddClassScreen() {
 
   useEffect(() => {
-   
+    addclassdata()
   }, []);
 
-  
+    const dispatch = useDispatch()
     const navigation = useNavigation('');
+    const {classData} = useSelector((store) => store.classmodal)
 
-    const [classname, setClassName] = useState('');
+    const [classname, setClassName] = useState();
     const [subject, setSubject] = useState('');
     const [time, setTime] = useState('');
     const [room, setRoom] = useState('');
+    const [allclass, setAllCllass] = useState();
     // const [classcode, setClassCode] = useState('');
     // const [preptime, setPreptime] = useState('');
     // const [deliveryfee, setDeliveryfee] = useState('');
@@ -110,6 +115,38 @@ export default function AddClassScreen() {
          }
         }
 
+        const addclassdata = async() => {
+
+          var result = await remoteDBSchedules.allDocs({
+            include_docs: true,
+            attachments: true
+          });
+          if(result.rows){
+              let modifiedArr = result.rows.map(function(item){
+              return item.doc
+          });
+          setAllCllass(modifiedArr)
+        }
+      }
+
+      const renderItem = ({ item }) => {
+
+        return(
+          <TouchableOpacity 
+          onPress={() => {
+          dispatch(setClassData(item))
+          }}
+           >
+            
+            <View style = {styles.item}>
+              <Text style = {styles.title}>
+                {item.Classname}
+              </Text>
+            </View>
+         </TouchableOpacity>
+        )
+    }
+
        
 
 
@@ -166,8 +203,14 @@ export default function AddClassScreen() {
      </ImageBackground>
      </View>
       <View style={styles.eventcontainer}>
-               
-          
+        <View>
+          <FlatList
+          renderItem={renderItem}
+          data={allclass}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          />     
+        </View>
           
       </View>
       </View>
@@ -196,7 +239,11 @@ const styles = StyleSheet.create({
     position: 'absolute'
 
   },
+  title: {
 
+    fontSize: 32,
+
+  },
 
   inputcontainer:{
     
@@ -244,6 +291,28 @@ const styles = StyleSheet.create({
       flexDirection: 'row'
     
     },
+
+    item: {
+
+      justifyContent: 'center',
+      alignself: 'center',
+      backgroundColor: '#fff',
+      padding: 30,
+      width: 250,
+      height: 200,
+      borderRadius: 10,
+      marginVertical: 8,
+      marginHorizontal: 16,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 1,
+        height: 2,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 3.41,
+      elevation: 5,
+
+  },
 
     container: {
         flex: 1,
