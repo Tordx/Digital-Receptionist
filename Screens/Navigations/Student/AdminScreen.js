@@ -26,38 +26,139 @@ import { useSelector } from 'react-redux';
 
     const user = useSelector(state => state.essensials.user)
     const dispatch = useDispatch()
-    const [admindata , setAdminDatas] = useState('')
+    const [admindata , setAdminDatas] = useState([])
 
     useEffect(() => {
-
-      getAdminData()
+      FakeData()
+      // getAdminData()
 
     }, []);
 
+
+
     const navigation = useNavigation();
 
-    const getAdminData = async() => {
+    // const getAdminData = async() => {
 
-    var result = await remoteDBAdmin.allDocs({
-      include_docs: true,
-      attachments: true
-    });
-    if(result.rows){
-        let modifiedArr = result.rows.map(function(item){
-        return item.doc
-    });
-    let filteredData = modifiedArr.filter(item => {
-        return item;
-      });
-      if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-              return item
-          })
-          setAdminDatas(newFilterData)
-      }
-  }  
+  //   var result = await remoteDBAdmin.allDocs({
+  //     include_docs: true,
+  //     attachments: true
+  //   });
+  //   if(result.rows){
+  //       let modifiedArr = result.rows.map(function(item){
+  //       return item.doc
+  //   });
+  //   let filteredData = modifiedArr.filter(item => {
+  //       return item;
+  //     });
+  //     if(filteredData) {
+  //         let newFilterData = filteredData.map(item => {
+  //             return item
+  //         })
+  //         setAdminDatas(newFilterData)
+  //     }
+  // // }  
+  //   }
+
+ const FakeData = async() => {
+
+  const data = ([
+    {
+      "_id": "63de6da17c07193d98cdf9f6",
+      "name": "Rojas",
+      "AdminName": "Deanne",
+      "AdminBuilding": "Maddox",
+      "AdminPresident": "Raymond",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Barry"
+    },
+    {
+      "_id": "63de6da14279fdac7417e802",
+      "name": "Mcbride",
+      "AdminName": "Dalton",
+      "AdminBuilding": "Shirley",
+      "AdminPresident": "Felicia",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Michael"
+    },
+    {
+      "_id": "63de6da1e09d9cb4d42f0ed4",
+      "name": "Heath",
+      "AdminName": "Clayton",
+      "AdminBuilding": "Gonzalez",
+      "AdminPresident": "Valdez",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Willie"
+    },
+    {
+      "_id": "63de6da1e019d0b6c6aa3be3",
+      "name": "Ramsey",
+      "AdminName": "Stephenson",
+      "AdminBuilding": "Maynard",
+      "AdminPresident": "Audrey",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Lola"
+    },
+    {
+      "_id": "63de6da174412d92266efd50",
+      "name": "Jones",
+      "AdminName": "Chambers",
+      "AdminBuilding": "Merritt",
+      "AdminPresident": "Francis",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Odonnell"
+    },
+    {
+      "_id": "63de6da1cfcfd0d50227af1e",
+      "name": "Acevedo",
+      "AdminName": "Townsend",
+      "AdminBuilding": "Jeanine",
+      "AdminPresident": "Rosales",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Wooten"
+    },
+    {
+      "_id": "63de6da180dd96c367dd8b05",
+      "name": "Thompson",
+      "AdminName": "Donna",
+      "AdminBuilding": "Maggie",
+      "AdminPresident": "Debora",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Coleen"
+    },
+    {
+      "_id": "63de6da1557736a588b95158",
+      "name": "Marshall",
+      "AdminName": "Mcconnell",
+      "AdminBuilding": "Washington",
+      "AdminPresident": "Leticia",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Peterson"
+    },
+    {
+      "_id": "63de6da13558cbea49425abf",
+      "name": "Roberts",
+      "AdminName": "Small",
+      "AdminBuilding": "Lina",
+      "AdminPresident": "Thomas",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Velazquez"
+    },
+    {
+      "_id": "63de6da167e09e748289293a",
+      "name": "Silva",
+      "AdminName": "Nicole",
+      "AdminBuilding": "Lott",
+      "AdminPresident": "Leon",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Valencia"
+    }
+  ])
+  setAdminDatas(data)
 
 }
+
+
     const back = () => {
       if(user == 'STUDENT'){
         navigation.navigate('StudentHomeScreen')
@@ -102,7 +203,7 @@ import { useSelector } from 'react-redux';
                     numColumns = '4'
                     data={admindata}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item._id}
                 />
             </View>
             </SafeAreaView>

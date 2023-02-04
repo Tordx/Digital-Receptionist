@@ -32,34 +32,132 @@ import BuildingModal from '../../../Modal/BuildingModal';
   // const {isOpen} = useSelector((store) => store.modal)
 
     useEffect(() => {
-
-      getEventData()
+      FakeData()
+      // getEventData()
 
     }, []);
 
 
-    const getEventData = async() => {
+//     const getEventData = async() => {
 
-    var result = await remoteDBBuilding.allDocs({
-      include_docs: true,
-      attachments: true
-    });
-    if(result.rows){
-        let modifiedArr = result.rows.map(function(item){
-        return item.doc
-    });
-    let filteredData = modifiedArr.filter(item => {
-        return item;
-      });
-      if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-              return item
-          })
-          setBuildingDatas(newFilterData)
+//     var result = await remoteDBBuilding.allDocs({
+//       include_docs: true,
+//       attachments: true
+//     });
+//     if(result.rows){
+//         let modifiedArr = result.rows.map(function(item){
+//         return item.doc
+//     });
+//     let filteredData = modifiedArr.filter(item => {
+//         return item;
+//       });
+//       if(filteredData) {
+//           let newFilterData = filteredData.map(item => {
+//               return item
+//           })
+//           setBuildingDatas(newFilterData)
            
-      }
-  }  
-};
+//       }
+//   }  
+// };
+
+const FakeData = async() => {
+
+  const data = ([
+    {
+      "_id": "63de6ebc0c3b6dafa15a6322",
+      "name": "Hickman",
+      "AdminName": "Lavonne",
+      "BuildingName": "Maggie",
+      "BuildingLocation": "Bennett",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Becker"
+    },
+    {
+      "_id": "63de6ebc5fc8b4a9554135c4",
+      "name": "Price",
+      "AdminName": "Schultz",
+      "BuildingName": "Angeline",
+      "BuildingLocation": "Lakisha",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Anna"
+    },
+    {
+      "_id": "63de6ebc84f052f15d5ddcef",
+      "name": "Gray",
+      "AdminName": "Landry",
+      "BuildingName": "Reid",
+      "BuildingLocation": "Poole",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Lott"
+    },
+    {
+      "_id": "63de6ebc7286ee6372489006",
+      "name": "Rosario",
+      "AdminName": "Marilyn",
+      "BuildingName": "Neal",
+      "BuildingLocation": "Lindsey",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Ortega"
+    },
+    {
+      "_id": "63de6ebccb5b0f0c87cf92cc",
+      "name": "Bird",
+      "AdminName": "Eva",
+      "BuildingName": "Bailey",
+      "BuildingLocation": "Goff",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Sherri"
+    },
+    {
+      "_id": "63de6ebce4c2d1d678d1b04b",
+      "name": "Benton",
+      "AdminName": "Juliana",
+      "BuildingName": "Adrienne",
+      "BuildingLocation": "Walls",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Fern"
+    },
+    {
+      "_id": "63de6ebc10a3bea7420007a9",
+      "name": "Hogan",
+      "AdminName": "Aileen",
+      "BuildingName": "Russo",
+      "BuildingLocation": "Deleon",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Hilda"
+    },
+    {
+      "_id": "63de6ebccde096a991909a0e",
+      "name": "Ware",
+      "AdminName": "Ellis",
+      "BuildingName": "Burks",
+      "BuildingLocation": "Earnestine",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Valentine"
+    },
+    {
+      "_id": "63de6ebc97c7d1d775fef7c6",
+      "name": "Conner",
+      "AdminName": "Shelia",
+      "BuildingName": "Lily",
+      "BuildingLocation": "Silva",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Stevens"
+    },
+    {
+      "_id": "63de6ebc17125fbdb6411590",
+      "name": "Mullins",
+      "AdminName": "Adeline",
+      "BuildingName": "Dora",
+      "BuildingLocation": "Nancy",
+      "picture": "http://placehold.it/32x32",
+      "AdminVicePresident": "Gomez"
+    }
+  ])
+  setBuildingDatas(data)
+
+}
 
     const back = () => {
       if(user == 'STUDENT'){
@@ -120,7 +218,7 @@ import BuildingModal from '../../../Modal/BuildingModal';
                     numColumns = '2'
                     data={buidlingdata}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item._id}
                 />
             </View>
             </SafeAreaView>

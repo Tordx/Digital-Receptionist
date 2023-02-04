@@ -34,23 +34,25 @@ export default function GuestLoginScreen() {
 
   const setNewGuest = async () => {
 
-        if (guestfullname.length === 0){
+    navigation.navigate('GuestHomeScreen');
 
-          Alert.alert('Please input your name');
-          console.log('this');
+        // if (guestfullname.length === 0){
 
-          } if (purpose === 'Select')  {
+        //   Alert.alert('Please input your name');
+        //   console.log('this');
+
+        //   } if (purpose === 'Select')  {
           
-              Alert.alert("What's your purpose of the use?");
+        //       Alert.alert("What's your purpose of the use?");
 
-            } if (image.length === 0) {
-              Alert.alert("Please upload a selfie")
+        //     } if (image.length === 0) {
+        //       Alert.alert("Please upload a selfie")
               
-                }else {
+        //         }else {
 
-                  navigation.navigate('GuestHomeScreen');
-                  console.log('this');
-              }
+        //           navigation.navigate('GuestHomeScreen');
+        //           console.log('this');
+        //       }
 
 
   //       navigation.navigate('GuestHomeScreen')

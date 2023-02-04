@@ -27,35 +27,123 @@ import { useSelector } from 'react-redux';
     const [facultydata , setFacultyDatas] = useState('');
 
     useEffect(() => {
-
-      getFacultyData()
+      FakeData()
+      // getFacultyData()
 
     }, []);
 
     const navigation = useNavigation();
 
-    const getFacultyData = async() => {
+//     const getFacultyData = async() => {
 
-    var result = await remoteDBFaculty.allDocs({
-      include_docs: true,
-      attachments: true
-    });
-    if(result.rows){
-        let modifiedArr = result.rows.map(function(item){
-        return item.doc
-    });
-    let filteredData = modifiedArr.filter(item => {
-        return item;
-      });
-      if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-              return item
-          })
-          setFacultyDatas(newFilterData)
-      }
-  }  
+//     var result = await remoteDBFaculty.allDocs({
+//       include_docs: true,
+//       attachments: true
+//     });
+//     if(result.rows){
+//         let modifiedArr = result.rows.map(function(item){
+//         return item.doc
+//     });
+//     let filteredData = modifiedArr.filter(item => {
+//         return item;
+//       });
+//       if(filteredData) {
+//           let newFilterData = filteredData.map(item => {
+//               return item
+//           })
+//           setFacultyDatas(newFilterData)
+//       }
+//   }  
 
-};
+// };
+
+const FakeData = async() => {
+
+  const data = ([
+    {
+      "_id": "63de704b452d8b18045a1eba",
+      "Facultyname": "Schultz",
+      "FacultyBuilding": "Debbie",
+      "FacultyPresident": "Magdalena",
+      "FacultyVicePresident": "Olive",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704ba966ec6dc84e9b82",
+      "Facultyname": "Pace",
+      "FacultyBuilding": "Moses",
+      "FacultyPresident": "Slater",
+      "FacultyVicePresident": "Lawanda",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704be11d2be17372fdde",
+      "Facultyname": "Haney",
+      "FacultyBuilding": "Dorthy",
+      "FacultyPresident": "Davenport",
+      "FacultyVicePresident": "Nora",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704bf622ee40b42a323e",
+      "Facultyname": "Hammond",
+      "FacultyBuilding": "Audra",
+      "FacultyPresident": "Bonnie",
+      "FacultyVicePresident": "Elena",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704b80af967adb051afc",
+      "Facultyname": "Byers",
+      "FacultyBuilding": "Conrad",
+      "FacultyPresident": "Louise",
+      "FacultyVicePresident": "Maryann",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704b8175d2f2ebb46cb7",
+      "Facultyname": "Wallace",
+      "FacultyBuilding": "Long",
+      "FacultyPresident": "Madge",
+      "FacultyVicePresident": "Helene",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704bf9e4b9fdea34d57d",
+      "Facultyname": "Stein",
+      "FacultyBuilding": "Cora",
+      "FacultyPresident": "Constance",
+      "FacultyVicePresident": "Melanie",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704bd69a520323157e21",
+      "Facultyname": "Hobbs",
+      "FacultyBuilding": "Simon",
+      "FacultyPresident": "Charles",
+      "FacultyVicePresident": "Brock",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704b626b8340fb7c1643",
+      "Facultyname": "Ray",
+      "FacultyBuilding": "Barnes",
+      "FacultyPresident": "Marva",
+      "FacultyVicePresident": "Colleen",
+      "picture": "http://placehold.it/32x32"
+    },
+    {
+      "_id": "63de704b73f2cea959c167a6",
+      "Facultyname": "Glenn",
+      "FacultyBuilding": "Adkins",
+      "FacultyPresident": "Jillian",
+      "FacultyVicePresident": "Earlene",
+      "picture": "http://placehold.it/32x32"
+    }
+  ])
+  setFacultyDatas(data)
+
+}
       const back = () => {
         if(user == 'STUDENT'){
           navigation.navigate('StudentHomeScreen')
@@ -101,7 +189,7 @@ import { useSelector } from 'react-redux';
                     numColumns = '4'
                     data={facultydata}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item._id}
                 />
             </View>
             {/* <AddButton
