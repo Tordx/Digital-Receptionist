@@ -48,13 +48,13 @@ export default function StudentHomeScreen() {
   },[])
 
   if (seconds == 60)
-  ToastAndroid.show("Session ending in 60 seconds, Please re-login", ToastAndroid.SHORT) // shows warning time interval 
+  ToastAndroid.show("Session ending in 60 seconds", ToastAndroid.SHORT) // shows warning time interval 
   if (seconds == 0) 
   navigation.navigate('InitialRoutingScreen')
    
   useEffect(() => {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-      return () => backHandler.removeEventListener()
+      return () => backHandler.remove()
     }, [])
 
     
@@ -62,7 +62,7 @@ export default function StudentHomeScreen() {
  const confirmLogout = () => {
 
   Alert.alert(
-      'Confirm logout',
+      "You're about to exit",
       'Are you sure?',
       [
         {
@@ -93,7 +93,7 @@ export default function StudentHomeScreen() {
     }}
     >
         <CloseButton
-        title =  'logout'
+        title =  'Exit'
         name = 'logout'
         size = {30}
         onPress = {confirmLogout}

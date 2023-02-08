@@ -178,10 +178,6 @@ const FakeData = async() => {
                 justifyContent: 'center',
                 alignItems: 'center',}}>
                 
-                <SearchBar
-                    placeholder = 'Search Faculty'
-                    style={{top: 75}}
-                />
                 
             <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
                 <FlatList

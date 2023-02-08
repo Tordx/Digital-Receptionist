@@ -19,7 +19,7 @@ export const StudentMainMenu = () => {
           
           style = {[{}]}
           source = {require("../../../Assets/Img/icons8-classroom-96.png")}
-          title = 'Classes'
+          title = 'Courses'
           onPress = {() =>  navigation.navigate('ClassScreen')}
           />
           
