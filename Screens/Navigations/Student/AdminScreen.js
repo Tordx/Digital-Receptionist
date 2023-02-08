@@ -158,15 +158,6 @@ import { useSelector } from 'react-redux';
 
 }
 
-
-    const back = () => {
-      if(user == 'STUDENT'){
-        navigation.navigate('StudentHomeScreen')
-      }else{
-        navigation.navigate('GuestHomeScreen')
-      }
-    }
-
     const renderItem = ({ item }) => {
  
       return(
@@ -192,10 +183,6 @@ import { useSelector } from 'react-redux';
                 justifyContent: 'center',
                 alignItems: 'center',}}>
                 
-                <SearchBar
-                    placeholder = 'Search Admin'
-                    style={{top: 75}}
-                />
                
             <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
                 <FlatList
@@ -209,7 +196,7 @@ import { useSelector } from 'react-redux';
             </SafeAreaView>
             
             <CloseButton
-                    onPress = {back}
+                    onPress = {() => navigation.navigate('StudentHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
