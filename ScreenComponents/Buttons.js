@@ -26,28 +26,28 @@ export const ReportButton = () => {
 
 }
 
-export const AppointmentButton = () =>{
+export const SearchButton = (props) =>{
 
-    const navigation = useNavigation();
 
   return (
-    <View style = {{ alignContent: 'center',}}>
     <TouchableOpacity
-        onPress={()=> navigation.navigate('LoginScreen')}
+        onPress={props.onPress}
         style = {{  
-            width: 400, 
-            height: 50, 
+            width: 100, 
+            height: 40, 
             backgroundColor: '#0f2ed6',
-            alignSelf: 'center',
-            borderRadius: 100,
+            alignItems: 'center',
+            borderRadius: 3,
             justifyContent: 'center',
+            alignSelf: 'center',
+            position: 'absolute',
+            right: 5
         }}
         >
-        <Text style = {{textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-            Schedule an Appointment
+        <Text style = {{textAlign: 'center', fontSize: 20, fontWeight: '700', color: 'white' }}>
+            Search
         </Text>
     </TouchableOpacity>
-    </View>
   )
 }
 
