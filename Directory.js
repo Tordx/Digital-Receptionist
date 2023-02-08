@@ -34,8 +34,6 @@ import AddSuperAdmin from './Screens/Navigations/Employee/AddSuperAdmin';
 import LogBookScreen from './Screens/Navigations/Employee/LogBookScreen';
 import AddBuildingScreen from './Screens/Navigations/Employee/AddBuildingScreen';
 // Guest StackScreen
-import GuestHomeScreen from './Screens/Navigations/Guest/GuestHomeScreen';
-import GuestLoginScreen from './Screens/Navigations/Guest/GuestLoginScreen';
 import Camera from './ScreenComponents/Camera';
 
 export default function Directory() {
@@ -71,8 +69,6 @@ export default function Directory() {
                 <Stack.Screen name = 'AddEventScreen' component={AddEventScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AdminReports' component={AdminReports} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddStudentScreen' component={AddStudentScreen} options = {{ headerShown: false }} />
-                <Stack.Screen name = 'GuestLoginScreen' component={GuestLoginScreen} options = {{ headerShown: false }} />
-                <Stack.Screen name = 'GuestHomeScreen' component={GuestHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddSuperAdmin' component={AddSuperAdmin} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddBuildingScreen' component={AddBuildingScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'LogBookScreen' component={LogBookScreen} options = {{ headerShown: false }} />
