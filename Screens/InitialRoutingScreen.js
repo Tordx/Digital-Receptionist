@@ -10,6 +10,7 @@ import {
     ImageBackground,
     ToastAndroid,
     Pressable,
+    Animated
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -26,87 +27,49 @@ import UniversityMap from './UniversityMap';
 
 export default function InitialRoutingScreen() {
 
-    const dispatch = useDispatch()
+    const [fadeAnim] = useState(new Animated.Value(0));
     const navigation = useNavigation();
-
-    const student = () => {
-         dispatch(setUser('STUDENT'))
-         navigation.navigate('StudentLoginScreen')
-    }
-    const guest = () => {
-         navigation.navigate('GuestLoginScreen')
-         dispatch(setUser('GUEST'))
-    }
-
-    const this1 = () => {
-
-        console.log('This was pressed')
-         navigation.navigate('UniversityMap')
-        console.log('Error')
-
-    }
+    
+    useEffect(() => {
+        Animated.loop(
+            Animated.sequence([
+              Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true
+              }),
+              Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true
+              })
+            ])
+          ).start();
+      }, [fadeAnim]);
 
   return (
+    <Pressable onPress = {() => navigation.navigate('StudentHomeScreen')}
+    style = {{
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',}}>
     <ImageBackground 
     source={require('../Assets/Img/Background_image.png')}
     resizeMode = 'cover'
     style = {{
-        flex: 1,
+        width: '100%',
+        height: '100%',
       alignItems: 'center',
       justifyContent: 'center',}}
    >
-    <Pressable style = {{bottom: 50, left: 50, position: 'absolute', margin:20}} 
-    onPress = {() => navigation.navigate('UniversityMap')}>
-        <Text 
-        // style = {{bottom: 50, position: 'absolute', margin:20}}
-        >DKHDR {Version}</Text>
-        </Pressable>
-        <ReportButton/>
-        <View style = {{flexDirection: 'row', width: '80%', height: '90%', justifyContent: 'center', alignItem: 'center'}}>
-            <Pressable style = {[styles.Box, {backgroundColor: '#0f2ed6'}]}
-                onPress = {() => student()}
-                android_ripple = {{
-      
-                    color: '#fff',
-                    radius: 300,
-      
-                }}
-            >
-                <Image
-                    source={require("../Assets/Img/icons8-man-reading-a-book-96.png")}
-                    style = {{width: 175, height: 175}}
-          />
-          
-          <Text style = {[styles.text, {color: '#fddf54'}]}>STUDENT</Text>
-
-            </Pressable>
-            <Pressable 
-                style = {{justifyContent: 'center', alignItems: 'center',marginHorizontal: 20, width: '20%'}}
-                onLongPress = {() => navigation.navigate('AdminLoginScreen')}
-                delayLongPress = {1500}>
-                <FlipLogo/>
-            </Pressable>
-            <Pressable 
-                style = {styles.Box}
-                onPress = {() => guest()}
-                android_ripple = {{
-      
-                    color: '#fff',
-                    radius: 300,
-      
-                }}
-            >
-                <Image
-                    source={require("../Assets/Img/icons8-account-96.png")}
-                    style = {{width: 175, height: 175}}
-          />
-          
-          <Text style = {styles.text}>GUEST</Text>
-
-            </Pressable>
+        <FlipLogo/>
+                <Animated.View style={{ opacity: fadeAnim }}>
+                    <Text style = {{fontSize: 25}}>press anywhere to continue</Text>
+                </Animated.View>
             
-        </View>
     </ImageBackground>
+    </Pressable>
   )
 }
 
