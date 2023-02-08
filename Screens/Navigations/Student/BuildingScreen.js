@@ -159,14 +159,6 @@ const FakeData = async() => {
 
 }
 
-    const back = () => {
-      if(user == 'STUDENT'){
-        navigation.navigate('StudentHomeScreen')
-      }else{
-        navigation.navigate('GuestHomeScreen')
-      }
-    }
-
     const renderItem = ({ item }) => {
       // console.log(item.EventImage)
       // console.log('item.EventImage')
@@ -202,12 +194,8 @@ const FakeData = async() => {
                 justifyContent: 'center',
                 alignItems: 'center',}}>
                 
-                <SearchBar
-                    placeholder = 'Search Buildings'
-                    style={{top: 75}}
-                />
                 <CloseButton
-                    onPress = {back}
+                    onPress = {() => navigation.navigate('StudentHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
