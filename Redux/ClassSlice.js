@@ -5,7 +5,7 @@
    name: 'classmodal',
    initialState: {
     isOpen: false,
-    classData: []
+    courseData: []
    },
    reducers: {
       openClassModal: (state , action) => {
@@ -14,8 +14,8 @@
       closeClassModal: (state , action) => {
         state.isOpen = false
       },
-      setClassData: (state , action ) => {
-        state.classData = action.payload
+      setCourseData: (state , action ) => {
+        state.courseData = action.payload
         console.log(action)
         console.log('action')
       },
@@ -24,6 +24,6 @@
  })
  
  // Action creators are generated for each case reducer function
- export const {openClassModal , closeClassModal , setClassData} = ClassSlice.actions
+ export const {openClassModal , closeClassModal , setCourseData} = ClassSlice.actions
  
  export default ClassSlice.reducer
