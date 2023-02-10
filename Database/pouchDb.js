@@ -220,3 +220,22 @@ export const remoteDBBuilding = new PouchDB('http://admin:admin@192.168.0.191:59
     console.log(err);
   });
 }
+
+export const localDBCourse = new PouchDB('Building', {adapter: 'asyncstorage'})
+export const remoteDBCourses = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_courses')
+
+ export const SyncCourses = () => {  
+  localDBCourse.sync(remoteDBCourses, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBCourse.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
