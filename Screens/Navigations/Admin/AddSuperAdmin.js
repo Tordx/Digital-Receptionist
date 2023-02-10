@@ -16,7 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {localDBSuperAdmin , SyncSuperAdmin} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 

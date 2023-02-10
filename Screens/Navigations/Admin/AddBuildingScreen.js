@@ -13,7 +13,7 @@ import {
 import React , {useState , useEffect , useMemo} from 'react'
 import {localDBBuilding , SyncBuilding} from '../../../Database/pouchDb'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { launchImageLibrary } from 'react-native-image-picker';

@@ -16,7 +16,7 @@ import React , {useState , useEffect , useMemo} from 'react';
 import { Modal_apsg } from '../Components/Modalapsg';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {localDBEvent , SyncEvent} from '../../../Database/pouchDb'
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { launchImageLibrary } from 'react-native-image-picker';

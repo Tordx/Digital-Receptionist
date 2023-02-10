@@ -15,7 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {localDBSchedules , remoteDBSchedules , SyncSchedules} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
-import { AddButton, CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons';
+import { AddButton, CloseButton, ProceedButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { FlatList } from 'react-native-gesture-handler';

@@ -2,7 +2,7 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import AdminMainMenu from './AdminMainMenu'
 import { useNavigation } from '@react-navigation/native'
-import { CloseButton } from '../../../ScreenComponents/Buttons'
+import { CloseButton } from '../../../Components/Buttons'
 import { Version } from '../../../Assets/constants/constants'
 
 export default function AdminHomeScreen() {

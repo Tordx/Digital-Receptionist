@@ -1,6 +1,6 @@
 import { View, Text,StyleSheet } from 'react-native'
 import React from 'react'
-import { Box, CloseButton } from '../../../ScreenComponents/Buttons'
+import { Box, CloseButton } from '../../../Components/Buttons'
 import { useNavigation } from '@react-navigation/native'
 import { Version } from '../../../Assets/constants/constants';
 export default function AdminMainMenu() {

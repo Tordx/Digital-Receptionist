@@ -1,7 +1,7 @@
 import { View, Text, ImageBackground, TextInput, StyleSheet, Image , Alert , ToastAndroid } from 'react-native'
 import React, {useState} from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
+import { CloseButton, ProceedButton } from '../../../Components/Buttons'
 import { useNavigation } from '@react-navigation/native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import { remoteDBSuperAdmin , remoteDBLogBook , SyncLogBook } from '../../../Database/pouchDb'

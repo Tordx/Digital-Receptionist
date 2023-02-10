@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , AddButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Button } from 'react-native-paper';
