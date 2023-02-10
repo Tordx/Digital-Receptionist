@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar } from '../../../ScreenComponents/SearchBar';
+import { SearchBar } from '../../../Components/SearchBar';
 import { useSelector } from 'react-redux';
 import { remoteDBBuilding } from '../../../Database/pouchDb';
 import { useDispatch } from 'react-redux';

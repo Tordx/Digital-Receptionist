@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity , Image } from 'react-native'
 import React , {useState , useEffect} from 'react';
-import { CloseButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { remoteDBEvent } from '../../../Database/pouchDb';
 import EventModal from '../../../Modal/EventModal';
@@ -185,7 +185,7 @@ const FakeData = async() => {
 
         <CloseButton
           
-          onPress = {back}
+          onPress = {() => navigation.navigate('StudentHomeScreen')}
           name = 'arrow-back'
           size = {50}
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}

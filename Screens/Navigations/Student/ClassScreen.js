@@ -12,8 +12,9 @@ import {
     Modal,
     Image,
     StatusBar,
+    RefreshControl,
 } from 'react-native';
-import { CloseButton , SearchButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { remoteDBCourses } from '../../../Database/pouchDb';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +24,7 @@ export const ClassScreen = () => {
 
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const [courseRefresh, setCourseRefresh] = useState(false);
     const {courseData} = useSelector((store) => (store.classmodal))
     const [newSearch, setNewSearch] = useState();
     const [searchTerm, setSearchTerm] = useState('');
@@ -30,10 +32,10 @@ export const ClassScreen = () => {
     const [image, setImage] = useState('https://www.caltrain.com/files/images/2021-09/default.jpg')
   
     useEffect(() => {
-      rendertickets();
+      renderCourse();
     }, [searchTerm]);
   
-    const rendertickets = async () => {
+    const renderCourse = async () => {
       var result = await remoteDBCourses.allDocs({
         include_docs: true,
         attachments: true,
@@ -49,7 +51,8 @@ export const ClassScreen = () => {
           new RegExp(searchTerm, 'i').test(item.Course) ||
           new RegExp(searchTerm, 'i').test(item.CourseAcronym) ||
           new RegExp(searchTerm, 'i').test(item.Department) ||
-          new RegExp(searchTerm, 'i').test(item.DepartmentAcronym) 
+          new RegExp(searchTerm, 'i').test(item.DepartmentAcronym)
+
           )
         });
         if (filteredData) {
@@ -62,23 +65,32 @@ export const ClassScreen = () => {
       }
     };
 
+    const RefreshList = () => {
+
+        setCourseRefresh(true);
+        renderCourse();
+        setCourseRefresh(false);
+
+    }
+
 
     const renderItem = ({ item }) => {
 
       return(
         <Pressable
          style = {styles.item}
-        android_ripple={{
-          color: 'red',
+          android_ripple={{
+          color: 'yellow',
           borderRadius: 100,
+          radius: 200,
         }}
         onPress={() => {
-         dispatch(setCourseData(item)); setOpenModal(true); console.log('error')
+         dispatch(setCourseData(item)); setOpenModal(true);
 
         }} >
         <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image}}/>
           <Text style = {styles.title}>
-              {item.CourseAcronym}
+              {item.Course}
           </Text>
        </Pressable>
       )
@@ -92,7 +104,7 @@ export const ClassScreen = () => {
     >
         <View style = {styles.contentcontainer}>
           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
-          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>PANGASINAN STATE UNIVERSITY, LINGAYEN CAMPUS — COURSES OFFERED</Text>
+          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
           </View>
         {newSearch ? (
           <View style = {{justifyContent: 'center', alignItems: 'center'}}>
@@ -101,6 +113,12 @@ export const ClassScreen = () => {
           numColumns = {5}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
+          refreshControl = {
+            <RefreshControl
+              refreshing = {courseRefresh}
+              onRefresh = {RefreshList}
+            />
+          }
           
         />
         </View>
@@ -127,21 +145,20 @@ export const ClassScreen = () => {
           name = 'arrow-back'
           size = {40}
           style = {{flexDirection: 'row', top: 25, left: 25, position: 'absolute'}}
-  />
+        />
     <Modal
       visible = {openModal}
       transparent
       animationType='fade'
       onRequestClose = {() => setOpenModal(false)}
     >
-      <StatusBar
-      hidden
-      />
-      <View style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignSelf: 'center', alignItems: 'center'}}>
+     
+      <Pressable style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignSelf: 'center', alignItems: 'center'}} onPress = {() => setOpenModal(false)}> 
         <View style = {{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', width: '95%', height: '90%'}}>
         <Text>{courseData.Course}</Text>
+        <Text>{courseData?.Description}</Text>
         </View>
-      </View>
+      </Pressable>
     </Modal>
 
     </ImageBackground>
@@ -188,7 +205,8 @@ export const ClassScreen = () => {
 
     title: {
 
-      fontSize: 25,
+      fontSize: 16,
+      textAlign: 'center'
 
     },
 

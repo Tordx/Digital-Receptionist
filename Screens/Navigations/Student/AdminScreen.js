@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , AddButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar } from '../../../ScreenComponents/SearchBar';
+import { SearchBar } from '../../../Components/SearchBar';
 import { remoteDBAdmin } from '../../../Database/pouchDb';
 import AdminModal from '../../../Modal/AdminModal';
 import { useDispatch } from 'react-redux';

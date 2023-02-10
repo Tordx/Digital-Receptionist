@@ -6,241 +6,218 @@ import {
     StyleSheet, 
     Text,
     ImageBackground, 
-    TouchableOpacity 
+    Pressable,
+    Modal,
+    TextInput,
+    ActivityIndicator,
+    RefreshControl
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton , AddButton } from '../../../ScreenComponents/Buttons';
+import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar } from '../../../ScreenComponents/SearchBar';
 import { remoteDBFaculty } from '../../../Database/pouchDb';
-import FacultyModal from '../../../Modal/FacultyModal';
-import { openFacultyModal } from '../../../Redux/FacultySlice';
-import { setFacultyData } from '../../../Redux/FacultySlice';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { setFacultyDatas } from '../../../Redux/FacultySlice';
+import { useDispatch, useSelector } from 'react-redux';
 
    export default function FacultyScreen () {
 
-    const user = useSelector(state => state.essensials.user)
     const dispatch = useDispatch();
-    const [facultydata , setFacultyDatas] = useState('');
+    
+    const {facultyDatas} = useSelector((store) => (store.facultymodal))
+    const [searchTerm, setSearchTerm] = useState('');
+    const [openModal, setOpenModal] = useState(false)
+    const [newSearch, setNewSearch] = useState();
+    const [facultyRefresh, setFacultyRefresh] = useState(false)
 
     useEffect(() => {
-      FakeData()
-      // getFacultyData()
+      renderFaculty();
+    }, [searchTerm]);
 
-    }, []);
+    const renderFaculty = async() => {
+
+      var result = await remoteDBFaculty.allDocs({
+        include_docs: true,
+        attachments: true,
+      })
+      if(result.rows){
+        let modifiedArr = result.rows.map(function(item)
+        {
+          return item.doc;
+        });
+        let filteredData = modifiedArr.filter(item => {
+          return item && (
+            new RegExp(searchTerm, 'i').test(item.College) ||
+            new  RegExp(searchTerm, 'i').test(item.Building) ||
+            new RegExp(searchTerm, 'i').test(item.Dean)
+            // include more parameters
+          )
+        });
+        if(filteredData) {
+          let newFilterData = filteredData.map(item => {
+            return item;
+          });
+          setNewSearch(newFilterData);
+        }
+      }
+    }
 
     const navigation = useNavigation();
 
-//     const getFacultyData = async() => {
+    const RefreshList = () => {
 
-//     var result = await remoteDBFaculty.allDocs({
-//       include_docs: true,
-//       attachments: true
-//     });
-//     if(result.rows){
-//         let modifiedArr = result.rows.map(function(item){
-//         return item.doc
-//     });
-//     let filteredData = modifiedArr.filter(item => {
-//         return item;
-//       });
-//       if(filteredData) {
-//           let newFilterData = filteredData.map(item => {
-//               return item
-//           })
-//           setFacultyDatas(newFilterData)
-//       }
-//   }  
+      setFacultyRefresh(true);
+      renderCourse();
+      setCourseRefresh(false);
 
-// };
-
-const FakeData = async() => {
-
-  const data = ([
-    {
-      "_id": "63de704b452d8b18045a1eba",
-      "Facultyname": "Schultz",
-      "FacultyBuilding": "Debbie",
-      "FacultyPresident": "Magdalena",
-      "FacultyVicePresident": "Olive",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704ba966ec6dc84e9b82",
-      "Facultyname": "Pace",
-      "FacultyBuilding": "Moses",
-      "FacultyPresident": "Slater",
-      "FacultyVicePresident": "Lawanda",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704be11d2be17372fdde",
-      "Facultyname": "Haney",
-      "FacultyBuilding": "Dorthy",
-      "FacultyPresident": "Davenport",
-      "FacultyVicePresident": "Nora",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704bf622ee40b42a323e",
-      "Facultyname": "Hammond",
-      "FacultyBuilding": "Audra",
-      "FacultyPresident": "Bonnie",
-      "FacultyVicePresident": "Elena",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704b80af967adb051afc",
-      "Facultyname": "Byers",
-      "FacultyBuilding": "Conrad",
-      "FacultyPresident": "Louise",
-      "FacultyVicePresident": "Maryann",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704b8175d2f2ebb46cb7",
-      "Facultyname": "Wallace",
-      "FacultyBuilding": "Long",
-      "FacultyPresident": "Madge",
-      "FacultyVicePresident": "Helene",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704bf9e4b9fdea34d57d",
-      "Facultyname": "Stein",
-      "FacultyBuilding": "Cora",
-      "FacultyPresident": "Constance",
-      "FacultyVicePresident": "Melanie",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704bd69a520323157e21",
-      "Facultyname": "Hobbs",
-      "FacultyBuilding": "Simon",
-      "FacultyPresident": "Charles",
-      "FacultyVicePresident": "Brock",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704b626b8340fb7c1643",
-      "Facultyname": "Ray",
-      "FacultyBuilding": "Barnes",
-      "FacultyPresident": "Marva",
-      "FacultyVicePresident": "Colleen",
-      "picture": "http://placehold.it/32x32"
-    },
-    {
-      "_id": "63de704b73f2cea959c167a6",
-      "Facultyname": "Glenn",
-      "FacultyBuilding": "Adkins",
-      "FacultyPresident": "Jillian",
-      "FacultyVicePresident": "Earlene",
-      "picture": "http://placehold.it/32x32"
-    }
-  ])
-  setFacultyDatas(data)
-
-}
-      const back = () => {
-        if(user == 'STUDENT'){
-          navigation.navigate('StudentHomeScreen')
-        }else{
-          navigation.navigate('GuestHomeScreen')
-        }
-      }
-
+  }
 
       const renderItem = ({ item }) => {
 
         return(
-          <TouchableOpacity onPress={() => {
-            dispatch(openFacultyModal()) ; dispatch(setFacultyData(item))
+          <Pressable 
+          style = {styles.item}
+          android_ripple={{
+            color: 'red',
+            borderRadius: 100,
+            radius: 200,
+          }} 
+          onPress={() => {
+             dispatch(setFacultyDatas(item)); navigation.navigate('Maps')
           }} >
-          <View style = {styles.item}>
             <Text style = {styles.title}>
-              {item.Facultyname}
+              {item.College}</Text>
+            <Text style = {styles.title}>
+              {item.Building}
             </Text>
-          </View>
-        </TouchableOpacity>
+        </Pressable>
         )
       }
 
       return (
-        <ImageBackground style={styles.container}
-        source = {require('../../../Assets/Img/Background_image.png')}
-
+        <ImageBackground 
+          source = {require('../../../Assets/Img/Background_image.png')} 
+          style={styles.container}
+          resizeMode = 'cover'
         >
-           
-            <SafeAreaView style = {{
-                justifyContent: 'center',
-                alignItems: 'center',}}>
-                
-                
-            <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
-                <FlatList
-                    showsVerticalScrollIndicator = {false}
-                    numColumns = '4'
-                    data={facultydata}
-                    renderItem={renderItem}
-                    keyExtractor={item => item._id}
+            <View style = {styles.contentcontainer}>
+              <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
+              <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
+              </View>
+            {newSearch ? (
+              <View style = {{justifyContent: 'center', alignItems: 'center'}}>
+            <FlatList
+              data={newSearch}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              refreshControl = {
+                <RefreshControl
+                  refreshing = {facultyRefresh}
+                  onRefresh = {RefreshList}
                 />
-            </View>
-            {/* <AddButton
-                    onPress = {() => navigation.navigate('AddFaculty')}
-                    name = 'add'
-                    color = 'green'
-                    size = {100}
-                    style = {{flexDirection: 'row', bottom: 0, right: 0, position: 'absolute', margin: 20}}
-              /> */}
-            </SafeAreaView>
-            <CloseButton
-                    onPress = {back}
-                    name = 'arrow-back'
-                    size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+              }
+              
             />
-            <FacultyModal/>
-        </ImageBackground>
-      );
+            </View>
+          ) : (
+            <ActivityIndicator size="large" color="#fddf54"/>
+          )}
+               </View>
+              
+            <View style = {styles.TextInput}>
+            <TextInput
+                style  = {{width: '100%', fontSize: 17}}
+                value={searchTerm} 
+                onChange={(event) => {
+                  setSearchTerm(event.nativeEvent.text) }}
+             
+            />
+            <SearchButton onPress = {(event) => {
+            setSearchTerm(event.nativeEvent.text);
+            }} />
+            </View>
+            <CloseButton
     
-
-  }
-
-  const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        
-    },
-
-    item: {
-
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        padding: 30,
-        width: 275,
-        height: 300,
-        borderRadius: 10,
-        marginVertical: 16,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
+              onPress = {() => navigation.navigate('StudentHomeScreen')}     
+              name = 'arrow-back'
+              size = {40}
+              style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
+      />
+    
+        </ImageBackground>
+      )
+    
+      }
+    
+      const styles = StyleSheet.create({
+    
+        container: {
+    
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f2f3f7',
+            
         },
-        shadowOpacity: 0.6,
-        shadowRadius: 2,
-        elevation: 3,
-
-    },
-
-    title: {
-
-      fontSize: 32,
-    },
-  });
+    
+        contentcontainer: {
+    
+          width: '100%',
+          position: 'absolute',
+          top: 100,
+          justifyContent: 'center',
+          alignItems: 'center',
+    
+        },
+    
+        item: {
+    
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+          width: 245,
+          height: 230,
+          borderRadius: 5,
+          marginVertical: 5,
+          marginHorizontal: 5,
+          elevation: 1,
+          flexDirection: 'column'
+    
+        },
+    
+        title: {
+    
+          fontSize: 16,
+          textAlign: 'center'
+    
+        },
+    
+        text: {
+    
+          fontSize: 25,
+          fontWeight: '500',
+          left: 0,
+          textAlign: 'center',
+          color: 'white'
+    
+        },
+    
+        TextInput: { 
+    
+          position: 'absolute', 
+          top: 20, 
+          alignSelf:'center', 
+          flexDirection: 'row',
+          backgroundColor: '#ffff',
+          width: 600,
+          borderRadius: 4,
+          height: 50,
+          elevation: 1,
+          borderWidth: .5,
+          borderColor: '#a2a2a2'
+    
+        }
+    
+      });
+    

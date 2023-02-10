@@ -1,7 +1,7 @@
 import { View, Text, ImageBackground, TextInput, StyleSheet, ToastAndroid , Alert, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CloseButton, ProceedButton } from '../../../ScreenComponents/Buttons'
+import { CloseButton, ProceedButton } from '../../../Components/Buttons'
 import { useNavigation } from '@react-navigation/native'
 import { remoteDBStudentLogin , remoteDBLogBook } from '../../../Database/pouchDb'
 import { useDispatch } from 'react-redux'

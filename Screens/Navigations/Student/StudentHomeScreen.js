@@ -10,13 +10,14 @@ import {
 } from 'react-native'
 import React, {useEffect, useState} from 'react';
 import psu_BackgroundImage from '../../../Assets/Img/psu_backgroundImage2.png';
-import { SearchScreen } from '../../../ScreenComponents/SearchBar';
-import { WelcomeText } from '../../../ScreenComponents/WelcomeText';
-import { CloseButton, ReportButton } from '../../../ScreenComponents/Buttons';
+import { SearchScreen } from '../../../Components/SearchBar';
+import { WelcomeText } from '../../../Components/WelcomeText';
+import { CloseButton, ReportButton } from '../../../Components/Buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
 import psu_logo from '../../../Assets/Img/psu_logo.png'
 import {StudentMainMenu} from './StudentMainMenu';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 
 
@@ -102,18 +103,18 @@ export default function StudentHomeScreen() {
        <ReportButton
        />
       <View style = {{alignItems: 'center', justifyContent: 'center',}}>
-        
+        <Pressable onLongPress = {()=> navigation.navigate('AdminLoginScreen')}>
         <Image
         
-        source={require('../../../Assets/Img/psu_logo_emboss.png')}
+        source={require('../../../Assets/Img/psu_logo.png')}
         style = {{width: 200, height: 200, marginBottom: 25, }}
 
         />
+        </Pressable>
         <Text style = {{fontSize: 20,}}> Welcome to Pangasinan State University, Lingayen Campus </Text>
           <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center'}}>
             <StudentMainMenu/>
             </View>
-          <Text>{seconds}</Text>
       </View>
 
       </ImageBackground>

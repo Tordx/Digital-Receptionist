@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
-import { Box } from '../../../ScreenComponents/Buttons'
+import { Box } from '../../../Components/Buttons'
 
 export const StudentMainMenu = () => {
 
