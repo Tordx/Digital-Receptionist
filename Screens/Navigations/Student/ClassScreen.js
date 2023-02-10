@@ -9,7 +9,9 @@ import {
     ImageBackground,
     Pressable,
     ActivityIndicator,
-    Modal
+    Modal,
+    Image,
+    StatusBar,
 } from 'react-native';
 import { CloseButton , SearchButton } from '../../../ScreenComponents/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -25,6 +27,7 @@ export const ClassScreen = () => {
     const [newSearch, setNewSearch] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [openModal, setOpenModal] = useState(false);
+    const [image, setImage] = useState('https://www.caltrain.com/files/images/2021-09/default.jpg')
   
     useEffect(() => {
       rendertickets();
@@ -66,16 +69,17 @@ export const ClassScreen = () => {
         <Pressable
          style = {styles.item}
         android_ripple={{
-          color: 'red'
+          color: 'red',
+          borderRadius: 100,
         }}
         onPress={() => {
          dispatch(setCourseData(item)); setOpenModal(true); console.log('error')
 
         }} >
-          
-       <Text style = {styles.title}>
-              {item.Course}
-            </Text>
+        <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image}}/>
+          <Text style = {styles.title}>
+              {item.CourseAcronym}
+          </Text>
        </Pressable>
       )
   }
@@ -87,6 +91,9 @@ export const ClassScreen = () => {
       resizeMode = 'cover'
     >
         <View style = {styles.contentcontainer}>
+          <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
+          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>PANGASINAN STATE UNIVERSITY, LINGAYEN CAMPUS — COURSES OFFERED</Text>
+          </View>
         {newSearch ? (
           <View style = {{justifyContent: 'center', alignItems: 'center'}}>
         <FlatList
@@ -98,7 +105,7 @@ export const ClassScreen = () => {
         />
         </View>
       ) : (
-        <ActivityIndicator size="large" color="#1240ac"/>
+        <ActivityIndicator size="large" color="#fddf54"/>
       )}
            </View>
           
@@ -127,6 +134,9 @@ export const ClassScreen = () => {
       animationType='fade'
       onRequestClose = {() => setOpenModal(false)}
     >
+      <StatusBar
+      hidden
+      />
       <View style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignSelf: 'center', alignItems: 'center'}}>
         <View style = {{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', width: '95%', height: '90%'}}>
         <Text>{courseData.Course}</Text>
@@ -155,7 +165,7 @@ export const ClassScreen = () => {
 
       width: '100%',
       position: 'absolute',
-      top: 75,
+      top: 100,
       justifyContent: 'center',
       alignItems: 'center',
 
@@ -163,20 +173,22 @@ export const ClassScreen = () => {
 
     item: {
 
+      alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#fff',
       width: 245,
-      height: 245,
-      borderRadius: 3,
+      height: 230,
+      borderRadius: 5,
       marginVertical: 5,
       marginHorizontal: 5,
       elevation: 1,
+      flexDirection: 'column'
 
     },
 
     title: {
 
-      fontSize: 32,
+      fontSize: 25,
 
     },
 
