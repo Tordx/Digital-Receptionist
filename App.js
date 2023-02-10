@@ -16,7 +16,8 @@ function App (){
     <>
     <Directory/>
     <StatusBar
-    hidden = {true}
+    hidden
+    barStyle={'dark-content'}
     />
     </>
  
