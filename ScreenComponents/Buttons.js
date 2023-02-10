@@ -35,7 +35,7 @@ export const SearchButton = (props) =>{
         style = {{  
             width: 100, 
             height: 40, 
-            backgroundColor: '#0f2ed6',
+            backgroundColor: '#fddf54',
             alignItems: 'center',
             borderRadius: 3,
             justifyContent: 'center',
@@ -44,7 +44,7 @@ export const SearchButton = (props) =>{
             right: 5
         }}
         >
-        <Text style = {{textAlign: 'center', fontSize: 20, fontWeight: '700', color: 'white' }}>
+        <Text style = {{textAlign: 'center', fontSize: 20, fontWeight: '700', color: '#0f2ed6' }}>
             Search
         </Text>
     </TouchableOpacity>
