@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground , Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { CloseButton } from '../ScreenComponents/Buttons';
+import { CloseButton } from '../Components/Buttons';
 import { RadioButton } from 'react-native-paper';
 import { localDBReportBugReport , SyncReportBugReport } from '../Database/pouchDb';
 import { Picker } from '@react-native-picker/picker';

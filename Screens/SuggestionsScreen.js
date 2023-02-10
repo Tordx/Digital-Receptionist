@@ -4,7 +4,7 @@ import { BuildingSelection } from '../Assets/constants/constants';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native';
-import { CloseButton } from '../ScreenComponents/Buttons';
+import { CloseButton } from '../Components/Buttons';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { localDBSuggestionFeedback , SyncSuggestionFeedback } from '../Database/pouchDb';
@@ -64,15 +64,6 @@ export default function SuggestionsScreen() {
      }
      }
     }
-
-    const back = () => {
-      if(user == 'STUDENT'){
-        navigation.navigate('StudentHomeScreen')
-      }else{
-        navigation.navigate('GuestHomeScreen')
-      }
-    }
-
   return (
     <ImageBackground  style = {styles.Container} 
     resizeMode = 'cover'
@@ -80,9 +71,8 @@ export default function SuggestionsScreen() {
       <CloseButton
       
         name = "arrow-back"
-        onPress = {back}
-        size = {50}
-        color = '#808080'
+        onPress = {() => navigation.navigate('StudentHomeScreen')}
+        size = {35}
         style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
 
       />

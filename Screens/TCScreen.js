@@ -1,8 +1,8 @@
 import { View, Text, Pressable, Image, Animated, Easing } from 'react-native'
 import React from 'react'
-import { ProceedButton } from '../ScreenComponents/Buttons'
+import { ProceedButton } from '../Components/Buttons'
 import { useNavigation } from '@react-navigation/native'
-import { FlipLogo } from '../ScreenComponents/FlipLogo'
+import { FlipLogo } from '../Components/FlipLogo'
 import { useSelector } from 'react-redux';
 
 
