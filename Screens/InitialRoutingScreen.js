@@ -13,17 +13,8 @@ import {
     Animated
 
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import psu_logo from '../Assets/Img/psu_logo.png';
-import psu_backgroundImage from '../Assets/Img/psu_backgroundImage.png';
-import { useFocusEffect ,useNavigation } from '@react-navigation/native';
-import { AppName, Version, WCT, TagLine, Report } from '../Assets/constants/constants';
-import {ReportButton} from '../ScreenComponents/Buttons';
-import BackgroundTimer from 'react-native-background-timer';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../Redux/TaskReducer';
-import { FlipLogo } from '../ScreenComponents/FlipLogo';
-import UniversityMap from './UniversityMap';
+import { useNavigation } from '@react-navigation/native';
+import { FlipLogo } from '../Components/FlipLogo';
 
 export default function InitialRoutingScreen() {
 
