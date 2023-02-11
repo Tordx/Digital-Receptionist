@@ -203,7 +203,7 @@ export const remoteDBGuest = new PouchDB('http://admin:1234@192.168.0.199:5984/g
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //BUILDING
 export const localDBBuilding = new PouchDB('Building', {adapter: 'asyncstorage'})
-export const remoteDBBuilding = new PouchDB('http://admin:admin@192.168.0.191:5984/building')
+export const remoteDBBuilding = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_building')
 
  export const SyncBuilding = () => {  
   localDBBuilding.sync(remoteDBBuilding, {
