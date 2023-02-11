@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import { remoteDBFaculty } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Maps from '../../Maps';
 
    export default function FacultyScreen () {
 
@@ -82,7 +83,7 @@ import { useDispatch, useSelector } from 'react-redux';
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); navigation.navigate('Maps')
+             dispatch(setFacultyDatas(item)); setOpenModal(true)
           }} >
             <Text style = {styles.title}>
               {item.College}</Text>
@@ -101,7 +102,7 @@ import { useDispatch, useSelector } from 'react-redux';
         >
             <View style = {styles.contentcontainer}>
               <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
-              <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
+              <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COLLEGES</Text>
               </View>
             {newSearch ? (
               <View style = {{justifyContent: 'center', alignItems: 'center'}}>
@@ -136,6 +137,7 @@ import { useDispatch, useSelector } from 'react-redux';
             setSearchTerm(event.nativeEvent.text);
             }} />
             </View>
+            
             <CloseButton
     
               onPress = {() => navigation.navigate('StudentHomeScreen')}     
@@ -143,7 +145,25 @@ import { useDispatch, useSelector } from 'react-redux';
               size = {40}
               style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
       />
-    
+        <Modal
+          transparent
+          visible = {openModal}
+          onRequestClose = {() => setOpenModal(false)}
+        >
+          <View style = {{flexDirection: 'row', flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',}}>
+            <Maps/>
+            <View>
+              <Text>
+                {facultyDatas.College}
+              </Text>
+            </View>
+          </View>
+          <CloseButton
+          onPress = {() => setOpenModal(false)}     
+          name = 'arrow-back'
+          size = {40}
+          style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
+        </Modal>
         </ImageBackground>
       )
     
