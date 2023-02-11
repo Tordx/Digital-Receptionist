@@ -67,8 +67,8 @@ import Maps from '../../Maps';
     const RefreshList = () => {
 
       setFacultyRefresh(true);
-      renderCourse();
-      setCourseRefresh(false);
+      renderFaculty();
+      setFacultyRefresh(false);
 
   }
 
@@ -115,6 +115,7 @@ import Maps from '../../Maps';
                 <RefreshControl
                   refreshing = {facultyRefresh}
                   onRefresh = {RefreshList}
+                  style = {{backgroundColor: 'green'}}
                 />
               }
               
@@ -152,7 +153,7 @@ import Maps from '../../Maps';
         >
           <View style = {{flexDirection: 'row', flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',}}>
             <Maps/>
-            <View>
+            <View style = {{width: '50%', height: '50%', justifyContent: 'center', alignItems: 'center',}} >
               <Text>
                 {facultyDatas.College}
               </Text>
@@ -161,6 +162,7 @@ import Maps from '../../Maps';
           <CloseButton
           onPress = {() => setOpenModal(false)}     
           name = 'arrow-back'
+          color = '#fff'
           size = {40}
           style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
         </Modal>
