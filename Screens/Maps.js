@@ -7,30 +7,25 @@ import {
 import React, { useEffect, useState,  } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import { useSelector } from 'react-redux';
+import { CloseButton } from '../Components/Buttons'
+import { useNavigation } from '@react-navigation/native';
 
 export default function Maps() {
 
+  const navigation = useNavigation();
   const {facultyDatas} = useSelector((store) => store.facultymodal)                                                                       
   const [AccessToken] = useState(facultyDatas.Token)
-  MapboxGL.setWellKnownTileServer('Mapbox'); // error making mapbox v-11 style must include
+  MapboxGL.setWellKnownTileServer('Mapbox'); // error making mapbox v-11 style must include this component
   MapboxGL.setAccessToken(AccessToken)
 
   return (
-    <View style = {{flex: 1}}>
+    <View style = {{width: '50%', height: '90%', borderRadius: 5}}>
     <MapboxGL.MapView
    AccessToken = {AccessToken}
-   style = {{flex: 1}}
+   style = {{flex: 1, borderRadius: 5}}
    
    >
    </MapboxGL.MapView>
-   <CloseButton
-
-        onPress = {() => navigation.navigate('StudentHomeScreen')}     
-        name = 'arrow-back'
-        size = {40}
-        color = 'red'
-        style = {{flexDirection: 'row', top: 25, left: 25, position: 'absolute'}}
-    />
    </View>
   );
 }
