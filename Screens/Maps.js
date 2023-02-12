@@ -51,18 +51,17 @@ export default function Maps() {
   }
 
   return (
-    <View style = {{width: '50%', height: '95%', borderRadius: 5, marginLeft: 5}}>
+    <View style = {{width: '50%', height: '95%', borderRadius: 5, marginLeft: 20}}>
     <MapboxGL.MapView
    style = {{flex: 1, borderRadius: 5}}
    styleURL = 'mapbox://styles/kalokalo/cldzyog2k000a01t401qifylc'
    tile
    logoEnabled = {false}
-   pitchEnabled = {false}
-   scrollEnabled = {false}
+   attributionPosition = {{bottom: 10, left: 10}}
    >
     <MapboxGL.Camera
-      centerCoordinate={center}
-      zoomLevel = {17.5}
+      centerCoordinate={facultyDatas.Coordinates}
+      zoomLevel = {17.9}
     />
       <MapboxGL.PointAnnotation
         id = {facultyDatas.CollegeAcronym}
