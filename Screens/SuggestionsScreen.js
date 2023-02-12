@@ -67,15 +67,7 @@ export default function SuggestionsScreen() {
   return (
     <ImageBackground  style = {styles.Container} 
     resizeMode = 'cover'
-    source = {require('../Assets/Img/Background_image2.png')}>
-      <CloseButton
-      
-        name = "arrow-back"
-        onPress = {() => navigation.navigate('StudentHomeScreen')}
-        size = {35}
-        style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-
-      />
+    source = {require('../Assets/Img/Background_image.png')}>
     <View style = {styles.BoxContainer}>
       <View style = {{flexDirection: 'row',}}>
         <View style = {styles.ButtonContainer} >
@@ -98,7 +90,7 @@ export default function SuggestionsScreen() {
         </View>
       </View>
       <View style = {{margin: 5}} >
-        <Text style = {{fontSize: 17,}}>Fullname</Text>
+        <Text style = {{fontSize: 17,}}>Fullname <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
             onChangeText={(value) => setName(value)}
@@ -176,8 +168,18 @@ export default function SuggestionsScreen() {
                 Submit
             </Text>
       </TouchableOpacity>
-    </View>
       <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 25, fontWeight: '500', color: '#808080' }}>Submit a suggestion or feedback</Text>
+    </View>
+    
+      
+      <CloseButton
+      
+        name = "arrow-back"
+        onPress = {() => navigation.navigate('StudentHomeScreen')}
+        size = {35}
+        style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+
+      />
     </ImageBackground>
   )
 };
