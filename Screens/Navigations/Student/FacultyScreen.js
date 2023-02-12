@@ -78,7 +78,7 @@ import Maps from '../../Maps';
           <Pressable 
           style = {styles.item}
           android_ripple={{
-            color: 'red',
+            color: 'blue',
             borderRadius: 100,
             radius: 200,
           }} 
@@ -149,15 +149,29 @@ import Maps from '../../Maps';
         <Modal
           transparent
           visible = {openModal}
+          animationType = 'fade'
           onRequestClose = {() => setOpenModal(false)}
         >
-          <View style = {{flexDirection: 'row', flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center',}}>
+          <View style = {{flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00000032'}}>
             <Maps/>
-            <View style = {{width: '50%', height: '50%', justifyContent: 'center', alignItems: 'center',}} >
-              <Text>
-                {facultyDatas.College}
-              </Text>
+            <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center'}} >
+              <View style = {{position: 'absolute', top: 10, left: 20, width: '100%', height: '100%'}}>
+                <View style = {{justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
+                  <Text style = {{fontSize: 25, fontWeight: '500' }}>
+                    {facultyDatas.College}
+                  </Text>
+                  <Text style = {{fontSize: 20, fontWeight: '300' }}>
+                  {facultyDatas.Dean} — College Dean
+                </Text>
+              </View>
+              <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
+                  
+                  <Text style = {{fontSize: 20, fontWeight: '300' }}>
+                  {facultyDatas.Building}
+                </Text>
+              </View>
             </View>
+          </View>
           </View>
           <CloseButton
           onPress = {() => setOpenModal(false)}     
