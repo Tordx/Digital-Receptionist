@@ -26,12 +26,7 @@ export default function SuggestionsScreen() {
   const setNewSuggestion = async () => {
     const id = uuid.v4();
 
-    if(1+1 == 3){
-      console.log('hey')
-    }
-    // if((classname.length == 0) && (subject.length == 0) ) {
-    //   console.log('ilove')}
-   else{
+    
      try {
        var NewSuggestion = {
         _id: id,
@@ -40,16 +35,7 @@ export default function SuggestionsScreen() {
           Name: name,
           FeedbackorSuggestion : checked,
           SpecifySuggestion : specify
-     
-        //  place: place,
-        //  Price : price,
-        //  Preptime : preptime,
-        //  Deliveryfee : deliveryfee,
-        //  Status: status,
-        //  Image: Images
        }
-    //    console.log(Images)
-    //    console.log('Images')
     localDBSuggestionFeedback.put(NewSuggestion)
        .then((response) =>{
          Alert.alert('Your Schedule has been successfully added!')
@@ -62,7 +48,7 @@ export default function SuggestionsScreen() {
      } catch (error) {
       console.log(error)
      }
-     }
+
     }
   return (
     <ImageBackground  style = {styles.Container} 
@@ -168,10 +154,10 @@ export default function SuggestionsScreen() {
                 Submit
             </Text>
       </TouchableOpacity>
-      <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 25, fontWeight: '500', color: '#808080' }}>Submit a suggestion or feedback</Text>
+      
     </View>
     
-      
+    <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 25, fontWeight: '500', color: 'black' }}>Submit a suggestion or feedback</Text>
       <CloseButton
       
         name = "arrow-back"
@@ -218,7 +204,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#f2f3f7',
     width: 600,
-    borderRadius: 15,
+    borderRadius: 5,
     height: 50,
     marginTop: 10,
     alignItems: 'center',
