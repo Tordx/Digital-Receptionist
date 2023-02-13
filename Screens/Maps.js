@@ -33,11 +33,13 @@ export default function Maps() {
     <MapboxGL.Camera
       centerCoordinate={center}
       zoomLevel = {17.8}
+      onPress = {() => console.log(facultyDatas.Coordinates)}
     />
       <MapboxGL.PointAnnotation
         id = {facultyDatas.CollegeAcronym}
         title = {facultyDatas.College}
         coordinate = {facultyDatas.Coordinates}
+       
       />
    </MapboxGL.MapView>
    </View>
