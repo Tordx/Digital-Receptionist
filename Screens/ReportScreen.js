@@ -22,8 +22,6 @@ export default function SuggestionsScreen() {
     if(1+1 == 3){
       console.log('hey')
     }
-    // if((classname.length == 0) && (subject.length == 0) ) {
-    //   console.log('ilove')}
    else{
      try {
        var NewReport = {
@@ -34,15 +32,7 @@ export default function SuggestionsScreen() {
           ReportBugReport : checked,
           SpecifyComplaint : specify
      
-        //  place: place,
-        //  Price : price,
-        //  Preptime : preptime,
-        //  Deliveryfee : deliveryfee,
-        //  Status: status,
-        //  Image: Images
        }
-    //    console.log(Images)
-    //    console.log('Images')
     localDBReportBugReport.put(NewReport)
        .then((response) =>{
          Alert.alert('Your Schedule has been successfully added!')
@@ -59,10 +49,7 @@ export default function SuggestionsScreen() {
     }
 
   return (
-    <ImageBackground  style = {styles.Container} 
-    resizeMode = 'cover'
-    // source = {require('../Assets/Img/Background_image2.png')}
-    >
+    <View  style = {styles.Container}>
       <CloseButton
       
         name = "arrow-back"
@@ -171,7 +158,7 @@ export default function SuggestionsScreen() {
       </TouchableOpacity>
     </View>
       <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 20, color: 'white',  }}>In case of emergency please call your local authority  </Text>
-    </ImageBackground>
+    </View>
   )
 };
 
