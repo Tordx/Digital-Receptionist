@@ -23,10 +23,7 @@ import Maps from '../../Maps';
    export default function FacultyScreen () {
 
     const dispatch = useDispatch();
-    
-    const {facultyDatas} = useSelector((store) => (store.facultymodal))
     const [searchTerm, setSearchTerm] = useState('');
-    const [openModal, setOpenModal] = useState(false)
     const [newSearch, setNewSearch] = useState();
     const [facultyRefresh, setFacultyRefresh] = useState(false)
 
@@ -83,7 +80,7 @@ import Maps from '../../Maps';
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); setOpenModal(true)
+             dispatch(setFacultyDatas(item)); navigation.navigate('MapScreen')
           }} >
             <Text style = {styles.title}>
               {item.College}</Text>
@@ -146,40 +143,7 @@ import Maps from '../../Maps';
               size = {40}
               style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
       />
-        <Modal
-          transparent
-          visible = {openModal}
-          animationType = 'fade'
-          onRequestClose = {() => setOpenModal(false)}
-        >
-          <View style = {{flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#00000032'}}>
-            <Maps/>
-            <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center'}} >
-              <View style = {{position: 'absolute', top: 10, left: 20, width: '100%', height: '100%'}}>
-                <View style = {{justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-                  <Text style = {{fontSize: 25, fontWeight: '500' }}>
-                    {facultyDatas.College}
-                  </Text>
-                  <Text style = {{fontSize: 20, fontWeight: '300' }}>
-                  {facultyDatas.Dean} — College Dean
-                </Text>
-              </View>
-              <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-                  
-                  <Text style = {{fontSize: 20, fontWeight: '300' }}>
-                  {facultyDatas.Building}
-                </Text>
-              </View>
-            </View>
-          </View>
-          </View>
-          <CloseButton
-          onPress = {() => setOpenModal(false)}     
-          name = 'arrow-back'
-          color = '#fff'
-          size = {40}
-          style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
-        </Modal>
+       
         </ImageBackground>
       )
     
