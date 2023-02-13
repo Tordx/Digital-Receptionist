@@ -60,6 +60,26 @@ export const remoteDBAdmin = new PouchDB('http://admin:1234@192.168.0.199:5984/a
     console.log(err);
   });
 }
+
+export const localDBfacultyMember = new PouchDB('facultyMember', {adapter: 'asyncstorage'})
+export const remoteDfacultyMember = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_facultymembers')
+
+ export const SyncfacultyMember = () => {  
+  localDBfacultyMember.sync(remoteDfacultyMember, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBfacultyMember.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // EVENT
 export const localDBEvent = new PouchDB('Event', {adapter: 'asyncstorage'})
