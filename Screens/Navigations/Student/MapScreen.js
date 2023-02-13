@@ -1,4 +1,5 @@
 //import liraries
+import { useNavigation } from '@react-navigation/native';
 import React, { Component, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, FlatList, RefreshControl } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -11,10 +12,11 @@ export default function MapScreen ()  {
 
     useEffect(() => {
         MemberDetails();
-      },[])
+      },[memberdetails])
 
     const {facultyDatas} = useSelector((store) => (store.facultymodal))
-    const [memberdetails, setMemberFaculty] = useState();
+    const navigation = useNavigation()
+    const [memberdetails, setMemberFaculty] = useState('');
     const [memberRefresh, setMemberRefresh] = useState();
     
     
@@ -29,7 +31,7 @@ export default function MapScreen ()  {
             return item.doc
           })
           let filteredData = modifiedArr.filter(item => {
-            return item
+            return item.CollegeAcronym  === facultyDatas.CollegeAcronym
           })
           if(filteredData) {
             let newFilterData = filteredData.map(item => {
@@ -46,7 +48,7 @@ export default function MapScreen ()  {
       const RefreshList = () => {
 
         setMemberRefresh(true);
-        renderFaculty();
+        MemberDetails();
         setMemberRefresh(false);
   
     }
@@ -54,8 +56,9 @@ export default function MapScreen ()  {
     const renderItem = ({item}) => {
 
         return (
-        <View>
-            <Text>{item.Name}</Text>
+        <View style = {{flexDirection: 'row'}}>
+            <Text>{item.Name} — </Text>
+            <Text>{item.Title}</Text>
         </View>
         )
 
@@ -104,10 +107,10 @@ export default function MapScreen ()  {
         </View>
         </View>
         <CloseButton
-        onPress = {() => setOpenModal(false)}     
+        onPress = {() => navigation.goBack('FacultyScreen')}     
         name = 'arrow-back'
         color = '#fff'
-        size = {40}
+        size = {35}
         style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
       </>
     );
