@@ -43,7 +43,7 @@ export const remoteDBFaculty = new PouchDB('http://admin:admin@192.168.0.192:598
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ADMIN
 export const localDBAdmin = new PouchDB('Admin', {adapter: 'asyncstorage'})
-export const remoteDBAdmin = new PouchDB('http://admin:1234@192.168.0.199:5984/admin')
+export const remoteDBAdmin = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_administration')
 
  export const SyncAdmin = () => {  
   localDBAdmin.sync(remoteDBAdmin, {
@@ -163,7 +163,7 @@ export const remoteDBStudentLogin = new PouchDB('http://admin:1234@192.168.0.199
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //SUPERADMIN
 export const localDBSuperAdmin = new PouchDB('SuperAdmin', {adapter: 'asyncstorage'})
-export const remoteDBSuperAdmin = new PouchDB('http://admin:1234@192.168.0.199:5984/superadmin')
+export const remoteDBSuperAdmin = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_systemadmin')
 
  export const SyncSuperAdmin = () => {  
   localDBSuperAdmin.sync(remoteDBSuperAdmin, {
