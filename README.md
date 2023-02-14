@@ -1,7 +1,6 @@
 # Digital Help Desk Receptionist
 
-This is a thesis Project currently under development by BSCS A students, Please refer to our copyright policy for usage.
-
+This is a thesis Project currently under development by BSCS A students, Please refer to our copyright policy for usage (Note: ako talaga yung isang Narra na contributor diyan, ibang pc lang gamit di na setup 😆😆) 
 
 ## Get Started
 To begin with, check the installation guide of [React Native Development Environment Setup](https://reactnative.dev/docs/environment-setup)
