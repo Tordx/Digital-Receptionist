@@ -39,6 +39,13 @@ export const StudentMainMenu = () => {
           title = 'Event'
   
           />
+          <Box
+          
+          source={require("../../../Assets/Img/icons8-book-reading-96.png")}
+          onPress = {() => navigation.navigate('EventScreen')}
+          title = 'Citizen Chart'
+  
+          />
         </View>
         <View style = {{flexDirection: 'row'}}>
           <Box
@@ -61,6 +68,14 @@ export const StudentMainMenu = () => {
           onPress={() =>  navigation.navigate('SuggestionsScreen')}
           source={require("../../../Assets/Img/icons8-hint-96.png")}
           title = 'Suggestions'
+  
+          />
+
+          <Box
+          
+          onPress={() =>  navigation.navigate('SuggestionsScreen')}
+          source={require("../../../Assets/Img/icons8-map-marker-96.png")}
+          title = 'University Map'
   
           />
         </View>
