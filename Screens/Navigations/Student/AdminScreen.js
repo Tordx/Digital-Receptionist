@@ -7,11 +7,14 @@ import {
     Text,
     ImageBackground, 
     TouchableOpacity, 
-    Pressable
+    Pressable,
+    RefreshControl,
+    ActivityIndicator,
+    TextInput
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseButton , AddButton } from '../../../Components/Buttons';
+import { CloseButton , AddButton, SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SearchBar } from '../../../Components/SearchBar';
 import { remoteDBAdmin } from '../../../Database/pouchDb';
@@ -27,121 +30,228 @@ import { useSelector } from 'react-redux';
 
     const user = useSelector(state => state.essensials.user)
     const dispatch = useDispatch()
-    const [admindata , setAdminDatas] = useState([])
+    const [admindata , setAdminDatas] = useState([]);
+    const [searchTerm, setSearchTerm] = useState();
+    const [adminRefresh, setAdminRefresh] = useState(false);
+    const [univPres, setUnivPres] = useState('University President');
+    const [univPresident, setUnivPresident] = useState([]);
+    const [univVicePres, setUnivVicePRes] = useState('Vice Presidents');
+    const [univVicePresident, setUnivVicePresident] = useState([]);
 
     useEffect(() => {
       getAdminData()
 
-    }, []);
+    }, [admindata]);
 
 
 
     const navigation = useNavigation();
 
-    const getAdminData = async() => {
-
-    var result = await remoteDBAdmin.allDocs({
-      include_docs: true,
-      attachments: true
-    });
-    if(result.rows){
-        let modifiedArr = result.rows.map(function(item){
-        return item.doc
-    });
-    let filteredData = modifiedArr.filter(item => {
-        return item;
+    const getAdminData = async () => {
+      var result = await remoteDBAdmin.allDocs({
+        include_docs: true,
+        attachments: true,
       });
-      if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-              return item
-          })
-          setAdminDatas(newFilterData)
+      if (result.rows) {
+        let modifiedArr = result.rows.map(function (item) {
+          return item.doc;
+        });
+        let filteredData = modifiedArr.filter((item) => item);
+    
+        const presidentData = filteredData.filter(
+          (item) => item.Office === univPres
+        );
+        const vicePresidentData = filteredData.filter(
+          (item) => item.Office === univVicePres
+        );
+
+        const SearchFunction = filteredData.filter((item) => {
+            return item && (
+              new RegExp(searchTerm, 'i').test(item.Name) ||
+              new RegExp(searchTerm, 'i').test(item.Office) ||
+              new RegExp(searchTerm, 'i').test(item.Position)
+            )
+        }); // for proper implementation
+    
+        setUnivPresident(presidentData);
+        setUnivVicePresident(vicePresidentData);
+        setAdminData(filteredData)
+        setSearchTerm(SearchFunction)
       }
-  // }  
+    };
+
+    const RefreshList = () => {
+
+      setAdminRefresh(true);
+      getAdminData();
+      setAdminRefresh(false)
+
     }
-  }
+
     const renderItem = ({ item }) => {
- 
+
       return(
-        <Pressable onPress={() => {
-          dispatch(openAdminModal()) ; dispatch(setAdminData(item))
+        <Pressable 
+        style = {styles.item}
+        android_ripple={{
+          color: 'blue',
+          borderRadius: 100,
+          radius: 200,
+        }} 
+        onPress={() => {
+           dispatch(setFacultyDatas(item))
         }} >
-        <View style = {styles.item}>
           <Text style = {styles.title}>
-            {item.Name}
+            {item.Name}</Text>
+          <Text style = {styles.title}>
+            {item.Position}
           </Text>
-        </View>
       </Pressable>
       )
-  }
+    }
 
-      return (
-        <ImageBackground style={styles.container}
-        source = {require('../../../Assets/Img/Background_image.png')}
-
-        >
+    return (
+      <ImageBackground 
+        source = {require('../../../Assets/Img/Background_image.png')} 
+        style={styles.container}
+        resizeMode = 'cover'
+      >
+        <ScrollView>
+          <View style = {styles.contentcontainer}>
            
-            <SafeAreaView style = {{
-                justifyContent: 'center',
-                alignItems: 'center',}}>
-                
-               
-            <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
-                <FlatList
-                    showsVerticalScrollIndicator = {false}
-                    numColumns = {5}
-                    data={admindata}
-                    renderItem={renderItem}
-                    keyExtractor={item => item._id}
-                />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS AND PROFILES</Text>
             </View>
-            </SafeAreaView>
-            
-            <CloseButton
-                    onPress = {() => navigation.navigate('StudentHomeScreen')}
-                    name = 'arrow-back'
-                    size = {40}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
+          {admindata ? 
+            <View style = {{justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flexDirection: 'column', flex: 1, marginTop: 20}}>
+            <RefreshControl
+            refreshing = {adminRefresh}
+            onRefresh = {RefreshList}
+            style = {{backgroundColor: 'green'}}
             />
-            <AdminModal/>
-        </ImageBackground>
-      );
-    
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, width: '100%', marginBottom: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY PRESIDENT</Text>
+            </View>
+          <FlatList
+            data={univPresident}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+            
+          />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, marginBottom: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY VICE PRESIDENTS</Text>
+            </View>
+            <FlatList
+              data={univVicePresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            </View>
+        : (
+          <ActivityIndicator size="large" color="#fddf54"/>
+        )}
 
-  }
-
-  const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
+             </View> 
+</ScrollView>
+            
+          <View style = {styles.TextInput}>
+          <TextInput
+              style  = {{width: '100%', fontSize: 17}}
+              value={searchTerm} 
+              onChange={(event) => {
+                setSearchTerm(event.nativeEvent.text) }}
+           
+          />
+          <SearchButton onPress = {(event) => {
+          setSearchTerm(event.nativeEvent.text);
+          }} />
+          </View>
+          
+          <CloseButton
+  
+            onPress = {() => navigation.navigate('StudentHomeScreen')}     
+            name = 'arrow-back'
+            size = {40}
+            style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
+    />
+     
+      </ImageBackground>
+    )
+  
+    }
+  
+    const styles = StyleSheet.create({
+  
+      container: {
+  
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#f2f3f7',
+          
+      },
+  
+      contentcontainer: {
+  
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
-        
-    },
+        alignItems: 'center',
+        marginVertical: 5,
+        paddingTop: 75
 
-    item: {
-
-        alignSelf: 'center',
+  
+      },
+  
+      item: {
+  
+        alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
-        padding: 30,
-        width: 275,
-        height: 300,
-        borderRadius: 10,
-        marginVertical: 16,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-        shadowOpacity: 0.6,
-        shadowRadius: 2,
-        elevation: 3,
-
-    },
-
-    title: {
-
-      fontSize: 32,
-    },
-  });
+        backgroundColor: '#fff',
+        width: 245,
+        height: 230,
+        borderRadius: 5,
+        marginHorizontal: 5,
+        marginVertical: 5,
+        elevation: 1,
+        flexDirection: 'column'
+  
+      },
+  
+      title: {
+  
+        fontSize: 16,
+        textAlign: 'center'
+  
+      },
+  
+      text: {
+  
+        fontSize: 25,
+        fontWeight: '500',
+        left: 0,
+        textAlign: 'center',
+        color: 'white'
+  
+      },
+  
+      TextInput: { 
+  
+        position: 'absolute', 
+        top: 20, 
+        alignSelf:'center', 
+        flexDirection: 'row',
+        backgroundColor: '#ffff',
+        width: 600,
+        borderRadius: 4,
+        height: 50,
+        elevation: 1,
+        borderWidth: .5,
+        borderColor: '#a2a2a2'
+  
+      }
+  
+    });
+  
