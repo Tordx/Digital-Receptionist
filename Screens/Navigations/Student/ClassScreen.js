@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { remoteDBCourses } from '../../../Database/pouchDb';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourseData } from '../../../Redux/ClassSlice';
-  
+
 export const ClassScreen = () => {
 
     const navigation = useNavigation()
@@ -29,7 +29,7 @@ export const ClassScreen = () => {
     const [newSearch, setNewSearch] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [openModal, setOpenModal] = useState(false);
-    const [image, setImage] = useState('https://www.caltrain.com/files/images/2021-09/default.jpg')
+    const [image, setImage] = useState('https://i.imgur.com/hYraFON.png');
   
     useEffect(() => {
       renderCourse();
@@ -88,7 +88,7 @@ export const ClassScreen = () => {
          dispatch(setCourseData(item)); setOpenModal(true);
 
         }} >
-        <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image}}/>
+        <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image }}/>
           <Text style = {styles.title}>
               {item.Course}
           </Text>
