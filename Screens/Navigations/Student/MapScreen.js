@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, StatusBar, FlatList, RefreshControl } from 'rea
 import { useSelector } from 'react-redux';
 import { CloseButton } from '../../../Components/Buttons';
 import { remoteDfacultyMember } from '../../../Database/pouchDb';
-import Maps from '../../Maps';
+import Maps from '../../../Components/Maps';
 
 // create a component
 export default function MapScreen ()  {
@@ -70,7 +70,11 @@ export default function MapScreen ()  {
             <StatusBar
                 hidden
             />
-          <Maps/>
+          <Maps
+          id = {facultyDatas.CollegeAcronym}
+          title = {facultyDatas.College}
+          coordinate = {facultyDatas.Coordinates}
+          />
           <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: 0}} >
             <View style = {{position: 'absolute', top: 10, left: 20, width: '100%', height: '100%',}}>
               <View style = {{justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10,}}>

@@ -18,7 +18,6 @@ import { useNavigation } from '@react-navigation/native';
 import { remoteDBFaculty } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Maps from '../../Maps';
 
    export default function FacultyScreen () {
 
