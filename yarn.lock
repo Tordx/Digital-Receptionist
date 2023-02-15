@@ -7255,6 +7255,11 @@ react-native-select-dropdown@^3.0.3:
   resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-3.0.3.tgz#8ba7b0ca132827da00fa914d8f270fe44412888b"
   integrity sha512-WjR3udyYHo+7O6DvQfC0CCrqxZiKZ7L9RiZ1K5q06Hy7mGpm8SlWyec27bRyPoVv/7+tgrBnOXLMwAhmZCbGTg==
 
+react-native-slideshow-improved@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-slideshow-improved/-/react-native-slideshow-improved-0.0.4.tgz#0b1169af4397c063e40ac06c35ae545394f5893d"
+  integrity sha512-AWdYWHeGkQrUJ0qubEec8K16iJNr0s4cBNIzQGXojO3VUWizaKiW6/PWD89cI1nXtsU3hzf17dL54No/F8ZNIg==
+
 react-native-uuid@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
