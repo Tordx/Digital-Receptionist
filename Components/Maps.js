@@ -7,17 +7,17 @@ import {
 import React, { useEffect, useState,  } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import { useSelector } from 'react-redux';
-import { CloseButton } from '../Components/Buttons'
+import { CloseButton } from './Buttons'
 import { useNavigation } from '@react-navigation/native';
 import { remoteDBBuilding } from '../Database/pouchDb';
 
-export default function Maps() {
+export default function Maps(props) {
 
   const navigation = useNavigation();
   const [buildingCoordinates, setBuildingCoordinates] = useState('')
   const {facultyDatas} = useSelector((store) => store.facultymodal)      
   const [center, setCenter] = useState([120.2307078878246, 16.032108026014853])                                                                 
-  const [AccessToken] = useState(facultyDatas.Token)
+  const [AccessToken] = useState('pk.eyJ1Ijoia2Fsb2thbG8iLCJhIjoiY2xkeXV5bWxwMHY3aTNvcjNsc3Bsc3hmdyJ9.n-Gnaro_yu9dj5PnUhNgfQ')
   MapboxGL.setWellKnownTileServer('Mapbox'); // error making mapbox v-11 style must include this component
   MapboxGL.setAccessToken(AccessToken)
 
@@ -33,12 +33,11 @@ export default function Maps() {
     <MapboxGL.Camera
       centerCoordinate={center}
       zoomLevel = {17.8}
-      onPress = {() => console.log(facultyDatas.Coordinates)}
     />
       <MapboxGL.PointAnnotation
-        id = {facultyDatas.CollegeAcronym}
-        title = {facultyDatas.College}
-        coordinate = {facultyDatas.Coordinates}
+        id = {props.id} // facultyDatas.CollegeAcronym
+        title = {props.title} // facultyDatas.College
+        coordinate = {props.coordinate} //facultyDatas.Coordinates
        
       />
    </MapboxGL.MapView>
