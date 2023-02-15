@@ -11,7 +11,7 @@ import {
 
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {localDBAdmin , SyncAdmin} from '../../../Database/pouchDb'
+import {localDBAdmin , SyncAdmin , remoteDBAdmin} from '../../../Database/pouchDb'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +20,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { setImages } from '../../../Redux/TaskReducer';
 import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
+import { FlatList } from 'react-native-gesture-handler';
 
 const CustomInput = (props) => {
 
@@ -42,24 +43,24 @@ return (
 )
 }
 
-
 export default function AddFacultyScreen() {
 
 useEffect(() => {
- 
+  admindatas()
 }, []);
 
   const dispatch = useDispatch();
   const navigation = useNavigation('');
 
   const [next, setNext] = useState(true);
-  const [adminname, setAdminName] = useState('');
-  const [adminbuilding, setAdminBuilding] = useState('');
-  const [adminpresident, setAdminPresident] = useState('');
-  const [adminvicepresident, setAdminVicePresident] = useState('');
-  const [adminmembers, setAdminMembers] = useState('');
-  const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png')
 
+  const [adminid , setAdminID] = useState(null);
+  const [adminrev , setAdminRev] = useState(null);
+  const [adminname, setAdminName] = useState('');
+  const [adminpostion, setAdminPosition] = useState('');
+  const [adminoffice, setAdminOffice] = useState('');
+  const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png')
+  const [dataforadmin , setDataForAdmin] = useState()
   const [transferred, setTransferred] = useState(0);
 
   const AddNewAdmin =  () => {
@@ -67,14 +68,10 @@ useEffect(() => {
      
     if (adminname.length == 0) {
       Alert.alert('Please Enter Admin Name') 
-    } else if (adminbuilding.length == 0) {
-        Alert.alert('Please Enter Admin Building') 
-      } else if (adminpresident.length == 0) {
-          Alert.alert('Please Enter Admin President')
-        } else if (adminvicepresident.length == 0) {
-            Alert.alert('Please Enter Admin VicePresident')
-          } else if (adminmembers == 0) {
-              Alert.alert('Please Enter Admin Member')
+    } else if (adminpostion.length == 0) {
+        Alert.alert('Please Enter Admin Position') 
+      } else if (adminoffice.length == 0) {
+          Alert.alert('Please Enter Admin Office')
             } else {
                 setNext(false)
                 }
@@ -120,20 +117,20 @@ const setNewAdmin = async () => {
   } else {
     try {
       const newAdmin = {
-        _id: id,
-        AdminName: adminname,
-        AdminBuilding: adminbuilding,
-        AdminPresident: adminpresident,
-        AdminVicePresident: adminvicepresident,
-        AdminMembers: adminmembers,
-        AdminImage: url,
+        _id: adminid === null ? id : adminid,
+        _rev:adminrev === null ? undefined : adminrev,
+        Name: adminname,
+        Position: adminpostion,
+        Office: adminoffice,
+        Image: url,
       };
-      localDBAdmin
+
+      remoteDBAdmin
         .put(newAdmin)
         .then((response) => {
           navigation.navigate('AdminHomeScreen');
-          Alert.alert('Your Schedule has been successfully added!');
-          SyncAdmin();
+          Alert.alert('Done');
+          // SyncAdmin();
         })
         .catch((err) => console.log(err));
     } catch (error) {
@@ -141,6 +138,49 @@ const setNewAdmin = async () => {
     }
   }
 };
+
+const admindatas = async() => {
+
+    var result = await remoteDBAdmin.allDocs({
+      include_docs: true,
+      attachments: true,
+    });
+    if (result.rows) {
+      let modifiedArr = result.rows.map(function (item) {
+        return item.doc;
+      });
+      setDataForAdmin(modifiedArr)
+      console.log('modifiedArr')
+      console.log(modifiedArr)
+      console.log('modifiedArr')
+
+    }
+}
+
+const renderItem = ({ item }) => {
+  // console.log(item.EventImage)
+  // console.log('item.EventImage')
+return(
+  <TouchableOpacity onPress={() => {
+   setAdminPosition(item.Position)
+   setAdminOffice(item.Office)
+   setAdminID(item._id)
+   setAdminRev(item._rev)
+   setImage(item.Image)
+  }} >
+  <View style = {{flex: 1 }}>
+    <Text style = {{fontSize: 35 , padding: 10}}>
+      {item.Position}
+    </Text>
+    {/* <Image
+        resizeMode="cover" style={{width: 550, height: 300}} source={{uri:item.BuildingPicture}}
+        
+        /> */}
+  </View>
+</TouchableOpacity>
+)
+}
+
 
 return (
   
@@ -156,38 +196,24 @@ return (
               <CustomInput
                 onChangeText={(value) => setAdminName(value)}
                  value={adminname}
-                 title = 'Admin Department  '
-                 placeholder="e.g. Year-end Party 2022"
+                 title = 'Admin Name  '
+                 placeholder="e.g. admin name"
               />
               <CustomInput
-                onChangeText={(value) => setAdminBuilding(value)}
-                value={adminbuilding}
+                onChangeText={(value) => setAdminPosition(value)}
+                value={adminpostion}
                 multiline
-                title='Admin Building'
-                placeholder="e.g. guidelines and other info"
+                title='Admin Position'
+                placeholder="e.g. position"
             
               />
               <CustomInput
-                onChangeText={(value) => setAdminPresident(value)}
-                value={adminpresident}
+                onChangeText={(value) => setAdminOffice(value)}
+                value={adminoffice}
                 multiline
-                title = 'Admin Director'
-                placeholder='The Event will be held on'
+                title = 'Admin Office'
+                placeholder='e.g. office'
             
-              />
-              <CustomInput
-                onChangeText={(value) => setAdminVicePresident(value)}
-                value={adminvicepresident}
-                multiline
-                title = 'Admin Executive Assistant'
-                placeholder='The Event will be held at'
-              />
-              <CustomInput
-                onChangeText={(value) => setAdminMembers(value)}
-                value={adminmembers}
-                multiline
-                title = 'Admin Members'
-                placeholder='The Event will be held at'
               />
              <TouchableOpacity
               onPress={AddNewAdmin}
@@ -219,15 +245,19 @@ return (
         </View>
       }
         <View style={styles.eventcontainer}>
-             
+             <FlatList
+             data={dataforadmin}
+             renderItem={renderItem}
+             keyExtractor={item => item._id}
+             />
         </View>
     </View>
-            <CloseButton
-                  onPress = {() => navigation.navigate('AdminHomeScreen')}
-                  name = 'arrow-back'
-                  size = {35}
-                  color = '#000'
-                  style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+        <CloseButton
+         onPress = {() => navigation.navigate('AdminHomeScreen')}
+         name = 'arrow-back'
+         size = {35}
+         color = '#000'
+         style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
       />
   </View>
 
