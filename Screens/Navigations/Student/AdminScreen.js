@@ -33,9 +33,11 @@ import { useSelector } from 'react-redux';
     const [admindata , setAdminDatas] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
     const [adminRefresh, setAdminRefresh] = useState(false);
-    const [univPres, setUnivPres] = useState('University President');
+    const [univPres] = useState('University President');
+    const [univVicePres] = useState('Vice Presidents');
+    const [univCampusPres] = useState('Office of the University President')
     const [univPresident, setUnivPresident] = useState([]);
-    const [univVicePres, setUnivVicePRes] = useState('Vice Presidents');
+    const [univCampusPresident, setUnivCampusPresident] = useState([]);
     const [univVicePresident, setUnivVicePresident] = useState([]);
 
     useEffect(() => {
@@ -64,6 +66,9 @@ import { useSelector } from 'react-redux';
         const vicePresidentData = filteredData.filter(
           (item) => item.Office === univVicePres
         );
+        const campusPresidentData = filteredData.filter(
+          (item) => item.Office === univCampusPres
+        )
 
         const SearchFunction = filteredData.filter((item) => {
             return item && (
@@ -75,6 +80,7 @@ import { useSelector } from 'react-redux';
     
         setUnivPresident(presidentData);
         setUnivVicePresident(vicePresidentData);
+        setUnivCampusPresident(campusPresidentData)
         setAdminData(filteredData)
         setSearchTerm(SearchFunction)
       }
@@ -122,7 +128,7 @@ import { useSelector } from 'react-redux';
             <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10}}>
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS AND PROFILES</Text>
             </View>
-          {admindata ? 
+          {admindata ? (
             <View style = {{justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flexDirection: 'column', flex: 1, marginTop: 20}}>
             <RefreshControl
             refreshing = {adminRefresh}
@@ -138,7 +144,7 @@ import { useSelector } from 'react-redux';
             keyExtractor={(item) => item._id}
             
           />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, marginBottom: 20}}>
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY VICE PRESIDENTS</Text>
             </View>
             <FlatList
@@ -148,7 +154,68 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE UNIVERSITY PRESIDENT</Text>
             </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION AND LINKAGES</Text>
+            </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AND STUDENT AFFAIRS</Text>
+            </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR PLANNING AND FINANCE MANAGEMENT</Text>
+            </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR RESEARCH, EXTENSION AND INNOVATION</Text>
+            </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR QUALITY ASSURANCE</Text>
+            </View>
+            <FlatList
+              data={univCampusPresident}
+              numColumns = {5}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+              
+            />
+            </View>
+        )
         : (
           <ActivityIndicator size="large" color="#fddf54"/>
         )}
