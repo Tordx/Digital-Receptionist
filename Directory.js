@@ -32,7 +32,7 @@ import LogBookScreen from './Screens/Navigations/Admin/LogBookScreen';
 import AddBuildingScreen from './Screens/Navigations/Admin/AddBuildingScreen';
 // Guest StackScreen
 import Camera from './Components/Camera';
-import Maps from './Screens/Maps';
+import Maps from './Components/Maps';
 import MapScreen from './Screens/Navigations/Student/MapScreen';
 
 export default function Directory() {
