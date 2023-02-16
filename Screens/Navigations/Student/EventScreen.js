@@ -16,20 +16,20 @@ export default function EventScreen() {
       ImageData()
     }, []);
 
-  const [imagedata, setImageData] = useState();
+  const [imagedata, setImageData] = useState('');
   const ImageData  = () => {
    const image  = [
       {
-        "img": "https://satriyaadikaums.files.wordpress.com/2019/10/welcome-slider-1024x446.jpg?w=1024]",
-        "_id": '2211'
+        img: "https://satriyaadikaums.files.wordpress.com/2019/10/welcome-slider-1024x446.jpg?w=1024]",
+        _id: '2211'
       },
       {
-        "img": "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-        "_id": '223'
+        img: "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
+        _id: '223'
       },
       {
-        "img": "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg",
-        "_id": '332'
+        img: "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg",
+        _id: '332'
       }
   ]
   setImageData(image)
@@ -39,13 +39,27 @@ export default function EventScreen() {
 
     const [reference, setReference] = useState(null)
 
+    const renderItem = ({item}) => {
+
+      return (
+        <View styler = {{justifyContent: 'center', alignContent: 'center', alignSelf: 'center',}}>
+          <Image
+            source = {{uri: item.img}}
+            style = {{width: 1280, height: '100%', alignSelf: 'center'}}
+            resizeMode = 'contain'
+          />
+        </View>
+      )
+    }
     
     return (
-      <View style = {{flex: 1, justifyContent: 'center',}}>
+      <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000'}}>
        
-        <Slideshow
-          dataSource = {imagedata}
-          height = {500}
+        <FlatList
+          data = {imagedata}
+          horizontal
+          renderItem = {renderItem}
+          keyExtractor = {item => item._id}
         />
 
         <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
