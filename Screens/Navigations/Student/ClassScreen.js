@@ -13,6 +13,7 @@ import {
     Image,
     StatusBar,
     RefreshControl,
+    ScrollView,
 } from 'react-native';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -102,12 +103,13 @@ export const ClassScreen = () => {
       style={styles.container}
       resizeMode = 'cover'
     >
+      
+          
         <View style = {styles.contentcontainer}>
-          <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
-          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
-          </View>
+         
+          <ScrollView>
         {newSearch ? (
-          <View style = {{justifyContent: 'center', alignItems: 'center'}}>
+          <View style = {{justifyContent: 'center', alignItems: 'center', paddingTop: '15%'}}>
         <FlatList
           data={newSearch}
           numColumns = {5}
@@ -118,15 +120,20 @@ export const ClassScreen = () => {
               refreshing = {courseRefresh}
               onRefresh = {RefreshList}
             />
+            
           }
           
         />
         </View>
+       
       ) : (
         <ActivityIndicator size="large" color="#fddf54"/>
       )}
+      </ScrollView>
            </View>
-          
+           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5, position: 'absolute', top: 100}}>
+          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
+          </View>
         <View style = {styles.TextInput}>
         <TextInput
             style  = {{width: '100%', fontSize: 17}}
@@ -181,8 +188,6 @@ export const ClassScreen = () => {
     contentcontainer: {
 
       width: '100%',
-      position: 'absolute',
-      top: 100,
       justifyContent: 'center',
       alignItems: 'center',
 
