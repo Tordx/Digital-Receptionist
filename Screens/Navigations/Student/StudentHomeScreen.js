@@ -111,7 +111,7 @@ export default function StudentHomeScreen() {
 
         />
         </Pressable>
-        <Text style = {{fontSize: 20,}}> Welcome to Pangasinan State University, Lingayen Campus </Text>
+        <Text style = {{fontSize: 20, color: '#000'}}> Welcome to Pangasinan State University, Lingayen Campus </Text>
           <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center'}}>
             <StudentMainMenu/>
             </View>
