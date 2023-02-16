@@ -83,7 +83,7 @@ export const remoteDfacultyMember = new PouchDB('http://admin:admin@192.168.0.19
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // EVENT
 export const localDBEvent = new PouchDB('Event', {adapter: 'asyncstorage'})
-export const remoteDBEvent = new PouchDB('http://admin:1234@192.168.0.199:5984/event')
+export const remoteDBEvent = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_event')
 
  export const SyncEvent = () => {  
   localDBEvent.sync(remoteDBEvent, {
