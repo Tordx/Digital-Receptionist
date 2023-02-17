@@ -62,10 +62,10 @@ export const remoteDBAdmin = new PouchDB('http://admin:admin@192.168.0.192:5984/
 }
 
 export const localDBfacultyMember = new PouchDB('facultyMember', {adapter: 'asyncstorage'})
-export const remoteDfacultyMember = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_facultymembers')
+export const remoteDBfacultyMember = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_facultymembers')
 
  export const SyncfacultyMember = () => {  
-  localDBfacultyMember.sync(remoteDfacultyMember, {
+  localDBfacultyMember.sync(remoteDBfacultyMember, {
     live: true, 
     retry: true
   }).on('change', function () {
