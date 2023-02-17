@@ -4,19 +4,15 @@ import {
     Text, 
     StyleSheet,
     Pressable,
-    ScrollView,
     TouchableOpacity,
     Alert,
-    Image,
-    ImageBackground
+    ImageBackground,
+    FlatList,
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {TextInput} from 'react-native-paper'; 
-import { Modal_apsg } from '../Components/Modalapsg';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBFaculty , remoteDBSchedules , SyncFaculty} from '../../../Database/pouchDb'
-import { useSelector } from 'react-redux';
-import { Picker } from '@react-native-picker/picker';
+import {localDBFaculty, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -24,29 +20,48 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { setImages } from '../../../Redux/TaskReducer';
 import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Picker } from '@react-native-picker/picker';
+
+const CustomInput = (props) => {
+
+  return (
+  <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+    <View  style = {{width: '80%'}}>
+    <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>{props.title}</Text>
+    </View>
+    <View style  = {styles.TextInput} >
+      <View style = {{marginLeft: 5}}>
+      <TextInput
+        placeholder= {props.placeholder}
+        onChangeText={props.onChangeText}
+        value={props.value}
+        style = {props.inputstyle}
+      />
+      </View>
+    </View>
+  </View>
+  )
+  }
+  
 
 export default function AddFacultyScreen() {
 
   useEffect(() => {
-   
+    facultydatas()
   }, []);
 
     const dispatch = useDispatch();
     const navigation = useNavigation('');
-
-    const [facultyname, setFacultysName] = useState('');
-    const [facultybuilding, setFacultyBuilding] = useState('');
-    const [facultypresident, setFacultyPresident] = useState('');
-    const [facultyvicepresident, setFacultyVicePresident] = useState('');
-    const [facultymembers, setFacultyMembers] = useState('');
+    const [dataforFaculty, setDataForFaculty] = useState('');
+    const [college, setCollege] = useState('');
+    const [collegeAcronym, setCollegeAcronym] = useState('');
+    const [department, setDepartment] = useState('');
+    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
     const [image, setImage] = useState(null)
-
+    const [next, setNext] = useState(true);
     const [transferred, setTransferred] = useState(0);
-    // const [facultycode, setFacultyCode] = useState('');
-    // const [preptime, setPreptime] = useState('');
-    // const [deliveryfee, setDeliveryfee] = useState('');
-    // const [place, setPlace] = useState('');
-    // const [status , setStatus] = useState('')
 
     const AddNewFaculty =  () => {
         
@@ -56,28 +71,24 @@ export default function AddFacultyScreen() {
       facultyvicepresident === '' ? Alert.alert('Please Enter Faculty VicePresident') :
       facultymembers === '' ? Alert.alert('Please Enter Faculty Member') :
       image === null ? Alert.alert('Please Add Image') : 
-      setNewFaculty())
+      setNext(false))
   }
 
-    const OpenGallary = async() => {
+    const OpenGallery = async() => {
 
-      // saves the photo you have, PS: Camera type not working but saving the file does modify mo ayang
       
   
       launchImageLibrary({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
         
         console.log(response)
   
-        // navigation.navigate('GuestLoginScreen')
   
       }).then(image => {
         console.log('yyyyyyyyyyyyy')
         console.log(image.assets[0].uri)
         console.log('xxxxxxxxxxxx')
         setImage(image.assets[0].uri)
-        // setImage(image.assets[0].uri); 
         dispatch(setImages(image.assets[0].uri))
-        // uploadImage()
       });
   
   }
@@ -94,7 +105,6 @@ export default function AddFacultyScreen() {
       const task = storage()
         .ref(filename)
         .putFile(uploadUri);
-      // set progress state
       task.on('state_changed', snapshot => {
         setTransferred(
           Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
@@ -110,7 +120,6 @@ export default function AddFacultyScreen() {
       );  
       setImage(null);
       const url = await storage().ref(filename).getDownloadURL();
-      // dispatch(setImages(url));
       setImage(url)
       console.log(url)
       console.log('url')
@@ -118,245 +127,301 @@ export default function AddFacultyScreen() {
 
       const id = uuid.v4();
 
-        if(1+1 == 3){
-          console.log('hey')
-        }
-        // if((classname.length == 0) && (subject.length == 0) ) {
-        //   console.log('ilove')}
-       else{
          try {
            var NewFaculty = {
             _id: id,
-             Facultyname : facultyname,
-             FacultyBuilding : facultybuilding,
-             FacultyPresident: facultypresident,
-             FacultyVicePresident : facultyvicepresident,
-             FacultyMembers : facultymembers,
-             FacultyImage: url
-            //  place: place,
-            //  Price : price,
-            //  Preptime : preptime,
-            //  Deliveryfee : deliveryfee,
-            //  Status: status,
-            //  Image: Images
+              College: college,
+             CollegeAcronym : collegeAcronym,
+             Department : department,
+             Name: name,
+             Title : title,
            }
-        //    console.log(Images)
-        //    console.log('Images')
         localDBFaculty.put(NewFaculty)
            .then((response) =>{
-             Alert.alert('Your Schedule has been successfully added!')
+             Alert.alert('Your  has been successfully added!')
              console.log(response)
              SyncFaculty()
-             navigation.navigate('AdminHomeScreen')
+             navigation.navigate('AddFacultyScreen')
            })
            .catch(err=>console.log(err))
            
          } catch (error) {
           console.log(error)
          }
-         }
-        }
+    }
 
+    const facultydatas = async() => {
 
-  return (
-    
-    <View style={styles.container}>
-        <ScrollView>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      <CloseButton
-                    onPress = {() => navigation.navigate('AdminHomeScreen')}
-                    name = 'arrow-back'
-                    size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-        />
-            <Text
-            style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Faculty </Text>
-        </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
+      var result = await remoteDBfacultyMember.allDocs({
+        include_docs: true,
+        attachments: true,
+      });
+      if (result.rows) {
+        let modifiedArr = result.rows.map(function (item) {
+          return item.doc;
+        });
+        setDataForFaculty(modifiedArr)
+        console.log('modifiedArr')
+        console.log(modifiedArr)
+        console.log('modifiedArr')
+  
+      }
+  }
         
-                    >
+
+
+        const renderItem = ({ item }) => {
+          return(
+            <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
+              <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
+                <TouchableOpacity 
+                  onPress={() => {
+                    setCollege(item.College)
+                    setCollegeAcronym(item.CollegeAcronym)
+                    setDepartment(item.Department)
+                    setName(item.Name)
+                    setTitle(item.Title)
+                    setImage(item?.Image)
+                  }}
+                  style = {{paddingLeft: 20}}
+                >
+                  <Icon
+                    name = 'edit'
+                    size = {25}
+                    
+                  />
+            </TouchableOpacity>
+              <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
+                {item.Name}
+              </Text>
+              </View>
+              
+            </View>
+          )
+          }
+          
+          
+          return (
             
-                </View>
-                <TextInput
-                    onChangeText={(value) => setFacultysName(value)}
-                   value={facultyname}
-                   label="Faculty Name"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyBuilding(value)}
-                value={facultybuilding}
-                mode ='Outlined'
-                multiline
-                label='Faculty Building'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyPresident(value)}
-                value={facultypresident}
-                mode ='Outlined'
-                multiline
-                label='Faculty President'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyVicePresident(value)}
-                value={facultyvicepresident}
-                mode ='Outlined'
-                multiline
-                label='Faculty Vice President'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View>
-                <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setFacultyMembers(value)}
-                   value={facultymembers}
-                   label="Faculty Members"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                <View style={{alignSelf: 'center' , marginBottom: 50}}>
-                <Image
-                resizeMode="contain" style={{width: 250, height: 250}} source={{uri:image}}
-                
-                />
-               </View>
-               
-             </ScrollView>
-             <Pressable
-                        style = {{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 500,
-                            backgroundColor: 'green',
-                            borderRadius: 20,
-                            position: 'absolute',
-                            bottom: 100,
-                        }}
-                        onPress={OpenGallary}
-                        >
-                            <Text
-                            
-                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD CLASS </Text>
-              </Pressable>   
-                <Pressable
-                        style = {{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 500,
-                            backgroundColor: '#225',
-                            borderRadius: 20,
-                            position: 'absolute',
-                            bottom: 10,
-                        }}
+            <View style={styles.container}>
+              <View style={styles.contentcontainer}>
+                {next? 
+                  <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+                    <ImageBackground
+                  style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
+                  resizeMode = 'cover'
+                  source = {require('../../../Assets/Img/admin-image.png')}>
+                    <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE FACULTY MEMBERS</Text>
+                        <CustomInput
+                          onChangeText={(value) => setAdminName(value)}
+                           value={name}
+                           title = 'Faculty Name'
+                           placeholder="e.g. admin name"
+                        />
+                        <CustomInput
+                          onChangeText={(value) => setAdminPosition(value)}
+                          value={title}
+                          multiline
+                          title='Faculty Title'
+                          placeholder="e.g. position"
+                      
+                        />
+                        <CustomInput
+                          onChangeText={(value) => setAdminOffice(value)}
+                          value={department}
+                          multiline
+                          title = 'Faculty Department'
+                          placeholder='e.g. office'
+                      
+                        />
+                        <View style = {{justifyContent: 'flex-start', margin: 5}}>
+                        <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>Subject</Text>
+                            <View
+                              style = {styles.TextInput}> 
+                    
+                            <Picker
+                              title = 'Select Category'
+                              selectedValue={college}
+                              mode="dropdown"
+                              style={{
+                                transform: [
+                                { scaleX: 1 }, 
+                                { scaleY: 1 },
+                              ],
+                              width: '100%',
+                              bottom: 0,
+                              color: '#9e9e9e',
+                    
+                              }}
+                              onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
+                            >
+                                <Picker.Item label="Select" value="Select" />
+                                <Picker.Item label="AB English Language" value="CA" />
+                                <Picker.Item label="AB Economics" value="BU" />
+                                <Picker.Item label="Bachelor of Secondary Education" value="FA" />
+                                <Picker.Item label="Bachelor of Technology and Livelihood Education" value="CO" />
+                                <Picker.Item label="Bachelor of Technical and Vocational Teacher Education" value="OR" />
+                                <Picker.Item label="Bachelor of Public Administration" value="OT" />
+                                <Picker.Item label="BS Biology" value="OT" />
+                                <Picker.Item label="BS Computer Science" value="OT" />
+                                <Picker.Item label="BS Information Technology" value="OT" />
+                                <Picker.Item label="BS Hospitality Management" value="OT" />
+                                <Picker.Item label="BS Nutrition and Dietetics" value="OT" />
+                                <Picker.Item label="BS Social Work" value="OT" />
+                                <Picker.Item label="BS Business Administration major in Operations Mgt., Financial Mgt." value="OT" />
+                                <Picker.Item label="BS Mathematics" value="OT" />
+                                <Picker.Item label="Bachelor of Industrial Technology" value="OT" />
+                              </Picker>
+                    
+                            </View>
+                        </View>
+                        <CustomInput
+                          onChangeText={(value) => setCollegeAcronym(value)}
+                          value={collegeAcronym}
+                          multiline
+                          title = 'College Acronym'
+                          placeholder='e.g. CSS, CAS'
+                      
+                        />
+                       <TouchableOpacity
                         onPress={AddNewFaculty}
-                        >
-                            <Text
-                            
-                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD CLASS </Text>
-              </Pressable>   
-    </View>
-
-  )
-}
-
-const styles = StyleSheet.create({
-    
-    TextInput: {
-
-        margin: 20,
-        width: 400,
-        height: 40  ,
-        borderRadius: 10,
-        backgroundColor: 'red',
-        alignSelf: 'center',
-        justifyContent: 'center',
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
-        backgroundColor: '#e2e2e2',
-    },
-    
-})
+                        style = {styles.nextbutton}>
+                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >NEXT</Text>
+                        </TouchableOpacity>
+                        </ImageBackground>
+                      </View>
+                :     
+                  <View style = {[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+                      <ImageBackground
+                          resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
+                        <Pressable
+                          style = {styles.imagebutton} 
+                          onPress = {OpenGallery}>
+                          <Icon
+                            name={image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png' ? null : 'done'}
+                            size={100}
+                            color = {image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png' ? '#fff' : '#2ade2a'}
+                          />
+                        </Pressable>
+                      </ImageBackground>
+                        <TouchableOpacity
+                          onPress={setNewFaculty}
+                          style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
+                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                        </TouchableOpacity>
+                        
+                  </View>
+                }
+                  <View style={styles.eventcontainer}>
+                      {dataforFaculty?  <FlatList
+                       data={dataforFaculty}
+                       renderItem={renderItem}
+                       keyExtractor={item => item._id}
+                       /> : <ActivityIndicator/>}
+                  </View>
+              </View>
+                  <CloseButton
+                   onPress = {() => navigation.navigate('AdminHomeScreen')}
+                   name = 'arrow-back'
+                   size = {35}
+                   color = '#000'
+                   style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
+                />
+            </View>
+          
+          )
+          }
+          
+          const styles = StyleSheet.create({
+            
+          eventcontainer: {
+            
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            width: '50%'
+          
+          },
+          
+          imagecontainer: {
+            
+            borderRadius: 20,
+            width: 500, 
+            height: 500, 
+            justifyContent: 'center', 
+            alignItems: 'center',
+          
+          },
+          
+          inputcontainer:{
+            
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            width: '50%',
+            height: '100%',
+          
+          },
+          
+          contentcontainer: {
+            
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            width: '100%',
+            height: '100%',
+            flexDirection: 'row'
+          
+          },
+          
+          TextInput: {
+          
+            backgroundColor: '#f2f3f7',
+            width: '80%',
+            borderRadius: 5,
+            height: 50,
+            marginTop: 10,
+            alignItems: 'center',
+            flexDirection: 'row',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 1,
+              height: 2,
+            },
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            elevation: 3,
+          
+          },
+          
+          nextbutton: {
+            
+            backgroundColor: '#0f2ed6',
+            width: '100%',
+            height: 75,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRightWidth: 3,
+            bottom: 0,
+            position: 'absolute'
+          
+          },
+          
+          imagebutton: {
+          
+            width: '50%',
+            height: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            borderRadius: 10,
+          
+          },
+          
+          container: {
+          
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#f2f3f7',
+          },
+            
+          })
