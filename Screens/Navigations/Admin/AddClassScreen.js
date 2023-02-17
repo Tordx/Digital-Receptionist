@@ -198,7 +198,7 @@ export default function AddClassScreen() {
                 <TouchableOpacity
                   onPress={AddNewSchedule}
                   style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
-                  <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD CLASS</Text>
+                  <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >CONFIGURE COURSES</Text>
                 </TouchableOpacity>
      </ImageBackground>
      </View>

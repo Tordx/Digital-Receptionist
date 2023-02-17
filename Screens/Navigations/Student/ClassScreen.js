@@ -158,6 +158,7 @@ export const ClassScreen = () => {
       transparent
       animationType='fade'
       onRequestClose = {() => setOpenModal(false)}
+      statusBarTranslucent
     >
      
       <Pressable style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignSelf: 'center', alignItems: 'center'}} onPress = {() => setOpenModal(false)}> 
