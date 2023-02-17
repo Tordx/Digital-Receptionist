@@ -9,13 +9,15 @@ import {
     Alert,
     Image,
     TextInput,
-    ImageBackground
+    ImageBackground,
+    FlatList,
+    ActivityIndicator
 
 } from 'react-native';
 import React , {useState , useEffect , useMemo} from 'react'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {localDBEvent , SyncEvent} from '../../../Database/pouchDb'
+import {localDBEvent , remoteDBEvent, SyncEvent} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -48,8 +50,8 @@ const CustomInput = (props) => {
 export default function AddEventScreen() {
 
   useEffect(() => {
-    
-  }, []);
+    eventdatas()
+  }, [dataforEvent]);
   
     const navigation = useNavigation('');
     const dispatch = useDispatch()
@@ -59,8 +61,16 @@ export default function AddEventScreen() {
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
+    const [status, setStatus] = useState('');
+    const [ID, setID] = useState()
+    const [rev, setRev] = useState()
     const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png');
     const [transferred, setTransferred] = useState(0);
+    const [dataforEvent, setDataForEvent] = useState('');
+    const [cancelEdit, setCancelEdit] = useState(true);
+    const [inactive, setInactive] = useState('Inactive');
+    const [deleteState, setDeleteState] = useState(false);
+    const id = uuid.v4()
 
     const AddNewEvent =  () => {
         
@@ -97,27 +107,15 @@ export default function AddEventScreen() {
   }
 
      const setNewEvent = async () => {
-
-      
-      if (image === 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png') { 
-        Alert.alert('Please Add Image')
-        console.log('Error Upload')
-      } else {  
-      navigation.navigate('AdminHomeScreen')
-      console.log('Images')
-      console.log(image)
-      console.log('Images')
-      const  uri  = image;
+      const uri = image;
       const filename = uri.substring(uri.lastIndexOf('/') + 1);
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
       setTransferred(0);
-      const task = storage()
-        .ref(filename)
-        .putFile(uploadUri);
+      const task = storage().ref(filename).putFile(uploadUri);
       // set progress state
-      task.on('state_changed', snapshot => {
+      task.on('state_changed', (snapshot) => {
         setTransferred(
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 10000)
         );
       });
       try {
@@ -125,50 +123,138 @@ export default function AddEventScreen() {
       } catch (e) {
         console.error(e);
       }
-      Alert.alert(
-        'Successfully added Photo!'
-      );  
+      Alert.alert('Successfully added Photo!');
       setImage(null);
       const url = await storage().ref(filename).getDownloadURL();
-      setImage(url)
-      console.log(url)
+    
+      if (image === 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png') {
+        Alert.alert('Please Add Image');
+      } else {
+        try {
+          const newEvent = {
+            _id: ID === null ? id : ID,
+            _rev: rev === null ? undefined : rev,
+            EventName : eventname,
+            EventTagline : eventtagline,
+            EventWhen: eventwhen,
+            EventWhere : eventwhere,
+            EventImage : url,
+            Status: status
+          };
+    
+          remoteDBEvent
+            .put(newEvent)
+            .then((response) => {
+              navigation.navigate('AdminHomeScreen');
+              Alert.alert('Done');
+              // SyncAdmin();
+            })
+            .catch((err) => console.log(err));
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+      const deleteData = () => {
+
+        try {
+          const newEvent = {
+            _id: ID === null ? id : ID,
+            _rev: rev === null ? undefined : rev,
+            EventName : eventname,
+            EventTagline : eventtagline,
+            EventWhen: eventwhen,
+            EventWhere : eventwhere,
+            EventImage : image,
+            Status: 'Inactive'
+          };
+    
+          remoteDBEvent
+            .put(newEvent)
+            .then((response) => {
+              navigation.navigate('AddEventScreen');
+              Alert.alert('Done');
+              SyncEvent()
+            })
+            .catch((err) => console.log(err));
+        } catch (error) {
+          console.log(error);
+        }
+
+      }
+
+      const eventdatas = async() => {
+
+          var result = await remoteDBEvent.allDocs({
+            include_docs: true,
+            attachments: true,
+          });
+          if (result.rows) {
+            let modifiedArr = result.rows.map(function (item) {
+              return item.doc;
+            });
+            let filteredData = modifiedArr.filter((item) => {
+              return item.Status  == 'Active'
+            })
+            if (filteredData){
+              let newFilterData = filteredData.filter((item) => {
+                return item
+              })
+              
+            setDataForEvent(newFilterData)
+            }
+            console.log('modifiedArr')
+            console.log(modifiedArr)
+            console.log('modifiedArr')
       
-      const id = uuid.v4();
+          }
+      }
+      const renderItem = ({ item }) => {
+        return(
+          <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
+            <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
+              <TouchableOpacity 
+                onPress={() => {
+                  setID(item._id)
+                  setRev(item._rev)
+                  setEventName(item.EventName)
+                  setEventTagline(item.EventTagline)
+                  setEventWhen(item.EventWhen)
+                  setEventWhere(item.EventWhere)
+                  setImage(item.Image)
+                  setStatus(item.Status)
+                  setCancelEdit(false) 
+                  setDeleteState(true)
+                }}
+                style = {{paddingLeft: 20}}
+              >
+                <Icon
 
-        if(1+1 == 3){
-          console.log('hey')
+                  name =  'edit'
+                  size = {27}
+                  color = 'black'
+                  
+                />
+          </TouchableOpacity>
+          
+            <Text style = {{fontSize: 25 , padding: 10, textAlign: 'left'}}>
+              {item.EventName}
+            </Text>
+            </View>
+            
+          </View>
+        )
         }
-       else{
-         try {
-            var NewEvent = {
-                _id: id,
-                 EventName : eventname,
-                 EventTagline : eventtagline,
-                 EventWhen: eventwhen,
-                 EventWhere : eventwhere,
-                 EventImage : url
-           }
-        localDBEvent.put(NewEvent)
-           .then((response) =>{
-             Alert.alert('Your Schedule has been successfully added!')
-             console.log(response)
-             SyncEvent()
-             navigation.navigate('AdminHomeScreen')
-           })
-           .catch(err=>console.log(err))
+        
            
-         } catch (error) {
-          console.log(error)
-         }
-         }
-        }
-        }
-
 
   return (
     
     <View style={styles.container}>
       <View style={styles.contentcontainer}>
+        
+      
         {next? 
           <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
             <ImageBackground
@@ -235,9 +321,34 @@ export default function AddEventScreen() {
           </View>
         }
           <View style={styles.eventcontainer}>
+            {dataforEvent?  
+            <FlatList
+              data={dataforEvent}
+              renderItem={renderItem}
+              keyExtractor={item => item._id}
+            /> : <ActivityIndicator size={'large'} color = 'blue'/>}
                
           </View>
       </View>
+        <TouchableOpacity 
+          onPress={() => {
+            setEventName('')
+            setEventTagline('')
+            setEventWhen('')
+            setEventWhere('')
+            setImage('')
+            setCancelEdit(true)
+            setDeleteState(false)
+          }}
+                style = {{position: 'absolute',}}
+              >
+                <Icon
+                  name =  {eventname === '' ? null : 'cancel'}
+                  size = {50}
+                  color = 'red'
+                  
+                />
+          </TouchableOpacity> 
       <CloseButton
           onPress = {() => navigation.navigate('AdminHomeScreen')}
           name = 'arrow-back'
@@ -245,6 +356,17 @@ export default function AddEventScreen() {
           color = '#000'
           style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
       />
+      
+      {deleteState? <TouchableOpacity 
+        style = {{position: 'absolute', bottom: 20, right: 20}}
+        onPress = {deleteData}
+        >
+          <Icon
+            name = 'delete'
+            size = {50}
+            color = 'red'
+          />
+      </TouchableOpacity> : null}
     </View>
 
   )
