@@ -62,6 +62,7 @@ useEffect(() => {
   const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png')
   const [dataforadmin , setDataForAdmin] = useState()
   const [transferred, setTransferred] = useState(0);
+  const id = uuid.v4()
 
   const AddNewAdmin =  () => {
       
@@ -89,7 +90,6 @@ useEffect(() => {
 }
 
 const setNewAdmin = async () => {
-  navigation.navigate('AdminHomeScreen');
   const uri = image;
   const filename = uri.substring(uri.lastIndexOf('/') + 1);
   const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -109,8 +109,6 @@ const setNewAdmin = async () => {
   Alert.alert('Successfully added Photo!');
   setImage(null);
   const url = await storage().ref(filename).getDownloadURL();
-
-  const id = uuid.v4();
 
   if (image === 'https://cdn-icons-png.flaticon.com/512/1160/1160358.png') {
     Alert.alert('Please Add Image');
@@ -158,26 +156,32 @@ const admindatas = async() => {
 }
 
 const renderItem = ({ item }) => {
-  // console.log(item.EventImage)
-  // console.log('item.EventImage')
 return(
-  <TouchableOpacity onPress={() => {
-   setAdminPosition(item.Position)
-   setAdminOffice(item.Office)
-   setAdminID(item._id)
-   setAdminRev(item._rev)
-   setImage(item.Image)
-  }} >
-  <View style = {{flex: 1 }}>
-    <Text style = {{fontSize: 35 , padding: 10}}>
+  <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
+    <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
+      <TouchableOpacity 
+        onPress={() => {
+          setAdminPosition(item.Position)
+          setAdminName(item.Name)
+          setAdminOffice(item.Office)
+          setAdminID(item._id)
+          setAdminRev(item._rev)
+          setImage(item.Image)
+        }}
+        style = {{paddingLeft: 20}}
+      >
+        <Icon
+          name = 'edit'
+          size = {25}
+          
+        />
+  </TouchableOpacity>
+    <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
       {item.Position}
     </Text>
-    {/* <Image
-        resizeMode="cover" style={{width: 550, height: 300}} source={{uri:item.BuildingPicture}}
-        
-        /> */}
+    </View>
+    
   </View>
-</TouchableOpacity>
 )
 }
 
@@ -192,7 +196,7 @@ return (
         style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
         resizeMode = 'cover'
         source = {require('../../../Assets/Img/admin-image.png')}>
-          <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>ADD ADMIN</Text>
+          <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE ADMIN</Text>
               <CustomInput
                 onChangeText={(value) => setAdminName(value)}
                  value={adminname}
