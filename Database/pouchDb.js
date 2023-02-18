@@ -259,3 +259,22 @@ export const remoteDBCourses = new PouchDB('http://admin:admin@192.168.0.192:598
     console.log(err);
   });
 }
+
+export const localDBOrg = new PouchDB('Organization', {adapter: 'asyncstorage'})
+export const remoteDBOrg = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_organization')
+
+ export const SyncOrg = () => {  
+  localDBOrg.sync(remoteDBOrg, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBOrg.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
