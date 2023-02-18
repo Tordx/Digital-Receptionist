@@ -258,7 +258,7 @@ export default function AddEventScreen() {
         {next? 
           <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
             <ImageBackground
-          style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
+          style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', borderRightWidth: 1}} 
           resizeMode = 'cover'
           source = {require('../../../Assets/Img/announcement-image.png')}>
             <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}> ADD EVENT</Text>
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     height: 75,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRightWidth: 3,
+    borderRightWidth: 1,
     bottom: 0,
     position: 'absolute'
 
