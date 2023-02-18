@@ -33,7 +33,8 @@ import AddBuildingScreen from './Screens/Navigations/Admin/AddBuildingScreen';
 // Guest StackScreen
 import Camera from './Components/Camera';
 import Maps from './Components/Maps';
-import MapScreen from './Screens/Navigations/Student/MapScreen';
+import CourseMapScreen from './Screens/MapScreen/CourseMapScreen';
+import FacultyMapScreen from './Screens/MapScreen/FacultyMapScreen';
 
 export default function Directory() {
   
@@ -46,7 +47,8 @@ export default function Directory() {
 
                
                 <Stack.Screen name = 'InitialRoutingScreen' component={InitialRoutingScreen} options = {{ headerShown: false }}/>
-                <Stack.Screen name = 'MapScreen' component={MapScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ReportScreen' component={ReportScreen} options = {{ headerShown: false }} />
