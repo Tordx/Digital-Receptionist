@@ -86,7 +86,7 @@ export const ClassScreen = () => {
           radius: 200,
         }}
         onPress={() => {
-         dispatch(setCourseData(item)); setOpenModal(true);
+         dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen');
 
         }} >
         <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image }}/>

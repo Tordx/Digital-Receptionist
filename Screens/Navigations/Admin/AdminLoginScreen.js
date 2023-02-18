@@ -16,7 +16,7 @@ export default function AdminLoginScreen() {
     const id = uuid.v4();
 
     
-    const [show, setShow] = useState();
+    const [show, setShow] = useState(true);
     const [adminid , setAdminId] = useState('')
     const [passcode , setPasscode] = useState('')
     const log = new Date();

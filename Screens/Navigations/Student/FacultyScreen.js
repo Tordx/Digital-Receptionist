@@ -79,7 +79,7 @@ import { useDispatch, useSelector } from 'react-redux';
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); navigation.navigate('MapScreen')
+             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyMapScreen')
           }} >
             <Text style = {styles.title}>
               {item.College}</Text>

@@ -52,7 +52,7 @@ export const StudentMainMenu = () => {
           
           source={require("../../../Assets/Img/icons8-female-teacher-96.png")}
           onPress = {() => navigation.navigate('FacultyScreen')}
-          title = 'Faculty'
+          title = 'Colleges'
   
           />
           <Box

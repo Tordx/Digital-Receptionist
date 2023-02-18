@@ -30,7 +30,7 @@ export default function EventScreen() {
         return item.doc
       });
       let filteredData = modifiedArr.filter(item => {
-        return item
+        return item.Status === 'Active'
       })
       if(filteredData){
        let newFilterData = filteredData.map((item) => {
