@@ -59,9 +59,14 @@ useEffect(() => {
   const [adminname, setAdminName] = useState('');
   const [adminpostion, setAdminPosition] = useState('');
   const [adminoffice, setAdminOffice] = useState('');
+  const [status, setStatus] = useState('');
   const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png')
   const [dataforadmin , setDataForAdmin] = useState()
   const [transferred, setTransferred] = useState(0);
+  const [dataforCourse, setDataForCourse] = useState('');
+  const [cancelEdit, setCancelEdit] = useState(true);
+  const [inactive, setInactive] = useState('Inactive');
+  const [deleteState, setDeleteState] = useState(false);
   const id = uuid.v4()
 
   const AddNewAdmin =  () => {
@@ -121,6 +126,7 @@ const setNewAdmin = async () => {
         Position: adminpostion,
         Office: adminoffice,
         Image: url,
+        Status: status,
       };
 
       remoteDBAdmin
@@ -147,12 +153,44 @@ const admindatas = async() => {
       let modifiedArr = result.rows.map(function (item) {
         return item.doc;
       });
-      setDataForAdmin(modifiedArr)
+      let filteredData = modifiedArr.filter((item) => {
+        return item.Status  = 'Active'
+      });
+      let newFilterData = filteredData.filter((item) => {
+        return item
+      });
+      setDataForAdmin(newFilterData)
       console.log('modifiedArr')
       console.log(modifiedArr)
       console.log('modifiedArr')
 
     }
+}
+const deleteData = () => {
+
+  try {
+    const newEvent = {
+      _id: adminid === null ? id : adminid,
+      _rev:adminrev === null ? undefined : adminrev,
+      Name: adminname,
+      Position: adminpostion,
+      Office: adminoffice,
+      Image: url,
+      Status: 'Inactive'
+    };
+
+    remoteDBAdmin
+      .put(newEvent)
+      .then((response) => {
+        navigation.navigate('AddClassScreen');
+        Alert.alert('Done');
+        SyncEvent()
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 
 const renderItem = ({ item }) => {
@@ -167,6 +205,8 @@ return(
           setAdminID(item._id)
           setAdminRev(item._rev)
           setImage(item.Image)
+          setCancelEdit(false) 
+          setDeleteState(true)
         }}
         style = {{paddingLeft: 20}}
       >
@@ -193,7 +233,7 @@ return (
       {next? 
         <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
           <ImageBackground
-        style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}} 
+        style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', borderRightWidth: 1,}} 
         resizeMode = 'cover'
         source = {require('../../../Assets/Img/admin-image.png')}>
           <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE ADMIN</Text>
@@ -256,6 +296,26 @@ return (
              />
         </View>
     </View>
+    <TouchableOpacity 
+                onPress={() => {
+                  setAdminPosition('')
+                  setAdminName('')
+                  setAdminOffice('')
+                  setAdminID('')
+                  setAdminRev('')
+                  setImage('')
+                  setCancelEdit(true)
+                  setDeleteState(false)
+                }}
+                      style = {{position: 'absolute',}}
+                    >
+                      <Icon
+                        name =  {adminpostion === '' ? null : 'cancel'}
+                        size = {50}
+                        color = 'red'
+                        
+                      />
+                </TouchableOpacity> 
         <CloseButton
          onPress = {() => navigation.navigate('AdminHomeScreen')}
          name = 'arrow-back'
@@ -263,101 +323,111 @@ return (
          color = '#000'
          style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
       />
+      {deleteState? <TouchableOpacity 
+              style = {{position: 'absolute', bottom: 20, right: 20}}
+              onPress = {deleteData}
+              >
+                <Icon
+                  name = 'delete'
+                  size = {50}
+                  color = 'red'
+                />
+            </TouchableOpacity> : null}
   </View>
 
 )
 }
 
 const styles = StyleSheet.create({
+      
+  eventcontainer: {
+    
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    width: '50%'
   
-eventcontainer: {
-  
-  alignItems: 'center', 
-  justifyContent: 'center', 
-  width: '50%'
-
-},
-
-imagecontainer: {
-  
-  borderRadius: 20,
-  width: 500, 
-  height: 500, 
-  justifyContent: 'center', 
-  alignItems: 'center',
-
-},
-
-inputcontainer:{
-  
-  justifyContent: 'center', 
-  alignItems: 'center', 
-  width: '50%',
-  height: '100%',
-
-},
-
-contentcontainer: {
-  
-  justifyContent: 'center', 
-  alignItems: 'center', 
-  width: '100%',
-  height: '100%',
-  flexDirection: 'row'
-
-},
-
-TextInput: {
-
-  backgroundColor: '#f2f3f7',
-  width: '80%',
-  borderRadius: 5,
-  height: 50,
-  marginTop: 10,
-  alignItems: 'center',
-  flexDirection: 'row',
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 1,
-    height: 2,
   },
-  shadowOpacity: 0.1,
-  shadowRadius: 1,
-  elevation: 3,
 
-},
-
-nextbutton: {
+  imagecontainer: {
+    
+    borderRadius: 20,
+    width: 500, 
+    height: 500, 
+    justifyContent: 'center', 
+    alignItems: 'center',
   
-  backgroundColor: '#0f2ed6',
-  width: '100%',
-  height: 75,
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRightWidth: 3,
-  bottom: 0,
-  position: 'absolute'
+  },
 
-},
+  inputcontainer:{
+    
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '50%',
+    height: '100%',
+  
+  },
 
-imagebutton: {
-
-  width: '50%',
-  height: '50%',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'absolute',
-  borderRadius: 10,
-
-},
-
-container: {
-
+  contentcontainer: {
+    
+    justifyContent: 'center', 
+    alignItems: 'center', 
     width: '100%',
     height: '100%',
+    flexDirection: 'row'
+  
+  },
+
+  TextInput: {
+
+    backgroundColor: '#f2f3f7',
+    width: '80%',
+    borderRadius: 5,
+    height: 50,
+    marginTop: 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 3,
+
+  },
+
+  nextbutton: {
+    
+    backgroundColor: '#0f2ed6',
+    width: '100%',
+    height: 75,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f2f3f7',
-},
-  
+    borderRightWidth: 1,
+    bottom: 0,
+    position: 'absolute'
+
+  },
+
+  imagebutton: {
+
+    width: '50%',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    borderRadius: 10,
+
+  },
+
+  container: {
+
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#f2f3f7',
+  },
+    
 })
