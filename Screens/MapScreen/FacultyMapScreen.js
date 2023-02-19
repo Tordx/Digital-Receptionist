@@ -56,9 +56,11 @@ export default function FacultyMapScreen ()  {
     const renderItem = ({item}) => {
 
         return (
-        <View style = {{flexDirection: 'row'}}>
-            <Text>{item.Name} — </Text>
-            <Text>{item.Title}</Text>
+          <View style = {{flexDibrection: 'column'}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
+            <Text style = {{fontSize: 19, color: '#303030' }}>{item.Name} — {item.Title} </Text>
+            
+        </View>
         </View>
         )
 
@@ -75,24 +77,26 @@ export default function FacultyMapScreen ()  {
           title = {facultyDatas.College}
           coordinate = {facultyDatas.Coordinates}
           />
-          <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: 0}} >
+          <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: 0}}>
             <View style = {{position: 'absolute', top: 10, left: 20, width: '100%', height: '100%',}}>
-              <View style = {{justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10,}}>
-                <Text style = {{fontSize: 25, fontWeight: '500' }}>
+              <View style = {{justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10,}}>
+                <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#303030' }}>
                   {facultyDatas.College}
                 </Text>
-                <Text style = {{fontSize: 20, fontWeight: '300' }}>
-                {facultyDatas.Dean} — College Dean
+                <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030' }}>College Dean   — <Text style = {{fontSize: 19, fontWeight: '600' }}> {facultyDatas.Dean}
+               </Text>
               </Text>
             </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
+            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
                 
-                <Text style = {{fontSize: 20, fontWeight: '300' }}>
+                <Text style = {{fontSize: 20, fontWeight: '300', color: '#303030' }}>
                 {facultyDatas.Building}
               </Text>
             </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-                
+            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
+            <Text style = {{fontSize: 16, fontWeight: '300', marginBottom: 10, color: '#505050'  }}>
+                Teaching Faculty
+              </Text>
             <FlatList
               data={memberdetails}
               renderItem={renderItem}
