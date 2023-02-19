@@ -18,7 +18,7 @@ export default function AdminMainMenu() {
       
       source = {require('../../../Assets/Img/icons8-classroom-settings-96.png')}
       onPress = {() => navigation.navigate('AddClassScreen')}
-      title = 'Classes'
+      title = 'Courses'
       style = {styles.Box}
       titleStyle = {styles.title}
 

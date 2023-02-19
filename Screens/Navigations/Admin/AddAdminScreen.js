@@ -283,7 +283,7 @@ return (
               <TouchableOpacity
                 onPress={setNewAdmin}
                 style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
-                <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD/EDIT ADMIN</Text>
               </TouchableOpacity>
               
         </View>
