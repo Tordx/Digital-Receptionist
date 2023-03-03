@@ -24,6 +24,7 @@ export default function AdminLoginScreen() {
     const time = log.toLocaleTimeString();
 
     const LoginData = async () => {
+        // navigation.navigate('AdminHomeScreen')
 
         if (adminid.length == 0) {
             ToastAndroid.show('Please input your Student ID', ToastAndroid.SHORT)
@@ -41,14 +42,14 @@ export default function AdminLoginScreen() {
               return item.doc
           });
           let filteredData = modifiedArr.filter(item => {
-              return item.AdminID === adminid
+              return item.SuperAdminId === adminid
             });
             if(!filteredData.length == 0) {
                 let newFilterData = filteredData.map(item => {
                     return item
                 })
-                const AdminID = newFilterData[0].AdminID
-                const Passcode = newFilterData[0].Passcode
+                const AdminID = newFilterData[0].SuperAdminId
+                const Passcode = newFilterData[0].SuperAdminPasscode
                 try {
                     var Newlog = {
                      _id: id,
@@ -66,6 +67,7 @@ export default function AdminLoginScreen() {
                   } catch (error) {
                    console.log(error)
                 }
+
                 if((adminid == AdminID) && (passcode == Passcode)){
                     
                   

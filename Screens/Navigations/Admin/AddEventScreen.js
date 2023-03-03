@@ -62,7 +62,7 @@ export default function AddEventScreen() {
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
     const [status, setStatus] = useState('');
-    const [ID, setID] = useState()
+    const [ID, setID] = useState(null)
     const [rev, setRev] = useState()
     const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png');
     const [transferred, setTransferred] = useState(0);

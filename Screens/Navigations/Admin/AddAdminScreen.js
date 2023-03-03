@@ -132,6 +132,9 @@ const setNewAdmin = async () => {
       remoteDBAdmin
         .put(newAdmin)
         .then((response) => {
+          console.log('====================================response');
+          console.log(response);
+          console.log('====================================response');
           navigation.navigate('AdminHomeScreen');
           Alert.alert('Done');
           // SyncAdmin();

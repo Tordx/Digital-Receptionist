@@ -32,34 +32,34 @@ import BuildingModal from '../../../Modal/BuildingModal';
   // const {isOpen} = useSelector((store) => store.modal)
 
     useEffect(() => {
-      FakeData()
-      // getEventData()
+      // FakeData()
+      getEventData()
 
     }, []);
 
 
-//     const getEventData = async() => {
+    const getEventData = async() => {
 
-//     var result = await remoteDBBuilding.allDocs({
-//       include_docs: true,
-//       attachments: true
-//     });
-//     if(result.rows){
-//         let modifiedArr = result.rows.map(function(item){
-//         return item.doc
-//     });
-//     let filteredData = modifiedArr.filter(item => {
-//         return item;
-//       });
-//       if(filteredData) {
-//           let newFilterData = filteredData.map(item => {
-//               return item
-//           })
-//           setBuildingDatas(newFilterData)
+    var result = await remoteDBBuilding.allDocs({
+      include_docs: true,
+      attachments: true
+    });
+    if(result.rows){
+        let modifiedArr = result.rows.map(function(item){
+        return item.doc
+    });
+    let filteredData = modifiedArr.filter(item => {
+        return item;
+      });
+      if(filteredData) {
+          let newFilterData = filteredData.map(item => {
+              return item
+          })
+          setBuildingDatas(newFilterData)
            
-//       }
-//   }  
-// };
+      }
+  }  
+};
 
 const FakeData = async() => {
 

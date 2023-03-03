@@ -61,16 +61,19 @@ export default function AddFacultyScreen() {
     const [title, setTitle] = useState('');
     const [image, setImage] = useState(null)
     const [next, setNext] = useState(true);
+    const [facultymemberid , setFacultyMembersId] = useState(null);
+    const [facultymemberrev , setFacultyMembersRev] = useState(null);
     const [transferred, setTransferred] = useState(0);
+    const id = uuid.v4()
 
     const AddNewFaculty =  () => {
         
-      facultyname === '' ? Alert.alert('Please Enter Faculty Name') : 
-      (facultybuilding === '' ? Alert.alert('Please Enter Faculty Building') : 
-      facultypresident === '' ? Alert.alert('Please Enter Faculty President') : 
-      facultyvicepresident === '' ? Alert.alert('Please Enter Faculty VicePresident') :
-      facultymembers === '' ? Alert.alert('Please Enter Faculty Member') :
-      image === null ? Alert.alert('Please Add Image') : 
+      name === '' ? Alert.alert('Please Enter Faculty Name') : 
+      (title === '' ? Alert.alert('Please Enter Faculty Building') : 
+      department === '' ? Alert.alert('Please Enter Faculty President') : 
+      college === '' ? Alert.alert('Please Enter Faculty VicePresident') :
+      collegeAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
+      // image === null ? Alert.alert('Please Add Image') : 
       setNext(false))
   }
 
@@ -125,23 +128,22 @@ export default function AddFacultyScreen() {
       console.log('url')
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-      const id = uuid.v4();
 
          try {
            var NewFaculty = {
-            _id: id,
-              College: college,
+            _id: facultymemberid === null ? id : facultymemberid,
+            _rev:facultymemberrev === null ? undefined : facultymemberrev,
              CollegeAcronym : collegeAcronym,
              Department : department,
              Name: name,
              Title : title,
            }
-        localDBFaculty.put(NewFaculty)
+           remoteDBfacultyMember.put(NewFaculty)
            .then((response) =>{
              Alert.alert('Your  has been successfully added!')
              console.log(response)
-             SyncFaculty()
-             navigation.navigate('AddFacultyScreen')
+            //  SyncFaculty()
+             navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))
            
@@ -182,6 +184,8 @@ export default function AddFacultyScreen() {
                     setName(item.Name)
                     setTitle(item.Title)
                     setImage(item?.Image)
+                    setFacultyMembersId(item._id)
+                    setFacultyMembersRev(item._rev)
                   }}
                   style = {{paddingLeft: 20}}
                 >
@@ -213,13 +217,13 @@ export default function AddFacultyScreen() {
                   source = {require('../../../Assets/Img/admin-image.png')}>
                     <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE FACULTY MEMBERS</Text>
                         <CustomInput
-                          onChangeText={(value) => setAdminName(value)}
+                          onChangeText={(value) => setName(value)}
                            value={name}
                            title = 'Faculty Name'
                            placeholder="e.g. admin name"
                         />
                         <CustomInput
-                          onChangeText={(value) => setAdminPosition(value)}
+                          onChangeText={(value) => setTitle(value)}
                           value={title}
                           multiline
                           title='Faculty Title'
@@ -227,7 +231,7 @@ export default function AddFacultyScreen() {
                       
                         />
                         <CustomInput
-                          onChangeText={(value) => setAdminOffice(value)}
+                          onChangeText={(value) => setDepartment(value)}
                           value={department}
                           multiline
                           title = 'Faculty Department'

@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
-  TextInput
-
+  TextInput,
+  FlatList
 } from 'react-native';
 import React , {useState , useEffect , useMemo} from 'react'
-import {localDBBuilding , SyncBuilding} from '../../../Database/pouchDb'
+import {localDBBuilding , SyncBuilding , remoteDBBuilding} from '../../../Database/pouchDb'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -60,6 +60,39 @@ export default function AddBuildingScreen() {
     const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png');
     const [transferred, setTransferred] = useState(0);
 
+    const [buidlingdata , setBuildingDatas] = useState('')
+    // const {isOpen} = useSelector((store) => store.modal)
+  
+      useEffect(() => {
+        // FakeData()
+        getEventData()
+  
+      }, []);
+  
+  
+      const getEventData = async() => {
+  
+      var result = await remoteDBBuilding.allDocs({
+        include_docs: true,
+        attachments: true
+      });
+      if(result.rows){
+          let modifiedArr = result.rows.map(function(item){
+          return item.doc
+      });
+      let filteredData = modifiedArr.filter(item => {
+          return item;
+        });
+        if(filteredData) {
+            let newFilterData = filteredData.map(item => {
+                return item
+            })
+            setBuildingDatas(newFilterData)
+             
+        }
+    }  
+  };
+
     const AddNewBuilding =  () => {
         
       buildingname === '' ? Alert.alert('Please Enter Building Name') : 
@@ -89,7 +122,8 @@ export default function AddBuildingScreen() {
   }
 
   const setNewBuilding = async () => {
-    navigation.navigate('AdminHomeScreen');
+
+    
     console.log('Images');
     console.log(image);
     const uri = image;
@@ -129,13 +163,13 @@ export default function AddBuildingScreen() {
           BuildingLocation: buildinglocation,
           BuildingPicture: url,
         };
-        localDBBuilding
+        remoteDBBuilding
           .put(newEvent)
           .then((response) => {
             navigation.navigate('AdminHomeScreen');
             Alert.alert('Your Schedule has been successfully added!');
-            console.log(response);
-            SyncBuilding();
+            // console.log(response);
+            // SyncBuilding();
           })
           .catch((err) => console.log(err));
       } catch (error) {
@@ -143,6 +177,39 @@ export default function AddBuildingScreen() {
       }
     }
   };
+
+  const renderItem = ({ item }) => {
+    return(
+      <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
+        <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
+          <TouchableOpacity 
+            onPress={() => {
+              setBuildingName(item.BuildingName)
+              setBuildingLocation(item.BuildingLocation)
+              setImage(item.BuildingPicture)
+              // set(item.Office)
+              // setAdminID(item._id)
+              // setAdminRev(item._rev)
+              // setImage(item.Image)
+              // setCancelEdit(false) 
+              // setDeleteState(true)
+            }}
+            style = {{paddingLeft: 20}}
+          >
+            <Icon
+              name = 'edit'
+              size = {25}
+              
+            />
+      </TouchableOpacity>
+        <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
+          {item.BuildingName}
+        </Text>
+        </View>
+        
+      </View>
+    )
+    }
 
 
         return (
@@ -199,7 +266,11 @@ export default function AddBuildingScreen() {
                 </View>
               }
                 <View style={styles.eventcontainer}>
-                     
+                <FlatList
+                data={buidlingdata}
+                renderItem={renderItem}
+                keyExtractor={item => item._id}
+                 />
                 </View>
             </View>
                     <CloseButton

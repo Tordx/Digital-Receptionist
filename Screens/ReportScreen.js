@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { CloseButton } from '../Components/Buttons';
 import { RadioButton } from 'react-native-paper';
-import { localDBReportBugReport , SyncReportBugReport } from '../Database/pouchDb';
+import { localDBReportBugReport , SyncReportBugReport , remoteDBReportBugReport } from '../Database/pouchDb';
 import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 
@@ -33,12 +33,12 @@ export default function SuggestionsScreen() {
           SpecifyComplaint : specify
      
        }
-    localDBReportBugReport.put(NewReport)
+       remoteDBReportBugReport.put(NewReport)
        .then((response) =>{
          Alert.alert('Your Schedule has been successfully added!')
          console.log(response)
-         SyncReportBugReport()
-         navigation.navigate('InitialRoutingScreen')
+        //  SyncReportBugReport()
+         navigation.navigate('StudentHomeScreen')
        })
        .catch(err=>console.log(err))
        
