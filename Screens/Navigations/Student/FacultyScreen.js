@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBFaculty } from '../../../Database/pouchDb';
+import { remoteDBFaculty , remoteDBCollage } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultLogo from '../../../Assets/Img/psu_logo.png'
@@ -35,7 +35,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
     const renderFaculty = async() => {
 
-      var result = await remoteDBFaculty.allDocs({
+      var result = await remoteDBCollage.allDocs({
         include_docs: true,
         attachments: true,
       })
