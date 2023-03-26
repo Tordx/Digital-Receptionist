@@ -105,7 +105,7 @@ import { useSelector } from 'react-redux';
           radius: 200,
         }} 
         onPress={() => {
-           dispatch(setFacultyDatas(item))
+           dispatch(setAdminDatas(item))
         }} >
           <Text style = {styles.title}>
             {item.Name}</Text>

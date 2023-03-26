@@ -13,7 +13,7 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBSuperAdmin , SyncSuperAdmin} from '../../../Database/pouchDb'
+import {localDBSuperAdmin , SyncSuperAdmin , remoteDBSuperAdmin} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../Components/Buttons';
@@ -75,9 +75,9 @@ export default function AddSuperAdmin() {
            }
         //    console.log(Images)
         //    console.log('Images')
-        localDBSuperAdmin.put(NewSuperAdmin)
+        remoteDBSuperAdmin.put(NewSuperAdmin)
            .then((response) =>{
-             Alert.alert('Your Schedule has been successfully added!')
+             Alert.alert('Your Super Admin is Added has been successfully added!')
              console.log(response)
              SyncSuperAdmin()
              navigation.navigate('AdminHomeScreen')

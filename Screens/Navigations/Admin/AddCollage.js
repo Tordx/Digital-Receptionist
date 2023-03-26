@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {localDBFaculty, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
+import {remoteDBCollage, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -45,7 +45,7 @@ const CustomInput = (props) => {
   }
   
 
-export default function AddFacultyScreen() {
+export default function AddCollage() {
 
   useEffect(() => {
     facultydatas()
@@ -54,25 +54,27 @@ export default function AddFacultyScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation('');
     const [dataforFaculty, setDataForFaculty] = useState('');
-    const [college, setCollege] = useState('');
-    const [collegeAcronym, setCollegeAcronym] = useState('');
-    const [department, setDepartment] = useState('');
-    const [name, setName] = useState('');
-    const [title, setTitle] = useState('');
+    const [collage, setCollage] = useState('');
+    const [collageAcronym, setCollageAcronym] = useState('');
+    const [department, setDepartment] = useState([]);
+    const [building, setBuilding] = useState('');
+    const [dean, setDean] = useState('');
     const [image, setImage] = useState(null)
+    const [coordinates, setCoordinate] = useState([])
     const [next, setNext] = useState(true);
-    const [facultymemberid , setFacultyMembersId] = useState(null);
-    const [facultymemberrev , setFacultyMembersRev] = useState(null);
+    const [collageid , setCollageId] = useState(null);
+    const [collagerev , setCollageRev] = useState(null);
     const [transferred, setTransferred] = useState(0);
     const id = uuid.v4()
 
     const AddNewFaculty =  () => {
         
-      name === '' ? Alert.alert('Please Enter Faculty Name') : 
-      (title === '' ? Alert.alert('Please Enter Faculty Building') : 
+      collage === '' ? Alert.alert('Please Enter Faculty Name') : 
+      (building === '' ? Alert.alert('Please Enter Faculty Building') : 
       department === '' ? Alert.alert('Please Enter Faculty President') : 
-      college === '' ? Alert.alert('Please Enter Faculty VicePresident') :
-      collegeAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
+      collage === '' ? Alert.alert('Please Enter Faculty VicePresident') :
+      collageAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
+      dean === '' ? Alert.alert('Please Enter Dean') :
       // image === null ? Alert.alert('Please Add Image') : 
       setNext(false))
   }
@@ -131,14 +133,17 @@ export default function AddFacultyScreen() {
 
          try {
            var NewFaculty = {
-            _id: facultymemberid === null ? id : facultymemberid,
-            _rev:facultymemberrev === null ? undefined : facultymemberrev,
-             CollegeAcronym : collegeAcronym,
+            _id: collageid === null ? id : collageid,
+            _rev:collagerev === null ? undefined : collagerev,
+             CollegeAcronym : collageAcronym,
+             Collage : collage,
              Department : department,
-             Name: name,
-             Title : title,
+             Image : url,
+             Building : building,
+             Dean : dean,
+             Coordinates : coordinates
            }
-           remoteDBfacultyMember.put(NewFaculty)
+           remoteDBCollage.put(NewFaculty)
            .then((response) =>{
              Alert.alert('Your  has been successfully added!')
              console.log(response)
@@ -154,7 +159,7 @@ export default function AddFacultyScreen() {
 
     const facultydatas = async() => {
 
-      var result = await remoteDBfacultyMember.allDocs({
+      var result = await remoteDBCollage.allDocs({
         include_docs: true,
         attachments: true,
       });
@@ -178,14 +183,14 @@ export default function AddFacultyScreen() {
               <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
                 <TouchableOpacity 
                   onPress={() => {
-                    setCollege(item.College)
-                    setCollegeAcronym(item.CollegeAcronym)
+                    setCollage(item.Collage)
+                    setCollageAcronym(item.CollageAcronym)
                     setDepartment(item.Department)
-                    setName(item.Name)
-                    setTitle(item.Title)
                     setImage(item?.Image)
-                    setFacultyMembersId(item._id)
-                    setFacultyMembersRev(item._rev)
+                    setCollageId(item._id)
+                    setCollageRev(item._rev)
+                    setDean(item.Dean)
+                    setBuilding(item.Building)
                   }}
                   style = {{paddingLeft: 20}}
                 >
@@ -196,7 +201,7 @@ export default function AddFacultyScreen() {
                   />
             </TouchableOpacity>
               <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
-                {item.Name}
+                {item.Collage}
               </Text>
               </View>
               
@@ -217,28 +222,28 @@ export default function AddFacultyScreen() {
                   source = {require('../../../Assets/Img/admin-image.png')}>
                     <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE FACULTY MEMBERS</Text>
                         <CustomInput
-                          onChangeText={(value) => setName(value)}
-                           value={name}
-                           title = 'Faculty Name'
-                           placeholder="e.g. admin name"
+                          onChangeText={(value) => setCollage(value)}
+                           value={collage}
+                           title = 'Collage Name'
+                           placeholder="e.g. collage name"
                         />
                         <CustomInput
-                          onChangeText={(value) => setTitle(value)}
-                          value={title}
+                          onChangeText={(value) => setCollageAcronym(value)}
+                          value={collageAcronym}
                           multiline
-                          title='Faculty Title'
-                          placeholder="e.g. position"
+                          title='CollegeAcronym'
+                          placeholder="e.g. collegeAcronym"
                       
                         />
                         <CustomInput
                           onChangeText={(value) => setDepartment(value)}
                           value={department}
                           multiline
-                          title = 'Faculty Department'
+                          title = 'Collage Department'
                           placeholder='e.g. office'
                       
                         />
-                        <View style = {{justifyContent: 'flex-start', margin: 5}}>
+                        {/* <View style = {{justifyContent: 'flex-start', margin: 5}}>
                         <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>Subject</Text>
                             <View
                               style = {styles.TextInput}> 
@@ -278,12 +283,20 @@ export default function AddFacultyScreen() {
                               </Picker>
                     
                             </View>
-                        </View>
+                        </View> */}
                         <CustomInput
-                          onChangeText={(value) => setCollegeAcronym(value)}
-                          value={collegeAcronym}
+                          onChangeText={(value) => setBuilding(value)}
+                          value={building}
                           multiline
-                          title = 'College Acronym'
+                          title = 'College Building'
+                          placeholder='e.g. Building 1'
+                      
+                        />
+                         <CustomInput
+                          onChangeText={(value) => setDean(value)}
+                          value={dean}
+                          multiline
+                          title = 'College Dean'
                           placeholder='e.g. CSS, CAS'
                       
                         />

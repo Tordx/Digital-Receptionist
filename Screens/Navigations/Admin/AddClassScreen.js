@@ -9,7 +9,7 @@ import {
     TextInput,
     ImageBackground,
     ActivityIndicator,
-
+    Pressable
 } from 'react-native';
 import {remoteDBCourses , SyncCourses} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
@@ -18,6 +18,8 @@ import uuid from 'react-native-uuid';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import Icon  from 'react-native-vector-icons/MaterialIcons';
+import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 const CustomInput = (props) => {
 
@@ -54,7 +56,7 @@ export default function AddClassScreen() {
     const [college, setCollege] = useState('');
     const [collegeAcronym, setCollegeAcronym] = useState('');
     const [status, setStatus] = useState('');
-    const [ID, setID] = useState()
+    const [ID, setID] = useState(null)
     const [rev, setRev] = useState()
     const [image, setImage] = useState('https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png');
     const [transferred, setTransferred] = useState(0);
@@ -139,7 +141,7 @@ export default function AddClassScreen() {
             .then((response) => {
               navigation.navigate('AddClassScreen');
               Alert.alert('Done');
-              SyncCourses();
+              // SyncCourses();
             })
             .catch((err) => console.log(err));
         } catch (error) {

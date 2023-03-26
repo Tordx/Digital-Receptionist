@@ -10,14 +10,16 @@ import {
     Modal,
     TextInput,
     ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    Image
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBFaculty } from '../../../Database/pouchDb';
+import { remoteDBFaculty , remoteDBCollage } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
+import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
    export default function FacultyScreen () {
 
@@ -25,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
     const [searchTerm, setSearchTerm] = useState('');
     const [newSearch, setNewSearch] = useState();
     const [facultyRefresh, setFacultyRefresh] = useState(false)
+    const [image, setImage] = useState('https://i.imgur.com/CY1O1Y9.png');
 
     useEffect(() => {
       renderFaculty();
@@ -32,7 +35,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
     const renderFaculty = async() => {
 
-      var result = await remoteDBFaculty.allDocs({
+      var result = await remoteDBCollage.allDocs({
         include_docs: true,
         attachments: true,
       })
@@ -81,9 +84,10 @@ import { useDispatch, useSelector } from 'react-redux';
           onPress={() => {
              dispatch(setFacultyDatas(item)); navigation.navigate('FacultyMapScreen')
           }} >
+             <Image resizeMode='contain' style = {{width: 125, height: 150}} source = {{uri:  item.Image || image }}/>
             <Text style = {styles.title}>
               {item.College}</Text>
-            <Text style = {styles.title}>
+            <Text style = {{fontSize: 14}}>
               {item.Building}
             </Text>
         </Pressable>

@@ -18,7 +18,7 @@ export default function AdminMainMenu() {
       
       source = {require('../../../Assets/Img/icons8-classroom-settings-96.png')}
       onPress = {() => navigation.navigate('AddClassScreen')}
-      title = 'Classes'
+      title = 'Courses'
       style = {styles.Box}
       titleStyle = {styles.title}
 
@@ -68,8 +68,8 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
-      onPress = {() => navigation.navigate('LogBookScreen')}
-      title = 'Log Book'
+      onPress = {() => navigation.navigate('AddCollage')}
+      title = 'Collage'
       style = {styles.Box}
       titleStyle = {styles.title}
 

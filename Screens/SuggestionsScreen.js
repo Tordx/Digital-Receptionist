@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CloseButton } from '../Components/Buttons';
 import { RadioButton } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { localDBSuggestionFeedback , SyncSuggestionFeedback } from '../Database/pouchDb';
+import { localDBSuggestionFeedback , remoteDBSuggestionFeedback } from '../Database/pouchDb';
 import { Picker } from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 import { useSelector } from 'react-redux';
@@ -24,23 +24,23 @@ export default function SuggestionsScreen() {
   const [specify, setSpecify] = useState('');
 
   const setNewSuggestion = async () => {
+    
     const id = uuid.v4();
 
-    
      try {
        var NewSuggestion = {
-        _id: id,
+          _id: id,
           Message : text,
-         Department : value,
+          Department : value,
           Name: name,
           FeedbackorSuggestion : checked,
           SpecifySuggestion : specify
        }
-    localDBSuggestionFeedback.put(NewSuggestion)
+       remoteDBSuggestionFeedback.put(NewSuggestion)
        .then((response) =>{
          Alert.alert('Your Schedule has been successfully added!')
          console.log(response)
-         SyncSuggestionFeedback()
+        //  SyncSuggestionFeedback()
          navigation.navigate('StudentHomeScreen')
        })
        .catch(err=>console.log(err))
