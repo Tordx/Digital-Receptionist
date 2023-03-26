@@ -17,9 +17,9 @@ import {
 } from 'react-native';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBCourses } from '../../../Database/pouchDb';
+import { remoteDBCourses, remoteDBOrg } from '../../../Database/pouchDb';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCourseData } from '../../../Redux/ClassSlice';
+import { setCourseData, setOrgData } from '../../../Redux/ClassSlice';
 
 export const ClassScreen = () => {
 
@@ -34,6 +34,7 @@ export const ClassScreen = () => {
   
     useEffect(() => {
       renderCourse();
+      renderOrg();
     }, [searchTerm]);
   
     const renderCourse = async () => {
@@ -62,6 +63,29 @@ export const ClassScreen = () => {
           });
           setNewSearch(newFilterData);
           console.log(newSearch)
+        }
+      }
+    };
+
+    const renderOrg = async () => {
+      var result = await remoteDBOrg.allDocs({
+        include_docs: true,
+        attachments: true,
+      });
+      if (result.rows) {
+        let modifiedArr = result.rows.map(function(item) {
+          return item.doc;
+        });
+        let filteredData = modifiedArr.filter((item) => {
+          return item
+        });
+        if (filteredData) {
+          let newFilterData = filteredData.map((item) => {
+            return item;
+          });
+          setNewOrg(newFilterData);
+          dispatch(setOrgData(newFilterData))
+          console.log(newFilterData)
         }
       }
     };

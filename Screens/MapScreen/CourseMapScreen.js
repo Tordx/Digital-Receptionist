@@ -1,26 +1,29 @@
 //import liraries
 import { useNavigation } from '@react-navigation/native';
-import React, { Component, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, FlatList, RefreshControl, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text,  StatusBar, FlatList, RefreshControl } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CloseButton } from '../../Components/Buttons';
-import { remoteDBfacultyMember } from '../../Database/pouchDb';
+import { remoteDBCourses } from '../../Database/pouchDb';
 import Maps from '../../Components/Maps';
 
+// create a component
 export default function CourseMapScreen ()  {
 
     useEffect(() => {
-        MemberDetails();
-      },[])
+      courseDetails();
+      },[memberdetails])
 
-    const {courseData} = useSelector((store) => (store.classmodal))
+    const {courseData, orgData} = useSelector((store) => (store.classmodal))
+
     const navigation = useNavigation()
-    const [memberdetails, setMemberFaculty] = useState([]);
-    const [memberRefresh, setMemberRefresh] = useState('');
+    const [memberdetails, setMemberFaculty] = useState('');
+    const [memberRefresh, setMemberRefresh] = useState();
     
-      const MemberDetails = async() => {
     
-        var result =  await remoteDBfacultyMember.allDocs({
+      const courseDetails = async() => {
+    
+        var result =  await remoteDBCourses.allDocs({
             include_docs: true,
             attachments: true,
         })
@@ -36,15 +39,17 @@ export default function CourseMapScreen ()  {
               return item;
             });
             setMemberFaculty(newFilterData);
+            console.log(newFilterData)
     
           }
         } 
     
       }
+
       const RefreshList = () => {
 
         setMemberRefresh(true);
-        MemberDetails();
+        courseDetails();
         setMemberRefresh(false);
   
     }
@@ -67,7 +72,7 @@ export default function CourseMapScreen ()  {
                 hidden
             />
           <Maps
-          id = {courseData.CourseAcronym}
+          id = {courseData.CollegeAcronym}
           title = {courseData.College}
           coordinate = {courseData.Coordinates}
           />
@@ -80,9 +85,6 @@ export default function CourseMapScreen ()  {
                 <Text style = {{fontSize: 20, fontWeight: '300' }}>
                 {courseData.Dean} — College Dean
               </Text>
-              <Text style = {{fontSize: 20, fontWeight: '300' }}>
-                {courseData.ChairPerson} — Chair Person
-              </Text>
             </View>
             <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
                 
@@ -92,28 +94,8 @@ export default function CourseMapScreen ()  {
             </View>
             <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
                 
-                <Text style = {{fontSize: 16, fontWeight: '300' }}>
-                Organization/s under {courseData.Course}
-              </Text>
-              {/* <FlatList
-              data={orgdetails}
-              renderItem={imageRender}
-              keyExtractor={(item) => item._id}
-              refreshControl = {
-                <RefreshControl
-                  refreshing = {memberRefresh}
-                  onRefresh = {RefreshList}
-                  style = {{backgroundColor: 'green'}}
-                />
-              }
-              
-            />
-              */}
-            </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
             <FlatList
               data={memberdetails}
-              horizontal
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
               refreshControl = {

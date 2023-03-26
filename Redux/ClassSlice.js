@@ -4,18 +4,17 @@
  export const ClassSlice = createSlice({
    name: 'classmodal',
    initialState: {
-    isOpen: false,
-    courseData: []
+    courseData: [],
+    orgData: []
    },
    reducers: {
-      openClassModal: (state , action) => {
-        state.isOpen = true
-      },
-      closeClassModal: (state , action) => {
-        state.isOpen = false
-      },
       setCourseData: (state , action ) => {
         state.courseData = action.payload
+        console.log(action)
+        console.log('action')
+      },
+      setOrgData: (state , action ) => {
+        state.orgData = action.payload
         console.log(action)
         console.log('action')
       },
@@ -24,6 +23,6 @@
  })
  
  // Action creators are generated for each case reducer function
- export const {openClassModal , closeClassModal , setCourseData} = ClassSlice.actions
+ export const { setCourseData, setOrgData} = ClassSlice.actions
  
  export default ClassSlice.reducer
