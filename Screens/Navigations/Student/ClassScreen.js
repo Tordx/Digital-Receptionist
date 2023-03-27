@@ -27,6 +27,7 @@ export const ClassScreen = () => {
     const dispatch = useDispatch()
     const [courseRefresh, setCourseRefresh] = useState(false);
     const {courseData} = useSelector((store) => (store.classmodal))
+    const [neworg, setNewOrg] = useState();
     const [newSearch, setNewSearch] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [openModal, setOpenModal] = useState(false);
@@ -34,6 +35,7 @@ export const ClassScreen = () => {
   
     useEffect(() => {
       renderCourse();
+      renderOrg();
     }, [searchTerm]);
   
     const renderCourse = async () => {
@@ -62,6 +64,29 @@ export const ClassScreen = () => {
           });
           setNewSearch(newFilterData);
           console.log(newSearch)
+        }
+      }
+    };
+
+    const renderOrg = async () => {
+      var result = await remoteDBOrg.allDocs({
+        include_docs: true,
+        attachments: true,
+      });
+      if (result.rows) {
+        let modifiedArr = result.rows.map(function(item) {
+          return item.doc;
+        });
+        let filteredData = modifiedArr.filter((item) => {
+          return item
+        });
+        if (filteredData) {
+          let newFilterData = filteredData.map((item) => {
+            return item;
+          });
+          setNewOrg(newFilterData);
+          dispatch(setOrgData(newFilterData))
+          console.log(newFilterData)
         }
       }
     };

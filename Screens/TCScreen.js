@@ -12,14 +12,7 @@ import { useSelector } from 'react-redux';
 
     const navigation = useNavigation()
 
-    const proceed = () => {
-      if(user == 'STUDENT'){
-        navigation.navigate('StudentLoginScreen')
-      }else{
-        navigation.navigate('GuestLoginScreen')
-      }
-    }
-
+        
     return (
       <View style = {{justifyContent: 'center', alignItems: 'center', flex: 1}} >
         <FlipLogo/>
