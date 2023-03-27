@@ -1,27 +1,26 @@
 //import liraries
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text,  StatusBar, FlatList, RefreshControl } from 'react-native';
+import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CloseButton } from '../../Components/Buttons';
-import { remoteDBCourses } from '../../Database/pouchDb';
-import { remoteDBfacultyMember, remoteDBOrg } from '../../Database/pouchDb';
+import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
+import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../Components/Maps';
 
 // create a component
 export default function CourseMapScreen ()  {
 
     useEffect(() => {
-      courseDetails();
       OrgList();
-      MemberList()
+      MemberDetails()
       },[memberdetails])
       
-    const {courseData, orgData} = useSelector((store) => (store.classmodal))
+    const {courseData} = useSelector((store) => (store.classmodal))
 
     const navigation = useNavigation()
     
-    const [orgdetail, setOrgDetail] = useState([]);
+    const [orgdetail, setOrgDetail] = useState('');
     const [memberdetails, setMemberDetail] = useState();
     const [memberRefresh, setMemberRefresh] = useState(false);
     
@@ -36,24 +35,23 @@ export default function CourseMapScreen ()  {
             return item.doc
           })
           let filteredData = modifiedArr.filter(item => {
-            return item.CollegeAcronym === courseData.CollegeAcronym
+            return item.Department === courseData.Department
           })
           if(filteredData) {
             let newFilterData = filteredData.map(item => {
               return item;
             });
             setOrgDetail(newFilterData);
+
             console.log(newFilterData)
     
           }
         } 
     
       }
-      const MemberList = async() => {
+      const MemberDetails = async() => {
     
-      const courseDetails = async() => {
-    
-        var result =  await remoteDBCourses.allDocs({
+        var result =  await remoteDBfacultyMember.allDocs({
             include_docs: true,
             attachments: true,
         })
@@ -62,13 +60,12 @@ export default function CourseMapScreen ()  {
             return item.doc
           })
           let filteredData = modifiedArr.filter(item => {
-            return item.CollegeAcronym === courseData.CollegeAcronym
+            return item.Department  === courseData.Department
           })
           if(filteredData) {
             let newFilterData = filteredData.map(item => {
               return item;
-            });
-            setMemberFaculty(newFilterData);
+            });;
             setMemberDetail(newFilterData);
             console.log(newFilterData)
     
@@ -77,10 +74,12 @@ export default function CourseMapScreen ()  {
     
       }
 
+      console.log(courseData)
+    
+
       const RefreshList = () => {
 
         setMemberRefresh(true);
-        courseDetails();
         OrgList();
         MemberList();
         setMemberRefresh(false);
@@ -90,9 +89,9 @@ export default function CourseMapScreen ()  {
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column'}}>
+        <View style = {{flexDibrection: 'column', padding: 20}}>
         <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-            <Text style = {{fontSize: 19, color: '#505050' }}>{item.Title}  —  {item.Name}</Text>
+            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Title}  —  {item.Name}</Text>
             
         </View>
         </View>
@@ -116,7 +115,7 @@ export default function CourseMapScreen ()  {
 
     return (
         <>
-        <View style = {{flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style = {styles.container}>
             <StatusBar
                 hidden
             />
@@ -125,59 +124,43 @@ export default function CourseMapScreen ()  {
           title = {courseData.Course}
           coordinate = {courseData.Coordinates}
           />
-          <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: 0}} >
-            
-         
-            <View style = {{position: 'absolute', top: 10, left: 20, width: '100%', height: '100%',}}>
-              <View style = {{justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10,}}>
-              <RefreshControl
-                  refreshing = {memberRefresh}
-                  onRefresh = {RefreshList}
-                  style = {{backgroundColor: 'green'}}
-              />
-                <Text style = {{fontSize: 25, fontWeight: '500', color: '#505050'  }}>
-                  {courseData.College}
-                </Text>
-              <Text style = {{fontSize: 20, fontWeight: '300', color: '#505050'  }}>
-              <Text style = {{fontSize: 20, fontWeight: '500', color: '#505050'  }}>Chairperson </Text>— {courseData.ChairPerson} 
-              </Text>
-            </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-                
-                <Text style = {{fontSize: 20, fontWeight: '300', color: '#505050'  }}>
-                {courseData.Building}
-              </Text>
-            </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-                
-                <Text style = {{fontSize: 16, fontWeight: '300', marginBottom: 10, color: '#505050'  }}>
-                Organization/s under {courseData.Course}
-              </Text>
-              <FlatList
-              
-              horizontal
-              data={orgdetail}
-              renderItem={orgItem}
-              keyExtractor={(item) => item._id}
-              
-            />
-             
-            </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fff', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
-            <Text style = {{fontSize: 16, fontWeight: '300', marginBottom: 10, color: '#505050'  }}>
-                Teaching Faculty
-              </Text>
-            <FlatList
-              data={memberdetails}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
+          
+          <View style = {{width: '50%', height: '100%'}} />
+            <View style = {{width: '50%', height: '100%'}} >
+              <View style = {styles.header}>
+                <View style = {{padding: 20}}>
+                  <Text style = {{fontSize: 30, marginVertical: 1}}>{courseData.Course}</Text>
+                  <Text style = {{ fontSize: 20, marginBottom: 2}}>{courseData.College}</Text>
+                </View>
+              </View>
+              <View style = {[styles.header, {height: 100}]}>
+                <View style = {{padding: 20}}>
+                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Chairperson - {courseData.ChairPerson}</Text>
+                </View>
+              </View>
+              <View style = {[styles.header, {height: 150}]}>
+                <View style = {{padding: 20}}>
+                  <Text style = {{ fontSize: 17, marginVertical: 5}}>Organization/s under {courseData.Course}</Text>
+                    <FlatList
+                      data={orgdetail}
+                      renderItem = {orgItem}
+                      keyExtractor = {(item) => item._id}
+                    />
+                </View>
+              </View>
+              <View style = {[styles.header, {height: '45%'}]}>
+                <View style = {{padding: 20}}>
+                  <FlatList
+                  data={memberdetails}
+                  renderItem = {renderItem}
+                  keyExtractor = {(item) => item._id}
+                  />
+                </View>
+              </View>
             </View>
           </View>
-        </View>
-        </View>
         <CloseButton
-        onPress = {() => navigation.goBack('FacultyScreen')}     
+        onPress = {() => navigation.goBack('ClassScreen')}     
         name = 'arrow-back'
         color = '#fff'
         size = {35}
@@ -186,4 +169,31 @@ export default function CourseMapScreen ()  {
     );
 };
 
-}
+const styles = StyleSheet.create({
+
+  container: {
+    
+    flexDirection: 'row',  
+    width: '100%', 
+    height: '100%',
+    justifyContent: 'center', 
+    alignItems: 'center',
+
+  },
+  header: { 
+    
+    flexDirection: 'column',
+    alignSelf: 'flex-end', 
+    justifyContent: 'center',
+    backgroundColor: '#f6f6f6', 
+    width: '100%', 
+    height: 150, 
+    marginTop: 15, 
+    marginLeft: 15, 
+    elevation: 10, 
+    borderBottomLeftRadius: 15, 
+    borderTopLeftRadius: 15
+  
+  }
+
+})
