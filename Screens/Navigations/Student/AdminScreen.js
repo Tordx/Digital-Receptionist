@@ -33,13 +33,14 @@ import { useSelector } from 'react-redux';
     const [admindata , setAdminDatas] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
     const [adminRefresh, setAdminRefresh] = useState(false);
-    const [univPres] = useState('University President');
-    const [univVicePres] = useState('Vice Presidents');
-    const [univCampusPres] = useState('Office of the University President')
     const [univPresident, setUnivPresident] = useState([]);
     const [univCampusPresident, setUnivCampusPresident] = useState([]);
     const [univVicePresident, setUnivVicePresident] = useState([]);
-
+    const [univVicePresidentAL, setUnivVicePresidentAL] = useState([]);
+    const [univVicePresidentASAD, setUnivVicePresidentASAD] = useState([]);
+    const [univVicePresidentPFMD, setUnivVicePresidentPFMD] = useState([]);
+    const [univVicePresidentREI, setUnivVicePresidentREI] = useState([]);
+    const [univVicePresidentQA, setUnivVicePresidentQA] = useState([]);
     useEffect(() => {
       getAdminData()
 
@@ -61,14 +62,30 @@ import { useSelector } from 'react-redux';
         let filteredData = modifiedArr.filter((item) => item);
     
         const presidentData = filteredData.filter(
-          (item) => item.Office === univPres
+          (item) => item.PosCode === "UP" //univpresidentmismo
         );
         const vicePresidentData = filteredData.filter(
-          (item) => item.Office === univVicePres
+          (item) => item.PosCode === "VP"
         );
         const campusPresidentData = filteredData.filter(
-          (item) => item.Office === univCampusPres
-        )
+          (item) => item.PosCode === "UCP"
+        );
+
+        const vicePresidentALData  = filteredData.filter(
+          (item) => item.PosCode === 'ALD'
+        );
+        const vicePresidentASAData  = filteredData.filter(
+          (item) => item.PosCode === 'ASAD'
+        );
+        const vicePresidentPFMData  = filteredData.filter(
+          (item) => item.PosCode === 'PFMD'
+        );
+        const vicePresidentREIData  = filteredData.filter(
+          (item) => item.PosCode === 'REI'
+        );
+        const vicePresidentQAData  = filteredData.filter(
+          (item) => item.PosCode === 'QA'
+        );
 
         const SearchFunction = filteredData.filter((item) => {
             return item && (
@@ -81,6 +98,11 @@ import { useSelector } from 'react-redux';
         setUnivPresident(presidentData);
         setUnivVicePresident(vicePresidentData);
         setUnivCampusPresident(campusPresidentData)
+        setUnivVicePresidentAL(vicePresidentALData)
+        setUnivVicePresidentASAD(vicePresidentASAData)
+        setUnivVicePresidentPFMD(vicePresidentPFMData)
+        setUnivVicePresidentREI(vicePresidentREIData)
+        setUnivVicePresidentQA(vicePresidentQAData)
         setAdminData(filteredData)
         setSearchTerm(SearchFunction)
       }
@@ -107,10 +129,10 @@ import { useSelector } from 'react-redux';
         onPress={() => {
            dispatch(setAdminDatas(item))
         }} >
-          <Text style = {styles.title}>
+          <Text style = {styles.name}>
             {item.Name}</Text>
-          <Text style = {styles.title}>
-            {item.Position}
+          <Text style = {styles.office}>
+            {item.Office}
           </Text>
       </Pressable>
       )
@@ -123,7 +145,7 @@ import { useSelector } from 'react-redux';
         resizeMode = 'cover'
       >
         <ScrollView>
-          <View style = {styles.contentcontainer}>
+          <View style = {styles.contentcontainer}>  
            
             <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10}}>
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS AND PROFILES</Text>
@@ -168,7 +190,7 @@ import { useSelector } from 'react-redux';
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION AND LINKAGES</Text>
             </View>
             <FlatList
-              data={univCampusPresident}
+              data={univVicePresidentAL}
               numColumns = {5}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
@@ -178,7 +200,7 @@ import { useSelector } from 'react-redux';
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AND STUDENT AFFAIRS</Text>
             </View>
             <FlatList
-              data={univCampusPresident}
+              data={univVicePresidentASAD}
               numColumns = {5}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
@@ -188,7 +210,7 @@ import { useSelector } from 'react-redux';
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR PLANNING AND FINANCE MANAGEMENT</Text>
             </View>
             <FlatList
-              data={univCampusPresident}
+              data={univVicePresidentPFMD}
               numColumns = {5}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
@@ -198,7 +220,7 @@ import { useSelector } from 'react-redux';
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR RESEARCH, EXTENSION AND INNOVATION</Text>
             </View>
             <FlatList
-              data={univCampusPresident}
+              data={univVicePresidentREI}
               numColumns = {5}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
@@ -208,7 +230,7 @@ import { useSelector } from 'react-redux';
             <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR QUALITY ASSURANCE</Text>
             </View>
             <FlatList
-              data={univCampusPresident}
+              data={univVicePresidentQA}
               numColumns = {5}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
@@ -253,10 +275,11 @@ import { useSelector } from 'react-redux';
   
       container: {
   
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#f2f3f7',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f2f3f7',
           
       },
   
@@ -278,7 +301,7 @@ import { useSelector } from 'react-redux';
         justifyContent: 'center',
         backgroundColor: '#fff',
         width: 245,
-        height: 230,
+        height: 300,
         borderRadius: 5,
         marginHorizontal: 5,
         marginVertical: 5,
@@ -287,12 +310,22 @@ import { useSelector } from 'react-redux';
   
       },
   
-      title: {
+      name: {
   
-        fontSize: 16,
-        textAlign: 'center'
+        fontSize: 20,
+        textAlign: 'center',
+        padding: 5,
   
       },
+      office: {
+  
+        fontSize: 20,
+        textAlign: 'center',
+        position: 'absolute',
+        bottom: 20,
+  
+      },
+  
   
       text: {
   
