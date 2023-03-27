@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
 
@@ -16,7 +16,6 @@ import EventScreen from './Screens/Navigations/Student/EventScreen';
 import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
 import AddClassScreen from './Screens/Navigations/Admin/AddClassScreen';
-import StudentLoginScreen from './Screens/Navigations/Student/StudentLoginScreen';
 import StudentHomeScreen from './Screens/Navigations/Student/StudentHomeScreen';
 // Admin StackScreen
 import AdminHomeScreen from './Screens/Navigations/Admin/AdminHomeScreen';
@@ -36,6 +35,8 @@ import Camera from './Components/Camera';
 import Maps from './Components/Maps';
 import CourseMapScreen from './Screens/MapScreen/CourseMapScreen';
 import FacultyMapScreen from './Screens/MapScreen/FacultyMapScreen';
+import { CitizenChartScreen } from './Screens/Navigations/Student/CitizenChartScreen';
+import SplashScreen from './Screens/SplashScreen';
 
 export default function Directory() {
   
@@ -48,12 +49,13 @@ export default function Directory() {
 
                
                 <Stack.Screen name = 'InitialRoutingScreen' component={InitialRoutingScreen} options = {{ headerShown: false }}/>
+                <Stack.Screen name = 'CitizenChartScreen' component={CitizenChartScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'SplashScreen' component={SplashScreen} options = {{headerShown: false, transitionSpec: { open: TransitionSpecs.TransitionIOSSpec, close: TransitionSpecs.TransitionIOSSpec, }, }}/>
                 <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ReportScreen' component={ReportScreen} options = {{ headerShown: false }} />
-                <Stack.Screen name = 'StudentLoginScreen' component={StudentLoginScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ClassScreen' component={ClassScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AdminScreen' component={AdminScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'FacultyScreen' component={FacultySreen} options = {{ headerShown: false }} />
