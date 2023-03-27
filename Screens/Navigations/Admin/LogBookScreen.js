@@ -21,15 +21,12 @@ import { remoteDBLogBook } from '../../../Database/pouchDb';
 
     useEffect(() => {
 
-      StudentLogin()
       AdminLogin()
       GuestLogin()
     //   PreviousClass()
 
 
     }, []);
-
-    // const [itemdata,setItemdata] = useState('')
     const [studentlogin,setStudentLogin] = useState('')
     const [adminlogin,setAdminLogin] = useState('')
     const [guestlogin,setGuestLogin] = useState('')
