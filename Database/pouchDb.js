@@ -202,26 +202,6 @@ export const remoteDBLogBook = new PouchDB('https://root:root@database.vidarsson
   });
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//GUEST
-export const localDBGuest = new PouchDB('Guest', {adapter: 'asyncstorage'})
-export const remoteDBGuest = new PouchDB('http://admin:1234@192.168.0.199:5984/guest')
-
- export const SyncGuest = () => {  
-  localDBGuest.sync(remoteDBGuest, {
-    live: true, 
-    retry: true
-  }).on('change', function () {
-   console.log('start sync')
-
-   localDBGuest.allDocs({include_docs:true}).then(function(doc){
-      console.log(doc)
-      console.log('done sync')
-  })
-  }).on('error', function (err) {
-    console.log(err);
-  });
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //BUILDING
 export const localDBBuilding = new PouchDB('Building', {adapter: 'asyncstorage'})
 export const remoteDBBuilding = new PouchDB('https://root:root@database.vidarsson.online/dhd_building')
@@ -262,7 +242,7 @@ export const remoteDBCourses = new PouchDB('https://root:root@database.vidarsson
 }
 
 export const localDBOrg = new PouchDB('Organization', {adapter: 'asyncstorage'})
-export const remoteDBOrg = new PouchDB('http://admin:admin@192.168.0.192:5984/dhd_organization')
+export const remoteDBOrg = new PouchDB('https://root:root@database.vidarsson.online/dhd_organization')
 
  export const SyncOrg = () => {  
   localDBOrg.sync(remoteDBOrg, {
