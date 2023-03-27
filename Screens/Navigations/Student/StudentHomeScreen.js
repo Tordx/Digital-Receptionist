@@ -9,13 +9,9 @@ import {
     Alert,
 } from 'react-native'
 import React, {useEffect, useState} from 'react';
-import psu_BackgroundImage from '../../../Assets/Img/psu_backgroundImage2.png';
-import { SearchScreen } from '../../../Components/SearchBar';
-import { WelcomeText } from '../../../Components/WelcomeText';
 import { CloseButton, ReportButton } from '../../../Components/Buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
-import psu_logo from '../../../Assets/Img/psu_logo.png'
 import {StudentMainMenu} from './StudentMainMenu';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
