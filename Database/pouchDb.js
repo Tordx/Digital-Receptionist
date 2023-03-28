@@ -259,3 +259,22 @@ export const remoteDBOrg = new PouchDB('https://root:root@database.vidarsson.onl
     console.log(err);
   });
 }
+
+export const localDBCitizenChart = new PouchDB('citizenchart', {adapter: 'asyncstorage'})
+export const remoteDBCitizenChart = new PouchDB('https://root:root@database.vidarsson.online/dhd_citizenchart')
+
+ export const SyncCitizenChart = () => {  
+  localDBCitizenChart.sync(remoteDBCitizenChart, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localDBCitizenChart.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}
