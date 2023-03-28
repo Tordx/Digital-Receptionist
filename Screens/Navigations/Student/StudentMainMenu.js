@@ -42,7 +42,7 @@ export const StudentMainMenu = () => {
           <Box
           
           source={require("../../../Assets/Img/icons8-book-reading-96.png")}
-          onPress = {() => navigation.navigate('CitizenChartScreen')}
+          onPress = {() => navigation.navigate('SplashScreen')}
           title = 'Citizen Chart'
   
           />

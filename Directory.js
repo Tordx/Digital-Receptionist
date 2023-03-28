@@ -35,7 +35,7 @@ import Camera from './Components/Camera';
 import Maps from './Components/Maps';
 import CourseMapScreen from './Screens/MapScreen/CourseMapScreen';
 import FacultyMapScreen from './Screens/MapScreen/FacultyMapScreen';
-import { CitizenChartScreen } from './Screens/Navigations/Student/CitizenChartScreen';
+import CitizenChartScreen  from './Screens/Navigations/Student/CitizenChartScreen';
 import SplashScreen from './Screens/SplashScreen';
 
 export default function Directory() {
