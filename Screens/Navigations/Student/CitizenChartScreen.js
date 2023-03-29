@@ -72,7 +72,7 @@ export default function CitizenChartScreen() {
         return (
           <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', width: 1280, height: '100%', backgroundColor: '#f6f6f6' }}>
             <View style = {{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{fontWeight: 'bold', color: '#FFF', fontSize: 50, backgroundColor: 'blue', padding: 10, paddingHorizontal: 20, borderRadius: 20, marginBottom: 20 }}>{item.Title}</Text>
+              <Text style={{fontWeight: 'bold', color: '#fddf54', fontSize: 50, backgroundColor: 'blue', padding: 10, paddingHorizontal: 20, borderRadius: 20, marginBottom: 20 }}>{item.Title}</Text>
               <Text style={{ color: '#404040', fontSize: 35, textAlign: 'center' }}>{item.Content}</Text>
             </View>
           </View>
