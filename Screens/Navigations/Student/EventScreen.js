@@ -45,6 +45,11 @@ export default function EventScreen() {
 
 
     const renderItem = ({item}) => {
+      console.log('====================================item EventImage');
+      console.log(item.EventImage);
+      console.log('====================================item EventImage');
+      
+      
 
       return (
         <Pressable style = {{justifyContent: 'center', alignContent: 'center', alignSelf: 'center',}}
