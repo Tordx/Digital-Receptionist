@@ -123,6 +123,10 @@ export default function CourseMapScreen ()  {
           id = {courseData.CourseAcronym}
           title = {courseData.Course}
           coordinate = {courseData.Coordinates}
+          // onSelected={() => {
+          //   setSelectedMarker(marker);
+          //   setShowModal(true);
+          // }}
           />
           
           <View style = {{width: '50%', height: '100%'}} />
@@ -131,11 +135,23 @@ export default function CourseMapScreen ()  {
                 <View style = {{padding: 20}}>
                   <Text style = {{fontSize: 30, marginVertical: 1}}>{courseData.Course}</Text>
                   <Text style = {{ fontSize: 20, marginBottom: 2}}>{courseData.College}</Text>
+                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Chairperson - {courseData.ChairPerson}</Text>
+                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Room: - {courseData.Room}</Text>
                 </View>
               </View>
-              <View style = {[styles.header, {height: 100}]}>
+              {/* <View style = {[styles.header, {height: 100}]}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Chairperson - {courseData.ChairPerson}</Text>
+                  
+                </View>
+              </View> */}
+           
+              <View style = {[styles.header, {height: '60%'}]}>
+                <View style = {{padding: 20}}>
+                  <FlatList
+                  data={memberdetails}
+                  renderItem = {renderItem}
+                  keyExtractor = {(item) => item._id}
+                  />
                 </View>
               </View>
               <View style = {[styles.header, {height: 150}]}>
@@ -146,15 +162,6 @@ export default function CourseMapScreen ()  {
                       renderItem = {orgItem}
                       keyExtractor = {(item) => item._id}
                     />
-                </View>
-              </View>
-              <View style = {[styles.header, {height: '45%'}]}>
-                <View style = {{padding: 20}}>
-                  <FlatList
-                  data={memberdetails}
-                  renderItem = {renderItem}
-                  keyExtractor = {(item) => item._id}
-                  />
                 </View>
               </View>
             </View>
