@@ -8,31 +8,20 @@ import { useDispatch } from 'react-redux';
 import { setEventData } from '../../../Redux/EventSlice';
 import { remoteDBEvent } from '../../../Database/pouchDb';
 
-
-
-
 export default function EventScreen() {
 
     useEffect(() => {
       EventData()
     }, [event]);
 
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [event, setEvent] = useState();
   const [data, setData] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const {eventData} = useSelector((store) => (store.eventmodal))
   StatusBar.setHidden(true);
 
   const handleViewableItemsChanged = useCallback(
     ({ viewableItems, changed }) => {
-      // Run your function here
-      console.log('====================================changed');
-      console.log(changed[0].item.EventName);
-      setData(changed[0].item)
-        // dispatch(setEventData(changed[0].item))
-      console.log('====================================changed');
+      setData(viewableItems[0].item)
     },
     []
   );
@@ -63,32 +52,19 @@ export default function EventScreen() {
 
   }
 
-  // const handleViewableItemsChanged = ({ viewableItems, changed }) => {
-
-  //   // Run your function here
-  
-  //   console.log('Viewable items changed:', viewableItems);
-  // };
-
-
-  
     const renderItem = ({item}) => {
-      console.log('====================================item EventImage');
-      console.log(item.EventName);
-      console.log('====================================item EventImage');
-      
-  
+
       return (
      <View>
           <Image
             source = {{uri: item.EventImage}}
-            style = {{width: 650, height: '100%', alignSelf: 'center'}}
+            style = {{width: 700, height: '100%', alignSelf: 'center'}}
             // resizeMode = 'contain'
           />
        </View>
       )
     }
-    
+
     return (
       <View style={styles.container}>
       <View style={styles.contentcontainer}>
@@ -107,30 +83,18 @@ export default function EventScreen() {
         color = {'#fff'}
         onPress = {() => navigation.goBack('StudentHomeScreen')}
         />
-        {/* <Modal
-          statusBarTranslucent 
-          visible = {openModal}
-          onRequestClose = {() => setOpenModal(false)}
-          animationType = 'fade'
-          transparent
-        > */}
          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
          <StatusBar barStyle= 'light-content'/>
-           {/* <Image
-            source = {{uri: eventData.EventImage}}
-            resizeMode = 'contain'asd
-            style = {{width: '100%', height: 800}}
-           /> */}
-           <View style = {{width: '100%', height: 400, backgroundColor: '#00000070' }}>
+           <View style = {{width: '100%', height: '100%', backgroundColor: '#00000070' }}>
             <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
-            <Text style = {{color: '#fff', fontSize: 25, fontWeight: '500'}}>{data.EventName}</Text>
-            <Text style = {{color: '#fff', fontSize: 17}}>{data.EventTagline}</Text>
-            <Text style = {{color: '#fff', fontSize: 17}}>{data.EventWhere}</Text>
-            <Text style = {{color: '#fff', fontSize: 17}}>{data.EventWhen}</Text>
+            <Text style = {{color: '#fff', fontSize: 35, fontWeight: '500'}}>Event Name:{data.EventName}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Tagline: {data.EventTagline}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Where: {data.EventWhere}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event When: {data.EventWhen}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Description: {data.EventDescription}</Text>
             </View>
            </View>
         </View>
-        {/* </Modal> */}
         </View>
       </View>
     )

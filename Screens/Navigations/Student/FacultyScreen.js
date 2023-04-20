@@ -88,7 +88,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             <Text style = {styles.title}>
               {item.College}</Text>
             <Text style = {{fontSize: 14}}>
-              {item.Building}
+              {item.Collage}
             </Text>
         </Pressable>
         )

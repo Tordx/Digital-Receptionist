@@ -61,6 +61,7 @@ export default function AddEventScreen() {
     const [eventtagline, setEventTagline] = useState('');
     const [eventwhen, setEventWhen] = useState('');
     const [eventwhere, setEventWhere] = useState('');
+    const [eventdescription, setEventDescription] = useState('');
     const [status, setStatus] = useState('');
     const [ID, setID] = useState(null)
     const [rev, setRev] = useState()
@@ -85,12 +86,8 @@ export default function AddEventScreen() {
               } else {
                 setNext(false)
                 }
-      
-
      
   }
-
-
     const OpenGallery = async() => {
   
       launchImageLibrary({cameraType: 'front' , maxHeight: 300 , maxWidth: 300 ,  mediaType: 'photo'}, response => {
@@ -138,8 +135,9 @@ export default function AddEventScreen() {
             EventTagline : eventtagline,
             EventWhen: eventwhen,
             EventWhere : eventwhere,
+            EventDescription : eventdescription,
             EventImage : url,
-            Status: status
+            Status: "Active"
           };
     
           remoteDBEvent
@@ -166,6 +164,7 @@ export default function AddEventScreen() {
             EventTagline : eventtagline,
             EventWhen: eventwhen,
             EventWhere : eventwhere,
+            EventDescription : eventdescription,
             EventImage : image,
             Status: 'Inactive'
           };
@@ -290,6 +289,13 @@ export default function AddEventScreen() {
                   multiline
                   title = 'Event Place'
                   placeholder='The Event will be held at'
+                />
+                 <CustomInput
+                  onChangeText={(value) => setEventDescription(value)}
+                  value={eventdescription}
+                  multiline
+                  title = 'Event Description'
+                  placeholder='Full Description'
                 />
                <TouchableOpacity
                 onPress={AddNewEvent}
