@@ -12,6 +12,7 @@ import TCScreen from './Screens/TCScreen';
 import ClassScreen from './Screens/Navigations/Student/ClassScreen';
 import AdminScreen from './Screens/Navigations/Student/AdminScreen';
 import FacultySreen from './Screens/Navigations/Student/FacultyScreen';
+import FacultyScreen2 from './Screens/Navigations/Student/FacultyScreen2';
 import EventScreen from './Screens/Navigations/Student/EventScreen';
 import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
@@ -52,6 +53,7 @@ export default function Directory() {
                 <Stack.Screen name = 'CitizenChartScreen' component={CitizenChartScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'SplashScreen' component={SplashScreen} options = {{headerShown: false, transitionSpec: { open: TransitionSpecs.TransitionIOSSpec, close: TransitionSpecs.TransitionIOSSpec, }, }}/>
                 <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'FacultyMapScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />

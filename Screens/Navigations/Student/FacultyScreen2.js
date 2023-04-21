@@ -21,9 +21,11 @@ import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
-   export default function FacultyScreen () {
+   export default function FacultyScreen2 () {
 
     const dispatch = useDispatch();
+    const {facultyDatas} = useSelector((store) => (store.facultymodal))
+
     const [searchTerm, setSearchTerm] = useState('');
     const [newSearch, setNewSearch] = useState();
     const [facultyRefresh, setFacultyRefresh] = useState(false)
@@ -33,32 +35,63 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
       renderFaculty();
     }, [searchTerm]);
 
+    console.log('====================================facultyDatas');
+    console.log(facultyDatas.Collage);
+    console.log('====================================facultyDatas');
+
+    // const renderFaculty = async() => {
+
+    //   var result = await remoteDBCollage.allDocs({
+    //     include_docs: true,
+    //     attachments: true,
+    //   })
+    //   if(result.rows){
+    //     let modifiedArr = result.rows.map(function(item)
+    //     {
+    //       return item.doc;
+    //     });
+    //     let filteredData = modifiedArr.filter(item => {
+    //       return item 
+    //     });
+    //     if(filteredData) {
+    //       let newFilterData = filteredData.map(item => {
+    //         return item.College === facultyDatas.Collage
+    //       });
+    //       console.log('====================================newFilterData');
+    //       console.log(newFilterData);
+    //       console.log('====================================newFilterData');
+    //       setNewSearch(newFilterData);
+    //     }
+    //   }
+    // }
+
     const renderFaculty = async() => {
 
-      var result = await remoteDBCollage.allDocs({
-        include_docs: true,
-        attachments: true,
-      })
-      if(result.rows){
-        let modifiedArr = result.rows.map(function(item)
-        {
-          return item.doc;
+        var result = await remoteDBCollage.allDocs({
+          include_docs: true,
+          attachments: true,
         });
-        let filteredData = modifiedArr.filter(item => {
-          return item && (
-            new RegExp(searchTerm, 'i').test(item.College) ||
-            new  RegExp(searchTerm, 'i').test(item.Building) ||
-            new RegExp(searchTerm, 'i').test(item.Dean)
-            // include more parameters
-          )
-        });
-        if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-            return item;
+        if (result.rows) {
+          let modifiedArr = result.rows.map(function (item) {
+            return item.doc;
           });
-          setNewSearch(newFilterData);
+          let filteredData = modifiedArr.filter((item) => {
+            return item.College  === facultyDatas.Collage
+          })
+          if (filteredData){
+            const newFilterData = filteredData.filter((item) => {
+              return item
+            })
+            console.log('====================================newFilterData');
+            console.log(newFilterData);
+            console.log('====================================newFilterData');
+        //   setDataForEvent(newFilterData)
+          }
+        //   console.log('modifiedArr')
+        //   console.log(modifiedArr)
+        //   console.log('modifiedArr')
+    
         }
-      }
     }
 
     const navigation = useNavigation();
@@ -82,7 +115,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyMapScreen2')
+             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyMapScreen')
           }} >
              <Image resizeMode='contain' style = {{width: 125, height: 150}} source = {{uri:  item.Image || image }}/>
             <Text style = {styles.title}>
@@ -102,7 +135,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
         >
             <View style = {styles.contentcontainer}>
               <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5}}>
-              <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COLLEGES</Text>
+              <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY DEPARTMENT</Text>
               </View>
             {newSearch ? (
               <View style = {{justifyContent: 'center', alignItems: 'center'}}>
