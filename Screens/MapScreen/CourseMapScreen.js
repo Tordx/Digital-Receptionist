@@ -91,7 +91,7 @@ export default function CourseMapScreen ()  {
       return (
         <View style = {{flexDibrection: 'column', padding: 20}}>
         <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Title}  —  {item.Name}</Text>
+            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Name}  —  {item.Title}</Text>
             
         </View>
         </View>

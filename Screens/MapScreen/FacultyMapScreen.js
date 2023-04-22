@@ -38,7 +38,9 @@ export default function FacultyMapScreen ()  {
               return item;
             });
             setMemberFaculty(newFilterData);
+            console.log('newFilterData')
             console.log(newFilterData)
+            console.log('newFilterData')
     
           }
         } 
@@ -66,6 +68,9 @@ export default function FacultyMapScreen ()  {
 
     }
 
+      console.log('facultyDatas');
+      console.log(facultyDatas);
+      console.log('facultyDatas');
     return (
         <>
         <View style = {{flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -83,16 +88,16 @@ export default function FacultyMapScreen ()  {
                 <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#303030' }}>
                   {facultyDatas.College}
                 </Text>
-                <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030' }}>College Dean   — <Text style = {{fontSize: 19, fontWeight: '600' }}> {facultyDatas.Dean}
+                <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030' }}>Collage Dean- {facultyDatas.ChairPerson}  <Text style = {{fontSize: 19, fontWeight: '600' }}> {facultyDatas.Dean}
                </Text>
               </Text>
             </View>
-            <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
+            {/* <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
                 
                 <Text style = {{fontSize: 20, fontWeight: '300', color: '#303030' }}>
                 {facultyDatas.Building}
               </Text>
-            </View>
+            </View> */}
             <View style = {{ marginTop: 5,justifyContent: 'center',   backgroundColor: '#fddf54', padding: 30, borderTopLeftRadius: 20, borderBottomLeftRadius: 20, elevation: 10}}>
             <Text style = {{fontSize: 16, fontWeight: '300', marginBottom: 10, color: '#505050'  }}>
                 Teaching Faculty

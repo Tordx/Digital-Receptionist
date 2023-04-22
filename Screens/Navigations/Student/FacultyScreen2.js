@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBFaculty , remoteDBCollage } from '../../../Database/pouchDb';
+import { remoteDBFaculty , remoteDBCollage , remoteDBCourses } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultLogo from '../../../Assets/Img/psu_logo.png'
@@ -35,39 +35,9 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
       renderFaculty();
     }, [searchTerm]);
 
-    console.log('====================================facultyDatas');
-    console.log(facultyDatas.Collage);
-    console.log('====================================facultyDatas');
-
-    // const renderFaculty = async() => {
-
-    //   var result = await remoteDBCollage.allDocs({
-    //     include_docs: true,
-    //     attachments: true,
-    //   })
-    //   if(result.rows){
-    //     let modifiedArr = result.rows.map(function(item)
-    //     {
-    //       return item.doc;
-    //     });
-    //     let filteredData = modifiedArr.filter(item => {
-    //       return item 
-    //     });
-    //     if(filteredData) {
-    //       let newFilterData = filteredData.map(item => {
-    //         return item.College === facultyDatas.Collage
-    //       });
-    //       console.log('====================================newFilterData');
-    //       console.log(newFilterData);
-    //       console.log('====================================newFilterData');
-    //       setNewSearch(newFilterData);
-    //     }
-    //   }
-    // }
-
     const renderFaculty = async() => {
 
-        var result = await remoteDBCollage.allDocs({
+        var result = await remoteDBCourses.allDocs({
           include_docs: true,
           attachments: true,
         });
@@ -82,15 +52,8 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             const newFilterData = filteredData.filter((item) => {
               return item
             })
-            console.log('====================================newFilterData');
-            console.log(newFilterData);
-            console.log('====================================newFilterData');
-        //   setDataForEvent(newFilterData)
-          }
-        //   console.log('modifiedArr')
-        //   console.log(modifiedArr)
-        //   console.log('modifiedArr')
-    
+            setNewSearch(newFilterData)
+          }    
         }
     }
 
@@ -174,7 +137,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             
             <CloseButton
     
-              onPress = {() => navigation.navigate('StudentHomeScreen')}     
+              onPress = {() => navigation.navigate('FacultyScreen')}     
               name = 'arrow-back'
               size = {40}
               style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
