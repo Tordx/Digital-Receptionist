@@ -6,7 +6,8 @@ import EventModal from '../../../Modal/EventModal';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setEventData } from '../../../Redux/EventSlice';
-import { remoteDBEvent } from '../../../Database/pouchDb';
+import { remoteDBEvent , remoteDBBuilding } from '../../../Database/pouchDb';
+import { setBuildingData } from '../../../Redux/BuildingSlice';
 
 export default function EventScreen() {
 
@@ -14,6 +15,7 @@ export default function EventScreen() {
       EventData()
     }, [event]);
 
+  const dispatch = useDispatch()
   const navigation = useNavigation();
   const [event, setEvent] = useState();
   const [data, setData] = useState("");
@@ -22,6 +24,9 @@ export default function EventScreen() {
   const handleViewableItemsChanged = useCallback(
     ({ viewableItems, changed }) => {
       setData(viewableItems[0].item)
+      console.log('====================================viewableItems[0].item');
+      console.log(viewableItems[0].item);
+      console.log('====================================viewableItems[0].item');
     },
     []
   );
@@ -30,7 +35,7 @@ export default function EventScreen() {
   
   const EventData = async() => {
 
-    var result = await remoteDBEvent.allDocs({
+    var result = await remoteDBBuilding.allDocs({
       include_docs: true,
       attachments: true,
     });
@@ -39,14 +44,16 @@ export default function EventScreen() {
         return item.doc
       });
       let filteredData = modifiedArr.filter(item => {
-        return item.Status === 'Active'
+        return item
       })
       if(filteredData){
        let newFilterData = filteredData.map((item) => {
         return item 
        })
        setEvent(newFilterData);
+       console.log('newFilterData')
        console.log(newFilterData)
+       console.log('newFilterData')
       }
     }
 
@@ -55,13 +62,15 @@ export default function EventScreen() {
     const renderItem = ({item}) => {
 
       return (
-     <View>
+      <Pressable onPress={() => {
+        dispatch(setBuildingData(item)); navigation.navigate('BuildingMapScreen')
+     }}>
           <Image
-            source = {{uri: item.EventImage}}
+            source = {{uri: item.BuildingPicture}}
             style = {{width: 1300, height: '100%', alignSelf: 'center', backgroundColor: 'black'} }
             resizeMode = 'contain'
           />
-       </View>
+       </Pressable>
       )
     }
 
@@ -83,18 +92,18 @@ export default function EventScreen() {
         color = {'#fff'}
         onPress = {() => navigation.goBack('StudentHomeScreen')}
         />
-         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        
          <StatusBar barStyle= 'light-content'/>
-           <View style = {{width: '100%', height: '100%', backgroundColor: '#00000070' }}>
-            <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
-            <Text style = {{color: '#fff', fontSize: 35, fontWeight: '500'}}>Event Name:{data.EventName}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Tagline: {data.EventTagline}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Where: {data.EventWhere}</Text>
+           <View style = {{width: '100%', height: '20%', backgroundColor: 'black' }}>
+            <View style = {{justifyContent: 'flex-start', height: '100%'}}>
+            <Text style = {{color: '#fff', fontSize: 35, fontWeight: '500'}}>Building Name:{data.BuildingName}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Building Location: {data.BuildingLocation}</Text>
+            {/* <Text style = {{color: '#fff', fontSize: 25}}>Event Where: {data.EventWhere}</Text>
             <Text style = {{color: '#fff', fontSize: 25}}>Event When: {data.EventWhen}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Description: {data.EventDescription}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Description: {data.EventDescription}</Text> */}
             </View>
            </View>
-        </View>
+     
 
       </View>
     )

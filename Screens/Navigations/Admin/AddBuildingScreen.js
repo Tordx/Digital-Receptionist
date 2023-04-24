@@ -8,7 +8,8 @@ import {
   Alert,
   ImageBackground,
   TextInput,
-  FlatList
+  FlatList,
+  Button
 } from 'react-native';
 import React , {useState , useEffect , useMemo} from 'react'
 import {localDBBuilding , SyncBuilding , remoteDBBuilding} from '../../../Database/pouchDb'
@@ -50,7 +51,7 @@ export default function AddBuildingScreen() {
 
   // useMemo(() => uploadImage(image), [image]);
 
-  
+    const id = uuid.v4();
     const navigation = useNavigation('');
     const dispatch = useDispatch()
 
@@ -61,6 +62,18 @@ export default function AddBuildingScreen() {
     const [transferred, setTransferred] = useState(0);
 
     const [buidlingdata , setBuildingDatas] = useState('')
+    const [room , setRoom] = useState('')
+    const [inputs, setInputs] = useState([null]); // initial state with one input
+
+    console.log('====================================inputs');
+    console.log(inputs);
+    console.log('====================================inputs');
+
+    const handleAddInput = () => {
+      const newKey = id; // generate unique key for the new input
+      const newInput = { _id: id, Room: room }; // create new input object
+      setInputs([...inputs, newInput]); // update the inputs array with the new input
+    };
     // const {isOpen} = useSelector((store) => store.modal)
   
       useEffect(() => {
@@ -226,16 +239,22 @@ export default function AddBuildingScreen() {
                       <CustomInput
                         onChangeText={(value) => setBuildingName(value)}
                          value={buildingname}
-                         title = 'Admin Department  '
+                         title = 'Building Name  '
                          placeholder="e.g. Year-end Party 2022"
                       />
                       <CustomInput
                         onChangeText={(value) => setBuildingLocation(value)}
                         value={buildinglocation}
                         multiline
-                        title='Admin Building'
+                        title='Building Location'
                         placeholder="e.g. guidelines and other info"                    
                       />
+                       <View>
+                        {inputs.map((input) => (
+                          <TextInput style={{backgroundColor: 'red' , width: 500}} key={input._id} placeholder="Enter text"  onChangeText={(value) => setRoom(value)}/>
+                        ))}
+                        <Button title="Add Input" onPress={handleAddInput} />
+                      </View>
                      <TouchableOpacity
                       onPress={AddNewBuilding}
                       style = {styles.nextbutton}>

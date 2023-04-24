@@ -36,6 +36,7 @@ import Camera from './Components/Camera';
 import Maps from './Components/Maps';
 import CourseMapScreen from './Screens/MapScreen/CourseMapScreen';
 import FacultyMapScreen from './Screens/MapScreen/FacultyMapScreen';
+import BuildingMapScreen from './Screens/MapScreen/BuildingMapScreen';
 import CitizenChartScreen  from './Screens/Navigations/Student/CitizenChartScreen';
 import SplashScreen from './Screens/SplashScreen';
 
@@ -55,6 +56,7 @@ export default function Directory() {
                 <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'FacultyMapScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'BuildingMapScreen' component={BuildingMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ReportScreen' component={ReportScreen} options = {{ headerShown: false }} />
