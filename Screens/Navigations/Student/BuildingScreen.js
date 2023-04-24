@@ -1,254 +1,198 @@
-import React , {useEffect , useState} from 'react';
-import { 
-    
-    View, 
-    FlatList, 
-    StyleSheet, 
-    Text,
-    ImageBackground,
-    TouchableOpacity,
-    Image  
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity , Image, ImageBackground, Platform, Pressable, Modal, StatusBar } from 'react-native'
+import React , {useState , useEffect ,useCallback} from 'react';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar } from '../../../Components/SearchBar';
+import EventModal from '../../../Modal/EventModal';
 import { useSelector } from 'react-redux';
-import { remoteDBBuilding } from '../../../Database/pouchDb';
 import { useDispatch } from 'react-redux';
-import { openBuildingModal , setBuildingData } from '../../../Redux/BuildingSlice';
-import BuildingModal from '../../../Modal/BuildingModal';
+import { setEventData } from '../../../Redux/EventSlice';
+import { remoteDBEvent } from '../../../Database/pouchDb';
 
-
-  export default function BuildingScreen () {
-
-    const dispatch = useDispatch()
-    const user = useSelector(state => state.essensials.user)
-    const navigation = useNavigation();
-
-    // const dispatch = useDispatch()
-    const [buidlingdata , setBuildingDatas] = useState('')
-  // const {isOpen} = useSelector((store) => store.modal)
+export default function EventScreen() {
 
     useEffect(() => {
-      // FakeData()
-      getEventData()
+      EventData()
+    }, [event]);
 
-    }, []);
+  const navigation = useNavigation();
+  const [event, setEvent] = useState();
+  const [data, setData] = useState("");
+  StatusBar.setHidden(true);
+
+  const handleViewableItemsChanged = useCallback(
+    ({ viewableItems, changed }) => {
+      setData(viewableItems[0].item)
+    },
+    []
+  );
 
 
-    const getEventData = async() => {
+  
+  const EventData = async() => {
 
-    var result = await remoteDBBuilding.allDocs({
+    var result = await remoteDBEvent.allDocs({
       include_docs: true,
-      attachments: true
+      attachments: true,
     });
-    if(result.rows){
-        let modifiedArr = result.rows.map(function(item){
+    if(result.rows) {
+      let modifiedArr =  result.rows.map(function(item) {
         return item.doc
-    });
-    let filteredData = modifiedArr.filter(item => {
-        return item;
       });
-      if(filteredData) {
-          let newFilterData = filteredData.map(item => {
-              return item
-          })
-          setBuildingDatas(newFilterData)
-           
+      let filteredData = modifiedArr.filter(item => {
+        return item.Status === 'Active'
+      })
+      if(filteredData){
+       let newFilterData = filteredData.map((item) => {
+        return item 
+       })
+       setEvent(newFilterData);
+       console.log(newFilterData)
       }
-  }  
-};
-
-const FakeData = async() => {
-
-  const data = ([
-    {
-      "_id": "63de6ebc0c3b6dafa15a6322",
-      "name": "Hickman",
-      "AdminName": "Lavonne",
-      "BuildingName": "Maggie",
-      "BuildingLocation": "Bennett",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Becker"
-    },
-    {
-      "_id": "63de6ebc5fc8b4a9554135c4",
-      "name": "Price",
-      "AdminName": "Schultz",
-      "BuildingName": "Angeline",
-      "BuildingLocation": "Lakisha",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Anna"
-    },
-    {
-      "_id": "63de6ebc84f052f15d5ddcef",
-      "name": "Gray",
-      "AdminName": "Landry",
-      "BuildingName": "Reid",
-      "BuildingLocation": "Poole",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Lott"
-    },
-    {
-      "_id": "63de6ebc7286ee6372489006",
-      "name": "Rosario",
-      "AdminName": "Marilyn",
-      "BuildingName": "Neal",
-      "BuildingLocation": "Lindsey",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Ortega"
-    },
-    {
-      "_id": "63de6ebccb5b0f0c87cf92cc",
-      "name": "Bird",
-      "AdminName": "Eva",
-      "BuildingName": "Bailey",
-      "BuildingLocation": "Goff",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Sherri"
-    },
-    {
-      "_id": "63de6ebce4c2d1d678d1b04b",
-      "name": "Benton",
-      "AdminName": "Juliana",
-      "BuildingName": "Adrienne",
-      "BuildingLocation": "Walls",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Fern"
-    },
-    {
-      "_id": "63de6ebc10a3bea7420007a9",
-      "name": "Hogan",
-      "AdminName": "Aileen",
-      "BuildingName": "Russo",
-      "BuildingLocation": "Deleon",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Hilda"
-    },
-    {
-      "_id": "63de6ebccde096a991909a0e",
-      "name": "Ware",
-      "AdminName": "Ellis",
-      "BuildingName": "Burks",
-      "BuildingLocation": "Earnestine",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Valentine"
-    },
-    {
-      "_id": "63de6ebc97c7d1d775fef7c6",
-      "name": "Conner",
-      "AdminName": "Shelia",
-      "BuildingName": "Lily",
-      "BuildingLocation": "Silva",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Stevens"
-    },
-    {
-      "_id": "63de6ebc17125fbdb6411590",
-      "name": "Mullins",
-      "AdminName": "Adeline",
-      "BuildingName": "Dora",
-      "BuildingLocation": "Nancy",
-      "picture": "http://placehold.it/32x32",
-      "AdminVicePresident": "Gomez"
     }
-  ])
-  setBuildingDatas(data)
 
-}
-
-    const renderItem = ({ item }) => {
-      // console.log(item.EventImage)
-      // console.log('item.EventImage')
-    return(
-      <TouchableOpacity onPress={() => {
-        dispatch(openBuildingModal()) ; dispatch(setBuildingData(item))
-      }} >
-      <View style = {styles.item}>
-        <Text style = {styles.title}>
-          {item.BuildingName}
-        </Text>
-        <Image
-            resizeMode="cover" style={{width: 550, height: 300}} source={{uri:item.BuildingPicture}}
-            
-            />
-      </View>
-    </TouchableOpacity>
-    )
   }
 
-
-    // const renderItem = ({ item }) => (
-    //     <Item title={item.title} />
-    //   );
+    const renderItem = ({item}) => {
 
       return (
-        <ImageBackground style={styles.container}
-        source = {require('../../../Assets/Img/Background_image.png')}
+     <View>
+          <Image
+            source = {{uri: item.EventImage}}
+            style = {{width: 1300, height: '100%', alignSelf: 'center', backgroundColor: 'black'} }
+            resizeMode = 'contain'
+          />
+       </View>
+      )
+    }
 
-        >
-           
-            <SafeAreaView style = {{
-                justifyContent: 'center',
-                alignItems: 'center',}}>
-                
-                <CloseButton
-                    onPress = {() => navigation.navigate('StudentHomeScreen')}
-                    name = 'arrow-back'
-                    size = {50}
-                    style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
-/>
-            <View style = {{justifyContent: 'center', alignSelf: 'center', paddingTop: 100}}>
-                <FlatList
-                    showsVerticalScrollIndicator = {false}
-                    numColumns = '2'
-                    data={buidlingdata}
-                    renderItem={renderItem}
-                    keyExtractor={item => item._id}
-                />
+    return (
+      <View style={styles.container}>
+
+        <View>
+        <FlatList
+          data = {event}
+          horizontal
+          renderItem = {renderItem}
+          keyExtractor = {item => item._id}
+          onViewableItemsChanged={handleViewableItemsChanged}
+        />
+      </View>
+        <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
+        name = 'arrow-back'
+        size = {35}
+        color = {'#fff'}
+        onPress = {() => navigation.goBack('StudentHomeScreen')}
+        />
+         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+         <StatusBar barStyle= 'light-content'/>
+           <View style = {{width: '100%', height: '100%', backgroundColor: '#00000070' }}>
+            <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
+            <Text style = {{color: '#fff', fontSize: 35, fontWeight: '500'}}>Event Name:{data.EventName}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Tagline: {data.EventTagline}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Where: {data.EventWhere}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event When: {data.EventWhen}</Text>
+            <Text style = {{color: '#fff', fontSize: 25}}>Event Description: {data.EventDescription}</Text>
             </View>
-            </SafeAreaView>
-            <BuildingModal/>
-        </ImageBackground>
-      );
-    
+           </View>
+        </View>
 
-  }
+      </View>
+    )
 
-  const styles = StyleSheet.create({
+};
 
-    container: {
-        flex: 1,
-        justifyContent: 'center',
+
+
+ const styles = StyleSheet.create({
+          
+        eventcontainer: {
+          
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          width: '50%'
         
-    },
-
-    item: {
-
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        padding: 30,
-        width: 600,
-        height: 300,
-        borderRadius: 10,
-        marginVertical: 16,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
         },
-        shadowOpacity: 0.6,
-        shadowRadius: 2,
-        elevation: 3,
-
-    },
-
-    title: {
-
-      fontSize: 32,
-    },
-  });
+      
+        imagecontainer: {
+          
+          borderRadius: 20,
+          width: '100%', 
+          height: '100%', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+        
+        },
+      
+        inputcontainer:{
+          
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          width: '100%',
+          height: '100%',
+        
+        },
+      
+        contentcontainer: {
+          
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          width: '100%',
+          height: '100%',
+          flexDirection: 'row'
+        
+        },
+      
+        TextInput: {
+      
+          backgroundColor: '#f2f3f7',
+          width: '80%',
+          borderRadius: 5,
+          height: 50,
+          marginTop: 10,
+          alignItems: 'center',
+          flexDirection: 'row',
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 1,
+            height: 2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 1,
+          elevation: 3,
+      
+        },
+      
+        nextbutton: {
+          
+          backgroundColor: '#0f2ed6',
+          width: '100%',
+          height: 75,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRightWidth: 3,
+          bottom: 0,
+          position: 'absolute'
+      
+        },
+      
+        imagebutton: {
+      
+          width: '50%',
+          height: '50%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          borderRadius: 10,
+      
+        },
+      
+        container: {
+      
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f2f3f7',
+        },
+          
+      })
