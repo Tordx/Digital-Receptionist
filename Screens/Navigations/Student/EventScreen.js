@@ -16,7 +16,10 @@ export default function EventScreen() {
 
   const navigation = useNavigation();
   const [event, setEvent] = useState();
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(true)
+  const [when, setWhen] = useState()
+
   StatusBar.setHidden(true);
 
   const handleViewableItemsChanged = useCallback(
@@ -46,6 +49,8 @@ export default function EventScreen() {
         return item 
        })
        setEvent(newFilterData);
+       setLoading(false)
+       setWhen(newFilterData[0].EventWhen.toString())
        console.log(newFilterData)
       }
     }
@@ -55,10 +60,11 @@ export default function EventScreen() {
     const renderItem = ({item}) => {
 
       return (
-     <View>
+     <View  style = {{width: 640, height: '100%', alignItems: 'center',}}>
           <Image
             source = {{uri: item.EventImage}}
-            style = {{width: 700, height: '100%', alignSelf: 'center'}}
+            style = {{width: '100%', height: '100%', alignSelf: 'center'}}
+           
             // resizeMode = 'contain'
           />
        </View>
@@ -67,35 +73,46 @@ export default function EventScreen() {
 
     return (
       <View style={styles.container}>
-      <View style={styles.contentcontainer}>
-        <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
-        <FlatList
-          data = {event}
-          horizontal
-          renderItem = {renderItem}
-          keyExtractor = {item => item._id}
-          onViewableItemsChanged={handleViewableItemsChanged}
-        />
-      </View>
-        <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
-        name = 'arrow-back'
-        size = {35}
-        color = {'#fff'}
-        onPress = {() => navigation.goBack('StudentHomeScreen')}
-        />
-         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-         <StatusBar barStyle= 'light-content'/>
-           <View style = {{width: '100%', height: '100%', backgroundColor: '#00000070' }}>
-            <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
-            <Text style = {{color: '#fff', fontSize: 35, fontWeight: '500'}}>Event Name:{data.EventName}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Tagline: {data.EventTagline}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Where: {data.EventWhere}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event When: {data.EventWhen}</Text>
-            <Text style = {{color: '#fff', fontSize: 25}}>Event Description: {data.EventDescription}</Text>
+        <View style={styles.contentcontainer}>
+          <View style={[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+          <FlatList
+            data = {event}
+            horizontal
+            renderItem = {renderItem}
+            keyExtractor = {item => item._id}
+            onViewableItemsChanged={handleViewableItemsChanged}
+            pagingEnabled
+          />
+        </View>
+          <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
+          name = 'arrow-back'
+          size = {35}
+          color = {'#fff'}
+        o   onPress = {() => navigation.goBack('StudentHomeScreen')}
+          
+          />
+            <View style={{width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f6f6f6', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
+            <StatusBar barStyle= 'light-content'/>
+              <ImageBackground source={require('../../../Assets/Img/announcement-event-image.png')} resizeMode='cover' style = {{width: '100%', height: '100%'}}>
+              <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
+              <Text style = {{color: '#303030', fontSize: 35, fontWeight: '500'}}>{data.EventName}</Text>
+              <Text style = {{color: '#303030', fontSize: 25}}>{data.EventTagline}</Text>
+              <Text style = {{color: '#303030', fontSize: 15}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
+              <Text style = {{color: '#303030', fontSize: 15}}>Where: {data.EventWhere}</Text>
+              <Text style = {{color: '#303030', fontSize: 17}}>Event Description: {data.EventDescription}</Text>
+              </View>
+              </ImageBackground>
+          </View>
+          </View>
+          <Modal
+          statusBarTranslucent
+            visible = {loading}
+            animationType='fade'
+          >
+            <View style = {[styles.contentcontainer, {backgroundColor: '#fddf54'}]}>
+              <Text>loading Data</Text>
             </View>
-           </View>
-        </View>
-        </View>
+          </Modal>
       </View>
     )
 

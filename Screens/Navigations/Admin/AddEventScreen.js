@@ -162,7 +162,7 @@ export default function AddEventScreen() {
             _rev: rev === null ? undefined : rev,
             EventName : eventname,
             EventTagline : eventtagline,
-            EventWhen: eventwhen,
+            EventWhen: eventwhen.toString(),
             EventWhere : eventwhere,
             EventDescription : eventdescription,
             EventImage : image,
