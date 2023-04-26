@@ -1,0 +1,211 @@
+//import liraries
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image } from 'react-native';
+import { useSelector } from 'react-redux';
+import { CloseButton } from '../../Components/Buttons';
+import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
+import {  remoteDBOrg } from '../../Database/pouchDb';
+import Maps from '../../Components/Maps';
+
+
+// create a component
+export default function BuildingMapScreen ()  {
+
+    // useEffect(() => {
+    //   OrgList();
+    //   MemberDetails()
+    //   },[memberdetails])
+      
+    const {buildingData} = useSelector((store) => (store.buildingmodal))
+
+    const navigation = useNavigation()
+    
+    const [orgdetail, setOrgDetail] = useState('');
+    const [memberdetails, setMemberDetail] = useState();
+    const [memberRefresh, setMemberRefresh] = useState(false);
+    console.log('====================================buildingData');
+    console.log(buildingData.Rooms);
+    console.log('====================================buildingData');
+    
+    //   const OrgList = async() => {
+    
+    //     var result =  await remoteDBOrg.allDocs({
+    //         include_docs: true,
+    //         attachments: true,
+    //     })
+    //     if(result.rows){
+    //       let modifiedArr = result.rows.map(function(item) {
+    //         return item.doc
+    //       })
+    //       let filteredData = modifiedArr.filter(item => {
+    //         return item.Department === courseData.Department
+    //       })
+    //       if(filteredData) {
+    //         let newFilterData = filteredData.map(item => {
+    //           return item;
+    //         });
+    //         setOrgDetail(newFilterData);
+
+    //         console.log(newFilterData)
+    
+    //       }
+    //     } 
+    
+    //   }
+    //   const MemberDetails = async() => {
+    
+    //     var result =  await remoteDBfacultyMember.allDocs({
+    //         include_docs: true,
+    //         attachments: true,
+    //     })
+    //     if(result.rows){
+    //       let modifiedArr = result.rows.map(function(item) {
+    //         return item.doc
+    //       })
+    //       let filteredData = modifiedArr.filter(item => {
+    //         return item.Department  === courseData.Department
+    //       })
+    //       if(filteredData) {
+    //         let newFilterData = filteredData.map(item => {
+    //           return item;
+    //         });;
+    //         setMemberDetail(newFilterData);
+    //         console.log(newFilterData)
+    
+    //       }
+    //     } 
+    
+    //   }
+
+    //   console.log(courseData)
+    
+
+    //   const RefreshList = () => {
+
+    //     setMemberRefresh(true);
+    //     OrgList();
+    //     MemberList();
+    //     setMemberRefresh(false);
+  
+    // }
+
+    const renderItem = ({item}) => {
+
+      return (
+        <View style = {{flexDibrection: 'column', padding: 20}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
+            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Room}  —  {item.Floor}</Text>
+            
+        </View>
+        </View>
+      )
+    
+
+    } 
+//     const orgItem = ({item}) => {
+
+//       return (
+//       <View style = {{flexDirection: 'row'}}>
+//           <Image
+//             source = {{uri: item.Image}}
+//             style = {{width: 75, height: 75}}
+//             resizeMode = 'contain'
+//           />
+//       </View>
+//       )
+
+//   }
+
+
+    return (
+        <>
+        <View style = {styles.container}>
+            <StatusBar
+                hidden
+            />
+          <Maps
+          id = {buildingData.BuildingName}
+          title = {buildingData.BuildingLocation}
+          coordinate = {buildingData.Coordinates}
+          // onSelected={() => {
+          //   setSelectedMarker(marker);
+          //   setShowModal(true);
+          // }}
+          />
+          
+          <View style = {{width: '50%', height: '100%'}} />
+            <View style = {{width: '50%', height: '100%'}} >
+              <View style = {styles.header}>
+                <View style = {{padding: 20}}>
+                  {/* <Text style = {{fontSize: 30, marginVertical: 1}}>{buildingData.Course}</Text>
+                  <Text style = {{ fontSize: 20, marginBottom: 2}}>{buildingData.College}</Text> */}
+                  <Text style = {{ fontSize: 23, marginVertical: 3}}>BuildingName - {buildingData.BuildingName}</Text>
+                  <Text style = {{ fontSize: 23, marginVertical: 3}}>BuildingLocation: - {buildingData.BuildingLocation}</Text>
+                </View>
+              </View>
+              {/* <View style = {[styles.header, {height: 100}]}>
+                <View style = {{padding: 20}}>
+                  
+                </View>
+              </View> */}
+           
+              <View style = {[styles.header, {height: '60%'}]}>
+                <View style = {{padding: 20}}>
+                  <FlatList
+                  data={buildingData.Rooms}
+                  renderItem = {renderItem}
+                  keyExtractor = {(item) => item._id}
+                  />
+                </View>
+              </View>
+              {/* <View style = {[styles.header, {height: 150}]}>
+                <View style = {{padding: 20}}>
+                  <Text style = {{ fontSize: 17, marginVertical: 5}}>Organization/s under {courseData.Course}</Text>
+                    <FlatList
+                      data={orgdetail}
+                      renderItem = {orgItem}
+                      keyExtractor = {(item) => item._id}
+                    />
+                </View>
+              </View> */}
+            </View>
+          </View>
+        <CloseButton
+        onPress = {() => navigation.goBack('ClassScreen')}     
+        name = 'arrow-back'
+        color = '#fff'
+        size = {35}
+        style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
+      </>
+    );
+};
+
+const styles = StyleSheet.create({
+
+  container: {
+    
+    flexDirection: 'row',  
+    width: '100%', 
+    height: '100%',
+    justifyContent: 'center', 
+    alignItems: 'center',
+
+  },
+  header: { 
+    
+    flexDirection: 'column',
+    alignSelf: 'flex-end', 
+    justifyContent: 'center',
+    backgroundColor: '#f6f6f6', 
+    width: '100%', 
+    height: 150, 
+    marginTop: 15, 
+    marginLeft: 15, 
+    elevation: 10, 
+    borderBottomLeftRadius: 15, 
+    borderTopLeftRadius: 15
+  
+  }
+
+})
