@@ -30,7 +30,7 @@ import AddStudentScreen from './Screens/Navigations/Admin/AddStudentScreen';
 import AddSuperAdmin from './Screens/Navigations/Admin/AddSuperAdmin';
 import LogBookScreen from './Screens/Navigations/Admin/LogBookScreen';
 import AddBuildingScreen from './Screens/Navigations/Admin/AddBuildingScreen';
-import AddCollage from './Screens/Navigations/Admin/AddCollage';
+import AddCollege from './Screens/Navigations/Admin/AddCollege';
 // Guest StackScreen
 import Camera from './Components/Camera';
 import Maps from './Components/Maps';
@@ -77,7 +77,7 @@ export default function Directory() {
                 <Stack.Screen name = 'AddStudentScreen' component={AddStudentScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddSuperAdmin' component={AddSuperAdmin} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddBuildingScreen' component={AddBuildingScreen} options = {{ headerShown: false }} />
-                <Stack.Screen name = 'AddCollage' component={AddCollage} options = {{ headerShown: false }} />
+                <Stack.Screen name = 'AddCollege' component={AddCollege} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'LogBookScreen' component={LogBookScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'Camera' component={Camera} options = {{ headerShown: false }}/>
                 <Stack.Screen name = 'TCScreen' component={TCScreen} options= {{headerShown: false}} />
