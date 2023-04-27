@@ -25,7 +25,7 @@ export default function BuildingMapScreen ()  {
     const [memberdetails, setMemberDetail] = useState();
     const [memberRefresh, setMemberRefresh] = useState(false);
     console.log('====================================buildingData');
-    console.log(buildingData.Rooms);
+    console.log(buildingData);
     console.log('====================================buildingData');
     
     //   const OrgList = async() => {

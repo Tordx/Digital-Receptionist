@@ -96,10 +96,9 @@ export default function EventScreen() {
               <ImageBackground source={require('../../../Assets/Img/announcement-event-image.png')} resizeMode='cover' style = {{width: '100%', height: '100%'}}>
               <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
               <Text style = {{color: '#303030', fontSize: 35, fontWeight: '500'}}>{data.EventName}</Text>
-              <Text style = {{color: '#303030', fontSize: 25}}>{data.EventTagline}</Text>
               <Text style = {{color: '#303030', fontSize: 15}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
-              <Text style = {{color: '#303030', fontSize: 15}}>Where: {data.EventWhere}</Text>
-              <Text style = {{color: '#303030', fontSize: 17}}>Event Description: {data.EventDescription}</Text>
+              <Text style = {{color: '#303030', fontSize: 17}}>{data.EventWhere}</Text>
+              <Text style = {{color: '#303030', fontSize: 25, fontWeight: 'bold'}}>{data.EventDescription}</Text>
               </View>
               </ImageBackground>
           </View>

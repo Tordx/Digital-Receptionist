@@ -54,7 +54,7 @@ export default function Directory() {
                 <Stack.Screen name = 'CitizenChartScreen' component={CitizenChartScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'SplashScreen' component={SplashScreen} options = {{headerShown: false, transitionSpec: { open: TransitionSpecs.TransitionIOSSpec, close: TransitionSpecs.TransitionIOSSpec, }, }}/>
                 <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
-                <Stack.Screen name = 'FacultyMapScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'FacultyScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'BuildingMapScreen' component={BuildingMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
