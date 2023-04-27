@@ -88,7 +88,7 @@ export default function FacultyMapScreen ()  {
                 <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#303030' }}>
                   {facultyDatas.Course}
                 </Text>
-                <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030' }}>Collage Dean- {facultyDatas.ChairPerson}  <Text style = {{fontSize: 19, fontWeight: '600' }}> {facultyDatas.Dean}
+                <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030' }}>College Dean- {facultyDatas.ChairPerson}  <Text style = {{fontSize: 19, fontWeight: '600' }}> {facultyDatas.Dean}
                </Text>
               </Text>
             </View>
@@ -114,9 +114,9 @@ export default function FacultyMapScreen ()  {
         </View>
         </View>
         <CloseButton
-        onPress = {() => navigation.navigate('FacultyScreen')}     
+        onPress = {() => navigation.navigate('FacultyScreen2')}     
         name = 'arrow-back'
-        color = '#fff'
+        color = '#404040'
         size = {35}
         style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
       </>
