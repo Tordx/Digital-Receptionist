@@ -227,7 +227,8 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
          
           alignItems: 'center',
-          alignSelf:'center', 
+          alignSelf:'center',
+          justifyContent: 'center',
           flexDirection: 'row',
           backgroundColor: '#ffff',
           width: 600,
@@ -250,7 +251,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
           },
           searchButtonExit: {
             position: 'absolute',
-            top: 10,
+            top: 5,
             right: 10,
         },
     

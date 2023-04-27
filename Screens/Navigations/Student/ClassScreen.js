@@ -160,7 +160,7 @@ export const ClassScreen = () => {
            </View>
            <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 250}}>
          
-           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 100}}>
+           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 100, elevation: 10, shadowColor: '#000'}}>
           <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
           </View>
         <View style = {styles.TextInput}>
