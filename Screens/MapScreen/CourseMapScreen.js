@@ -89,10 +89,10 @@ export default function CourseMapScreen ()  {
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 20}}>
+        <View style = {{flexDibrection: 'column', padding: 15}}>
         <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Name}  —  {item.Title}</Text>
-            
+            <Text style = {{fontSize: 20, color: '#303030', fontWeight: '400' }}>{item.Name}</Text>
+            <Text style = {{fontSize: 20, color: '#303030', fontWeight: '400', position: 'absolute', right: 10 }}>{item.Title}</Text>
         </View>
         </View>
       )
@@ -104,7 +104,7 @@ export default function CourseMapScreen ()  {
       <View style = {{flexDirection: 'row'}}>
           <Image
             source = {{uri: item.Image}}
-            style = {{width: 75, height: 75}}
+            style = {{width: 70, height: 70}}
             resizeMode = 'contain'
           />
       </View>
@@ -133,30 +133,32 @@ export default function CourseMapScreen ()  {
             <View style = {{width: '50%', height: '100%'}} >
               <View style = {styles.header}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{fontSize: 30, marginVertical: 1}}>{courseData.Course}</Text>
-                  <Text style = {{ fontSize: 20, marginBottom: 2}}>{courseData.College}</Text>
-                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Chairperson - {courseData.ChairPerson}</Text>
-                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Room: - {courseData.Room}</Text>
+                  <Text style = {{fontSize: 27, fontWeight: 'bold', marginVertical: 1, color: '#303030'}}>{courseData.Course.toUpperCase()}</Text>
+                  <Text style = {{ fontSize: 20, marginBottom: 2, color: '#303030'}}>{courseData.College}</Text>
+                  <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030'}}>Chairperson - {courseData.ChairPerson}</Text>
+               
                 </View>
               </View>
-              {/* <View style = {[styles.header, {height: 100}]}>
+              <View style = {[styles.header, {height: 75}]}>
                 <View style = {{padding: 20}}>
-                  
+                <Text style = {{ fontSize: 18, marginVertical: 3, color: '#303030'}}>Faculty Office: {courseData.Room}</Text>
                 </View>
-              </View> */}
+              </View>
            
-              <View style = {[styles.header, {height: '60%'}]}>
-                <View style = {{padding: 20}}>
+              <View style = {[styles.header, {height: '45%'}]}>
+                <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 10, color: '#303030', width: '100%', backgroundColor: '#00000019'}}>FACULTY MEMBERS</Text>
                   <FlatList
                   data={memberdetails}
                   renderItem = {renderItem}
                   keyExtractor = {(item) => item._id}
+                  showsVerticalScrollIndicator = {false}
                   />
                 </View>
               </View>
-              <View style = {[styles.header, {height: 150}]}>
+              <View style = {[styles.header, {height: 125}]}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{ fontSize: 17, marginVertical: 5}}>Organization/s under {courseData.Course}</Text>
+                  <Text style = {{ fontSize: 17, marginVertical: 5, color: '#303030'}}>Organization/s under {courseData.Course}</Text>
                     <FlatList
                       data={orgdetail}
                       renderItem = {orgItem}
@@ -166,6 +168,7 @@ export default function CourseMapScreen ()  {
               </View>
             </View>
           </View>
+          
         <CloseButton
         onPress = {() => navigation.goBack('ClassScreen')}     
         name = 'arrow-back'
@@ -192,14 +195,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'flex-end', 
     justifyContent: 'center',
-    backgroundColor: '#f6f6f6', 
+    backgroundColor: '#fddf54', 
     width: '100%', 
     height: 150, 
     marginTop: 15, 
     marginLeft: 15, 
     elevation: 10, 
     borderBottomLeftRadius: 15, 
-    borderTopLeftRadius: 15
+    borderTopLeftRadius: 15,
   
   }
 

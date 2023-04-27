@@ -84,6 +84,7 @@ export default function EventScreen() {
           renderItem = {renderItem}
           keyExtractor = {item => item._id}
           onViewableItemsChanged={handleViewableItemsChanged}
+          pagingEnabled
         />
       </View>
         <CloseButton style = {{position: 'absolute', top: 10, left: 10}}

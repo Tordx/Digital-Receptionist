@@ -68,8 +68,8 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
-      onPress = {() => navigation.navigate('AddCollage')}
-      title = 'Collage'
+      onPress = {() => navigation.navigate('AddCollege')}
+      title = 'College'
       style = {styles.Box}
       titleStyle = {styles.title}
 

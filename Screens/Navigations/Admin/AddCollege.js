@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {remoteDBCollage, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
+import {remoteDBCollege, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -45,7 +45,7 @@ const CustomInput = (props) => {
   }
   
 
-export default function AddCollage() {
+export default function AddCollege() {
 
   useEffect(() => {
     facultydatas()
@@ -54,26 +54,26 @@ export default function AddCollage() {
     const dispatch = useDispatch();
     const navigation = useNavigation('');
     const [dataforFaculty, setDataForFaculty] = useState('');
-    const [collage, setCollage] = useState('');
-    const [collageAcronym, setCollageAcronym] = useState('');
+    const [College, setCollege] = useState('');
+    const [CollegeAcronym, setCollegeAcronym] = useState('');
     const [department, setDepartment] = useState([]);
     const [building, setBuilding] = useState('');
     const [dean, setDean] = useState('');
     const [image, setImage] = useState(null)
     const [coordinates, setCoordinate] = useState([])
     const [next, setNext] = useState(true);
-    const [collageid , setCollageId] = useState(null);
-    const [collagerev , setCollageRev] = useState(null);
+    const [Collegeid , setCollegeId] = useState(null);
+    const [Collegerev , setCollegeRev] = useState(null);
     const [transferred, setTransferred] = useState(0);
     const id = uuid.v4()
 
     const AddNewFaculty =  () => {
         
-      collage === '' ? Alert.alert('Please Enter Faculty Name') : 
+      College === '' ? Alert.alert('Please Enter Faculty Name') : 
       (building === '' ? Alert.alert('Please Enter Faculty Building') : 
       department === '' ? Alert.alert('Please Enter Faculty President') : 
-      collage === '' ? Alert.alert('Please Enter Faculty VicePresident') :
-      collageAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
+      College === '' ? Alert.alert('Please Enter Faculty VicePresident') :
+      CollegeAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
       dean === '' ? Alert.alert('Please Enter Dean') :
       // image === null ? Alert.alert('Please Add Image') : 
       setNext(false))
@@ -133,17 +133,17 @@ export default function AddCollage() {
 
          try {
            var NewFaculty = {
-            _id: collageid === null ? id : collageid,
-            _rev:collagerev === null ? undefined : collagerev,
-             CollegeAcronym : collageAcronym,
-             Collage : collage,
+            _id: Collegeid === null ? id : Collegeid,
+            _rev:Collegerev === null ? undefined : Collegerev,
+             CollegeAcronym : CollegeAcronym,
+             College : College,
              Department : department,
              Image : url,
              Building : building,
              Dean : dean,
              Coordinates : coordinates
            }
-           remoteDBCollage.put(NewFaculty)
+           remoteDBCollege.put(NewFaculty)
            .then((response) =>{
              Alert.alert('Your  has been successfully added!')
              console.log(response)
@@ -159,7 +159,7 @@ export default function AddCollage() {
 
     const facultydatas = async() => {
 
-      var result = await remoteDBCollage.allDocs({
+      var result = await remoteDBCollege.allDocs({
         include_docs: true,
         attachments: true,
       });
@@ -183,12 +183,12 @@ export default function AddCollage() {
               <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
                 <TouchableOpacity 
                   onPress={() => {
-                    setCollage(item.Collage)
-                    setCollageAcronym(item.CollageAcronym)
+                    setCollege(item.College)
+                    setCollegeAcronym(item.CollegeAcronym)
                     setDepartment(item.Department)
                     setImage(item?.Image)
-                    setCollageId(item._id)
-                    setCollageRev(item._rev)
+                    setCollegeId(item._id)
+                    setCollegeRev(item._rev)
                     setDean(item.Dean)
                     setBuilding(item.Building)
                   }}
@@ -201,7 +201,7 @@ export default function AddCollage() {
                   />
             </TouchableOpacity>
               <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
-                {item.Collage}
+                {item.College}
               </Text>
               </View>
               
@@ -222,14 +222,14 @@ export default function AddCollage() {
                   source = {require('../../../Assets/Img/admin-image.png')}>
                     <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE FACULTY MEMBERS</Text>
                         <CustomInput
-                          onChangeText={(value) => setCollage(value)}
-                           value={collage}
-                           title = 'Collage Name'
-                           placeholder="e.g. collage name"
+                          onChangeText={(value) => setCollege(value)}
+                           value={College}
+                           title = 'College Name'
+                           placeholder="e.g. College name"
                         />
                         <CustomInput
-                          onChangeText={(value) => setCollageAcronym(value)}
-                          value={collageAcronym}
+                          onChangeText={(value) => setCollegeAcronym(value)}
+                          value={CollegeAcronym}
                           multiline
                           title='CollegeAcronym'
                           placeholder="e.g. collegeAcronym"
@@ -239,7 +239,7 @@ export default function AddCollage() {
                           onChangeText={(value) => setDepartment(value)}
                           value={department}
                           multiline
-                          title = 'Collage Department'
+                          title = 'College Department'
                           placeholder='e.g. office'
                       
                         />

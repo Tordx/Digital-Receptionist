@@ -20,6 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { remoteDBCourses, remoteDBOrg } from '../../../Database/pouchDb';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourseData, setOrgData } from '../../../Redux/ClassSlice';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const ClassScreen = () => {
 
@@ -31,7 +32,8 @@ export const ClassScreen = () => {
     const [newSearch, setNewSearch] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [openModal, setOpenModal] = useState(false);
-    const [image, setImage] = useState('https://i.imgur.com/hYraFON.png');
+    const [image, setImage] = useState('https://i.imgur.com/CY1O1Y9.png');
+    const [showSearch, setShowSearch] = useState(false)
   
     useEffect(() => {
       renderCourse();
@@ -106,7 +108,7 @@ export const ClassScreen = () => {
         <Pressable
          style = {styles.item}
           android_ripple={{
-          color: 'yellow',
+          color: 'white',
           borderRadius: 100,
           radius: 200,
         }}
@@ -114,7 +116,7 @@ export const ClassScreen = () => {
          dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen');
 
         }} >
-        <Image resizeMode='contain' style = {{width: 150, height: 150}} source = {{uri:  item.Image || image }}/>
+        <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20}} source = {{uri:  item.Image || image }}/>
           <Text style = {styles.title}>
               {item.Course}
           </Text>
@@ -129,13 +131,14 @@ export const ClassScreen = () => {
       resizeMode = 'cover'
     >
       
-          
+        
+    
+      
         <View style = {styles.contentcontainer}>
-         
           <ScrollView>
         {newSearch ? (
-          <View style = {{justifyContent: 'center', alignItems: 'center', paddingTop: '15%'}}>
         <FlatList
+          style = {{paddingTop: 100}}
           data={newSearch}
           numColumns = {5}
           renderItem={renderItem}
@@ -149,51 +152,53 @@ export const ClassScreen = () => {
           }
           
         />
-        </View>
        
       ) : (
         <ActivityIndicator size="large" color="#fddf54"/>
       )}
       </ScrollView>
            </View>
-           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 5, position: 'absolute', top: 100}}>
-          <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
-          </View>
-        <View style = {styles.TextInput}>
-        <TextInput
-            style  = {{width: '100%', fontSize: 17}}
-            value={searchTerm} 
-            onChange={(event) => {
-              setSearchTerm(event.nativeEvent.text) }}
+           <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 250}}>
          
-        />
-        <SearchButton onPress = {(event) => {
-        setSearchTerm(event.nativeEvent.text);
-        }} />
-        </View>
+           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 20, elevation: 10, shadowColor: '#000'}}>
+         {showSearch ? null : <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>}
+          </View>
+        {showSearch ?
+          <View style = {styles.TextInput}>
+          <TextInput
+              style  = {{width: '100%', fontSize: 17}}
+              value={searchTerm} 
+              onChange={(event) => {
+                setSearchTerm(event.nativeEvent.text) }}
+              placeholder = 'Search Citizen Charter...'
+            
+          />
+              <CloseButton
+            style={styles.searchButtonExit}
+            name='close'
+            size={35}
+            color={'black'}
+            onPress={() => setShowSearch(!showSearch)}
+          />
+          
+          </View>
+       :  <CloseButton
+       style={styles.searchButton}
+       name='search'
+       size={35}
+       color={'#fddf54'}
+       onPress={() => setShowSearch(!showSearch)}
+     />}
         <CloseButton
 
           onPress = {() => navigation.navigate('StudentHomeScreen')}     
           name = 'arrow-back'
           size = {40}
+          color  = '#404040'
           style = {{flexDirection: 'row', top: 25, left: 25, position: 'absolute'}}
         />
-    <Modal
-      visible = {openModal}
-      transparent
-      animationType='fade'
-      onRequestClose = {() => setOpenModal(false)}
-      statusBarTranslucent
-    >
-     
-      <Pressable style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignSelf: 'center', alignItems: 'center'}} onPress = {() => setOpenModal(false)}> 
-        <View style = {{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', width: '95%', height: '90%'}}>
-        <Text>{courseData.Course}</Text>
-        <Text>{courseData?.Description}</Text>
-        </View>
-      </Pressable>
-    </Modal>
-
+        </LinearGradient>
+    
     </ImageBackground>
   )
 
@@ -218,15 +223,33 @@ export const ClassScreen = () => {
       alignItems: 'center',
 
     },
+    
+    closeButton: {
+      position: 'absolute',
+      top: 20,
+      left: 20,
+    },
+    searchButton: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+    },
+    searchButtonExit: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+  },
 
     item: {
 
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: '#FFFF',
+      borderWidth: 1,
+      borderColor: '#0f2ed6',
       width: 245,
-      height: 230,
-      borderRadius: 5,
+      height: 300,
+      borderRadius: 30,
       marginVertical: 5,
       marginHorizontal: 5,
       elevation: 1,
@@ -237,7 +260,9 @@ export const ClassScreen = () => {
     title: {
 
       fontSize: 16,
-      textAlign: 'center'
+      textAlign: 'center',
+      color: '#404040',
+      width: '85%'
 
     },
 
@@ -265,7 +290,22 @@ export const ClassScreen = () => {
       borderWidth: .5,
       borderColor: '#a2a2a2'
 
-    }
+    },
+    closeButton: {
+      position: 'absolute',
+      top: 20,
+      left: 20,
+    },
+    searchButton: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+    },
+    searchButtonExit: {
+      position: 'absolute',
+      top: 5,
+      right: 10,
+  },
 
   });
 

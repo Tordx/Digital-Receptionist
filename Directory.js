@@ -31,7 +31,7 @@ import AddStudentScreen from './Screens/Navigations/Admin/AddStudentScreen';
 import AddSuperAdmin from './Screens/Navigations/Admin/AddSuperAdmin';
 import LogBookScreen from './Screens/Navigations/Admin/LogBookScreen';
 import AddBuildingScreen from './Screens/Navigations/Admin/AddBuildingScreen';
-import AddCollage from './Screens/Navigations/Admin/AddCollage';
+import AddCollege from './Screens/Navigations/Admin/AddCollege';
 // Guest StackScreen
 import Camera from './Components/Camera';
 import Maps from './Components/Maps';
@@ -55,7 +55,7 @@ export default function Directory() {
                 <Stack.Screen name = 'CitizenChartScreen' component={CitizenChartScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'SplashScreen' component={SplashScreen} options = {{headerShown: false, transitionSpec: { open: TransitionSpecs.TransitionIOSSpec, close: TransitionSpecs.TransitionIOSSpec, }, }}/>
                 <Stack.Screen name = 'FacultyMapScreen' component={FacultyMapScreen} options = {{headerShown: false }}/>
-                <Stack.Screen name = 'FacultyMapScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'FacultyScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'BuildingMapScreen' component={BuildingMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'UniversityMap' component={UniversityMap} options = {{headerShown: false }}/>
@@ -79,7 +79,7 @@ export default function Directory() {
                 <Stack.Screen name = 'AddStudentScreen' component={AddStudentScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddSuperAdmin' component={AddSuperAdmin} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AddBuildingScreen' component={AddBuildingScreen} options = {{ headerShown: false }} />
-                <Stack.Screen name = 'AddCollage' component={AddCollage} options = {{ headerShown: false }} />
+                <Stack.Screen name = 'AddCollege' component={AddCollege} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'LogBookScreen' component={LogBookScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'Camera' component={Camera} options = {{ headerShown: false }}/>
                 <Stack.Screen name = 'TCScreen' component={TCScreen} options= {{headerShown: false}} />

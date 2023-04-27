@@ -15,9 +15,74 @@ export default function BuildingMapScreen ()  {
     const navigation = useNavigation()
     const [rooms, setRooms] = useState(buildingData.Rooms)
     
-    const filterRooms = (floor) => {
-      return rooms.filter((room) => room.Floor === floor);
-    };
+    const [orgdetail, setOrgDetail] = useState('');
+    const [memberdetails, setMemberDetail] = useState();
+    const [memberRefresh, setMemberRefresh] = useState(false);
+    console.log('====================================buildingData');
+    console.log(buildingData);
+    console.log('====================================buildingData');
+    
+    //   const OrgList = async() => {
+    
+    //     var result =  await remoteDBOrg.allDocs({
+    //         include_docs: true,
+    //         attachments: true,
+    //     })
+    //     if(result.rows){
+    //       let modifiedArr = result.rows.map(function(item) {
+    //         return item.doc
+    //       })
+    //       let filteredData = modifiedArr.filter(item => {
+    //         return item.Department === courseData.Department
+    //       })
+    //       if(filteredData) {
+    //         let newFilterData = filteredData.map(item => {
+    //           return item;
+    //         });
+    //         setOrgDetail(newFilterData);
+
+    //         console.log(newFilterData)
+    
+    //       }
+    //     } 
+    
+    //   }
+    //   const MemberDetails = async() => {
+    
+    //     var result =  await remoteDBfacultyMember.allDocs({
+    //         include_docs: true,
+    //         attachments: true,
+    //     })
+    //     if(result.rows){
+    //       let modifiedArr = result.rows.map(function(item) {
+    //         return item.doc
+    //       })
+    //       let filteredData = modifiedArr.filter(item => {
+    //         return item.Department  === courseData.Department
+    //       })
+    //       if(filteredData) {
+    //         let newFilterData = filteredData.map(item => {
+    //           return item;
+    //         });;
+    //         setMemberDetail(newFilterData);
+    //         console.log(newFilterData)
+    
+    //       }
+    //     } 
+    
+    //   }
+
+    //   console.log(courseData)
+    
+
+    //   const RefreshList = () => {
+
+    //     setMemberRefresh(true);
+    //     OrgList();
+    //     MemberList();
+    //     setMemberRefresh(false);
+  
+    // }
 
     const renderItem = ({item}) => {
 

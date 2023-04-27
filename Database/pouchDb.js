@@ -22,17 +22,17 @@ export const remoteDBSchedules = new PouchDB('http://admin:1234@192.168.0.199:59
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //FACULTY
-export const localDBCollage = new PouchDB('Faculty', {adapter: 'asyncstorage'})
-export const remoteDBCollage = new PouchDB('https://root:root@database.vidarsson.online/dhd_collage')
+export const localDBCollege = new PouchDB('Faculty', {adapter: 'asyncstorage'})
+export const remoteDBCollege = new PouchDB('https://root:root@database.vidarsson.online/dhd_collage')
 
  export const SyncFaculty = () => {  
-  localDBCollage.sync(remoteDBCollage, {
+  localDBCollege.sync(remoteDBCollege, {
     live: true, 
     retry: true
   }).on('change', function () {
    console.log('start sync')
 
-   localDBCollage.allDocs({include_docs:true}).then(function(doc){
+   localDBCollege.allDocs({include_docs:true}).then(function(doc){
       console.log(doc)
       console.log('done sync')
   })
