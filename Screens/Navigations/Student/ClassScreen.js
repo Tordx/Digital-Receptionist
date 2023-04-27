@@ -33,6 +33,7 @@ export const ClassScreen = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [openModal, setOpenModal] = useState(false);
     const [image, setImage] = useState('https://i.imgur.com/CY1O1Y9.png');
+    const [showSearch, setShowSearch] = useState(false)
   
     useEffect(() => {
       renderCourse();
@@ -136,8 +137,8 @@ export const ClassScreen = () => {
         <View style = {styles.contentcontainer}>
           <ScrollView>
         {newSearch ? (
-          <View style = {{justifyContent: 'center', alignItems: 'center', paddingTop: '15%'}}>
         <FlatList
+          style = {{paddingTop: 100}}
           data={newSearch}
           numColumns = {5}
           renderItem={renderItem}
@@ -151,7 +152,6 @@ export const ClassScreen = () => {
           }
           
         />
-        </View>
        
       ) : (
         <ActivityIndicator size="large" color="#fddf54"/>
@@ -160,21 +160,35 @@ export const ClassScreen = () => {
            </View>
            <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 250}}>
          
-           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 100, elevation: 10, shadowColor: '#000'}}>
-          <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>
+           <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 20, elevation: 10, shadowColor: '#000'}}>
+         {showSearch ? null : <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>}
           </View>
-        <View style = {styles.TextInput}>
-        <TextInput
-            style  = {{width: '100%', fontSize: 17}}
-            value={searchTerm} 
-            onChange={(event) => {
-              setSearchTerm(event.nativeEvent.text) }}
-         
-        />
-        <SearchButton onPress = {(event) => {
-        setSearchTerm(event.nativeEvent.text);
-        }} />
-        </View>
+        {showSearch ?
+          <View style = {styles.TextInput}>
+          <TextInput
+              style  = {{width: '100%', fontSize: 17}}
+              value={searchTerm} 
+              onChange={(event) => {
+                setSearchTerm(event.nativeEvent.text) }}
+              placeholder = 'Search Citizen Charter...'
+            
+          />
+              <CloseButton
+            style={styles.searchButtonExit}
+            name='close'
+            size={35}
+            color={'black'}
+            onPress={() => setShowSearch(!showSearch)}
+          />
+          
+          </View>
+       :  <CloseButton
+       style={styles.searchButton}
+       name='search'
+       size={35}
+       color={'#fddf54'}
+       onPress={() => setShowSearch(!showSearch)}
+     />}
         <CloseButton
 
           onPress = {() => navigation.navigate('StudentHomeScreen')}     
@@ -276,7 +290,22 @@ export const ClassScreen = () => {
       borderWidth: .5,
       borderColor: '#a2a2a2'
 
-    }
+    },
+    closeButton: {
+      position: 'absolute',
+      top: 20,
+      left: 20,
+    },
+    searchButton: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+    },
+    searchButtonExit: {
+      position: 'absolute',
+      top: 5,
+      right: 10,
+  },
 
   });
 
