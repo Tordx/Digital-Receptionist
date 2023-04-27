@@ -73,7 +73,7 @@ export const StudentMainMenu = () => {
 
           <Box
           
-          onPress={() =>  navigation.navigate('SuggestionsScreen')}
+          onPress={() =>  navigation.navigate('UniversityMap')}
           source={require("../../../Assets/Img/icons8-map-marker-96.png")}
           title = 'University Map'
   

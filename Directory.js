@@ -18,6 +18,7 @@ import OfficesScreen from './Screens/Navigations/Student/BuildingScreen';
 import SuggestionsScreen from './Screens/SuggestionsScreen';
 import AddClassScreen from './Screens/Navigations/Admin/AddClassScreen';
 import StudentHomeScreen from './Screens/Navigations/Student/StudentHomeScreen';
+import UniversityMap from './Screens/Navigations/Student/UniversityMap';
 // Admin StackScreen
 import AdminHomeScreen from './Screens/Navigations/Admin/AdminHomeScreen';
 import AdminMainMenu from './Screens/Navigations/Admin/AdminMainMenu';
@@ -57,6 +58,7 @@ export default function Directory() {
                 <Stack.Screen name = 'FacultyMapScreen2' component={FacultyScreen2} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'CourseMapScreen' component={CourseMapScreen} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'BuildingMapScreen' component={BuildingMapScreen} options = {{headerShown: false }}/>
+                <Stack.Screen name = 'UniversityMap' component={UniversityMap} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'Maps' component={Maps} options = {{headerShown: false }}/>
                 <Stack.Screen name = 'StudentHomeScreen' component={StudentHomeScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'ReportScreen' component={ReportScreen} options = {{ headerShown: false }} />

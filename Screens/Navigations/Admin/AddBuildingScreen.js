@@ -9,7 +9,8 @@ import {
   ImageBackground,
   TextInput,
   FlatList,
-  Button
+  Button,
+  Modal
 } from 'react-native';
 import React , {useState , useEffect , useMemo} from 'react'
 import {localDBBuilding , SyncBuilding , remoteDBBuilding} from '../../../Database/pouchDb'
@@ -21,6 +22,9 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { setImages } from '../../../Redux/TaskReducer';
 import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
+import { Picker } from '@react-native-picker/picker';
+// import MapboxGL from '@rnmapbox/maps';
+import Maps from '../../../Components/Maps';
 
 const CustomInput = (props) => {
 
@@ -63,24 +67,26 @@ export default function AddBuildingScreen() {
 
     const [buidlingdata , setBuildingDatas] = useState('')
     const [room , setRoom] = useState('')
-    const [inputs, setInputs] = useState([null]); // initial state with one input
-
-    console.log('====================================inputs');
-    console.log(inputs);
-    console.log('====================================inputs');
+    // const [floor , setFloor] = useState('')
+    const [selectedFloor, setSelectedFloor] = useState('1st floor');
+    const [defaultcoord, setDefaultCoord] = useState([119.97919707716136, 16.155291199328147]);
+    const [inputs, setInputs] = useState([""]); // initial state with one input
+    const [modalVisible, setModalVisible] = useState(true);
 
     const handleAddInput = () => {
-      const newKey = id; // generate unique key for the new input
-      const newInput = { _id: id, Room: room }; // create new input object
+      const newInput = { id: id, Room: room , Floor: selectedFloor }; // create new input object
       setInputs([...inputs, newInput]); // update the inputs array with the new input
     };
-    // const {isOpen} = useSelector((store) => store.modal)
   
       useEffect(() => {
         // FakeData()
         getEventData()
   
       }, []);
+
+      const toggleModal = () => {
+        setModalVisible(!modalVisible);
+      };
   
   
       const getEventData = async() => {
@@ -175,6 +181,8 @@ export default function AddBuildingScreen() {
           BuildingName: buildingname,
           BuildingLocation: buildinglocation,
           BuildingPicture: url,
+          Coordinates: defaultcoord,
+          Rooms: inputs,
         };
         remoteDBBuilding
           .put(newEvent)
@@ -192,8 +200,11 @@ export default function AddBuildingScreen() {
   };
 
   const renderItem = ({ item }) => {
+    
     return(
+      
       <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
+        {next?
         <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
           <TouchableOpacity 
             onPress={() => {
@@ -216,15 +227,19 @@ export default function AddBuildingScreen() {
             />
       </TouchableOpacity>
         <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
-          {item.BuildingName}
+        {item.BuildingName} - {item.Floor}
         </Text>
-        </View>
-        
+       </View>
+       :
+       <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
+        <Text style = {{fontSize: 20 , padding: 10, textAlign: 'left'}}>
+        {item.Room} - {item.Floor}
+        </Text>
+       </View>
+  }
       </View>
     )
     }
-
-
         return (
     
           <View style={styles.container}>
@@ -249,12 +264,6 @@ export default function AddBuildingScreen() {
                         title='Building Location'
                         placeholder="e.g. guidelines and other info"                    
                       />
-                       <View>
-                        {inputs.map((input) => (
-                          <TextInput style={{backgroundColor: 'red' , width: 500}} key={input._id} placeholder="Enter text"  onChangeText={(value) => setRoom(value)}/>
-                        ))}
-                        <Button title="Add Input" onPress={handleAddInput} />
-                      </View>
                      <TouchableOpacity
                       onPress={AddNewBuilding}
                       style = {styles.nextbutton}>
@@ -262,8 +271,28 @@ export default function AddBuildingScreen() {
                       </TouchableOpacity>
                       </ImageBackground>
                     </View>
-              :     
+              :    
                 <View style = {[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+                    <Modal
+              visible={modalVisible}
+              animationType="slide"
+              onRequestClose={() => setModalVisible(false)}
+            >
+            <Maps
+                  id={id}
+                  title={buildingname}
+                  coordinate={defaultcoord}
+                  logoEnabled = {false}
+                  attributionEnabled = {false}
+                  onLongPress={(event) => {
+                      console.log('Long press event:', event);
+                      const coordinates = event.geometry.coordinates;
+                      setDefaultCoord(coordinates)
+                      console.log('Selected coordinates:', coordinates);
+                  }}
+                    />
+                    <Button title="Close Modal" onPress={toggleModal} />
+        </Modal>
                     <ImageBackground
                         resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
                       <Pressable
@@ -276,6 +305,24 @@ export default function AddBuildingScreen() {
                         />
                       </Pressable>
                     </ImageBackground>
+                       <View>
+                             <Text style={{fontSize: 20}}>Select a floor</Text>
+                             <View style={{backgroundColor: 'white' , fontWeight: '500'}}>
+                              <Picker
+                                selectedValue={selectedFloor}
+                                onValueChange={(itemValue, itemIndex) =>
+                                  setSelectedFloor(itemValue)
+                                }>
+                                <Picker.Item label="1st floor" value="1st floor" />
+                                <Picker.Item label="2nd floor" value="2nd floor" />
+                                <Picker.Item label="3rd floor" value="3rd floor" />
+                              </Picker>
+                            </View>
+                            <TextInput style={{backgroundColor: 'white', width: 500}} placeholder="Enter Room" onChangeText={(value) => setRoom(value)} />
+                       
+                       
+                        <Button title="Add Input" onPress={handleAddInput} />
+                      </View>
                       <TouchableOpacity
                         onPress={setNewBuilding}
                         style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
@@ -285,11 +332,18 @@ export default function AddBuildingScreen() {
                 </View>
               }
                 <View style={styles.eventcontainer}>
-                <FlatList
+               {next? <FlatList
                 data={buidlingdata}
                 renderItem={renderItem}
                 keyExtractor={item => item._id}
                  />
+                 :
+                 <FlatList
+                data={inputs}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                 />
+               }
                 </View>
             </View>
                     <CloseButton
@@ -397,3 +451,5 @@ export default function AddBuildingScreen() {
         },
           
       })
+
+      

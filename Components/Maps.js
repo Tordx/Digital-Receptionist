@@ -11,7 +11,7 @@ import { CloseButton } from './Buttons'
 import { useNavigation } from '@react-navigation/native';
 import { remoteDBBuilding } from '../Database/pouchDb';
 
-export default function Maps(props) {
+export default function   Maps(props) {
 
   const navigation = useNavigation();
   const [buildingCoordinates, setBuildingCoordinates] = useState('')
@@ -29,6 +29,7 @@ export default function Maps(props) {
    tile
    logoEnabled = {false}
    attributionPosition = {{bottom: 10, left: 10}}
+   onLongPress={props.onLongPress}
    >
     <MapboxGL.Camera
       centerCoordinate={center}
