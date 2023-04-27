@@ -104,7 +104,7 @@ export default function CourseMapScreen ()  {
       <View style = {{flexDirection: 'row'}}>
           <Image
             source = {{uri: item.Image}}
-            style = {{width: 75, height: 75}}
+            style = {{width: 70, height: 70}}
             resizeMode = 'contain'
           />
       </View>
@@ -133,15 +133,15 @@ export default function CourseMapScreen ()  {
             <View style = {{width: '50%', height: '100%'}} >
               <View style = {styles.header}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{fontSize: 30, marginVertical: 1}}>{courseData.Course}</Text>
-                  <Text style = {{ fontSize: 20, marginBottom: 2}}>{courseData.College}</Text>
-                  <Text style = {{ fontSize: 23, marginVertical: 3}}>Chairperson - {courseData.ChairPerson}</Text>
+                  <Text style = {{fontSize: 27, fontWeight: 'bold', marginVertical: 1, color: '#303030'}}>{courseData.Course.toUpperCase()}</Text>
+                  <Text style = {{ fontSize: 20, marginBottom: 2, color: '#303030'}}>{courseData.College}</Text>
+                  <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030'}}>Chairperson - {courseData.ChairPerson}</Text>
                
                 </View>
               </View>
               <View style = {[styles.header, {height: 75}]}>
                 <View style = {{padding: 20}}>
-                <Text style = {{ fontSize: 18, marginVertical: 3, color: '#303030'}}>Faculty Office -{courseData.Room}</Text>
+                <Text style = {{ fontSize: 18, marginVertical: 3, color: '#303030'}}>Faculty Office: {courseData.Room}</Text>
                 </View>
               </View>
            
@@ -156,9 +156,9 @@ export default function CourseMapScreen ()  {
                   />
                 </View>
               </View>
-              <View style = {[styles.header, {height: 150}]}>
+              <View style = {[styles.header, {height: 125}]}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{ fontSize: 17, marginVertical: 5}}>Organization/s under {courseData.Course}</Text>
+                  <Text style = {{ fontSize: 17, marginVertical: 5, color: '#303030'}}>Organization/s under {courseData.Course}</Text>
                     <FlatList
                       data={orgdetail}
                       renderItem = {orgItem}
