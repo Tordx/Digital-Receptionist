@@ -17,10 +17,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBFaculty , remoteDBCollage } from '../../../Database/pouchDb';
+import { remoteDBFaculty , remoteDBCollege } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultLogo from '../../../Assets/Img/psu_logo.png'
+import { setCourseData } from '../../../Redux/ClassSlice';
 
    export default function FacultyScreen () {
 
@@ -37,7 +38,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
     const renderFaculty = async() => {
 
-      var result = await remoteDBCollage.allDocs({
+      var result = await remoteDBCollege.allDocs({
         include_docs: true,
         attachments: true,
       })
@@ -85,14 +86,14 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyScreen2')
+             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyScreen2'); console.log('bug');
           }} >
             <View style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
              
                 <Image  resizeMode='contain' style = {{width: 150, height: 150, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
             
             <Text style = {{fontSize: 18, fontWeight: 'bold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
-              {item.Collage.toUpperCase()}
+              {item.College.toUpperCase()}
             </Text>
             </View>
         </Pressable>
@@ -135,7 +136,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
        onPress={() => setShowSearch(!showSearch)}
      />}
         <FlatList
-          style = {{marginTop: 20}}
+          style = {{paddingTop: showSearch ? 5: 50}}
           data={newSearch}
           showsVerticalScrollIndicator = {false}
           numColumns = {3}
@@ -158,6 +159,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
 
           onPress = {() => navigation.navigate('StudentHomeScreen')}     
           name = 'arrow-back'
+          color = '#404040'
           size = {40}
           style = {{flexDirection: 'row', top: 25, left: 25, position: 'absolute'}}
         />

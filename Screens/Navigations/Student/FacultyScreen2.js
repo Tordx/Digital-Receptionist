@@ -16,10 +16,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseButton , SearchButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
-import { remoteDBFaculty , remoteDBCollage , remoteDBCourses } from '../../../Database/pouchDb';
+import { remoteDBFaculty , remoteDBCollege , remoteDBCourses } from '../../../Database/pouchDb';
 import { setFacultyDatas } from '../../../Redux/FacultySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import defaultLogo from '../../../Assets/Img/psu_logo.png'
+import { setCourseData } from '../../../Redux/ClassSlice';
 
    export default function FacultyScreen2 () {
 
@@ -46,7 +47,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             return item.doc;
           });
           let filteredData = modifiedArr.filter((item) => {
-            return item.College  === facultyDatas.Collage
+            return item.College  === facultyDatas.College
           })
           if (filteredData){
             const newFilterData = filteredData.filter((item) => {
@@ -78,7 +79,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
             radius: 200,
           }} 
           onPress={() => {
-             dispatch(setFacultyDatas(item)); navigation.navigate('FacultyMapScreen')
+             dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen'); console.log('bug');
           }} >
              <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20}} source = {{uri:  item.Image || image }}/>
               <Text style = {styles.title}>
@@ -100,7 +101,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
               
             <Image  resizeMode='contain' style = {{width: 250, height: 250, borderRadius: 500, marginTop: 30, marginBottom: 20  }} source = {{uri:  facultyDatas.Image }}/>
               <View style = {{backgroundColor: '#fddf54', padding: 10, borderRadius: 5, justifyContent: 'center', alignItems: 'center', borderRadius: 30}}>
-              <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#404040',paddingHorizontal: 20,paddingTop: 10}}>{facultyDatas.Collage}</Text>
+              <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#404040',paddingHorizontal: 20,paddingTop: 10}}>{facultyDatas.College.toUpperCase()}</Text>
               <Text style = {{fontSize: 20, color: '#404040', marginTop: 5,fontWeight: '500'}}>{facultyDatas.Dean}</Text>
               <Text style = {{fontSize: 17, color: '#404040', marginTop: 5,fontWeight: '400'}}>College Dean</Text>
               </View>
@@ -130,6 +131,7 @@ import defaultLogo from '../../../Assets/Img/psu_logo.png'
     
               onPress = {() => navigation.goBack('FacultyScreen')}     
               name = 'arrow-back'
+              color = '#404040'
               size = {40}
               style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
       />
