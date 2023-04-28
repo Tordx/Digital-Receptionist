@@ -28,7 +28,7 @@ export const StudentMainMenu = () => {
           
           source={require("../../../Assets/Img/icons8-admin-settings-male-96.png")}
           onPress = {() => navigation.navigate('AdminScreen')}
-          title = 'Admin'
+          title = 'Officials'
           
           />
            

@@ -88,14 +88,14 @@ import { setCourseData } from '../../../Redux/ClassSlice';
           onPress={() => {
              dispatch(setFacultyDatas(item)); navigation.navigate('FacultyScreen2'); console.log('bug');
           }} >
-            <View style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+            <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion1.png')} >
              
                 <Image  resizeMode='contain' style = {{width: 150, height: 150, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
             
-            <Text style = {{fontSize: 18, fontWeight: 'bold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
+            <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
               {item.College.toUpperCase()}
             </Text>
-            </View>
+            </ImageBackground>
         </Pressable>
         )
       }
