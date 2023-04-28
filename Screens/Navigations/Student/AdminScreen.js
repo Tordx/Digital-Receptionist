@@ -11,7 +11,9 @@ import {
     RefreshControl,
     ActivityIndicator,
     TextInput,
-    Image
+    Image,
+    Modal,
+    Animated 
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,6 +44,10 @@ import { useSelector } from 'react-redux';
     const [univVicePresidentPFMD, setUnivVicePresidentPFMD] = useState([]);
     const [univVicePresidentREI, setUnivVicePresidentREI] = useState([]);
     const [univVicePresidentQA, setUnivVicePresidentQA] = useState([]);
+    const [showSearch, setShowSearch] = useState(false)
+    const [scrollY, setScrollY] = useState(new Animated.Value(0));
+    const [modal, setModal] = useState(true)
+    const [image, setImage] = useState('https://i.imgur.com/ruPofda.png');
     useEffect(() => {
       getAdminData()
 
@@ -128,16 +134,17 @@ import { useSelector } from 'react-redux';
           radius: 200,
         }} 
         onPress={() => {
-           dispatch(setAdminDatas(item))
+           dispatch(setAdminData(item))
         }} >
-          <View style =  {{top: 0, position: 'absolute', justifyContent: 'center', alignItems: 'center',}} >
-            <Image resizeMode='cover' style = {{width: 230, height: 200, margin: 5}} source = {{uri:  item.Image || image }}/>
-            <Text style = {styles.title}>
-              {item.Name}</Text>
+          <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion.png')} >
+          <View style =  {{top: 5, position: 'absolute', justifyContent: 'center', alignItems: 'center',}} >
+            <Image resizeMode='cover' style = {{width: item.Image ?  230 : 150, height:item.Image ? 200 : 150, margin: 5, borderRadius: 5}} source = {{uri:  item.Image || image }}/>
+            <Text style = {styles.title}>{item.Name}</Text>
             </View>
             <Text style = {styles.office}>
               {item.Office}
             </Text>
+            </ImageBackground>
       </Pressable>
       )
     }
@@ -150,19 +157,15 @@ import { useSelector } from 'react-redux';
       >
         <ScrollView>
           <View style = {styles.contentcontainer}>  
-           
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS AND PROFILES</Text>
-            </View>
-          {admindata ? (
+          {searchTerm ? (
             <View style = {{justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flexDirection: 'column', flex: 1, marginTop: 20}}>
             <RefreshControl
             refreshing = {adminRefresh}
             onRefresh = {RefreshList}
             style = {{backgroundColor: 'green'}}
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, width: '100%', marginBottom: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY PRESIDENT</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, width: '100%', marginBottom: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>UNIVERSITY PRESIDENT</Text>
             </View>
           <FlatList
             data={univPresident}
@@ -170,8 +173,8 @@ import { useSelector } from 'react-redux';
             keyExtractor={(item) => item._id}
             
           />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY VICE PRESIDENTS</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>UNIVERSITY VICE PRESIDENTS</Text>
             </View>
             <FlatList
               data={univVicePresident}
@@ -180,8 +183,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE UNIVERSITY PRESIDENT</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>OFFICE OF THE UNIVERSITY PRESIDENT</Text>
             </View>
             <FlatList
               data={univCampusPresident}
@@ -190,8 +193,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION AND LINKAGES</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION AND LINKAGES</Text>
             </View>
             <FlatList
               data={univVicePresidentAL}
@@ -200,8 +203,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AND STUDENT AFFAIRS</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AND STUDENT AFFAIRS</Text>
             </View>
             <FlatList
               data={univVicePresidentASAD}
@@ -210,8 +213,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR PLANNING AND FINANCE MANAGEMENT</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>OFFICE OF THE VICE PRESIDENT FOR PLANNING AND FINANCE MANAGEMENT</Text>
             </View>
             <FlatList
               data={univVicePresidentPFMD}
@@ -220,8 +223,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR RESEARCH, EXTENSION AND INNOVATION</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#303030'}}>OFFICE OF THE VICE PRESIDENT FOR RESEARCH, EXTENSION AND INNOVATION</Text>
             </View>
             <FlatList
               data={univVicePresidentREI}
@@ -230,8 +233,8 @@ import { useSelector } from 'react-redux';
               keyExtractor={(item) => item._id}
               
             />
-            <View style = {{backgroundColor: '#0f2ed6', borderRadius: 5, padding: 10, margin: 20}}>
-            <Text style = {{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>OFFICE OF THE VICE PRESIDENT FOR QUALITY ASSURANCE</Text>
+            <View style = {{backgroundColor: '#fddf54', borderRadius: 5, padding: 10, margin: 20}}>
+            <Text style = {{fontSize: 20, fontWeight: 'bold', color: 'black'}}>OFFICE OF THE VICE PRESIDENT FOR QUALITY ASSURANCE</Text>
             </View>
             <FlatList
               data={univVicePresidentQA}
@@ -248,28 +251,55 @@ import { useSelector } from 'react-redux';
 
              </View> 
 </ScrollView>
-            
-          <View style = {styles.TextInput}>
-          <TextInput
-              style  = {{width: '100%', fontSize: 17}}
-              value={searchTerm} 
-              onChange={(event) => {
-                setSearchTerm(event.nativeEvent.text) }}
-           
+      <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 20, elevation: 10, shadowColor: '#000'}}>
+              {showSearch ? null : <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS</Text>}
+                </View>            
+      {showSearch ?
+                <View style = {styles.TextInput}>
+                <TextInput
+                    style  = {{width: '100%', fontSize: 17}}
+                    value={searchTerm} 
+                    onChange={(event) => {
+                      setSearchTerm(event.nativeEvent.text) }}
+                    placeholder = 'Search Citizen Charter...'
+                  
+                />
+                    <CloseButton
+                  style={styles.searchButtonExit}
+                  name='close'
+                  size={35}
+                  color={'black'}
+                  onPress={() => setShowSearch(!showSearch)}
+                />
+                
+                </View>
+            :  <CloseButton
+            style={styles.searchButton}
+            name='search'
+            size={35}
+            color={'#0f2ed6'}
+            onPress={() => setShowSearch(!showSearch)}
+          />}
+                
+                <CloseButton
+        
+                  onPress = {() => navigation.navigate('StudentHomeScreen')}     
+                  name = 'arrow-back'
+                  size = {40}
+                  color={'#404040'}
+                  style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
           />
-          <SearchButton onPress = {(event) => {
-          setSearchTerm(event.nativeEvent.text);
-          }} />
-          </View>
-          
-          <CloseButton
-  
-            onPress = {() => navigation.navigate('StudentHomeScreen')}     
-            name = 'arrow-back'
-            size = {40}
-            style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
-    />
-     
+          <Modal
+          visible = {modal}
+          animationType='fade'
+          onRequestClose={() => setModal(false)}
+          statusBarTranslucent
+          >
+            <Pressable style = {{flex: 1, justifyContent: 'center', alignItems: 'center',}} onPressOut={() => setModal(false)} >
+              <Image style = {{flex: 1}} resizeMode = 'contain' source={require('../../../Assets/Img/official_opening.png')} />
+              <Text style = {{position: 'absolute', bottom: 10, color: 'white'}} >Press anywhere to continue</Text>
+            </Pressable>
+          </Modal>    
       </ImageBackground>
     )
   
@@ -307,7 +337,7 @@ import { useSelector } from 'react-redux';
         borderWidth: 1,
         borderColor: '#0f2ed6',
         width: 245,
-        height: 320,
+        height: 350,
         borderRadius: 5,
         marginVertical: 5,
         marginHorizontal: 5,
@@ -321,18 +351,21 @@ import { useSelector } from 'react-redux';
         fontSize: 20,
         textAlign: 'center',
         color: '#fff',
-        width: '99%'
+        width: '99%',
+        height: 50,
+        fontFamily: 'extrabold'
   
       },
 
       office: {
   
-        fontSize: 12,
+        fontSize: 15,
         textAlign: 'center',
         color: '#fff',
         width: '85%',
         bottom: 10, 
-        position: 'absolute'
+        position: 'absolute',
+        fontFamily: 'regular'
   
       },
   
@@ -361,7 +394,22 @@ import { useSelector } from 'react-redux';
         borderWidth: .5,
         borderColor: '#a2a2a2'
   
-      }
+      },
+      closeButton: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+      },
+      searchButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
+      },
+      searchButtonExit: {
+        position: 'absolute',
+        top: 5,
+        right: 10,
+    },
   
     });
   
