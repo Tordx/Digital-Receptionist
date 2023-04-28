@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux';
 import { openAdminModal } from '../../../Redux/AdminSlice';
 import { setAdminData } from '../../../Redux/AdminSlice';
 import { useSelector } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
   export default function AdminScreen () {
     
@@ -251,6 +252,7 @@ import { useSelector } from 'react-redux';
 
              </View> 
 </ScrollView>
+<LinearGradient colors = {['#f6f6f6', '#00000000','#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 250}}></LinearGradient>
       <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 20, elevation: 10, shadowColor: '#000'}}>
               {showSearch ? null : <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY OFFICIALS</Text>}
                 </View>            
@@ -295,8 +297,8 @@ import { useSelector } from 'react-redux';
           onRequestClose={() => setModal(false)}
           statusBarTranslucent
           >
-            <Pressable style = {{flex: 1, justifyContent: 'center', alignItems: 'center',}} onPressOut={() => setModal(false)} >
-              <Image style = {{flex: 1}} resizeMode = 'contain' source={require('../../../Assets/Img/official_opening.png')} />
+            <Pressable style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} onPressOut={() => setModal(false)} >
+              <Image style = {{width: '100%', height: '100%', }} resizeMode = 'cover' source={require('../../../Assets/Img/official_opening.png')} />
               <Text style = {{position: 'absolute', bottom: 10, color: 'white'}} >Press anywhere to continue</Text>
             </Pressable>
           </Modal>    
