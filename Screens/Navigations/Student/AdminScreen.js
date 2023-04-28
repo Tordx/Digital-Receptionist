@@ -10,7 +10,8 @@ import {
     Pressable,
     RefreshControl,
     ActivityIndicator,
-    TextInput
+    TextInput,
+    Image
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -129,11 +130,14 @@ import { useSelector } from 'react-redux';
         onPress={() => {
            dispatch(setAdminDatas(item))
         }} >
-          <Text style = {styles.name}>
-            {item.Name}</Text>
-          <Text style = {styles.office}>
-            {item.Office}
-          </Text>
+          <View style =  {{top: 0, position: 'absolute', justifyContent: 'center', alignItems: 'center',}} >
+            <Image resizeMode='cover' style = {{width: 230, height: 200, margin: 5}} source = {{uri:  item.Image || image }}/>
+            <Text style = {styles.title}>
+              {item.Name}</Text>
+            </View>
+            <Text style = {styles.office}>
+              {item.Office}
+            </Text>
       </Pressable>
       )
     }
@@ -296,33 +300,39 @@ import { useSelector } from 'react-redux';
       },
   
       item: {
-  
+
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#0f2ed6',
+        borderWidth: 1,
+        borderColor: '#0f2ed6',
         width: 245,
-        height: 300,
+        height: 320,
         borderRadius: 5,
-        marginHorizontal: 5,
         marginVertical: 5,
+        marginHorizontal: 5,
         elevation: 1,
         flexDirection: 'column'
   
       },
   
-      name: {
+      title: {
   
         fontSize: 20,
         textAlign: 'center',
-        padding: 5,
+        color: '#fff',
+        width: '99%'
   
       },
+
       office: {
   
-        fontSize: 20,
+        fontSize: 12,
         textAlign: 'center',
-        position: 'absolute',
-        bottom: 20,
+        color: '#fff',
+        width: '85%',
+        bottom: 10, 
+        position: 'absolute'
   
       },
   
@@ -333,7 +343,7 @@ import { useSelector } from 'react-redux';
         fontWeight: '500',
         left: 0,
         textAlign: 'center',
-        color: 'white'
+        color: 'white',
   
       },
   
