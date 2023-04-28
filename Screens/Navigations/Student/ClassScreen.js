@@ -116,10 +116,12 @@ export const ClassScreen = () => {
          dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen');
 
         }} >
+          <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion.png')} >
         <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20}} source = {{uri:  item.Image || image }}/>
           <Text style = {styles.title}>
               {item.Course}
           </Text>
+          </ImageBackground>
        </Pressable>
       )
   }
@@ -186,7 +188,7 @@ export const ClassScreen = () => {
        style={styles.searchButton}
        name='search'
        size={35}
-       color={'#fddf54'}
+       color={'#0f2ed6'}
        onPress={() => setShowSearch(!showSearch)}
      />}
         <CloseButton
@@ -223,22 +225,6 @@ export const ClassScreen = () => {
       alignItems: 'center',
 
     },
-    
-    closeButton: {
-      position: 'absolute',
-      top: 20,
-      left: 20,
-    },
-    searchButton: {
-      position: 'absolute',
-      top: 20,
-      right: 20,
-    },
-    searchButtonExit: {
-      position: 'absolute',
-      top: 10,
-      right: 10,
-  },
 
     item: {
 
@@ -262,17 +248,19 @@ export const ClassScreen = () => {
       fontSize: 16,
       textAlign: 'center',
       color: '#404040',
-      width: '85%'
+      width: '85%',
+      fontFamily: 'regular'
+
 
     },
 
     text: {
 
       fontSize: 25,
-      fontWeight: '500',
       left: 0,
       textAlign: 'center',
-      color: 'white'
+      color: 'white',
+      fontFamily: 'regular'
 
     },
 
