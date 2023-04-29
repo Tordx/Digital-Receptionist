@@ -84,7 +84,7 @@ export default function SuggestionsScreen() {
           <TextInput
             onChangeText={(value) => setName(value)}
             value={name}
-            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular'}}
+            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular', width: '100%', height: '100%'}}
             placeholder = 'e.g, John Doe'
         />
         </View>
@@ -105,7 +105,8 @@ export default function SuggestionsScreen() {
                                { scaleX: 1 }, 
                                { scaleY: 1 },
                             ],
-                        width: 400  ,
+                            width: '100%', 
+                            height: '100%',
                         bottom: 0,
                         color: '#000',
                          fontFamily: 'regular'
@@ -128,7 +129,7 @@ export default function SuggestionsScreen() {
         <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020' }}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
-            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular'}}
+            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular', width: '100%', height: '100%'}}
             placeholder = 'e.g, John Doe or Office'
             onChangeText={(value) => setSpecify(value)}
             value={specify}
@@ -143,7 +144,7 @@ export default function SuggestionsScreen() {
           <TextInput
             onChangeText={(value) => setText(value)}
             value={text}
-            style = {{margin: 20, fontSize: 20, fontFamily: 'regular'}}
+            style = {{margin: 20, fontSize: 20, fontFamily: 'regular', width: '100%', alignSelf: 'flex-start',}}
             placeholder = 'Write your message here...'   
             multiline
             maxLength={1100}
@@ -155,7 +156,7 @@ export default function SuggestionsScreen() {
         onPress = {setNewSuggestion}
         
          >
-            <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: '600'}}>
+            <Text style = {{textAlign: 'center', color: '#0f2ed6', fontSize: 20, fontWeight: '600',fontFamily: 'extrabold'}}>
                 Submit
             </Text>
       </TouchableOpacity>
