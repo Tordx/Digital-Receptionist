@@ -7,6 +7,7 @@ import { CloseButton } from '../../Components/Buttons';
 import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../Components/Maps';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 // create a component
 export default function CourseMapScreen ()  {
@@ -89,10 +90,10 @@ export default function CourseMapScreen ()  {
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 15}}>
+        <View style = {{flexDibrection: 'row', padding: 15}}>
         <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-            <Text style = {{fontSize: 20, color: '#303030', fontWeight: '400' }}>{item.Name}</Text>
-            <Text style = {{fontSize: 20, color: '#303030', fontWeight: '400', position: 'absolute', right: 10 }}>{item.Title}</Text>
+            <Text style = {{fontSize: 20, color: '#303030', fontFamily: 'regular' }}>{item.Name}</Text>
+            <Text style = {{fontSize: 20, color: '#303030', fontFamily: 'regular', position: 'absolute', right: 10 }}>{item.Title}</Text>
         </View>
         </View>
       )
@@ -132,22 +133,29 @@ export default function CourseMapScreen ()  {
           <View style = {{width: '50%', height: '100%'}} />
             <View style = {{width: '50%', height: '100%'}} >
               <View style = {styles.header}>
-                <View style = {{padding: 20}}>
-                  <Text style = {{fontSize: 27, fontWeight: 'bold', marginVertical: 1, color: '#303030'}}>{courseData.Course.toUpperCase()}</Text>
-                  <Text style = {{ fontSize: 20, marginBottom: 2, color: '#303030'}}>{courseData.College}</Text>
-                  <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030'}}>Chairperson - {courseData.ChairPerson}</Text>
-               
-                </View>
+                <View style = {{flexDirection: 'row', alignItems: 'center',}}>
+                  <View style = {{padding: 20}}>
+                    <Text style = {{fontSize: 25, marginVertical: 1, color: '#303030', fontFamily: 'extrabold'}}>{courseData.Course.toUpperCase()}</Text>
+                    <Text style = {{ fontSize: 20, marginBottom: 2, color: '#303030', fontFamily: 'regular'}}>{courseData.College}</Text>
+                    <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030', fontFamily: 'regular'}}>Chairperson - {courseData.ChairPerson}</Text>
+                
+                  </View>
+                  <View style = {{position: 'absolute', right: 20, bottom: 10, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#0f2ed6'}}>
+                  <FontAwesome5
+                  name = 'info' size = {20} color={'#0f2ed6'}
+                  />
+                  </View>
+        </View>
               </View>
               <View style = {[styles.header, {height: 75}]}>
                 <View style = {{padding: 20}}>
-                <Text style = {{ fontSize: 18, marginVertical: 3, color: '#303030'}}>Faculty Office: {courseData.Room}</Text>
+                <Text style = {{ fontSize: 18, marginVertical: 3, color: '#303030', fontFamily: 'regular'}}>Faculty Office: {courseData.Room}</Text>
                 </View>
               </View>
            
-              <View style = {[styles.header, {height: '45%'}]}>
+              <View style = {[styles.header, {height: '50%'}]}>
                 <View style = {{paddingVertical: 20, wdith: '100%'}}>
-                <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 10, color: '#303030', width: '100%', backgroundColor: '#00000019'}}>FACULTY MEMBERS</Text>
+                <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 10, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FACULTY MEMBERS</Text>
                   <FlatList
                   data={memberdetails}
                   renderItem = {renderItem}
@@ -158,7 +166,7 @@ export default function CourseMapScreen ()  {
               </View>
               <View style = {[styles.header, {height: 125}]}>
                 <View style = {{padding: 20}}>
-                  <Text style = {{ fontSize: 17, marginVertical: 5, color: '#303030'}}>Organization/s under {courseData.Course}</Text>
+                  <Text style = {{ fontSize: 18, marginVertical: 5, color: '#303030', fontFamily: 'regular'}}>Organization/s under {courseData.Course}</Text>
                     <FlatList
                       data={orgdetail}
                       renderItem = {orgItem}

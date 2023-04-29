@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     
         color: '#fff',
         fontSize: 25,
+        fontFamily: 'regular'
     
       },
 

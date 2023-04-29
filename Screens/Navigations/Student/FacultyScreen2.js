@@ -68,26 +68,31 @@ import { setCourseData } from '../../../Redux/ClassSlice';
 
   }
 
-      const renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
 
-        return(
-          <Pressable 
-          style = {styles.item}
-          android_ripple={{
-            color: 'blue',
-            borderRadius: 100,
-            radius: 200,
-          }} 
-          onPress={() => {
-             dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen'); console.log('bug');
-          }} >
-             <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20}} source = {{uri:  item.Image || image }}/>
-              <Text style = {styles.title}>
-                  {item.Course}
-              </Text>
-        </Pressable>
-        )
-      }
+    return(
+      <Pressable 
+      style = {styles.item}
+      android_ripple={{
+        color: 'blue',
+        borderRadius: 100,
+        radius: 200,
+      }} 
+      onPress={() => {
+         dispatch(setFacultyDatas(item)); navigation.navigate('FacultyScreen2'); console.log('bug');
+      }} >
+        <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion.png')} >
+         
+            <Image  resizeMode='contain' style = {{width: 150, height: 150, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
+        
+        <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
+          {item.College.toUpperCase()}
+        </Text>
+        </ImageBackground>
+    </Pressable>
+    )
+  }
+
 
       return (
         <ImageBackground 
@@ -101,9 +106,9 @@ import { setCourseData } from '../../../Redux/ClassSlice';
               
             <Image  resizeMode='contain' style = {{width: 250, height: 250, borderRadius: 500, marginTop: 30, marginBottom: 20  }} source = {{uri:  facultyDatas.Image }}/>
               <View style = {{backgroundColor: '#fddf54', padding: 10, borderRadius: 5, justifyContent: 'center', alignItems: 'center', borderRadius: 30}}>
-              <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#404040',paddingHorizontal: 20,paddingTop: 10}}>{facultyDatas.College.toUpperCase()}</Text>
-              <Text style = {{fontSize: 20, color: '#404040', marginTop: 5,fontWeight: '500'}}>{facultyDatas.Dean}</Text>
-              <Text style = {{fontSize: 17, color: '#404040', marginTop: 5,fontWeight: '400'}}>College Dean</Text>
+              <Text style = {{fontSize: 25, fontFamily: 'extrabold', color: '#404040',paddingHorizontal: 20,paddingTop: 10}}>{facultyDatas.College.toUpperCase()}</Text>
+              <Text style = {{fontSize: 25, color: '#404040', marginTop: 5, fontFamily: 'regular'}}>{facultyDatas.Dean}</Text>
+              <Text style = {{fontSize: 17, color: '#404040', marginTop: 5, fontFamily: 'regular'}}>College Dean</Text>
               </View>
               {newSearch ? (
               <FlatList
@@ -185,7 +190,8 @@ import { setCourseData } from '../../../Redux/ClassSlice';
         fontSize: 16,
         textAlign: 'center',
         color: '#404040',
-        width: '85%'
+        width: '85%',
+        fontFamily: 'regular'
   
       },
   

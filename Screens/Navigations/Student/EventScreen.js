@@ -64,8 +64,6 @@ export default function EventScreen() {
           <Image
             source = {{uri: item.EventImage}}
             style = {{width: '100%', height: '100%', alignSelf: 'center'}}
-           
-            // resizeMode = 'contain'
           />
        </View>
       )
@@ -94,11 +92,13 @@ export default function EventScreen() {
             <View style={{width: '50%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f6f6f6', borderTopLeftRadius: 20, borderBottomLeftRadius: 20}}>
             <StatusBar barStyle= 'light-content'/>
               <ImageBackground source={require('../../../Assets/Img/announcement-event-image.png')} resizeMode='cover' style = {{width: '100%', height: '100%'}}>
-              <View style = {{padding: 20, paddingLeft: 50, justifyContent: 'flex-start', height: '100%'}}>
-              <Text style = {{color: '#303030', fontSize: 35, fontWeight: '500'}}>{data.EventName}</Text>
-              <Text style = {{color: '#303030', fontSize: 15}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
-              <Text style = {{color: '#303030', fontSize: 17}}>{data.EventWhere}</Text>
-              <Text style = {{color: '#303030', fontSize: 25, fontWeight: 'bold'}}>{data.EventDescription}</Text>
+              <View style = {{padding: 20, justifyContent: 'flex-start', height: '100%'}}>
+              <Text style = {{color: '#303030', fontSize: 35, fontFamily: 'black'}}>{data.EventName}</Text>
+              <View style = {{flexDirection: 'row'}}>
+                <Text style = {{color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
+                <Text style = {{color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data.EventWhere}</Text>
+              </View>
+              <Text style = {{color: '#303030', fontSize: 25, fontFamily: 'medium', textAlign: 'justify', marginTop: 50}}>{data.EventDescription}</Text>
               </View>
               </ImageBackground>
           </View>

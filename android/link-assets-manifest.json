@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "Assets/Fonts/black.ttf",
+      "sha1": "bcbcf1e08af584fe100feff04e85daff3fdae299"
+    },
+    {
+      "path": "Assets/Fonts/demibold.ttf",
+      "sha1": "504286e7f127b78b3d2c864cdd818dc3c95370e1"
+    },
+    {
+      "path": "Assets/Fonts/extrabold.ttf",
+      "sha1": "1814ebe32b99c3ba585f214fed128c17a2291b59"
+    },
+    {
+      "path": "Assets/Fonts/extrabold_italic.ttf",
+      "sha1": "8966424a151489518e14a5af42f050674678a1bb"
+    },
+    {
+      "path": "Assets/Fonts/italic.ttf",
+      "sha1": "1192d1f99c9eab4ed5da985723835182bc3e7c35"
+    },
+    {
+      "path": "Assets/Fonts/medium.ttf",
+      "sha1": "a2912fb23d17a80028e4d4251d6392fa3c32d43e"
+    },
+    {
+      "path": "Assets/Fonts/regular.ttf",
+      "sha1": "55f447e3accf22e51a72c340e56bd49103d1ebbb"
+    },
+    {
+      "path": "Assets/Fonts/thin.ttf",
+      "sha1": "dfc62ecc1c5492ab57b9ccc85cb241fb8d9e0503"
+    }
+  ]
+}
