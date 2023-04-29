@@ -54,7 +54,10 @@ export default function SuggestionsScreen() {
     <ImageBackground  style = {styles.Container} 
     resizeMode = 'cover'
     source = {require('../Assets/Img/Background_image.png')}>
+      
+    <Text style = {{textAlign: 'center', fontSize: 25, fontFamily: 'black', color: '#202020', textShadowRadius: 1, }}>Submit a suggestion or feedback</Text>
     <View style = {styles.BoxContainer}>
+      <View style = {{justifyContent: 'center', alignItems: 'center', width: '50%', height: '100%', padding: 10  , }}>
       <View style = {{flexDirection: 'row',}}>
         <View style = {styles.ButtonContainer} >
           <RadioButton
@@ -63,7 +66,7 @@ export default function SuggestionsScreen() {
             status={ checked === 'Suggestion' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('Suggestion')}
           />
-          <Text style = {{fontSize: 20,}}>Suggestion</Text>
+          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020' }}>Suggestion</Text>
         </View>
         <View style = {styles.ButtonContainer} >
           <RadioButton
@@ -72,22 +75,22 @@ export default function SuggestionsScreen() {
             status={ checked === 'Feedback' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('Feedback')}
           />
-          <Text style = {{fontSize: 20,}}>Feedback</Text>
+          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020'}}>Feedback</Text>
         </View>
       </View>
       <View style = {{margin: 5}} >
-        <Text style = {{fontSize: 17,}}>Fullname <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
+        <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020'}}>Fullname <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
             onChangeText={(value) => setName(value)}
             value={name}
-            style = {{marginLeft: 20, fontSize: 17}}
+            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular'}}
             placeholder = 'e.g, John Doe'
         />
         </View>
       </View>
       <View style = {{justifyContent: 'flex-start', margin: 5}}>
-      <Text style = {{fontSize: 17, textAlign: 'left'}}>Subject</Text>
+      <Text style = {{fontSize: 17, textAlign: 'left',fontFamily: 'extrabold', color: '#202020'}}>Subject</Text>
       
       <View
                 
@@ -102,14 +105,14 @@ export default function SuggestionsScreen() {
                                { scaleX: 1 }, 
                                { scaleY: 1 },
                             ],
-                        width: 600  ,
+                        width: 400  ,
                         bottom: 0,
-                        color: '#9e9e9e',
-                    
+                        color: '#000',
+                         fontFamily: 'regular'
                           }}
                         onValueChange={(itemValue, itemIndex) => setvalue(itemValue)}
                     >
-                        <Picker.Item label="Select" value="Select" />
+                        <Picker.Item enabled = {false} label="Select" value="Select" />
                         <Picker.Item label="Campus" value="CA" />
                         <Picker.Item label="Building" value="BU" />
                         <Picker.Item label="Faculty" value="FA" />
@@ -122,23 +125,25 @@ export default function SuggestionsScreen() {
         </View>
 
        <View style = {{margin: 5}} >
-        <Text style = {{fontSize: 17,}}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
+        <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020' }}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
-            style = {{marginLeft: 20, fontSize: 17 }}
+            style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular'}}
             placeholder = 'e.g, John Doe or Office'
             onChangeText={(value) => setSpecify(value)}
             value={specify}
         />
         </View>
       </View>
-      <View style = {{margin: 20}} >
-        <Text>Message</Text>
+    </View>
+    <View sytle = {{width: '50%', justifyContent: 'center', alignItems: 'center', alignContent: 'center'}}>
+    <View style = {{marginBottom: 20}} >
+        <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020'}}>Message</Text>
         <View style = {styles.MessageInputtext} >
           <TextInput
             onChangeText={(value) => setText(value)}
             value={text}
-            style = {{margin: 20, fontSize: 20}}
+            style = {{margin: 20, fontSize: 20, fontFamily: 'regular'}}
             placeholder = 'Write your message here...'   
             multiline
             maxLength={1100}
@@ -154,10 +159,8 @@ export default function SuggestionsScreen() {
                 Submit
             </Text>
       </TouchableOpacity>
-      
+      </View>
     </View>
-    
-    <Text style = {{textAlign: 'center', position: 'absolute', top: 20, fontSize: 25, fontWeight: '500', color: 'black' }}>Submit a suggestion or feedback</Text>
       <CloseButton
       
         name = "arrow-back"
@@ -188,6 +191,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fddf54',
     borderRadius: 15,
     justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
 
 
     backgroundColor: '#f2f3f7',
-    width: 600,
+    width: 400,
     borderRadius: 5,
     height: 50,
     marginTop: 10,
@@ -224,9 +229,9 @@ const styles = StyleSheet.create({
 
 
     backgroundColor: '#f2f3f7',
-    width: 600,
+    width: 500,
     borderRadius: 15,
-    height: 200,
+    height: 400,
     marginTop: 10,
     alignItems: 'flex-start',
     alignContent: 'flex-start',
@@ -244,12 +249,13 @@ const styles = StyleSheet.create({
 
   BoxContainer: {
 
-    width: '80%', 
+    width: '90%', 
     height: '85%', 
     backgroundColor: '#00000019',
     borderRadius: 20, 
     justifyContent: 'center', 
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
 
 
   },
@@ -257,7 +263,7 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     
     flexDirection: 'row', 
-    width: 100, 
+    width: 120, 
     height: 30, 
     margin: 25, 
     justifyContent: 'center', 
