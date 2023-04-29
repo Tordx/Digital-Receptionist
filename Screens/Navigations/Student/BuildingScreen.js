@@ -75,7 +75,7 @@ export default function EventScreen() {
         radius: 200,
       }} 
       onPress={() => {
-         dispatch(setAdminData(item))
+         dispatch(setBuildingData(item), navigation.navigate('BuildingMapScreen'))
       }} >
         <View style = {{marginLeft: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
         <Image  resizeMode='cover' style = {{width: 175, height: 230, borderRadius: 30}} source = {{uri:  item.BuildingPicture}}/>
