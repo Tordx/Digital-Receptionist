@@ -7,7 +7,7 @@ import { CloseButton } from '../../../Components/Buttons';
 import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../../Components/Maps';
-// import { reverseGeocode } from '@react-native-mapbox-gl/maps';
+import axios from 'axios';
 
 // create a component
 export default function UniversityMap ()  {
@@ -19,6 +19,32 @@ export default function UniversityMap ()  {
     const [cdnterid, setCenterID] = useState("center")  
     const [cdnterbuilding, setCenterBuilding] = useState("centerbuilding")  
     const [locationName, setLocationName] = useState('');
+
+    const handleLongPress = async (event) => {
+        const coordinates = event.geometry.coordinates;
+        console.log('====================================coordinates');
+        console.log(coordinates);
+        console.log('====================================coordinates');
+        try {
+        const AccessToken = ('pk.eyJ1Ijoia2Fsb2thbG8iLCJhIjoiY2xkeXV5bWxwMHY3aTNvcjNsc3Bsc3hmdyJ9.n-Gnaro_yu9dj5PnUhNgfQ')
+          const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json`;
+          const response = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${AccessToken}`, 
+            },
+          });
+          console.log('====================================response');
+          console.log(response);
+          console.log('====================================response');
+          const features = response.data.features;
+          if (features.length > 0) {
+            const locationName = features[0].place_name;
+            setLocationName(locationName);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
     
     // const filterRooms = (floor) => {
     //   return rooms.filter((room) => room.Floor === floor);
@@ -45,12 +71,7 @@ export default function UniversityMap ()  {
                coordinate={center}
                   logoEnabled = {false}
                   attributionEnabled = {false}
-                  onLongPress={async (event) => {
-                    const coordinates = event.geometry.coordinates;
-                    const response = await reverseGeocode(coordinates);
-                    const locationName = response.features[0].place_name;
-                    setLocationName(locationName);
-                  }}
+                  onLongPress={handleLongPress}
               />
               <View style={{ width: '50%', height: '100%' }} />
               <View style={{ width: '50%', height: '100%' }}>
