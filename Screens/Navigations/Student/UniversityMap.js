@@ -7,7 +7,6 @@ import { CloseButton } from '../../../Components/Buttons';
 import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../../Components/Maps';
-import axios from 'axios';
 
 // create a component
 export default function UniversityMap ()  {

@@ -86,7 +86,7 @@ import { setCourseData } from '../../../Redux/ClassSlice';
             <Image  resizeMode='contain' style = {{width: 150, height: 150, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
         
         <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
-          {item.College.toUpperCase()}
+          {item.Course.toUpperCase()}
         </Text>
         </ImageBackground>
     </Pressable>
