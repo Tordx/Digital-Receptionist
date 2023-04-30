@@ -19,6 +19,7 @@ export default function CourseMapScreen ()  {
       
     const {courseData} = useSelector((store) => (store.classmodal))
 
+
     const navigation = useNavigation()
     
     const [orgdetail, setOrgDetail] = useState('');
@@ -108,6 +109,7 @@ export default function CourseMapScreen ()  {
             style = {{width: 70, height: 70}}
             resizeMode = 'contain'
           />
+          <Text style={{fontSize: 20 , padding: 20}}>President: {item.President} - {item.ContactNumber}</Text>
       </View>
       )
 
@@ -124,6 +126,7 @@ export default function CourseMapScreen ()  {
           id = {courseData.CourseAcronym}
           title = {courseData.Course}
           coordinate = {courseData.Coordinates}
+          centerCoordinate = {[120.2307078878246, 16.032108026014853]}
           // onSelected={() => {
           //   setSelectedMarker(marker);
           //   setShowModal(true);
@@ -135,7 +138,7 @@ export default function CourseMapScreen ()  {
               <View style = {styles.header}>
                 <View style = {{flexDirection: 'row', alignItems: 'center',}}>
                   <View style = {{padding: 20}}>
-                    <Text style = {{fontSize: 25, marginVertical: 1, color: '#303030', fontFamily: 'extrabold'}}>{courseData.Course.toUpperCase()}</Text>
+                    <Text style = {{fontSize: 25, marginVertical: 1, color: '#303030', fontFamily: 'extrabold'}}>{courseData.Course}</Text>
                     <Text style = {{ fontSize: 20, marginBottom: 2, color: '#303030', fontFamily: 'regular'}}>{courseData.College}</Text>
                     <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030', fontFamily: 'regular'}}>Chairperson - {courseData.ChairPerson}</Text>
                 

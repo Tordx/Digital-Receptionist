@@ -16,10 +16,13 @@ export default function   Maps(props) {
   const navigation = useNavigation();
   const [buildingCoordinates, setBuildingCoordinates] = useState('')
   const {facultyDatas} = useSelector((store) => store.facultymodal)      
-  const [center, setCenter] = useState([120.2307078878246, 16.032108026014853])                                                                 
+  const [center, setCenter] = useState([120.2307078878246, 16.032108026014853])
+  const {centerCoordinate } = props;                                                              
   const [AccessToken] = useState('pk.eyJ1Ijoia2Fsb2thbG8iLCJhIjoiY2xkeXV5bWxwMHY3aTNvcjNsc3Bsc3hmdyJ9.n-Gnaro_yu9dj5PnUhNgfQ')
   MapboxGL.setWellKnownTileServer('Mapbox'); // error making mapbox v-11 style must include this component
   MapboxGL.setAccessToken(AccessToken)
+  const [defaultZoomLevel, setDefaultZoomLevel] = useState(17.8);
+  const { zoomLevel } = props;
 
   return (
     <View style = {{width: '100%', height: '100%', borderRadius: 5, marginLeft: 20, position: 'absolute'}}>
@@ -32,13 +35,14 @@ export default function   Maps(props) {
    onLongPress={props.onLongPress}
    >
     <MapboxGL.Camera
-      centerCoordinate={center}
-      zoomLevel = {17.8}
+     centerCoordinate={props.centerCoordinate}
+      zoomLevel = {zoomLevel ?? defaultZoomLevel}
+      followUserLocation = {props.followUserLocation}
     />
       <MapboxGL.PointAnnotation
-        id = {props.id} // facultyDatas.CollegeAcronym
-        title = {props.title} // facultyDatas.College
-        coordinate = {props.coordinate} //facultyDatas.Coordinates
+        id = {props.id}
+        title = {props.title}
+        coordinate = {props.coordinate}
        
       />
    </MapboxGL.MapView>

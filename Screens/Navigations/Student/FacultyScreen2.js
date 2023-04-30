@@ -79,7 +79,7 @@ import { setCourseData } from '../../../Redux/ClassSlice';
         radius: 200,
       }} 
       onPress={() => {
-         dispatch(setFacultyDatas(item)); navigation.navigate('FacultyScreen2'); console.log('bug');
+         dispatch(setCourseData(item)); navigation.navigate('CourseMapScreen'); console.log('bug');
       }} >
         <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion.png')} >
          

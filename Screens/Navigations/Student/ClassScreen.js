@@ -132,10 +132,6 @@ export const ClassScreen = () => {
       style={styles.container}
       resizeMode = 'cover'
     >
-      
-        
-    
-      
         <View style = {styles.contentcontainer}>
           <ScrollView>
         {newSearch ? (
