@@ -126,6 +126,7 @@ export default function CourseMapScreen ()  {
           id = {courseData.CourseAcronym}
           title = {courseData.Course}
           coordinate = {courseData.Coordinates}
+          centerCoordinate = {[120.2307078878246, 16.032108026014853]}
           // onSelected={() => {
           //   setSelectedMarker(marker);
           //   setShowModal(true);
