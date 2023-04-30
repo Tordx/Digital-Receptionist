@@ -127,7 +127,7 @@ export default function UniversityMap ()  {
           <View style={[styles.centeredView, { height: "100%" }]}>
             <Image
               resizeMode="contain"
-              style={{ width: 1000, height: 1000 }}
+              style={{ width: '100%', height: '100%' }}
               source={{ uri: buildingdata.BuildingPicture }}
             />
           </View>
@@ -198,7 +198,15 @@ export default function UniversityMap ()  {
                         name = 'close' size = {20} color={'#101010'}
                         />
                       </Pressable>
+                   
                   </View>
+                  <View style = {[styles.header, {height: '30%'}]}>
+                      <Pressable style = {{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+                        <Image resizeMode="cover"
+                        style={{ width: '95%', height: '90%', borderRadius: 20, padding: 10, marginLeft: 10}}
+                        source={{ uri: buildingdata.BuildingPicture }} />
+                      </Pressable>
+                      </View>
                   <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
