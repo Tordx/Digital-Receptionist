@@ -68,8 +68,8 @@ export default function UniversityMap ()  {
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 20}}>
-        <View style = {{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', backgroundColor: 'red'}}>
+        <View style = {{flexDibrection: 'column', padding: 20, width: '100%', justifyContent: 'center'}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center'}}>
           <Pressable onPress={() => 
             {
             
@@ -84,21 +84,21 @@ export default function UniversityMap ()  {
          
             <Text style = {{fontSize: 25, color: '#303030', fontFamily: 'medium', }}>{item.BuildingName}</Text>  
             </Pressable>
-          
+        
         </View>
         <Pressable  style = {{position: 'absolute', right: 0}}  
-        onPress={() => {    
-          setBuildingData(item) , 
-          setCenterID(item.BuildingName) , 
-          setCenterBuilding(item.BuildingLocation),
-          setRooms(item.Rooms),
-          setCenter(item.Coordinates)
-          setBuildingInfo(false);
-          console.log('what the fuck2')
-          }}
-        >
-              <Icon name = 'expand-more' color = 'gray' size = {30} />
-            </Pressable>
+              onPress={() => {    
+                setBuildingData(item) , 
+                setCenterID(item.BuildingName) , 
+                setCenterBuilding(item.BuildingLocation),
+                setRooms(item.Rooms),
+                setCenter(item.Coordinates) 
+                setBuildingInfo(false);
+                }}
+              >
+              <Icon name = 'keyboard-arrow-right' color = '#303030' size = {35} />
+          </Pressable>
+        
         </View>
       )
     } 
@@ -109,6 +109,7 @@ export default function UniversityMap ()  {
         <View style = {{flexDirection: 'column', alignItems: 'flex-start', borderRightWidth: 1, borderColor: '#fff',}}>
             <Text style = {{fontSize: 20, color: '#505050', fontFamily: 'regular', paddingRight: 50, textAlign: 'center', width: '100%' }}>{item.Room.toUpperCase()}</Text>     
         </View>
+      
         </View>
       )
     } 
@@ -150,27 +151,28 @@ export default function UniversityMap ()  {
           />
           
           <Pressable 
-                        onPress={() => setListModal(true)}
-                        style = {{position: 'absolute', right: 20, bottom: 20, justifyContent: 'center', alignItems: 'center',}}>
-                        <Icon
-                        name = 'keyboard-arrow-up' size = {75} color={'#101010'}
-                        />
-                        <Text style = {{fontFamily: 'extrabold', color: '#fddf54', textShadowColor: '#101010', textShadowRadius: 10, fontSize: 20}}>BUILDING INFORMATION</Text>
-                      </Pressable>
+            onPress={() => setListModal(true)}
+            style = {{position: 'absolute', right: 20, bottom: 20, justifyContent: 'center', alignItems: 'center',}}>
+            <Icon
+              name = 'keyboard-arrow-up' size = {75} color={'#fddf54'} style = {{elavation: 10}}
+            />
+            <Text 
+              style = {{fontFamily: 'extrabold', color: '#fddf54', textShadowColor: '#101010', textShadowRadius: 10, fontSize: 20}}>BUILDING INFORMATION</Text>
+          </Pressable>
           <View style={{ width: "75%", height: "100%", alignSelf: 'flex-end'}}>
           {listModal &&
             <View style = {styles.container}>
             {buildinginfo ? (
               <View style={[styles.header, { height: "95%", width: '50%', }]}>
                    <View style={{flexDirection: 'row',borderBottomWidth: 2, borderColor: '#404040', width: '100%' }}>
-                <Text style={{ fontSize: 35, fontFamily: 'black', padding: 20, color: '#303030', }}>
+                <Text style={{ fontSize: 35, fontFamily: 'black', padding: 20, color: '#404040', }}>
                   Buildings
                 </Text>
                 <Pressable 
                   style = {{position: 'absolute', right: 0, padding: 5}} 
                   onPress={() => setListModal(false)}
                 >
-                <Icon name = 'keyboard-arrow-down' size = {75} color = '#303030'/>
+                <Icon name = 'keyboard-arrow-down' size = {75} color = '#404040'/>
                 </Pressable>
                 </View>
                   <FlatList
@@ -186,8 +188,7 @@ export default function UniversityMap ()  {
                 }}>
                   <View style={[styles.header]}>
                       <View style={{ padding: 10 }}>
-                          <Text style={{ fontSize: 23, marginVertical: 3 }}>{cdnterbuilding}</Text>
-                          <Text style={{ fontSize: 23, marginVertical: 3 }}> {locationName}</Text>
+                          <Text style={{ fontSize: 25, marginVertical: 3, fontFamily: 'extrabold', color: '#404040' }}>{cdnterbuilding}</Text>
                       </View>
                       
                       <Pressable 
