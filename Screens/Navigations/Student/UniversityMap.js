@@ -8,6 +8,8 @@ import { remoteDBBuilding } from '../../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../../Components/Maps';
 import axios from 'axios';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // create a component
 export default function UniversityMap ()  {
@@ -20,7 +22,7 @@ export default function UniversityMap ()  {
     const {buildingData} = useSelector((store) => (store.buildingmodal))
     const navigation = useNavigation()
     const [rooms, setRooms] = useState(buildingData.Rooms)
-    const [center, setCenter] = useState([120.23017646213697,16.03097522000529])  
+    const [center, setCenter] = useState([120.22984621518788,16.032077640860166])  
     const [cdnterid, setCenterID] = useState("center")  
     const [cdnterbuilding, setCenterBuilding] = useState("centerbuilding")  
     const [locationName, setLocationName] = useState('');
@@ -28,32 +30,8 @@ export default function UniversityMap ()  {
     const [buildingdata, setBuildingData] = useState('');
     const [buildings, setBuildings] = useState('');
     const [imagemodal, setImageModal] = useState(false);
-
-    // const handleLongPress = async (event) => {
-    //     const coordinates = event.geometry.coordinates;
-    //     console.log('====================================coordinates');
-    //     console.log(coordinates);
-    //     console.log('====================================coordinates');
-    //     try {
-    //     const AccessToken = ('pk.eyJ1Ijoia2Fsb2thbG8iLCJhIjoiY2xkeXV5bWxwMHY3aTNvcjNsc3Bsc3hmdyJ9.n-Gnaro_yu9dj5PnUhNgfQ')
-    //       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json`;
-    //       const response = await axios.get(url, {
-    //         headers: {
-    //           Authorization: `Bearer ${AccessToken}`, 
-    //         },
-    //       });
-    //       console.log('====================================response');
-    //       console.log(response);
-    //       console.log('====================================response');
-    //       const features = response.data.features;
-    //       if (features.length > 0) {
-    //         const locationName = features[0].place_name;
-    //         setLocationName(locationName);
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
+    const [listModal, setListModal] = useState(false)
+    const [coords, setDefaultCoord] = useState('');
 
       const BuildingData = async() => {
     
@@ -82,40 +60,55 @@ export default function UniversityMap ()  {
     
       }
     
-    const filterRooms = (floor) => {
-      return rooms.filter((room) => room.Floor === floor);
-    };
+     const filterRooms = (floor) => {
+      
+      console.log('rendered');
+        return rooms?.filter((room) => room?.Floor === floor);
+      };
 
     const renderItem = ({item}) => {
 
       return (
         <View style = {{flexDibrection: 'column', padding: 20}}>
-        <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', backgroundColor: 'red'}}>
           <Pressable onPress={() => 
-            {setBuildingData(item) , 
-            setBuildingInfo(false) , 
+            {
+            
+            setBuildingData(item) , 
             setCenterID(item.BuildingName) , 
             setCenterBuilding(item.BuildingLocation),
             setRooms(item.Rooms),
-            setCenter(item.Coordinates)}}>
+            setCenter(item.Coordinates)
+            console.log('what the fuck')
+            }}
+            >
          
-            <Text style = {{fontSize: 20, color: '#505050' }}>{item.BuildingName}</Text>  
-            </Pressable>   
+            <Text style = {{fontSize: 25, color: '#303030', fontFamily: 'medium', }}>{item.BuildingName}</Text>  
+            </Pressable>
+          
         </View>
+        <Pressable  style = {{position: 'absolute', right: 0}}  
+        onPress={() => {    
+          setBuildingData(item) , 
+          setCenterID(item.BuildingName) , 
+          setCenterBuilding(item.BuildingLocation),
+          setRooms(item.Rooms),
+          setCenter(item.Coordinates)
+          setBuildingInfo(false);
+          console.log('what the fuck2')
+          }}
+        >
+              <Icon name = 'expand-more' color = 'gray' size = {30} />
+            </Pressable>
         </View>
       )
     } 
     const renderItem1 = ({item}) => {
-      console.log('====================================item');
-      console.log(item);
-      console.log('====================================item');
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 10}}>
-        <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-          <Pressable onPress={() =>   {}}>
-            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Room}</Text>  
-            </Pressable>   
+        <View style = {{flexDibrection: 'column', padding: 20, width: 300}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start', borderRightWidth: 1, borderColor: '#fff',}}>
+            <Text style = {{fontSize: 20, color: '#505050', fontFamily: 'regular', paddingRight: 50, textAlign: 'center', width: '100%' }}>{item.Room.toUpperCase()}</Text>     
         </View>
         </View>
       )
@@ -144,81 +137,110 @@ export default function UniversityMap ()  {
           <Maps
             id={cdnterid}
             title={cdnterbuilding}
+            centerCoordinate = {center}
             coordinate={center}
             logoEnabled={false}
             attributionEnabled={false}
-            // onLongPress={handleLongPress}
+            zoomLevel = {18.2}
+            onLongPress={(event) => {
+              console.log('Long press event:', event);
+              const coordinates = event.geometry.coordinates;
+              setCenter(coordinates)
+              console.log('Selected coordinates:', coordinates);
+          }}
           />
-          <View style={{ width: "50%", height: "100%" }} />
-          <View style={{ width: "50%", height: "100%" }}>
+          
+          <Pressable 
+                        onPress={() => setListModal(true)}
+                        style = {{position: 'absolute', right: 20, bottom: 20, justifyContent: 'center', alignItems: 'center',}}>
+                        <Icon
+                        name = 'keyboard-arrow-up' size = {75} color={'#101010'}
+                        />
+                        <Text style = {{fontFamily: 'extrabold', color: '#fddf54', textShadowColor: '#101010', textShadowRadius: 10, fontSize: 20}}>BUILDING INFORMATION</Text>
+                      </Pressable>
+          <View style={{ width: "75%", height: "100%", alignSelf: 'flex-end'}}>
+          {listModal &&
+            <View style = {styles.container}>
             {buildinginfo ? (
-              <View style={[styles.header, { height: "95%" }]}>
-                <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>
-                  Building
+              <View style={[styles.header, { height: "95%", width: '50%', }]}>
+                   <View style={{flexDirection: 'row',borderBottomWidth: 2, borderColor: '#404040', width: '100%' }}>
+                <Text style={{ fontSize: 35, fontFamily: 'black', padding: 20, color: '#303030', }}>
+                  Buildings
                 </Text>
-                <View style={{ padding: 5 }}>
+                <Pressable 
+                  style = {{position: 'absolute', right: 0, padding: 5}} 
+                  onPress={() => setListModal(false)}
+                >
+                <Icon name = 'keyboard-arrow-down' size = {75} color = '#303030'/>
+                </Pressable>
+                </View>
                   <FlatList
+                    style = {{padding: 20}}
                     data={buildings}
                     renderItem={renderItem}
                     keyExtractor={(item) => item._id}
                   />
-                </View>
               </View>
             ) : (
-              <>
-                <View style={[styles.header, { height: "25%" }]}>
-                  <Pressable onPress={() => { console.log("pressss"); setImageModal(true) }}>
-                    <Image
-                      resizeMode="contain"
-                      style={{ width: 500, height: 400 }}
-                      source={{ uri: buildingdata.BuildingPicture }}
-                    />
-                  </Pressable>
-                  <CloseButton
-                    onPress={() => setBuildingInfo(true)}
-                    name="arrow-back"
-                    color="#fff"
-                    size={35}
-                    style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
-                </View>
-                <View style={[styles.header, { height: "23%" }]}>
-                  <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>
-                    1st floor
-                  </Text>
-                  <View style={{ padding: 2 }}>
-                    <FlatList
-                      data={filterRooms("1st floor")}
-                      renderItem={renderItem1}
-                      keyExtractor={(item) => item.id}
-                    />
+              <View style={{ height: "95%", width: '50%',alignSelf: 'flex-end', 
+              justifyContent: 'center',
+                }}>
+                  <View style={[styles.header]}>
+                      <View style={{ padding: 10 }}>
+                          <Text style={{ fontSize: 23, marginVertical: 3 }}>{cdnterbuilding}</Text>
+                          <Text style={{ fontSize: 23, marginVertical: 3 }}> {locationName}</Text>
+                      </View>
+                      
+                      <Pressable 
+                        onPress={() => setBuildingInfo(true)}
+                        style = {{position: 'absolute', right: 20, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#101010'}}>
+                        <FontAwesome
+                        name = 'close' size = {20} color={'#101010'}
+                        />
+                      </Pressable>
                   </View>
-                </View>
-                <View style={[styles.header, { height: "23%" }]}>
-                  <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>
-                    2nd floor
-                  </Text>
-                  <View style={{ padding: 2 }}>
-                    <FlatList
-                      data={filterRooms("2nd floor")}
-                      renderItem={renderItem1}
-                      keyExtractor={(item) => item.id}
-                    />
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
+                      
+                          <FlatList
+                              style = {{padding: 5}}
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
+                              data={filterRooms("1st floor")}
+                              renderItem={renderItem1}
+                              keyExtractor={(item) => item._id}
+                          />
                   </View>
-                </View>
-                <View style={[styles.header, { height: "23%" }]}>
-                  <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>
-                    3rd floor
-                  </Text>
-                  <View style={{ padding: 2 }}>
-                    <FlatList
-                      data={filterRooms("3rd floor")}
-                      renderItem={renderItem1}
-                      keyExtractor={(item) => item.id}
-                    />
                   </View>
-                </View>
-              </>
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
+                          <FlatList
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
+                              data={filterRooms("2nd floor")}
+                              renderItem={renderItem1}
+                              keyExtractor={(item) => item._id}
+                          />
+                      </View>
+                  </View>
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
+                          <FlatList
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
+                              data={filterRooms("3rd floor")}
+                              renderItem={renderItem1}
+                              keyExtractor={(item) => item._id}
+                          />
+                      </View>
+                  </View>
+              </View>
             )}
+            </View>
+            }
           </View>
         </View>
         <CloseButton
@@ -226,7 +248,8 @@ export default function UniversityMap ()  {
           name="arrow-back"
           color="#fff"
           size={35}
-          style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}/>
+          style = {{flexDibrection: 'row', top: 25, left: 25, position: 'absolute'}}
+        />
       </>
     );
 };
@@ -239,15 +262,15 @@ export default function UniversityMap ()  {
 const styles = StyleSheet.create({
 
   centeredView: {
-    flex: 1,
+    width: '100%', 
+    height: '100%',
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.5)"
   },
 
   container: {
-    
-    flexDirection: 'row',  
+      
     width: '100%', 
     height: '100%',
     justifyContent: 'center', 
@@ -259,7 +282,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'flex-end', 
     justifyContent: 'center',
-    backgroundColor: '#f6f6f6', 
+    backgroundColor: '#fddf54', 
     width: '100%', 
     height: 100, 
     marginTop: 15, 
