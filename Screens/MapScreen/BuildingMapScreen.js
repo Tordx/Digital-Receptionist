@@ -14,24 +14,23 @@ export default function BuildingMapScreen ()  {
     const {buildingData} = useSelector((store) => (store.buildingmodal))
     const navigation = useNavigation()
     const [rooms, setRooms] = useState(buildingData.Rooms)
+    const [coords, setDefaultCoord] = useState('');
     
-    console.log('====================================buildingData');
     console.log(buildingData);
-    console.log('====================================buildingData');
 
 
 
 
     const filterRooms = (floor) => {
-        return rooms.filter((room) => room?.Floor === floor);
+        return rooms?.filter((room) => room?.Floor === floor);
       };
 
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 20}}>
-        <View style = {{flexDirection: 'column', alignItems: 'flex-start',}}>
-            <Text style = {{fontSize: 20, color: '#505050' }}>{item.Room}  —  {item.Floor}</Text>     
+        <View style = {{flexDibrection: 'column', padding: 20, width: 300}}>
+        <View style = {{flexDirection: 'column', alignItems: 'flex-start', borderRightWidth: 1, borderColor: '#fff',}}>
+            <Text style = {{fontSize: 20, color: '#505050', fontFamily: 'regular', paddingRight: 50, textAlign: 'center', width: '100%' }}>{item.Room.toUpperCase()}</Text>     
         </View>
         </View>
       )
@@ -44,15 +43,11 @@ export default function BuildingMapScreen ()  {
               <Maps
                id={buildingData.BuildingName}
                title={buildingData.BuildingLocation}
+               centerCoordinate = {[120.2307078878246, 16.032108026014853]}
                coordinate={buildingData.Coordinates}
                   logoEnabled = {false}
                   attributionEnabled = {false}
-                  onLongPress={(event) => {
-                      console.log('Long press event:', event);
-                      const coordinates = event.geometry.coordinates;
-                      setDefaultCoord(coordinates)
-                      console.log('Selected coordinates:', coordinates);
-                  }}
+                
               />
               <View style={{ width: '50%', height: '100%' }} />
               <View style={{ width: '50%', height: '100%' }}>
@@ -62,30 +57,38 @@ export default function BuildingMapScreen ()  {
                           <Text style={{ fontSize: 23, marginVertical: 3 }}>BuildingLocation: - {buildingData.BuildingLocation}</Text>
                       </View>
                   </View>
-                  <View style={[styles.header, { height: '25%' }]}>
-                      <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>1st floor</Text>
-                      <View style={{ padding: 5 }}>
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
+                      
                           <FlatList
+                              style = {{padding: 5}}
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
                               data={filterRooms("1st floor")}
                               renderItem={renderItem}
                               keyExtractor={(item) => item.id}
                           />
-                      </View>
                   </View>
-                  <View style={[styles.header, { height: '25%' }]}>
-                      <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>2nd floor</Text>
-                      <View style={{ padding: 5 }}>
+                  </View>
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>SECOND FLOOR</Text>
                           <FlatList
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
                               data={filterRooms("2nd floor")}
                               renderItem={renderItem}
                               keyExtractor={(item) => item.id}
                           />
                       </View>
                   </View>
-                  <View style={[styles.header, { height: '25%' }]}>
-                      <Text style={{ fontSize: 23, fontWeight: "bold", marginTop: 30 }}>3rd floor</Text>
-                      <View style={{ padding: 5 }}>
+                  <View style={[styles.header, {height: '15%'}]}>
+                  <View style = {{paddingVertical: 20, wdith: '100%'}}>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>THIRD FLOOR</Text>
                           <FlatList
+                              showsHorizontalScrollIndicator = {false}
+                              horizontal
                               data={filterRooms("3rd floor")}
                               renderItem={renderItem}
                               keyExtractor={(item) => item.id}
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'flex-end', 
     justifyContent: 'center',
-    backgroundColor: '#f6f6f6', 
+    backgroundColor: '#fddf54', 
     width: '100%', 
     height: 100, 
     marginTop: 15, 
