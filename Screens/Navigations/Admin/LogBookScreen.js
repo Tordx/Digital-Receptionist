@@ -107,10 +107,6 @@ const AdminLogin = async () => {
 
       return (
   <View style={styles.container} >
-     <Image
-        source={require('../../../Assets/Img/psu_logo.png')}
-        style = {{width: 1000, height: 1000, opacity: 0.5, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
-        />
     
       <View style = {{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', paddingTop: 100}}>
       <TouchableOpacity style = {[styles.item, {backgroundColor: '#00000000', textShadowRadius: 0,}]}>

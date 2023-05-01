@@ -131,12 +131,7 @@ const BugReport = async() => {
       )}
     </View>
     <ScrollView
-     refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }>
+     >
       <View style={[styles.status, { backgroundColor: 'grey' }]}>
         <Text style={styles.text}>BugReport</Text>
       </View>

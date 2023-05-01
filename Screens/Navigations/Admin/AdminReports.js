@@ -7,7 +7,8 @@ import {
     Text,  
     TextInput,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -144,17 +145,22 @@ import {remoteDBReportBugReport , remoteDBSuggestionFeedback } from '../../../Da
       style={styles.container}
       // source={require('../../../Assets/Img/Background_image.png')}
     >
+        <Text style={[styles.text, {fontSize: 50}]}>SYSTEM REPORTS</Text>
       <View style={styles.boxContainer}>
-        <TouchableOpacity onPress={() => {navigation.navigate('AdminSuggestionScreen')}} style={[styles.box, {backgroundColor: 'lime'}]}>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminSuggestionScreen')}} style={[styles.box, ]}>
+          <Image style = {{width: 100, height: 100,}} resizeMode = 'contain' source = {require('../../../Assets/Img/icons8-idea-144.png')} />
           <Text style={styles.text}>Suggestion</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {navigation.navigate('AdminReportScreen')}} style={[styles.box, {backgroundColor: 'red'}]}>
-          <Text style={styles.text}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {navigation.navigate('AdminFeedBackScreen')}} style={[styles.box, {backgroundColor: 'blue'}]}>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminFeedBackScreen')}} style={[styles.box,]}>
+        <Image style = {{width: 100, height: 100,}} resizeMode = 'contain' source = {require('../../../Assets/Img/icons8-satisfied-96.png')} />
           <Text style={styles.text}>Feedback</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {navigation.navigate('AdminBugReportScreen')}} style={[styles.box, {backgroundColor: 'grey'}]}>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminReportScreen')}} style={[styles.box, ]}>
+        <Image style = {{width: 100, height: 100,}} resizeMode = 'contain' source = {require('../../../Assets/Img/icons8-box-important-96.png')} />
+          <Text style={styles.text}>Report</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminBugReportScreen')}} style={[styles.box, ]}>
+        <Image style = {{width: 100, height: 100,}} resizeMode = 'contain' source = {require('../../../Assets/Img/icons8-rhinoceros-beetle-96.png')} />
           <Text style={styles.text}>Bug Report</Text>
         </TouchableOpacity>
       </View>
@@ -177,7 +183,7 @@ import {remoteDBReportBugReport , remoteDBSuggestionFeedback } from '../../../Da
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow'
+    backgroundColor: '#fddf54'
   },
   boxContainer: {
     flexDirection: 'row',
@@ -189,17 +195,18 @@ import {remoteDBReportBugReport , remoteDBSuggestionFeedback } from '../../../Da
   },
   box: {
     width: 280,
-    height: '100%',
+    height: '80%',
     margin: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    elevation: 5,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    elevation: 20,
   },
   text: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
+    fontFamily: 'black',
+    color: '#303030',
   },
 });
 
