@@ -32,3 +32,5 @@ export const BuildingSelection = [
     
    "Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3","Building 1", "Building 2", "Building 3",
 ]
+
+export const aboutus = "Welcome to the Digital Kiosk Help Desk Receptionist! \n\nThis project was initially developed by BSCS students from PSU Lingayen Campus, demonstrating the skills and knowledge gained through their computer science program. The Digital Help Desk Receptionist is a system that provides information for students, visitors, and anyone within the university. \n\nThis project used react native which is a javascript framework for faster development and versatility, future implementation of feautures such Machine Learning, AI, Interactive Map and Voice Recognition can be attained through the support of the university. \n\n In the near future, once approve this will be an open-source(with limitations) project for anyone who are willing to contribute. \n\n\n Thank you!"

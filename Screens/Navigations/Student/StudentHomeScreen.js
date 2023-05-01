@@ -7,6 +7,7 @@ import {
     Image,
     BackHandler,
     Alert,
+    Modal,
 } from 'react-native'
 import React, {useEffect, useState} from 'react';
 import { CloseButton, ReportButton } from '../../../Components/Buttons';
@@ -14,13 +15,14 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import BackgroundTimer from 'react-native-background-timer';
 import {StudentMainMenu} from './StudentMainMenu';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import { aboutus } from '../../../Assets/constants/constants';
 
 
 
 export default function StudentHomeScreen() {
 
   const navigation = useNavigation();
-
+  const [modal, setModal] = useState(false)
   const [seconds, setSeconds] = useState(600); // Set time limit to 10 mins [by seconds], (if possible can be set by admin) 
   
   
@@ -111,8 +113,27 @@ export default function StudentHomeScreen() {
           <View style = {{flexDirection: 'row', justifyContent: 'center', alignSelf: 'center'}}>
             <StudentMainMenu/>
             </View>
+       
       </View>
-
+      <Pressable style = {{position: 'absolute', top: 20, right: 20}} onPress = {() => setModal(true)}>
+          <Text style = {{fontSize: 16, fontFamily: 'extrabold', color: 'black'}}>ABOUT</Text>
+        </Pressable>
+        <Modal
+        animationType='slide'
+          statusBarTranslucent
+          transparent
+          visible = {modal}
+          onRequestClose={() => setModal(false)}
+        >
+          <View style = {{width: '100%', height: '100%', backgroundColor: '#00000059', justifyContent: 'center', alignItems: 'center',}}>
+            <View style = {{justifyContent: 'center', alignItems: 'flex-start',width: '95%', height: '80%', backgroundColor: '#fff', borderRadius: 30}}>
+              <Text style = {{textAlign: 'left', fontSize: 25, fontFamily: 'thin', color: 'black', width: '80%', paddingLeft: 50}}>{aboutus}</Text>
+            </View>
+            <Pressable style = {{position: 'absolute', bottom: 20}} onPress = {() => setModal(false)}>
+          <Text style = {{fontSize: 16, fontFamily: 'extrabold', color: 'red'}}>CLOSE</Text>
+        </Pressable>
+          </View>
+        </Modal>
       </ImageBackground>
   )
 }
