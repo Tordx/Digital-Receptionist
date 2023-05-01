@@ -64,14 +64,13 @@ export default function AddClassScreen() {
     const [cancelEdit, setCancelEdit] = useState(true);
     const [inactive, setInactive] = useState('Inactive');
     const [deleteState, setDeleteState] = useState(false);
+    const [information, setInformation] = useState('');
     const id = uuid.v4()
 
     const NextPage =  () => {
         
       if (college.length === 0) {
         Alert.alert('Please Enter Event Name') 
-        } else if (courseAcronym.length === 0) {
-            Alert.alert('Please Enter Event Tagline') 
           } else if (college.length === 0) {
               Alert.alert('Please Enter Whene is the Event ') 
             } else if (collegeAcronym.length === 0) {
@@ -129,6 +128,7 @@ export default function AddClassScreen() {
             _id: ID === null ? id : ID,
             _rev: rev === null ? undefined : rev,
             Course : course,
+            information: information,
             CourseAcronym : courseAcronym,
             College: college,
             CollegeAcronym : collegeAcronym,
@@ -213,7 +213,7 @@ export default function AddClassScreen() {
                   setID(item._id)
                   setRev(item._rev)
                   setCourse(item.Course)
-                  setcourseAcronym(item.CourseAcronym)
+                  setInformation(item.information)
                   setCollege(item.College)
                   setCollegeAcronym(item.CollegeAcronym)
                   setImage(item.Image)
@@ -266,14 +266,14 @@ export default function AddClassScreen() {
                           placeholder = 'Bachelor of Arts in English Language'
                           title = 'Course Name'
                         />
-                        
-                        <CustomInput
-                          onChangeText={(value) => setcourseAcronym(value)}
-                          value={courseAcronym}
-                          placeholder = 'ABEL'
-                          title = 'Course Acronym'
 
+                        <CustomInput
+                          onChangeText={(value) => setInformation(value)}
+                          value={information}
+                          placeholder = 'Course About...'
+                          title = 'Course About'
                         />
+                      
                         <CustomInput
 
                           onChangeText={(value) => setCollege(value)}
