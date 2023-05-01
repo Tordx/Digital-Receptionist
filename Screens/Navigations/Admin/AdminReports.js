@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Button } from 'react-native-paper';
 import {remoteDBReportBugReport , remoteDBSuggestionFeedback } from '../../../Database/pouchDb';
 
+
   export const AdminReports = () => {
 
     useEffect(() => {
@@ -138,167 +139,69 @@ import {remoteDBReportBugReport , remoteDBSuggestionFeedback } from '../../../Da
       )
   }
 
-      return (
-        <ImageBackground style={styles.container}
-        source = {require('../../../Assets/Img/Background_image.png')}
-
-        >
-       
-        <ScrollView>
-        <View style = {styles.status} >
-          <Text style  = {styles.text}>Suggestion</Text>
-          </View> 
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator = {false}
-              data={suggestion}
-              renderItem={renderItem}
-              keyExtractor={item => item._id}
-          />
-          <View style = {styles.status} >
-          <Text style  = {styles.text}>Report</Text>
-          </View> 
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator = {false}
-              data={report}
-              renderItem={renderItem}
-              keyExtractor={item => item._id}
-          />
-        <View style = {[styles.status, {backgroundColor: '#0f2ed6'}]}>
-          <Text style  = {styles.text}>Feedback</Text>
-          </View>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator = {false}
-              data={feedback}
-              renderItem={renderItem}
-              keyExtractor={item => item._id}
-            />
-        <View style = {[styles.status, {backgroundColor: 'grey'}]}>
-          <Text style  = {styles.text}>Bug Report</Text>
-          </View>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator = {false}
-              data={bugreport}
-              renderItem={renderItem}
-              keyExtractor={item => item._id}
-            /> 
-          
-        </ScrollView>
-        <View style = {styles.TextInput}>
-            <Icon
-            
-            name = 'search'
-            size={30}
-            style = {{margin: 10}}
-
-            />
-            <TextInput
-                placeholder='Search Classes'
-                style = {{fontSize: 20,}}
-                
-            />
-        
-        
-        </View>
-        <CloseButton
-
-          onPress = {() => navigation.navigate('AdminHomeScreen')}
-          name = 'arrow-back'
-          size = {50}
-          style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20}}
-        />
-        </ImageBackground>
-      );
+  return (
+    <View
+      style={styles.container}
+      // source={require('../../../Assets/Img/Background_image.png')}
+    >
+      <View style={styles.boxContainer}>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminSuggestionScreen')}} style={[styles.box, {backgroundColor: 'lime'}]}>
+          <Text style={styles.text}>Suggestion</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminReportScreen')}} style={[styles.box, {backgroundColor: 'red'}]}>
+          <Text style={styles.text}>Report</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminFeedBackScreen')}} style={[styles.box, {backgroundColor: 'blue'}]}>
+          <Text style={styles.text}>Feedback</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {navigation.navigate('AdminBugReportScreen')}} style={[styles.box, {backgroundColor: 'grey'}]}>
+          <Text style={styles.text}>Bug Report</Text>
+        </TouchableOpacity>
+      </View>
+  
+      <CloseButton
+        onPress={() => navigation.navigate('AdminHomeScreen')}
+        name="arrow-back"
+        size={50}
+        style={{ flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20 }}
+      />
+    </View>
+  );
+  
     
 
   }
 
-  const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow'
+  },
+  boxContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 50,
+  },
+  box: {
+    width: 280,
+    height: '100%',
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    elevation: 5,
+  },
+  text: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+});
 
-    container: {
-
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center',
-        backgroundColor: '#f2f3f7',
-        paddingTop: 100,
-        paddingBottom: 10,
-        
-    },
-
-    item: {
-
-        justifyContent: 'center',
-        alignself: 'center',
-        backgroundColor: '#fff',
-        padding: 30,
-        width: 250,
-        height: 200,
-        borderRadius: 10,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.41,
-        elevation: 5,
-
-    },
-
-    title: {
-
-      fontSize: 32,
-
-    },
-
-    text: {
-
-      fontSize: 25,
-      fontWeight: '500',
-      left: 0,
-      textAlign: 'center',
-      color: 'white'
-
-    },
-
-    status: {
-      
-      width: 200, 
-      height: 50, 
-      backgroundColor: 'red', 
-      margin: 20,
-      borderRadius: 20,
-      justifyContent: 'center'
-
-    },
-
-    TextInput: { 
-
-      position: 'absolute', 
-      top: 20, 
-      alignSelf:'center', 
-      flexDirection: 'row',
-      backgroundColor: '#f2f3f7',
-      width: 600,
-      borderRadius: 15,
-      height: 50,
-      shadowColor: "#000",
-      shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-      shadowOpacity: 1,
-      shadowRadius: 3.41,
-      elevation: 10,
-
-    }
-
-  });
 
   export default AdminReports;
