@@ -22,6 +22,7 @@ export default function SuggestionsScreen() {
   const [value, setvalue] = useState('');
   const [name, setName] = useState('');
   const [specify, setSpecify] = useState('');
+  const timestamp = new Date().toISOString();
 
   const setNewSuggestion = async () => {
     
@@ -34,7 +35,8 @@ export default function SuggestionsScreen() {
           Department : value,
           Name: name,
           FeedbackorSuggestion : checked,
-          SpecifySuggestion : specify
+          SpecifySuggestion : specify,
+          timestamp : timestamp,
        }
        remoteDBSuggestionFeedback.put(NewSuggestion)
        .then((response) =>{

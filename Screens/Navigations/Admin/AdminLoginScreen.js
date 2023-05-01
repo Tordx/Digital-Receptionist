@@ -22,6 +22,7 @@ export default function AdminLoginScreen() {
     const log = new Date();
     const date  = log.toLocaleDateString();
     const time = log.toLocaleTimeString();
+    const timestamp = new Date().toISOString();
 
     const LoginData = async () => {
         // navigation.navigate('AdminHomeScreen')
@@ -55,6 +56,7 @@ export default function AdminLoginScreen() {
                      _id: id,
                      SuperAdminId : AdminID,
                      SuperAdminPasscode : Passcode,
+                     timestamp : timestamp,
                      Time: time,
                      Date: date
                     }
@@ -70,7 +72,8 @@ export default function AdminLoginScreen() {
 
                 if((adminid == AdminID) && (passcode == Passcode)){
                     
-                  
+                    setAdminId("")
+                    setPasscode("")
                     navigation.navigate('AdminHomeScreen')
 
                    }else{

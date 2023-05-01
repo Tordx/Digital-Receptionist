@@ -84,6 +84,15 @@ export default function AdminMainMenu() {
       titleStyle = {styles.title}
 
       />
+         <Box
+      
+      source = {require('../../../Assets/Img/icons8-answers-96.png')}
+      onPress = {() => navigation.navigate('LogBookScreen')}
+      title = 'Log Book'
+      style = {styles.Box}
+      titleStyle = {styles.title}
+
+      />
       <Box
       
       source = {require('../../../Assets/Img/icons8-services-96.png')}
