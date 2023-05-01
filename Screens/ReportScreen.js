@@ -16,6 +16,8 @@ export default function SuggestionsScreen() {
   const [name, setName] = useState('');
   const [specify, setSpecify] = useState('');
 
+  const timestamp = new Date().toISOString();
+
   const setNewReport = async () => {
     const id = uuid.v4();
 
@@ -30,7 +32,8 @@ export default function SuggestionsScreen() {
          Department : value,
           Name: name,
           ReportBugReport : checked,
-          SpecifyComplaint : specify
+          SpecifyComplaint : specify,
+          timestamp : timestamp,
      
        }
        remoteDBReportBugReport.put(NewReport)
