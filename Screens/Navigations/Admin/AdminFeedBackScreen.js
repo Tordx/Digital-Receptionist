@@ -113,22 +113,12 @@ const FeedBack = async() => {
               {item.Name}
             </Text>
             <Text style = {styles.title}>
-              {item.Message}
+              {item.Message.length > 10 ? item.Message.slice(0,10) + "..." : item.Message}
             </Text>
             </View>
           </TouchableOpacity>
       )
   }
-
-//   <TouchableOpacity onPress={() => {setFullInforModal(true) , setFullInforModalData(item)}}>
-//   <View style = {styles.item}>
-//     <Text style = {styles.title}>
-//      Department:  {item.Department}{"          "}
-//      Name: {item.Name}{"          "}
-//      Message:  {item.Message}
-//     </Text>
-//   </View>
-// </TouchableOpacity>
 
       return (
   <View style={styles.container} >
