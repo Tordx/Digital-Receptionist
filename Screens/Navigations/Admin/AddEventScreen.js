@@ -26,7 +26,7 @@ import storage from '@react-native-firebase/storage';
 import { useDispatch } from 'react-redux';
 import { setImages } from '../../../Redux/TaskReducer';;
 
-const CustomInput = (props) => {
+export const CustomInput = (props) => {
 
   return (
   <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
@@ -221,6 +221,7 @@ export default function AddEventScreen() {
                   setEventTagline(item.EventTagline)
                   setEventWhen(item.EventWhen)
                   setEventWhere(item.EventWhere)
+                  setEventDescription(item.EventDescription)
                   setImage(item.Image)
                   setStatus(item.Status)
                   setCancelEdit(false) 
@@ -342,6 +343,7 @@ export default function AddEventScreen() {
             setEventTagline('')
             setEventWhen('')
             setEventWhere('')
+            setEventDescription('')
             setImage('')
             setCancelEdit(true)
             setDeleteState(false)

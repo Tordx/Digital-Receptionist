@@ -10,10 +10,6 @@ import { remoteDBEvent } from '../../../Database/pouchDb';
 
 export default function EventScreen() {
 
-    useEffect(() => {
-      EventData()
-    }, [event]);
-
   const navigation = useNavigation();
   const [event, setEvent] = useState();
   const [data, setData] = useState('');
@@ -56,6 +52,12 @@ export default function EventScreen() {
     }
 
   }
+
+  
+  useEffect(() => {
+    EventData()
+  }, [event]);
+
 
     const renderItem = ({item}) => {
 

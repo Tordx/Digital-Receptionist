@@ -7,7 +7,8 @@ import {
     Text,  
     TextInput,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -88,62 +89,69 @@ const AdminLogin = async () => {
     const renderItem = ({ item }) => {
 
       return(
-        <TouchableOpacity>
-          <View style = {styles.item}>
+          <TouchableOpacity style = {styles.item}>
+            <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
             <Text style = {styles.title}>
-              {item.SuperAdminId}{"          "}
-              {item.Time}{"          "}
+              {item.SuperAdminId}
+            </Text>
+            <Text style = {styles.title}>
+              {item.Time}
+            </Text>
+            <Text style = {styles.title}>
               {item.Date}
             </Text>
-          </View>
-       </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
       )
   }
 
       return (
-  <ImageBackground style={styles.container} source={require('../../../Assets/Img/Background_image.png')}>
-  
-    <View>
-      {showCalendar && (
-        <>
-           <Calendar onDayPress={handleDateSelect} />
-          <TouchableOpacity onPress={handleHideCalendar} style={{ flexDirection: 'row', alignItems: 'center',justifyContent: 'center', backgroundColor: 'red', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 }}>
-        <Icon name="close" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
-        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Close</Text>
-      </TouchableOpacity>
-        </>
-      )}
-    </View>
-    <ScrollView>
-      <View style={[styles.status, { backgroundColor: '#0f2ed6' }]}>
-        <Text style={styles.text}>Admin Login</Text>
+  <View style={styles.container} >
+     <Image
+        source={require('../../../Assets/Img/psu_logo.png')}
+        style = {{width: 1000, height: 1000, opacity: 0.5, justifyContent: 'center', position: 'absolute', alignItems: 'center'}}
+        />
+    
+      <View style = {{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', paddingTop: 100}}>
+      <TouchableOpacity style = {[styles.item, {backgroundColor: '#00000000', textShadowRadius: 0,}]}>
+            <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+              ADMIN NAME
+            </Text>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+              LOGIN TIME
+            </Text>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+              LOGIN DATE
+            </Text>
+            </View>
+          </TouchableOpacity>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          data={adminlogin.filter((item) => item.SuperAdminId.includes(searchQuery))}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+        />
       </View>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        data={adminlogin.filter((item) => item.SuperAdminId.includes(searchQuery))}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-      />
-
-    </ScrollView>
-    <View style={styles.TextInput}>
-    <TouchableOpacity onPress={handleShowCalendar} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#007AFF', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 , width: 170 }}>
-        <Icon name="calendar-today" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
-        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Select Date</Text>
-      </TouchableOpacity>
-      <Icon name="search" size={30} style={{ margin: 10 }} />
-      <TextInput
-        placeholder="Search Classes"
-        style={{ fontSize: 20 }}
-        onChangeText={(query) => setSearchQuery(query)}
-      />
-
-    </View>
-    <CloseButton 
-    onPress={() => navigation.navigate('AdminHomeScreen')} 
-    name="arrow-back" size={50}
-     style={{ flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20 }} />
-  </ImageBackground>
+      <TouchableOpacity onPress={handleShowCalendar} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#0f2ed6', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, position: 'absolute', top: 20}}>
+          <Icon name="calendar-today" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
+          <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Select Date</Text>
+        </TouchableOpacity>
+        
+        {showCalendar && (
+          <View style = {{width: '100%', justifyContent: 'center', alignContent: 'center', position: 'absolute', backgroundColor: '#00000088', height: '100%'}}>
+            <Calendar onDayPress={handleDateSelect} style = {{width: '95%', alignSelf: 'center', borderRadius: 30}} />
+            <TouchableOpacity onPress={handleHideCalendar} style={{ alignSelf: 'center', alignItems: 'center',justifyContent: 'center', backgroundColor: 'red', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, width: '95%' }}>
+          <Icon name="close" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
+          <Text style={{ color: '#FFFFFF', fontSize: 18 }}>CLOSE</Text>
+        </TouchableOpacity>
+          </View>
+        )}
+      <CloseButton 
+      onPress={() => navigation.navigate('AdminHomeScreen')} 
+      name="arrow-back" size={50} color = {'#202020'}
+      style={{ flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20 }} />
+  </View>
 );
 
     
@@ -154,12 +162,12 @@ const AdminLogin = async () => {
 
     container: {
 
-        flex: 1,
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
+        alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: '#f2f3f7',
-        paddingTop: 100,
-        paddingBottom: 10,
+        backgroundColor: '#fddf54',
         
     },
 
@@ -167,27 +175,23 @@ const AdminLogin = async () => {
 
         justifyContent: 'center',
         alignself: 'center',
-        backgroundColor: '#fff',
-        padding: 30,
+        alignItems: 'center',
+        backgroundColor: '#00000019',
+        flexDirection: 'row',
+        borderBottomWidth: 2,
         width: '100%',
         height: 100,
-        borderRadius: 10,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.41,
-        elevation: 5,
 
     },
 
     title: {
 
       fontSize: 32,
+      marginHorizontal: 20,
+      fontFamily: 'medium',
+      color: '#202020',
+      textShadowColor: 'white',
+      textShadowRadius: 5,
 
     },
 
@@ -195,7 +199,6 @@ const AdminLogin = async () => {
 
       fontSize: 25,
       fontWeight: '500',
-      left: 0,
       textAlign: 'center',
       color: 'white'
 
@@ -208,30 +211,9 @@ const AdminLogin = async () => {
       backgroundColor: 'red', 
       margin: 20,
       borderRadius: 20,
-      justifyContent: 'center'
+      justifyContent: 'center',
 
     },
-
-    TextInput: { 
-
-      position: 'absolute', 
-      top: 20, 
-      alignSelf:'center', 
-      flexDirection: 'row',
-      backgroundColor: '#f2f3f7',
-      width: 600,
-      borderRadius: 15,
-      height: 50,
-      shadowColor: "#000",
-      shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-      shadowOpacity: 1,
-      shadowRadius: 3.41,
-      elevation: 10,
-
-    }
 
   });
 
