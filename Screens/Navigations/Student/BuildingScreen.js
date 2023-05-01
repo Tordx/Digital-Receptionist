@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, FlatList, TextInput , TouchableOpacity , Image, ImageBackground, Platform, Pressable, Modal, StatusBar, ScrollView, RefreshControl } from 'react-native'
-import React , {useState , useEffect ,useCallback} from 'react';
+import React , {useState , useEffect ,useMemo} from 'react';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import EventModal from '../../../Modal/EventModal';
@@ -10,6 +10,12 @@ import { remoteDBEvent , remoteDBBuilding } from '../../../Database/pouchDb';
 import { setBuildingData } from '../../../Redux/BuildingSlice';
 
 export default function EventScreen() {
+
+  useEffect(() => {
+    EventData()
+    
+  }, [searchTerm]);
+
 
 
   const dispatch = useDispatch()
@@ -23,37 +29,35 @@ export default function EventScreen() {
 
   
   const EventData = async() => {
-
-    var result = await remoteDBBuilding.allDocs({
-      include_docs: true,
-      attachments: true,
-    });
-    if(result.rows) {
-      let modifiedArr =  result.rows.map(function(item) {
-        return item.doc
-      });
-      let filteredData = modifiedArr.filter(item => {
-        return item && (
-          new RegExp(searchTerm, 'i').test(item.BuildingName)
-        )
-      })
-      if(filteredData){
-       let newFilterData = filteredData.map((item) => {
-        return item 
-       })
-       setData(newFilterData);
-       console.log('newFilterData')
-       console.log(newFilterData)
-       console.log('newFilterData')
-      }
-    }
-
-  }
-
   
-  useEffect(() => {
-    EventData()
-  }, [searchTerm]);
+    try {
+
+      var result = await remoteDBBuilding.allDocs({
+        include_docs: true,
+        attachments: true,
+      });
+      if(result.rows) {
+        let modifiedArr =  result.rows.map(function(item) {
+          return item.doc
+        });
+        let filteredData = modifiedArr.filter(item => {
+          return item && (
+            new RegExp(searchTerm, 'i').test(item.BuildingName)
+          )
+        })
+        if(filteredData){
+         let newFilterData = filteredData.map((item) => {
+          return item 
+         })
+         setData(newFilterData);
+        }
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const memoizedData = useMemo(() => data, [data]);
 
   const RefreshList = () => {
 
@@ -94,7 +98,7 @@ export default function EventScreen() {
         <ScrollView showsVerticalScrollIndicator = {false}>
         <FlatList
           style = {{paddingTop: 100}}
-          data={data}
+          data={memoizedData}
           numColumns = {3}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}

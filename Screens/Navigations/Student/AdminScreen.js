@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState , useEffect , useMemo} from 'react';
 import { 
     
     View, 
@@ -50,7 +50,7 @@ import LinearGradient from 'react-native-linear-gradient';
     const [modal, setModal] = useState(true)
     const [image, setImage] = useState('https://i.imgur.com/ruPofda.png');
     useEffect(() => {
-      getAdminData()
+      memoizedGetAdminData()
 
     }, [admindata]);
 
@@ -58,68 +58,60 @@ import LinearGradient from 'react-native-linear-gradient';
 
     const navigation = useNavigation();
 
-    const getAdminData = async () => {
-      var result = await remoteDBAdmin.allDocs({
-        include_docs: true,
-        attachments: true,
-      });
-      if (result.rows) {
-        let modifiedArr = result.rows.map(function (item) {
-          return item.doc;
+    const memoizedGetAdminData = useMemo(() => {
+      const filterDataByPosCode = (filteredData, posCode) =>
+        filteredData.filter((item) => item.PosCode === posCode);
+    
+      const filterDataBySearchTerm = (filteredData, searchTerm) =>
+        filteredData.filter((item) =>
+          item && (
+            new RegExp(searchTerm, 'i').test(item.Name) ||
+            new RegExp(searchTerm, 'i').test(item.Office) ||
+            new RegExp(searchTerm, 'i').test(item.Position)
+          )
+        );
+    
+      return async () => {
+        const result = await remoteDBAdmin.allDocs({
+          include_docs: true,
+          attachments: true,
         });
-        let filteredData = modifiedArr.filter((item) => item);
     
-        const presidentData = filteredData.filter(
-          (item) => item.PosCode === "UP" //univpresidentmismo
-        );
-        const vicePresidentData = filteredData.filter(
-          (item) => item.PosCode === "VP"
-        );
-        const campusPresidentData = filteredData.filter(
-          (item) => item.PosCode === "UCP"
-        );
-
-        const vicePresidentALData  = filteredData.filter(
-          (item) => item.PosCode === 'ALD'
-        );
-        const vicePresidentASAData  = filteredData.filter(
-          (item) => item.PosCode === 'ASAD'
-        );
-        const vicePresidentPFMData  = filteredData.filter(
-          (item) => item.PosCode === 'PFMD'
-        );
-        const vicePresidentREIData  = filteredData.filter(
-          (item) => item.PosCode === 'REI'
-        );
-        const vicePresidentQAData  = filteredData.filter(
-          (item) => item.PosCode === 'QA'
-        );
-
-        const SearchFunction = filteredData.filter((item) => {
-            return item && (
-              new RegExp(searchTerm, 'i').test(item.Name) ||
-              new RegExp(searchTerm, 'i').test(item.Office) ||
-              new RegExp(searchTerm, 'i').test(item.Position)
-            )
-        }); // for proper implementation
+        if (result.rows) {
+          const modifiedArr = result.rows.map((item) => item.doc).filter(Boolean);
+          const filteredData = modifiedArr.filter(Boolean);
     
-        setUnivPresident(presidentData);
-        setUnivVicePresident(vicePresidentData);
-        setUnivCampusPresident(campusPresidentData)
-        setUnivVicePresidentAL(vicePresidentALData)
-        setUnivVicePresidentASAD(vicePresidentASAData)
-        setUnivVicePresidentPFMD(vicePresidentPFMData)
-        setUnivVicePresidentREI(vicePresidentREIData)
-        setUnivVicePresidentQA(vicePresidentQAData)
-        setAdminData(filteredData)
-        setSearchTerm(SearchFunction)
-      }
-    };
+          const presidentData = filterDataByPosCode(filteredData, 'UP');
+          const vicePresidentData = filterDataByPosCode(filteredData, 'VP');
+          const campusPresidentData = filterDataByPosCode(filteredData, 'UCP');
+          const vicePresidentALData = filterDataByPosCode(filteredData, 'ALD');
+          const vicePresidentASAData = filterDataByPosCode(filteredData, 'ASAD');
+          const vicePresidentPFMData = filterDataByPosCode(filteredData, 'PFMD');
+          const vicePresidentREIData = filterDataByPosCode(filteredData, 'REI');
+          const vicePresidentQAData = filterDataByPosCode(filteredData, 'QA');
+    
+          const searchFunction = filterDataBySearchTerm(filteredData, searchTerm);
+    
+          setUnivPresident(presidentData);
+          setUnivVicePresident(vicePresidentData);
+          setUnivCampusPresident(campusPresidentData);
+          setUnivVicePresidentAL(vicePresidentALData);
+          setUnivVicePresidentASAD(vicePresidentASAData);
+          setUnivVicePresidentPFMD(vicePresidentPFMData);
+          setUnivVicePresidentREI(vicePresidentREIData);
+          setUnivVicePresidentQA(vicePresidentQAData);
+          setAdminData(filteredData);
+          setSearchTerm(searchFunction);
+        }
+      };
+    }, [remoteDBAdmin, searchTerm]);
+
+    
 
     const RefreshList = () => {
 
       setAdminRefresh(true);
-      getAdminData();
+      memoizedGetAdminData();
       setAdminRefresh(false)
 
     }
