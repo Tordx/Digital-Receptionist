@@ -255,7 +255,7 @@ export default function AddBuildingScreen() {
                         onChangeText={(value) => setBuildingName(value)}
                          value={buildingname}
                          title = 'Building Name  '
-                         placeholder="e.g. Year-end Party 2022"
+                         placeholder="CH Building"
                       />
                       <CustomInput
                         onChangeText={(value) => setBuildingLocation(value)}

@@ -145,14 +145,14 @@ export default function CourseMapScreen ()  {
                     <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030', fontFamily: 'regular'}}>Chairperson - {courseData.ChairPerson}</Text>
                 
                   </View>
-                  <Pressable 
+          </View>
+          <Pressable 
                   onPress={() => setModal(true)}
                   style = {{position: 'absolute', right: 20, bottom: 10, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#0f2ed6'}}>
                   <FontAwesome5
                   name = 'info' size = {20} color={'#0f2ed6'}
                   />
                   </Pressable>
-        </View>
               </View>
               <View style = {[styles.header, {height: 75}]}>
                 <View style = {{padding: 20}}>

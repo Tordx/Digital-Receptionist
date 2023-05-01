@@ -283,7 +283,7 @@ export default function AddCollege() {
                         <TouchableOpacity
                           onPress={setNewFaculty}
                           style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
-                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD/EDIT SUBMIT</Text>
                         </TouchableOpacity>
                         
                   </View>
