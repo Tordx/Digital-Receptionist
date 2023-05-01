@@ -103,22 +103,22 @@ export default function AdminLoginScreen() {
 
         />
         <View style = {styles.container}>
-            <Text style = {{fontSize: 50, bottom: 50, fontWeight: 'bold',}} >ADMIN LOGIN </Text>
-            <Text style = {{bottom: 30}}> Data Configuration  </Text>
+            <Text style = {{fontSize: 50, bottom: 50, fontFamily: 'black', color: '#303030'}} >ADMIN LOGIN </Text>
+            <Text style = {{bottom: 30, fontFamily: 'regular', color: '#303030'}}> Data Configuration  </Text>
          <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Administrator ID</Text>
+        <Text style = {{fontSize: 20,fontFamily: 'regular', color: '#303030'}}>Administrator ID</Text>
         <View style = {styles.loginInput}>
             <Icon/>
             <TextInput
                 onChangeText={(value) => setAdminId(value)}
                 value={adminid}
                 placeholder='123456789'
-                style = {{fontSize: 20}}
+                style = {{fontSize: 17,fontFamily: 'regular', color: '#303030', alignSelf: 'center', width: '100%'}}
             />
         </View>
         </View>
         <View style = {{marginTop: 10}}>
-        <Text style = {{fontSize: 20}}>Passcode</Text>
+        <Text style = {{fontSize: 20,fontFamily: 'regular', color: '#303030'}}>Passcode</Text>
         <View style = {styles.loginInput}>
             
             <TextInput
@@ -126,7 +126,7 @@ export default function AdminLoginScreen() {
                 value={passcode}
                 secureTextEntry = {show}
                 placeholder='********'
-                style = {{fontSize: 20}}
+                style = {{fontSize: 17,fontFamily: 'regular', color: '#303030', width: '100%'}}
             />
             <Pressable 
             style = {{position: 'absolute', right: 0, margin: 10}}

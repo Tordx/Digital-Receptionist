@@ -11,16 +11,12 @@ import { setBuildingData } from '../../../Redux/BuildingSlice';
 
 export default function EventScreen() {
 
-    useEffect(() => {
-      EventData()
-    }, [searchTerm]);
 
   const dispatch = useDispatch()
   const navigation = useNavigation();
-  const [event, setEvent] = useState();
   const [data, setData] = useState([]);
   const [showSearch, setShowSearch] = useState(false)
-  const [searchTerm, setSearchTerm] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
   const [courseRefresh, setCourseRefresh] = useState(false);
   StatusBar.setHidden(true);
 
@@ -37,15 +33,15 @@ export default function EventScreen() {
         return item.doc
       });
       let filteredData = modifiedArr.filter(item => {
-        return item && 
-        new RegExp(searchTerm, 'i').test(item.BuildingName) ||
-        new RegExp(searchTerm, 'i').test(item.BuildingLocation)
+        return item && (
+          new RegExp(searchTerm, 'i').test(item.BuildingName)
+        )
       })
       if(filteredData){
        let newFilterData = filteredData.map((item) => {
         return item 
        })
-       setSearchTerm(newFilterData);
+       setData(newFilterData);
        console.log('newFilterData')
        console.log(newFilterData)
        console.log('newFilterData')
@@ -53,6 +49,11 @@ export default function EventScreen() {
     }
 
   }
+
+  
+  useEffect(() => {
+    EventData()
+  }, [searchTerm]);
 
   const RefreshList = () => {
 
@@ -93,7 +94,7 @@ export default function EventScreen() {
         <ScrollView showsVerticalScrollIndicator = {false}>
         <FlatList
           style = {{paddingTop: 100}}
-          data={searchTerm}
+          data={data}
           numColumns = {3}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}

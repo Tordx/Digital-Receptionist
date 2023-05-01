@@ -47,9 +47,6 @@ const CustomInput = (props) => {
 
 export default function AddFacultyScreen() {
 
-  useEffect(() => {
-    facultydatas()
-  }, []);
 
     const dispatch = useDispatch();
     const navigation = useNavigation('');
@@ -64,14 +61,14 @@ export default function AddFacultyScreen() {
     const [facultymemberid , setFacultyMembersId] = useState(null);
     const [facultymemberrev , setFacultyMembersRev] = useState(null);
     const [transferred, setTransferred] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('')
     const id = uuid.v4()
 
     const AddNewFaculty =  () => {
         
       name === '' ? Alert.alert('Please Enter Faculty Name') : 
       (title === '' ? Alert.alert('Please Enter Faculty Building') : 
-      department === '' ? Alert.alert('Please Enter Faculty President') : 
-      college === '' ? Alert.alert('Please Enter Faculty VicePresident') :
+      department === '' ? Alert.alert('Please Enter Faculty President') :
       collegeAcronym === '' ? Alert.alert('Please Enter Faculty Member') :
       // image === null ? Alert.alert('Please Add Image') : 
       setNext(false))
@@ -162,7 +159,15 @@ export default function AddFacultyScreen() {
         let modifiedArr = result.rows.map(function (item) {
           return item.doc;
         });
-        setDataForFaculty(modifiedArr)
+        let filteredData = modifiedArr.filter((item) => {
+          return item && (
+            new RegExp(searchTerm,'i').test(item.Name) ||
+            new RegExp(searchTerm,'i').test(item.CollegeAcronym) ||
+            new RegExp(searchTerm,'i').test(item.Department) ||
+            new RegExp(searchTerm,'i').test(item.Title)
+          )
+        })
+        setDataForFaculty(filteredData)
         console.log('modifiedArr')
         console.log(modifiedArr)
         console.log('modifiedArr')
@@ -170,6 +175,9 @@ export default function AddFacultyScreen() {
       }
   }
         
+      useEffect(() => {
+        facultydatas()
+      }, [searchTerm]);
 
 
         const renderItem = ({ item }) => {
@@ -178,7 +186,6 @@ export default function AddFacultyScreen() {
               <View style = {{borderBottomWidth: 1, width: '100%', flexDirection: 'row',  alignItems: 'center',}}>
                 <TouchableOpacity 
                   onPress={() => {
-                    setCollege(item.College)
                     setCollegeAcronym(item.CollegeAcronym)
                     setDepartment(item.Department)
                     setName(item.Name)
@@ -245,7 +252,8 @@ export default function AddFacultyScreen() {
                     
                             <Picker
                               title = 'Select Category'
-                              selectedValue={college}
+                              value = {department}
+                              selectedValue={department}
                               mode="dropdown"
                               style={{
                                 transform: [
@@ -254,27 +262,25 @@ export default function AddFacultyScreen() {
                               ],
                               width: '100%',
                               bottom: 0,
-                              color: '#9e9e9e',
+                              color: '#202020',
                     
                               }}
-                              onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
+                              onValueChange={(itemValue, itemIndex) => setDepartment(itemValue)}
                             >
-                                <Picker.Item label="Select" value="Select" />
-                                <Picker.Item label="AB English Language" value="CA" />
-                                <Picker.Item label="AB Economics" value="BU" />
-                                <Picker.Item label="Bachelor of Secondary Education" value="FA" />
-                                <Picker.Item label="Bachelor of Technology and Livelihood Education" value="CO" />
-                                <Picker.Item label="Bachelor of Technical and Vocational Teacher Education" value="OR" />
-                                <Picker.Item label="Bachelor of Public Administration" value="OT" />
-                                <Picker.Item label="BS Biology" value="OT" />
-                                <Picker.Item label="BS Computer Science" value="OT" />
-                                <Picker.Item label="BS Information Technology" value="OT" />
-                                <Picker.Item label="BS Hospitality Management" value="OT" />
-                                <Picker.Item label="BS Nutrition and Dietetics" value="OT" />
-                                <Picker.Item label="BS Social Work" value="OT" />
-                                <Picker.Item label="BS Business Administration major in Operations Mgt., Financial Mgt." value="OT" />
-                                <Picker.Item label="BS Mathematics" value="OT" />
-                                <Picker.Item label="Bachelor of Industrial Technology" value="OT" />
+                                <Picker.Item enabled = {false} label="Select" value="" />
+                                <Picker.Item label="Language Department" value="Language Department" />
+                                <Picker.Item label="Economics Department" value="Economics Department" />
+                                <Picker.Item label="Natural Science Department" value="Natural Science Department" />
+                                <Picker.Item label="Nutrition and Dietetics Department" value="Nutrition and Dietetics Department" />
+                                <Picker.Item label="Social Work Department" value="Social Work Department" />
+                                <Picker.Item label="Information Technology" value="Information Technology" />
+                                <Picker.Item label="Mathematics" value="Mathematics" />
+                                <Picker.Item label="BS Computer Science" value="BS Computer Science" />
+                                <Picker.Item label="Hospitality Management" value="Hospitality Management" />
+                                <Picker.Item label="Social Studies Education Department" value="Social Studies Education Departmen" />
+                                <Picker.Item label="Teacher Education Specialization Courses Department" value="Teacher Education Specialization Courses Department" />
+                                <Picker.Item label="Technology Department" value="Technology Department" />
+                                <Picker.Item label="Computer Science" value="Computer Science" />
                               </Picker>
                     
                             </View>
@@ -317,7 +323,19 @@ export default function AddFacultyScreen() {
                   </View>
                 }
                   <View style={styles.eventcontainer}>
-                      {dataforFaculty?  <FlatList
+                  <View style = {styles.TextInput}>
+                    <TextInput
+                        style  = {{width: '100%', fontSize: 17}}
+                        value={searchTerm} 
+                        onChange={(event) => {
+                          setSearchTerm(event.nativeEvent.text) }}
+                        placeholder = 'Search Faculty Members...'
+                      
+                    />
+                    
+                  </View>
+                      {dataforFaculty?  
+                      <FlatList
                        data={dataforFaculty}
                        renderItem={renderItem}
                        keyExtractor={item => item._id}

@@ -68,7 +68,7 @@ export default function UniversityMap ()  {
     const renderItem = ({item}) => {
 
       return (
-        <View style = {{flexDibrection: 'column', padding: 20, width: '100%', justifyContent: 'center'}}>
+        <View style = {{flexDibrection: 'column', paddingBottom: 20, width: '100%', justifyContent: 'center', height: 75,}}>
         <View style = {{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center'}}>
           <Pressable onPress={() => 
             {
@@ -80,13 +80,14 @@ export default function UniversityMap ()  {
             setCenter(item.Coordinates)
             console.log('what the fuck')
             }}
+            style = {{ width: '95%'}}
             >
          
             <Text style = {{fontSize: 25, color: '#303030', fontFamily: 'medium', }}>{item.BuildingName}</Text>  
             </Pressable>
         
         </View>
-        <Pressable  style = {{position: 'absolute', right: 0}}  
+        <Pressable  style = {{position: 'absolute', right: 0, justifyContent: 'center', alignItems: 'center',}}  
               onPress={() => {    
                 setBuildingData(item) , 
                 setCenterID(item.BuildingName) , 
@@ -176,7 +177,7 @@ export default function UniversityMap ()  {
                 </Pressable>
                 </View>
                   <FlatList
-                    style = {{padding: 20}}
+                    style = {{padding: 20, marginBottom: 10}}
                     data={buildings}
                     renderItem={renderItem}
                     keyExtractor={(item) => item._id}

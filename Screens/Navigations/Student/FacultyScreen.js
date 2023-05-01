@@ -92,7 +92,7 @@ import { setCourseData } from '../../../Redux/ClassSlice';
              
                 <Image  resizeMode='contain' style = {{width: 200, height: 200, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
             
-            <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 5, color: '#404040', width: '90%'}}>
+            <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 5, color: '#404040', width: '100%'}}>
               {item.College.toUpperCase()}
             </Text>
             </ImageBackground>
@@ -132,11 +132,11 @@ import { setCourseData } from '../../../Redux/ClassSlice';
        style={styles.searchButton}
        name='search'
        size={35}
-       color={'#fddf54'}
+       color={'#0f2ed6'}
        onPress={() => setShowSearch(!showSearch)}
      />}
         <FlatList
-          style = {{paddingTop: showSearch ? 5: 50}}
+          style = {{paddingTop: showSearch ? 50: 100}}
           data={newSearch}
           showsVerticalScrollIndicator = {false}
           numColumns = {3}

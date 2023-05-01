@@ -11,7 +11,7 @@ export default function AdminMainMenu() {
   return (
     <View style = {{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
         
-        <Text style = {{fontSize: 30, fontWeight: 'bold', color: 'black'}} >Static Data Configuration</Text>
+        <Text style = {{fontSize: 30, fontFamily: 'black', color: '#202020', textShadowColor: 'white', textShadowRadius: 5}} >Static Data Configuration</Text>
         <Text style = {{fontSize: 15, fontWeight: '300', color: 'black'}} >Add / Edit / Delete</Text>
         <View style = {{flexDirection: 'row'}}>
       <Box
@@ -70,16 +70,6 @@ export default function AdminMainMenu() {
       source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
       onPress = {() => navigation.navigate('AddCollege')}
       title = 'College'
-      style = {styles.Box}
-      titleStyle = {styles.title}
-
-      />
-
-      <Box
-      
-      source = {require('../../../Assets/Img/icons8-edit-property-96.png')}
-      onPress = {() => navigation.navigate('AddStudentScreen')}
-      title = 'Student Data'
       style = {styles.Box}
       titleStyle = {styles.title}
 

@@ -117,7 +117,7 @@ export const ClassScreen = () => {
 
         }} >
           <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion.png')} >
-        <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20}} source = {{uri:  item.Image || image }}/>
+        <Image resizeMode='contain' style = {{width: 150, height: 150, marginBottom: 20, borderRadius: 300}} source = {{uri:  item.Image || image }}/>
           <Text style = {styles.title}>
               {item.Course}
           </Text>
@@ -156,7 +156,7 @@ export const ClassScreen = () => {
       )}
       </ScrollView>
            </View>
-           <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 250}}>
+           <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 100}}>
          
            <View style = {{backgroundColor: '#0f2ed6', padding: 10, borderRadius: 20, position: 'absolute', top: 20, elevation: 10, shadowColor: '#000'}}>
           {showSearch ? null : <Text style = {{fontSize: 30, fontWeight: 'bold', color: '#fff'}}>UNIVERSITY COURSES</Text>}

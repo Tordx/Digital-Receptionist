@@ -220,7 +220,7 @@ export default function AddCollege() {
                   style = {{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', borderRightWidth: 1,}} 
                   resizeMode = 'cover'
                   source = {require('../../../Assets/Img/admin-image.png')}>
-                    <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE FACULTY MEMBERS</Text>
+                    <Text style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: '#0f2ed6'}}>CONFIGURE COLLEGE</Text>
                         <CustomInput
                           onChangeText={(value) => setCollege(value)}
                            value={College}
@@ -243,47 +243,6 @@ export default function AddCollege() {
                           placeholder='e.g. office'
                       
                         />
-                        {/* <View style = {{justifyContent: 'flex-start', margin: 5}}>
-                        <Text style = {{color: '#000', fontWeight: '500',fontSize: 20, textAlign: 'left', justifyContent: 'flex-start', alignSelf: 'flex-start', width: '50%'}}>Subject</Text>
-                            <View
-                              style = {styles.TextInput}> 
-                    
-                            <Picker
-                              title = 'Select Category'
-                              selectedValue={college}
-                              mode="dropdown"
-                              style={{
-                                transform: [
-                                { scaleX: 1 }, 
-                                { scaleY: 1 },
-                              ],
-                              width: '100%',
-                              bottom: 0,
-                              color: '#9e9e9e',
-                    
-                              }}
-                              onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
-                            >
-                                <Picker.Item label="Select" value="Select" />
-                                <Picker.Item label="AB English Language" value="CA" />
-                                <Picker.Item label="AB Economics" value="BU" />
-                                <Picker.Item label="Bachelor of Secondary Education" value="FA" />
-                                <Picker.Item label="Bachelor of Technology and Livelihood Education" value="CO" />
-                                <Picker.Item label="Bachelor of Technical and Vocational Teacher Education" value="OR" />
-                                <Picker.Item label="Bachelor of Public Administration" value="OT" />
-                                <Picker.Item label="BS Biology" value="OT" />
-                                <Picker.Item label="BS Computer Science" value="OT" />
-                                <Picker.Item label="BS Information Technology" value="OT" />
-                                <Picker.Item label="BS Hospitality Management" value="OT" />
-                                <Picker.Item label="BS Nutrition and Dietetics" value="OT" />
-                                <Picker.Item label="BS Social Work" value="OT" />
-                                <Picker.Item label="BS Business Administration major in Operations Mgt., Financial Mgt." value="OT" />
-                                <Picker.Item label="BS Mathematics" value="OT" />
-                                <Picker.Item label="Bachelor of Industrial Technology" value="OT" />
-                              </Picker>
-                    
-                            </View>
-                        </View> */}
                         <CustomInput
                           onChangeText={(value) => setBuilding(value)}
                           value={building}
