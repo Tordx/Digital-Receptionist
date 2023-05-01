@@ -66,7 +66,7 @@ export default function SuggestionsScreen() {
             status={ checked === 'Suggestion' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('Suggestion')}
           />
-          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020' }}>Suggestion</Text>
+          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020',textShadowRadius: 5, textShadowColor: '#fff' }}>Suggestion</Text>
         </View>
         <View style = {styles.ButtonContainer} >
           <RadioButton
@@ -75,7 +75,7 @@ export default function SuggestionsScreen() {
             status={ checked === 'Feedback' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('Feedback')}
           />
-          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020'}}>Feedback</Text>
+          <Text style = {{fontSize: 20,fontFamily: 'extrabold', color: '#202020',textShadowRadius: 5, textShadowColor: '#fff'}}>Feedback</Text>
         </View>
       </View>
       <View style = {{margin: 5}} >
@@ -126,7 +126,7 @@ export default function SuggestionsScreen() {
         </View>
 
        <View style = {{margin: 5}} >
-        <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020' }}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
+        <Text style = {{fontSize: 17,fontFamily: 'extrabold', color: '#202020',textShadowRadius: 5, textShadowColor: '#fff' }}>Specify Suggestion <Text style = {{fontStyle: 'italic'}}>(Optional)</Text></Text>
         <View style = {styles.TextInput} >
           <TextInput
             style = {{marginLeft: 20, fontSize: 17, fontFamily: 'regular', width: '100%', height: '100%'}}
