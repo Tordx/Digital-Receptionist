@@ -317,7 +317,7 @@ export default function AddFacultyScreen() {
                         <TouchableOpacity
                           onPress={setNewFaculty}
                           style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
-                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD EVENT</Text>
+                          <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD/EDIT FACULTY</Text>
                         </TouchableOpacity>
                         
                   </View>
