@@ -19,6 +19,7 @@ import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
+import { CustomInput } from './AddEventScreen';
 
 export default function AddSuperAdmin() {
 
@@ -31,14 +32,6 @@ export default function AddSuperAdmin() {
 
     const [adminid, setAdminId] = useState('');
     const [passcode, setPasscode] = useState('');
-    // const [facultypresident, setFacultyPresident] = useState('');
-    // const [facultyvicepresident, setFacultyVicePresident] = useState('');
-    // const [facultymembers, setFacultyMembers] = useState('');
-    // const [facultycode, setFacultyCode] = useState('');
-    // const [preptime, setPreptime] = useState('');
-    // const [deliveryfee, setDeliveryfee] = useState('');
-    // const [place, setPlace] = useState('');
-    // const [status , setStatus] = useState('')
 
     const AddNewSuperAdmin =  () => {
         
@@ -63,18 +56,7 @@ export default function AddSuperAdmin() {
             _id: id,
              SuperAdminId : adminid,
              SuperAdminPasscode : passcode,
-            //  FacultyPresident: facultypresident,
-            //  FacultyVicePresident : facultyvicepresident,
-            //  FacultyMembers : facultymembers,
-            //  place: place,
-            //  Price : price,
-            //  Preptime : preptime,
-            //  Deliveryfee : deliveryfee,
-            //  Status: status,
-            //  Image: Images
            }
-        //    console.log(Images)
-        //    console.log('Images')
         remoteDBSuperAdmin.put(NewSuperAdmin)
            .then((response) =>{
              Alert.alert('Your Super Admin is Added has been successfully added!')
@@ -100,156 +82,56 @@ export default function AddSuperAdmin() {
                     onPress = {() => navigation.navigate('AdminHomeScreen')}
                     name = 'arrow-back'
                     size = {50}
+                    color = '#202020'
                     style = {{flexDirection: 'row', top: 0, left: 0, position: 'absolute', marginVertical: 27, marginHorizontal: 20}}
         />
             <Text
-            style = {{fontSize: 20, fontWeight: 'bold', marginTop: 20, color: 'blue'}}> 
-            Add Super Admin </Text>
+            style = {{fontSize: 50, fontFamily: 'black', marginTop: 20, color: '#303030'}}> 
+            ADMINISTRATOR </Text>
         </View>
-        <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
         
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setAdminId(value)}
-                   value={adminid}
-                   label="Super Admin ID"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View>
-                <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setPasscode(value)}
-                value={passcode}
-                mode ='Outlined'
-                multiline
-                label='Passcode'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
+        <Text style = {{textAlign: 'center', color: '#202020', fontSize: 17, fontFamily: 'regular', marginTop: 20}} >access database to remove an admin</Text>   
+            <CustomInput
+              onChangeText={(value) => setAdminId(value)}
+              value={adminid}
+              title="Admin ID"
+              placeholder="johndoe1234567"
+                  
+            />
+            <CustomInput
+              onChangeText={(value) => setPasscode(value)}
+              value={passcode}
+              title="Passcode"
+              placeholder="passcode123456"
               
                 />
-                </View>
-                {/* <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyPresident(value)}
-                value={facultypresident}
-                mode ='Outlined'
-                multiline
-                label='Faculty President'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View> */}
-                {/* <View style = {styles.TextInput}>
-                  <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-                </View>
-                <TextInput
-                onChangeText={(value) => setFacultyVicePresident(value)}
-                value={facultyvicepresident}
-                mode ='Outlined'
-                multiline
-                label='Faculty Vice President'
-                theme={{    
-                    colors: {
-                      primary: '#225'
-                    }
-                  }}
-              
-                />
-                </View> */}
-                {/* <View style = {styles.TextInput}>
-              <View
-                    style = {{
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}
-        
-                    >
-            
-                </View>
-                <TextInput
-                    onChangeText={(value) => setFacultyMembers(value)}
-                   value={facultymembers}
-                   label="Faculty Members"
-                    theme={{    
-                        colors: {
-                          primary: '#225'
-                        }
-                      }}
-
-                />
-                </View> */}
-               
-             </ScrollView>  
-                <Pressable
-                        style = {{
-                            justifyContent: 'center',
-                            alignSelf: 'center',
-                            height: 50,
-                            width: 500,
-                            backgroundColor: '#225',
-                            borderRadius: 20,
-                            position: 'absolute',
-                            bottom: 100,
-                        }}
-                        onPress={AddNewSuperAdmin}
-                        >
-                            <Text
-                            
-                            style = {{color: 'white', fontWeight: '900', textAlign: 'center'}}
-                            >  ADD SUPER ADMIN </Text>
-              </Pressable>   
+             </ScrollView>
+             
+           
+             <TouchableOpacity
+                onPress={AddNewSuperAdmin}
+                style = {[styles.nextbutton, {bottom: 0, position: 'absolute'}]}>
+                <Text style = {{textAlign: 'center', color: '#fddf54', fontSize: 20, fontWeight: 'bold'}} >ADD AN ADMINISTRATOR</Text>
+             </TouchableOpacity> 
     </View>
 
   )
 }
 
 const styles = StyleSheet.create({
+
+    nextbutton: {
+              
+      backgroundColor: '#0f2ed6',
+      width: '100%',
+      height: 75,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRightWidth: 1,
+      bottom: 0,
+      position: 'absolute'
+    
+    },
     
     TextInput: {
 
@@ -265,7 +147,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: '#e2e2e2',
+        backgroundColor: '#fddf54',
     },
     
 })
