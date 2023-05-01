@@ -120,16 +120,6 @@ const FeedBack = async() => {
       )
   }
 
-//   <TouchableOpacity onPress={() => {setFullInforModal(true) , setFullInforModalData(item)}}>
-//   <View style = {styles.item}>
-//     <Text style = {styles.title}>
-//      Department:  {item.Department}{"          "}
-//      Name: {item.Name}{"          "}
-//      Message:  {item.Message}
-//     </Text>
-//   </View>
-// </TouchableOpacity>
-
       return (
   <View style={styles.container} >
   
@@ -223,6 +213,7 @@ const FeedBack = async() => {
         fontSize: 25,
         marginBottom: 15,
         color: '#202020',
+        fontFamily: 'regular'
       },
       container: {
 
