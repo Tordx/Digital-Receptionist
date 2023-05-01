@@ -22,8 +22,11 @@ export default function SuggestionsScreen() {
   const [value, setvalue] = useState('');
   const [name, setName] = useState('');
   const [specify, setSpecify] = useState('');
-  const log = new Date();
-  const timestamp = log.toISOString();
+
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
+    console.log(timestamp); // Output: "2022-05-03T07:25:20.000Z"
 
 
   const setNewSuggestion = async () => {

@@ -22,7 +22,26 @@ export default function AdminLoginScreen() {
     const log = new Date();
     const date  = log.toLocaleDateString();
     const time = log.toLocaleTimeString();
-    const timestamp = log.toISOString();
+
+    // const now = new Date();
+    // const isoDate = now.toISOString();
+    // const localDate = now.toLocaleString();
+    
+    // console.log(isoDate); // "2023-05-03T01:23:45.678Z"
+    // console.log(localDate); // "5/3/2023, 1:23:45 AM" (depending on your local timezone)
+
+    // Create a new date object with the current time in the local time zone
+const localDate = new Date();
+
+// Get the UTC time by subtracting the local time zone offset
+const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+
+// Convert the UTC date to ISO string
+const timestamp = utcDate.toISOString();
+
+console.log(timestamp); // Output: "2022-05-03T07:25:20.000Z"
+
+    
 
     const LoginData = async () => {
         // navigation.navigate('AdminHomeScreen')
