@@ -1,11 +1,12 @@
 //import liraries
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CloseButton } from '../../Components/Buttons';
 import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Maps from '../../Components/Maps';
 
 // create a component
@@ -51,11 +52,18 @@ export default function BuildingMapScreen ()  {
               />
               <View style={{ width: '50%', height: '100%' }} />
               <View style={{ width: '50%', height: '100%' }}>
-                  <View style={styles.header}>
+              <View style={[styles.header]}>
                       <View style={{ padding: 10 }}>
-                          <Text style={{ fontSize: 23, marginVertical: 3 }}>BuildingName - {buildingData.BuildingName}</Text>
-                          <Text style={{ fontSize: 23, marginVertical: 3 }}>BuildingLocation: - {buildingData.BuildingLocation}</Text>
+                          <Text style={{ fontSize: 25, marginVertical: 3, fontFamily: 'extrabold', color: '#404040' }}>{buildingData.BuildingName}</Text>
                       </View>
+                      
+                      <Pressable 
+                        style = {{position: 'absolute', right: 20, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#101010'}}>
+                        <FontAwesome
+                        name = 'close' size = {20} color={'#101010'}
+                        />
+                      </Pressable>
+                   
                   </View>
                   <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
@@ -88,13 +96,20 @@ export default function BuildingMapScreen ()  {
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>THIRD FLOOR</Text>
                           <FlatList
                               showsHorizontalScrollIndicator = {false}
-                              horizontal
+                              horizontal    
                               data={filterRooms("3rd floor")}
                               renderItem={renderItem}
                               keyExtractor={(item) => item.id}
                           />
                       </View>
                   </View>
+                  <View style = {[styles.header, {height: '30%'}]}>
+                      <Pressable style = {{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+                        <Image resizeMode="cover"
+                        style={{ width: '95%', height: '90%', borderRadius: 20, padding: 10, marginLeft: 10}}
+                        source={{ uri: buildingData.BuildingPicture }} />
+                      </Pressable>
+                      </View>
               </View>
           </View>
           <CloseButton
