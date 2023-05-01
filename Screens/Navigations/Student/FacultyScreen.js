@@ -90,9 +90,9 @@ import { setCourseData } from '../../../Redux/ClassSlice';
           }} >
             <ImageBackground style = {{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',}} resizeMode='cover' source={require('../../../Assets/Img/background-lion1.png')} >
              
-                <Image  resizeMode='contain' style = {{width: 150, height: 150, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
+                <Image  resizeMode='contain' style = {{width: 200, height: 200, borderRadius: 500}} source = {{uri:  item.Image || image }}/>
             
-            <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 30, color: '#404040', width: '90%'}}>
+            <Text style = {{fontSize: 18, fontFamily: 'extrabold', justifyContent: 'center', textAlign: 'center', marginTop: 5, color: '#404040', width: '90%'}}>
               {item.College.toUpperCase()}
             </Text>
             </ImageBackground>

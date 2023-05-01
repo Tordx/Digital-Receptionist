@@ -104,7 +104,7 @@ import { setCourseData } from '../../../Redux/ClassSlice';
             <View style = {styles.contentcontainer}>
               
               
-            <Image  resizeMode='contain' style = {{width: 250, height: 250, borderRadius: 500, marginTop: 30, marginBottom: 20  }} source = {{uri:  facultyDatas.Image }}/>
+            <Image  resizeMode='contain' style = {{width: 300, height: 300, borderRadius: 500, marginTop: 30  }} source = {{uri:  facultyDatas.Image }}/>
               <View style = {{backgroundColor: '#fddf54', padding: 10, borderRadius: 5, justifyContent: 'center', alignItems: 'center', borderRadius: 30}}>
               <Text style = {{fontSize: 25, fontFamily: 'extrabold', color: '#404040',paddingHorizontal: 20,paddingTop: 10}}>{facultyDatas.College.toUpperCase()}</Text>
               <Text style = {{fontSize: 25, color: '#404040', marginTop: 5, fontFamily: 'regular'}}>{facultyDatas.Dean}</Text>
