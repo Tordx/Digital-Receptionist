@@ -26,7 +26,7 @@ import storage from '@react-native-firebase/storage';
 import { useDispatch } from 'react-redux';
 import { setImages } from '../../../Redux/TaskReducer';;
 
-const CustomInput = (props) => {
+export const CustomInput = (props) => {
 
   return (
   <View style = {{marginTop: 10, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
