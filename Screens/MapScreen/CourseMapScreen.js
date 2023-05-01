@@ -1,13 +1,14 @@
 //import liraries
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text,  StatusBar, FlatList, RefreshControl, ScrollView, StyleSheet, Image, Modal, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { CloseButton } from '../../Components/Buttons';
 import { remoteDBCourses, remoteDBfacultyMember } from '../../Database/pouchDb';
 import {  remoteDBOrg } from '../../Database/pouchDb';
 import Maps from '../../Components/Maps';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // create a component
 export default function CourseMapScreen ()  {
@@ -25,6 +26,7 @@ export default function CourseMapScreen ()  {
     const [orgdetail, setOrgDetail] = useState('');
     const [memberdetails, setMemberDetail] = useState();
     const [memberRefresh, setMemberRefresh] = useState(false);
+    const [modal, setModal] = useState(false)
     
       const OrgList = async() => {
     
@@ -109,7 +111,7 @@ export default function CourseMapScreen ()  {
             style = {{width: 70, height: 70}}
             resizeMode = 'contain'
           />
-          <Text style={{fontSize: 20 , padding: 20}}>President: {item.President} - {item.ContactNumber}</Text>
+          {/* <Text style={{fontSize: 20 , padding: 20}}>President: {item.President} - {item.ContactNumber}</Text> //Must be inside modal when user taps */}
       </View>
       )
 
@@ -143,11 +145,13 @@ export default function CourseMapScreen ()  {
                     <Text style = {{ fontSize: 23, marginVertical: 3, color: '#303030', fontFamily: 'regular'}}>Chairperson - {courseData.ChairPerson}</Text>
                 
                   </View>
-                  <View style = {{position: 'absolute', right: 20, bottom: 10, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#0f2ed6'}}>
+                  <Pressable 
+                  onPress={() => setModal(true)}
+                  style = {{position: 'absolute', right: 20, bottom: 10, justifyContent: 'center',alignItems: 'center', width: 35, height: 35, borderWidth: 4, alignSelf: 'center', borderRadius: 500, borderColor: '#0f2ed6'}}>
                   <FontAwesome5
                   name = 'info' size = {20} color={'#0f2ed6'}
                   />
-                  </View>
+                  </Pressable>
         </View>
               </View>
               <View style = {[styles.header, {height: 75}]}>
@@ -179,7 +183,23 @@ export default function CourseMapScreen ()  {
               </View>
             </View>
           </View>
-          
+        <Modal
+          visible = {modal}
+          transparent
+          statusBarTranslucent
+          animationType='slide'
+        >
+          <View style = {{width: '100%', height: '100%', backgroundColor: '#00000090', justifyContent: 'center', alignItems: 'center',}} >
+            <View style = {{backgroundColor: '#fff', borderRadius: 30, width: '80%', height: '80%',justifyContent: 'center', alignItems: 'center',}}>
+            <Text style = {{width: '90%', fontSize: 20, textAlign: 'center', fontFamily: 'regular', color: '#202020'}} >{courseData?.information}</Text>
+            <Pressable 
+              onPress={() => setModal(false)}
+              style = {{position: 'absolute', top: 10, right: 10}}>
+              <Icon name = 'keyboard-arrow-down' size={50} color = '#202020' />
+            </Pressable>
+            </View>
+          </View>
+        </Modal>
         <CloseButton
         onPress = {() => navigation.goBack('ClassScreen')}     
         name = 'arrow-back'
