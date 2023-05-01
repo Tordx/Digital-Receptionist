@@ -56,7 +56,7 @@ export default function EventScreen() {
   
   useEffect(() => {
     EventData()
-  }, [event]);
+  }, []);
 
 
     const renderItem = ({item}) => {
