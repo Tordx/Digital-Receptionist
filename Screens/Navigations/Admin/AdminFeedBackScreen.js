@@ -213,6 +213,7 @@ const FeedBack = async() => {
         fontSize: 25,
         marginBottom: 15,
         color: '#202020',
+        fontFamily: 'regular'
       },
       container: {
 
