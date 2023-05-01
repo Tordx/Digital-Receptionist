@@ -94,11 +94,11 @@ export default function EventScreen() {
               <ImageBackground source={require('../../../Assets/Img/announcement-event-image.png')} resizeMode='cover' style = {{width: '100%', height: '100%'}}>
               <View style = {{padding: 20, justifyContent: 'flex-start', height: '100%'}}>
               <Text style = {{color: '#303030', fontSize: 35, fontFamily: 'black'}}>{data.EventName}</Text>
-              <View style = {{flexDirection: 'row'}}>
-                <Text style = {{color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
-                <Text style = {{color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data.EventWhere}</Text>
+              <View style = {{flexDirection: 'row', marginTop: 5}}>
+                <Text style = {{marginRight: 5, color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data && data.EventWhen.toString().toUpperCase()}</Text>
+                <Text style = {{color: '#303030', fontSize: 15, fontFamily: 'extrabold', padding: 10, backgroundColor: '#fddf54', color: '#303030', width: '40%', borderRadius: 30, textAlign: 'center'}}>{data && data.EventWhere.toUpperCase()}</Text>
               </View>
-              <Text style = {{color: '#303030', fontSize: 25, fontFamily: 'medium', textAlign: 'justify', marginTop: 50}}>{data.EventDescription}</Text>
+              <Text style = {{color: '#101010', fontSize: 25, fontFamily: 'extrabold', textAlign: 'justify', marginTop: 50, textShadowRadius: 5, textShadowColor: '#fff'}}>{data.EventDescription}</Text>
               </View>
               </ImageBackground>
           </View>
