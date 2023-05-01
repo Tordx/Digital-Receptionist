@@ -1,4 +1,4 @@
-import React , {useState , useEffect , useCallback} from 'react';
+import React , {useState , useEffect, useCallback} from 'react';
 import { 
     
     View, 
@@ -20,18 +20,18 @@ import { Button } from 'react-native-paper';
 import { remoteDBReportBugReport } from '../../../Database/pouchDb';
 import { Calendar } from 'react-native-calendars';
 
-  export const AdminBugReportScreen = () => {
+  export const AdminBugScreen = () => {
 
     useEffect(() => {
 
-        BugReport()
+      Bug()
 
     }, []);
 
     
     const navigation = useNavigation();
 
-    const [bugreport,setBugReport] = useState([])
+    const [bug,setBug] = useState([])
     const [refreshing, setRefreshing] = useState(false);
     const [adminlogin,setAdminLogin] = useState([])
     const [searchQuery, setSearchQuery] = useState('');
@@ -41,7 +41,7 @@ import { Calendar } from 'react-native-calendars';
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        BugReport()
+        Bug()
         setRefreshing(false);
       }, []);
 
@@ -68,7 +68,7 @@ import { Calendar } from 'react-native-calendars';
         
         if (filteredData) {
           const newdata = filteredData.filter(item => item.timestamp?.startsWith(data));
-          setBugReport(newdata);
+          setBug(newdata);
           handleHideCalendar()
         }
       } catch (error) {
@@ -77,7 +77,7 @@ import { Calendar } from 'react-native-calendars';
     };
     
 
-const BugReport = async() => {
+const Bug = async() => {
     
   var result = await remoteDBReportBugReport.allDocs({
     include_docs: true,
@@ -94,7 +94,7 @@ const BugReport = async() => {
         let newFilterData = filteredData.map(item => {
             return item
         })
-        setBugReport(newFilterData)
+        setBug(newFilterData)
     
     }
 }  
@@ -104,45 +104,64 @@ const BugReport = async() => {
     const renderItem = ({ item }) => {
 
       return(
-        <TouchableOpacity onPress={() => {setFullInforModal(true) , setFullInforModalData(item)}}>
-          <View style = {styles.item}>
+        <TouchableOpacity style = {styles.item} onPress={() =>{ setFullInforModal(true); setFullInforModalData(item)}}>
+            <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
             <Text style = {styles.title}>
-             Department:  {item.Department}{"          "}
-             Name: {item.Name}{"          "}
-             Message:  {item.Message}
+              {item.Department}
             </Text>
-          </View>
-       </TouchableOpacity>
+            <Text style = {styles.title}>
+              {item.Name}
+            </Text>
+            <Text style = {styles.title}>
+            {item.Message.length > 10 ? item.Message.slice(0,10) + "..." : item.Message}
+            </Text>
+            </View>
+          </TouchableOpacity>
       )
   }
 
-      return (
-  <ImageBackground style={styles.container} source={require('../../../Assets/Img/Background_image.png')}>
-  
-    <View>
-      {showCalendar && (
-        <>
-           <Calendar onDayPress={handleDateSelect} />
-          <TouchableOpacity onPress={handleHideCalendar} style={{ flexDirection: 'row', alignItems: 'center',justifyContent: 'center', backgroundColor: 'red', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 }}>
-        <Icon name="close" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
-        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Close</Text>
-      </TouchableOpacity>
-        </>
-      )}
-    </View>
-    <ScrollView
-     >
-      <View style={[styles.status, { backgroundColor: 'grey' }]}>
-        <Text style={styles.text}>BugReport</Text>
-      </View>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        data={bugreport.filter((item) => item.Department.includes(searchQuery))}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-      />
+//   <TouchableOpacity onPress={() => {setFullInforModal(true) , setFullInforModalData(item)}}>
+//   <View style = {styles.item}>
+//     <Text style = {styles.title}>
+//      Department:  {item.Department}{"          "}
+//      Name: {item.Name}{"          "}
+//      Message:  {item.Message}
+//     </Text>
+//   </View>
+// </TouchableOpacity>
 
-    </ScrollView>
+      return (
+  <View style={styles.container} >
+  
+  <View style = {{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', paddingTop: 100}}>
+      
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0, marginBottom: 50}]}>
+              BUG
+            </Text>
+            <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+              DEPARTMENT
+            </Text>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+             FULL NAME
+            </Text>
+            <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
+              MESSAGE
+            </Text>
+            </View>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          data={bug.filter((item) => item.Department.includes(searchQuery))}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+      </View>
     <View style={styles.TextInput}>
     <TouchableOpacity onPress={handleShowCalendar} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#007AFF', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 , width: 170 }}>
         <Icon name="calendar-today" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
@@ -150,30 +169,48 @@ const BugReport = async() => {
       </TouchableOpacity>
       <Icon name="search" size={30} style={{ margin: 10 }} />
       <TextInput
-        placeholder="Search Classes"
+        placeholder="Search bug  "
         style={{ fontSize: 20 }}
         onChangeText={(query) => setSearchQuery(query)}
       />
 
     </View>
+    
+    {showCalendar && (
+          <View style = {{width: '100%', justifyContent: 'center', alignContent: 'center', position: 'absolute', backgroundColor: '#00000088', height: '100%'}}>
+            <Calendar onDayPress={handleDateSelect} style = {{width: '95%', alignSelf: 'center', borderRadius: 30,}} />
+            <TouchableOpacity onPress={handleHideCalendar} style={{ alignSelf: 'center', alignItems: 'center',justifyContent: 'center', backgroundColor: 'red', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, width: '95%' }}>
+          <Icon name="close" size={40} color="#FFFFFF" style={{ marginRight: 5 }} />
+          <Text style={{ color: '#FFFFFF', fontSize: 18 }}>CLOSE</Text>
+        </TouchableOpacity>
+          </View>
+        )}
     <CloseButton 
-    onPress={() => navigation.navigate('AdminHomeScreen')} 
+    onPress={() => navigation.navigate('AdminReports')} 
     name="arrow-back" size={50}
      style={{ flexDirection: 'row', top: 0, left: 0, position: 'absolute', margin: 20 }} />
-      <Modal visible={fullinfomodal} animationType="slide">
-        <View>
-          {/* Add your modal content here */}
-          <Text style={styles.modalText}>Concern:  {fullinfomodaldata.ReportBugReport}</Text>
-          <Text style={styles.modalText}>Department:  {fullinfomodaldata.Department}</Text>
-          <Text style={styles.modalText}>Name:  {fullinfomodaldata.Name}</Text>
-          <Text style={styles.modalText}>SpecifyComplaint:  {fullinfomodaldata.SpecifyComplaint}</Text>
-          <Text style={styles.modalText}>Message:  {fullinfomodaldata.Message}</Text>
-          <TouchableOpacity onPress={() => { setFullInforModal(false);  setFullInforModalData('')}} style={{backgroundColor: 'red' , justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 30}}>Close Modal</Text>
+       <Modal 
+       statusBarTranslucent
+       transparent
+       visible={fullinfomodal} 
+       animationType="slide">
+        <View style = {{width: '100%', height: '100%', backgroundColor: '#00000029', justifyContent: 'center', alignItems: 'center',}}>
+          <View style = {{width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 30}}>
+            <View style = {{padding: 50}}>
+              <Text style={styles.modalText}>Concern:  {fullinfomodaldata.ReportBugReport}</Text>
+              <Text style={styles.modalText}>Department:  {fullinfomodaldata.Department}</Text>
+              <Text style={styles.modalText}>Name:  {fullinfomodaldata.Name}</Text>
+              <Text style={styles.modalText}>SpecifyComplaint:  {fullinfomodaldata.SpecifySuggestion}</Text>
+              <Text style={styles.modalText}>Message:  {fullinfomodaldata.Message}</Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => { setFullInforModal(false);  setFullInforModalData('')}} style = {{position: 'absolute', bottom: 20}}>
+          <Text style = {{fontSize: 16, fontFamily: 'extrabold', color: 'red'}}>CLOSE</Text>
           </TouchableOpacity>
         </View>
       </Modal>
-  </ImageBackground>
+      
+  </View>
 );
 
     
@@ -183,50 +220,47 @@ const BugReport = async() => {
   const styles = StyleSheet.create({
 
     modalText: {
-        fontSize: 30,
-        marginBottom: 20
+        fontSize: 25,
+        marginBottom: 15,
+        color: '#202020',
       },
-      
-    container: {
+      container: {
 
-        flex: 1,
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
+        alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: '#f2f3f7',
-        paddingTop: 100,
-        paddingBottom: 10,
+        backgroundColor: '#fddf54',
         
     },
 
+    
     item: {
 
-        justifyContent: 'center',
-        alignself: 'center',
-        backgroundColor: '#fff',
-        padding: 30,
-        width: '100%',
-        height: 100,
-        borderRadius: 10,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        shadowColor: "#000",
-        shadowOffset: {
-	        width: 1,
-	        height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.41,
-        elevation: 5,
+      justifyContent: 'center',
+      alignself: 'center',
+      alignItems: 'center',
+      backgroundColor: '#00000019',
+      flexDirection: 'row',
+      borderBottomWidth: 2,
+      width: '100%',
+      height: 100,
 
-    },
+  },
 
-    title: {
 
-      fontSize: 32,
+  title: {
 
-    },
+    fontSize: 32,
+    marginHorizontal: 20,
+    fontFamily: 'medium',
+    color: '#202020',
+
+  },
 
     text: {
+
       fontSize: 25,
       fontWeight: '500',
       left: 0,
@@ -269,4 +303,4 @@ const BugReport = async() => {
 
   });
 
-  export default AdminBugReportScreen;
+  export default AdminBugScreen;

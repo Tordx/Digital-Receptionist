@@ -22,7 +22,7 @@ export default function AdminLoginScreen() {
     const log = new Date();
     const date  = log.toLocaleDateString();
     const time = log.toLocaleTimeString();
-    const timestamp = new Date().toISOString();
+    const timestamp = log.toISOString();
 
     const LoginData = async () => {
         // navigation.navigate('AdminHomeScreen')

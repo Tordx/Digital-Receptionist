@@ -15,8 +15,10 @@ export default function SuggestionsScreen() {
   const [value, setvalue] = useState('');
   const [name, setName] = useState('');
   const [specify, setSpecify] = useState('');
+   const log = new Date();
 
-  const timestamp = new Date().toISOString();
+    const timestamp = log.toISOString();
+
 
   const setNewReport = async () => {
     const id = uuid.v4();

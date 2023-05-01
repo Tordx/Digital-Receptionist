@@ -22,7 +22,9 @@ export default function SuggestionsScreen() {
   const [value, setvalue] = useState('');
   const [name, setName] = useState('');
   const [specify, setSpecify] = useState('');
-  const timestamp = new Date().toISOString();
+  const log = new Date();
+  const timestamp = log.toISOString();
+
 
   const setNewSuggestion = async () => {
     

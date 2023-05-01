@@ -113,7 +113,7 @@ const FeedBack = async() => {
               {item.Name}
             </Text>
             <Text style = {styles.title}>
-              {item.Message}
+              {item.Message.length > 10 ? item.Message.slice(0,10) + "..." : item.Message}
             </Text>
             </View>
           </TouchableOpacity>
