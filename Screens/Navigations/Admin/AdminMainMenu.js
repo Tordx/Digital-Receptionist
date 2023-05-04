@@ -105,8 +105,8 @@ export default function AdminMainMenu() {
       <Box
       
       source = {require('../../../Assets/Img/icons8-conference-96.png')}
-      onPress = {() => console.log('General Info')}
-      title = 'Developers'
+      onPress = {() => navigation.navigate('AddAdminCitizenChart')}
+      title = 'Citizen Chart'
       style = {styles.Box}
       titleStyle = {styles.title}
 

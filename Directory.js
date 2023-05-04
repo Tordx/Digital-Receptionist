@@ -36,6 +36,7 @@ import AdminSuggestionScreen from './Screens/Navigations/Admin/AdminSuggestionSc
 import AdminReportScreen from './Screens/Navigations/Admin/AdminReportScreen';
 import AdminFeedBackScreen from './Screens/Navigations/Admin/AdminFeedBackScreen';
 import AdminBugReportScreen from './Screens/Navigations/Admin/AdminBugReportScreen';
+import AddAdminCitizenChart from './Screens/Navigations/Admin/AddAdminCitizenChart';
 // Guest StackScreen
 import Camera from './Components/Camera';
 import Maps from './Components/Maps';
@@ -88,6 +89,7 @@ export default function Directory() {
                 <Stack.Screen name = 'AdminReportScreen' component={AdminReportScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AdminFeedBackScreen' component={AdminFeedBackScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'AdminBugReportScreen' component={AdminBugReportScreen} options = {{ headerShown: false }} />
+                <Stack.Screen name = 'AddAdminCitizenChart' component={AddAdminCitizenChart} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'LogBookScreen' component={LogBookScreen} options = {{ headerShown: false }} />
                 <Stack.Screen name = 'Camera' component={Camera} options = {{ headerShown: false }}/>
                 <Stack.Screen name = 'TCScreen' component={TCScreen} options= {{headerShown: false}} />
