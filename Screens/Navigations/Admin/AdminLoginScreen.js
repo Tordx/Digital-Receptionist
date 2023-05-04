@@ -7,6 +7,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import { remoteDBSuperAdmin , remoteDBLogBook , SyncLogBook } from '../../../Database/pouchDb'
 import { useDispatch } from 'react-redux'
 import { setStudentInfo } from '../../../Redux/TaskReducer'
+import { setAdminLoginInfo } from '../../../Redux/AdminSlice'
 import uuid from 'react-native-uuid';
 
 export default function AdminLoginScreen() {
@@ -69,6 +70,7 @@ export default function AdminLoginScreen() {
                     remoteDBLogBook.put(Newlog)
                     .then((response) =>{
                       console.log(response)
+                      dispatch(setAdminLoginInfo(Newlog))
                     })
                     .catch(err=>console.log(err))
                     

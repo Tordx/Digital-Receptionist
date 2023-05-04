@@ -17,7 +17,7 @@ import {
 import React , {useState , useEffect , useMemo} from 'react'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {localDBEvent , remoteDBCitizenChart, SyncEvent} from '../../../Database/pouchDb'
+import {localDBEvent , remoteDBCitizenChart, SyncEvent , remoteAdminActivities} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -25,6 +25,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import { useDispatch } from 'react-redux';
 import { setImages } from '../../../Redux/TaskReducer';;
+import { useSelector } from 'react-redux';
 
 export const CustomInput = (props) => {
 
@@ -53,6 +54,7 @@ export default function AddAdminCitizenChart() {
     eventdatas()
   }, [dataforEvent]);
   
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const navigation = useNavigation('');
     const dispatch = useDispatch()
 
@@ -72,6 +74,16 @@ export default function AddAdminCitizenChart() {
     const [inactive, setInactive] = useState('Inactive');
     const [deleteState, setDeleteState] = useState(false);
     const id = uuid.v4()
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
+
+    console.log('====================================adminLoginInfo');
+    console.log(adminLoginInfo);
+    console.log('====================================adminLoginInfo');
 
     const AddNewEvent =  () => {
         
@@ -137,8 +149,22 @@ export default function AddAdminCitizenChart() {
             Image : url,
             Type: "Text"
           };
+
+          const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Added or Edit Citizen Chart Data",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
+
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+            })
     
-          remoteDBCitizenChart
+         await remoteDBCitizenChart
             .put(newEvent)
             .then((response) => {
               navigation.navigate('AdminHomeScreen');
@@ -152,7 +178,7 @@ export default function AddAdminCitizenChart() {
       }
     };
 
-      const deleteData = () => {
+      const deleteData = async() => {
 
         try {
           const newEvent = {
@@ -166,8 +192,25 @@ export default function AddAdminCitizenChart() {
             Image : image,
             Type: 'Text'
           };
+
+          const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Citizen Chart Data Deleted",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
+
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+                console.log('====================================responseadminActivityadded');
+                console.log(response);
+                console.log('====================================responseadminActivityadded');
+            })
     
-          remoteDBCitizenChart
+         await remoteDBCitizenChart
             .remove(newEvent)
             .then((response) => {
               navigation.navigate('AdminHomeScreen');

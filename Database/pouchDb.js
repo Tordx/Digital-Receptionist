@@ -278,3 +278,22 @@ export const remoteDBCitizenChart = new PouchDB('https://root:root@database.vida
     console.log(err);
   });
 }
+
+export const localAdminActivities = new PouchDB('adminactivities', {adapter: 'asyncstorage'})
+export const remoteAdminActivities = new PouchDB('https://root:root@database.vidarsson.online/dhd_adminactivities')
+
+ export const SyncAdminActivities = () => {  
+  localAdminActivities.sync(remoteAdminActivities, {
+    live: true, 
+    retry: true
+  }).on('change', function () {
+   console.log('start sync')
+
+   localAdminActivities.allDocs({include_docs:true}).then(function(doc){
+      console.log(doc)
+      console.log('done sync')
+  })
+  }).on('error', function (err) {
+    console.log(err);
+  });
+}

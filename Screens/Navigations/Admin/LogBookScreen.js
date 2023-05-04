@@ -8,7 +8,8 @@ import {
     TextInput,
     ImageBackground,
     TouchableOpacity,
-    Image
+    Image,
+    Modal
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,6 +19,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Button } from 'react-native-paper';
 import { remoteDBLogBook } from '../../../Database/pouchDb';
 import { Calendar } from 'react-native-calendars';
+import { remoteAdminActivities } from '../../../Database/pouchDb';
+import { useSelector } from 'react-redux';
 
   export const LogBookScreen = () => {
 
@@ -27,9 +30,14 @@ import { Calendar } from 'react-native-calendars';
 
     }, []);
 
+    const navigation = useNavigation();
+
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const [adminlogin,setAdminLogin] = useState([])
     const [searchQuery, setSearchQuery] = useState('');
     const [showCalendar, setShowCalendar] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [fullinfo, setFullinfo] = useState([]);
 
     const handleShowCalendar = () => {
       setShowCalendar(true);
@@ -38,6 +46,46 @@ import { Calendar } from 'react-native-calendars';
     const handleHideCalendar = () => {
       setShowCalendar(false);
     }
+
+    const handlePress = async(item) => {
+
+      console.log('====================================clcikdata');
+      console.log(item._id);
+      console.log('====================================clcikdata');
+      const itemdata = item._id
+
+      // console.log('====================================adminLoginInfo');
+      // console.log(adminLoginInfo._id);
+      // console.log('====================================adminLoginInfo');
+
+      var result = await remoteAdminActivities.allDocs({
+        include_docs: true,
+        attachments: true
+      });
+      if(result.rows){
+          let modifiedArr = result.rows.map(function(item){
+          return item.doc
+      });
+      let filteredData = modifiedArr.filter(item => {
+          return item.idofadmin === itemdata;
+        });
+        if(filteredData) {
+            let newFilterData = filteredData.map(item => {
+                return item
+            })
+            setFullinfo(newFilterData)
+           console.log('====================================newFilterData');
+           console.log(newFilterData);
+           console.log('====================================newFilterData');
+        }
+    }  
+      setModalVisible(true);
+
+    };
+  
+    const handleCloseModal = () => {
+      setModalVisible(false);
+    };
   
 
 const handleDateSelect = async (date) => {
@@ -84,12 +132,31 @@ const AdminLogin = async () => {
   }
 };
 
-    const navigation = useNavigation();
+
+
+    const renderItemfullitem = ({ item }) => {
+
+      return(
+            <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
+            <Text style = {styles.title}>
+              {item.Activity}
+            </Text>
+            <Text style = {styles.title}>
+              {item.Date}
+            </Text>
+            <Text style = {styles.title}>
+              {item.Time}
+            </Text>
+            </View>
+      )
+  }
 
     const renderItem = ({ item }) => {
 
       return(
-          <TouchableOpacity style = {styles.item}>
+          <TouchableOpacity style = {styles.item} onPress={() => {
+            handlePress(item);
+          }}>
             <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
             <Text style = {styles.title}>
               {item.SuperAdminId}
@@ -107,9 +174,22 @@ const AdminLogin = async () => {
 
       return (
   <View style={styles.container} >
+
+    <Modal visible={modalVisible} onRequestClose={handleCloseModal}>
+            <View>
+              <Text style={styles.title1}>
+                ACTIVITIES
+              </Text>
+             <FlatList
+             data={fullinfo}
+             renderItem={renderItemfullitem}
+             keyExtractor={(item) => item._id}
+             />
+            </View>
+          </Modal>
     
       <View style = {{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', paddingTop: 100}}>
-      <TouchableOpacity style = {[styles.item, {backgroundColor: '#00000000', textShadowRadius: 0,}]}>
+    
             <View style = {{flexDirection: 'row', width: '100%', justifyContent: 'space-between',}}>
             <Text style = {[styles.title, {fontFamily: 'extrabold', textShadowRadius: 0,}]}>
               ADMIN NAME
@@ -121,7 +201,7 @@ const AdminLogin = async () => {
               LOGIN DATE
             </Text>
             </View>
-          </TouchableOpacity>
+    
         <FlatList
           showsHorizontalScrollIndicator={false}
           data={adminlogin.filter((item) => item.SuperAdminId.includes(searchQuery))}
@@ -183,6 +263,17 @@ const AdminLogin = async () => {
     title: {
 
       fontSize: 32,
+      marginHorizontal: 20,
+      fontFamily: 'medium',
+      color: '#202020',
+      textShadowColor: 'white',
+      textShadowRadius: 5,
+
+    },
+
+    title1: {
+
+      fontSize: 40,
       marginHorizontal: 20,
       fontFamily: 'medium',
       color: '#202020',

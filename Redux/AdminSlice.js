@@ -5,7 +5,9 @@
    name: 'adminmodal',
    initialState: {
     isOpen: false,
-    adminData: []
+    adminData: [],
+    adminLoginInfo: []
+
    },
    reducers: {
       openAdminModal: (state , action) => {
@@ -19,11 +21,17 @@
         console.log(action)
         console.log('action')
       },
+      setAdminLoginInfo: (state , action ) => {
+        state.adminLoginInfo = action.payload
+        console.log('adminlogininfo')
+        console.log(action)
+        console.log('adminlogininfo')
+      },
  
    }
  })
  
  // Action creators are generated for each case reducer function
- export const {openAdminModal , closeAdminModal , setAdminData} = AdminSlice.actions
+ export const {openAdminModal , closeAdminModal , setAdminData , setAdminLoginInfo} = AdminSlice.actions
  
  export default AdminSlice.reducer

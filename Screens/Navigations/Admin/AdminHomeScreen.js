@@ -4,10 +4,13 @@ import AdminMainMenu from './AdminMainMenu'
 import { useNavigation } from '@react-navigation/native'
 import { CloseButton } from '../../../Components/Buttons'
 import { Version } from '../../../Assets/constants/constants'
+import { useDispatch } from 'react-redux'
+import { setAdminLoginInfo } from '../../../Redux/AdminSlice'
 
 export default function AdminHomeScreen() {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch()
 
   return (
     <View style = {{flex: 1, backgroundColor: '#fddf54',justifyContent: 'center', alignItems: 'center'}}>
@@ -22,7 +25,11 @@ export default function AdminHomeScreen() {
         size = {25}
         color = 'black'
         style = {{position: 'absolute', left: 0, top: 0, margin: 20, flexDirection: 'row', justifyContent: 'center' }}
-        onPress = {() => navigation.goBack('InitialRoutingScreen')}
+        onPress={() => {
+          navigation.goBack('InitialRoutingScreen');
+          dispatch(setAdminLoginInfo(''));
+        }}
+        
         title = 'logout'
 
         />
