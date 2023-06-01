@@ -13,7 +13,7 @@ import {
   Modal
 } from 'react-native';
 import React , {useState , useEffect , useMemo} from 'react'
-import {localDBBuilding , SyncBuilding , remoteDBBuilding} from '../../../Database/pouchDb'
+import {localDBBuilding , SyncBuilding , remoteDBBuilding , remoteAdminActivities} from '../../../Database/pouchDb'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -25,6 +25,7 @@ import storage from '@react-native-firebase/storage';
 import { Picker } from '@react-native-picker/picker';
 // import MapboxGL from '@rnmapbox/maps';
 import Maps from '../../../Components/Maps';
+import { useSelector } from 'react-redux';
 
 const CustomInput = (props) => {
 
@@ -54,7 +55,7 @@ export default function AddBuildingScreen() {
   }, []);
 
   // useMemo(() => uploadImage(image), [image]);
-
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const id = uuid.v4();
     const navigation = useNavigation('');
     const dispatch = useDispatch()
@@ -72,6 +73,12 @@ export default function AddBuildingScreen() {
     const [defaultcoord, setDefaultCoord] = useState([119.97919707716136, 16.155291199328147]);
     const [inputs, setInputs] = useState([""]); // initial state with one input
     const [modalVisible, setModalVisible] = useState(true);
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
 
     const handleAddInput = () => {
       const newInput = { id: id, Room: room , Floor: selectedFloor }; // create new input object
@@ -184,13 +191,26 @@ export default function AddBuildingScreen() {
           Coordinates: defaultcoord,
           Rooms: inputs,
         };
-        remoteDBBuilding
+
+        const adminactivity = {
+          _id: id ,
+          idofadmin : adminLoginInfo._id,
+          Activity: "Added or Edit Building Data",
+          timestamp : timestamp,
+          Time: time,
+          Date: date
+        }
+  
+        await remoteAdminActivities
+          .put(adminactivity)
+          .then((response) => {
+          })
+
+       await remoteDBBuilding
           .put(newEvent)
           .then((response) => {
+            Alert.alert('Your Building has been successfully added!');
             navigation.navigate('AdminHomeScreen');
-            Alert.alert('Your Schedule has been successfully added!');
-            // console.log(response);
-            // SyncBuilding();
           })
           .catch((err) => console.log(err));
       } catch (error) {

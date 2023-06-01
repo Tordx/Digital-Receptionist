@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {localDBFaculty, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty} from '../../../Database/pouchDb'
+import {localDBFaculty, remoteDBFaculty, remoteDBfacultyMember, remoteAdminActivities} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Picker } from '@react-native-picker/picker';
+import { useSelector } from 'react-redux';
 
 const CustomInput = (props) => {
 
@@ -47,7 +48,7 @@ const CustomInput = (props) => {
 
 export default function AddFacultyScreen() {
 
-
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const dispatch = useDispatch();
     const navigation = useNavigation('');
     const [dataforFaculty, setDataForFaculty] = useState('');
@@ -63,6 +64,12 @@ export default function AddFacultyScreen() {
     const [transferred, setTransferred] = useState(0);
     const [searchTerm, setSearchTerm] = useState('')
     const id = uuid.v4()
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
 
     const AddNewFaculty =  () => {
         
@@ -135,12 +142,25 @@ export default function AddFacultyScreen() {
              Name: name,
              Title : title,
            }
-           remoteDBfacultyMember.put(NewFaculty)
+
+           const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Added or Edit Faculty Data",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
+    
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+            })
+
+          await remoteDBfacultyMember.put(NewFaculty)
            .then((response) =>{
-             Alert.alert('Your  has been successfully added!')
-             console.log(response)
-            //  SyncFaculty()
-             navigation.navigate('AdminHomeScreen')
+            Alert.alert('Your Faculty has been successfully added!')
+              navigation.navigate('AdminHomeScreen');
            })
            .catch(err=>console.log(err))
            

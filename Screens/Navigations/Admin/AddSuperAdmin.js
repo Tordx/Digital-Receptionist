@@ -13,7 +13,7 @@ import React , {useState , useEffect} from 'react'
 import {TextInput} from 'react-native-paper'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {localDBSuperAdmin , SyncSuperAdmin , remoteDBSuperAdmin} from '../../../Database/pouchDb'
+import {remoteAdminActivities , SyncSuperAdmin , remoteDBSuperAdmin} from '../../../Database/pouchDb'
 import { useSelector } from 'react-redux';
 import { Picker } from '@react-native-picker/picker';
 import { CloseButton } from '../../../Components/Buttons';
@@ -27,11 +27,17 @@ export default function AddSuperAdmin() {
    
   }, []);
 
-  
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const navigation = useNavigation('');
 
     const [adminid, setAdminId] = useState('');
     const [passcode, setPasscode] = useState('');
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
 
     const AddNewSuperAdmin =  () => {
         
@@ -57,11 +63,24 @@ export default function AddSuperAdmin() {
              SuperAdminId : adminid,
              SuperAdminPasscode : passcode,
            }
-        remoteDBSuperAdmin.put(NewSuperAdmin)
+
+           const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Added or Edit Faculty Data",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
+    
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+            })
+
+          await remoteDBSuperAdmin.put(NewSuperAdmin)
            .then((response) =>{
              Alert.alert('Your Super Admin is Added has been successfully added!')
-             console.log(response)
-             SyncSuperAdmin()
              navigation.navigate('AdminHomeScreen')
            })
            .catch(err=>console.log(err))

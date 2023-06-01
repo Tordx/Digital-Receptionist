@@ -11,7 +11,7 @@ import {
 
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
-import {localDBAdmin , SyncAdmin , remoteDBAdmin} from '../../../Database/pouchDb'
+import {localDBAdmin , SyncAdmin , remoteDBAdmin , remoteAdminActivities} from '../../../Database/pouchDb'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +21,7 @@ import { setImages } from '../../../Redux/TaskReducer';
 import { useDispatch } from 'react-redux';
 import storage from '@react-native-firebase/storage';
 import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
 const CustomInput = (props) => {
 
@@ -49,6 +50,7 @@ useEffect(() => {
   admindatas()
 }, []);
 
+  const {adminLoginInfo} = useSelector((store) => store.adminmodal)
   const dispatch = useDispatch();
   const navigation = useNavigation('');
 
@@ -68,6 +70,12 @@ useEffect(() => {
   const [inactive, setInactive] = useState('Inactive');
   const [deleteState, setDeleteState] = useState(false);
   const id = uuid.v4()
+  const log = new Date();
+  const date  = log.toLocaleDateString();
+  const time = log.toLocaleTimeString();
+  const localDate = new Date();
+  const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+  const timestamp = utcDate.toISOString();
 
   const AddNewAdmin =  () => {
       
@@ -129,15 +137,25 @@ const setNewAdmin = async () => {
         Status: status,
       };
 
-      remoteDBAdmin
+      const adminactivity = {
+        _id: id ,
+        idofadmin : adminLoginInfo._id,
+        Activity: "Added or Edit Admin Data",
+        timestamp : timestamp,
+        Time: time,
+        Date: date
+      }
+
+      await remoteAdminActivities
+        .put(adminactivity)
+        .then((response) => {
+        })
+
+      await remoteDBAdmin
         .put(newAdmin)
         .then((response) => {
-          console.log('====================================response');
-          console.log(response);
-          console.log('====================================response');
+          Alert.alert('Your Admin has been successfully added!');
           navigation.navigate('AdminHomeScreen');
-          Alert.alert('Done');
-          // SyncAdmin();
         })
         .catch((err) => console.log(err));
     } catch (error) {

@@ -11,7 +11,7 @@ import {
     ActivityIndicator,
     Pressable
 } from 'react-native';
-import {remoteDBCourses , SyncCourses} from '../../../Database/pouchDb'
+import {remoteDBCourses , SyncCourses , remoteAdminActivities} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import Icon  from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import { useSelector } from 'react-redux';
 
 const CustomInput = (props) => {
 
@@ -46,7 +47,8 @@ export default function AddClassScreen() {
   useEffect(() => {
     coursedata()
   }, [dataforCourse]);
-  
+
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const navigation = useNavigation('');
     const dispatch = useDispatch()
 
@@ -66,6 +68,12 @@ export default function AddClassScreen() {
     const [deleteState, setDeleteState] = useState(false);
     const [information, setInformation] = useState('');
     const id = uuid.v4()
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
 
     const NextPage =  () => {
         
@@ -133,15 +141,28 @@ export default function AddClassScreen() {
             College: college,
             CollegeAcronym : collegeAcronym,
             EventImage : url,
-            Status: status
+            Status: "Active"
           };
+
+          const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Added or Edit Class Data",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
     
-          remoteDBCourses
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+            })
+    
+          await remoteDBCourses
             .put(newEvent)
             .then((response) => {
-              navigation.navigate('AddClassScreen');
-              Alert.alert('Done');
-              // SyncCourses();
+              Alert.alert('Your Course has been successfully added!');
+              navigation.navigate('AdminHomeScreen');
             })
             .catch((err) => console.log(err));
         } catch (error) {

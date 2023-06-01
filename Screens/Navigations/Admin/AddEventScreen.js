@@ -17,7 +17,7 @@ import {
 import React , {useState , useEffect , useMemo} from 'react'; 
 import { Modal_apsg } from '../Components/Modalapsg';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {localDBEvent , remoteDBEvent, SyncEvent} from '../../../Database/pouchDb'
+import {localDBEvent , remoteDBEvent, SyncEvent , remoteAdminActivities} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -25,6 +25,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import { useDispatch } from 'react-redux';
 import { setImages } from '../../../Redux/TaskReducer';;
+import { useSelector } from 'react-redux';
 
 export const CustomInput = (props) => {
 
@@ -53,6 +54,7 @@ export default function AddEventScreen() {
     eventdatas()
   }, [dataforEvent]);
   
+    const {adminLoginInfo} = useSelector((store) => store.adminmodal)
     const navigation = useNavigation('');
     const dispatch = useDispatch()
 
@@ -72,6 +74,13 @@ export default function AddEventScreen() {
     const [inactive, setInactive] = useState('Inactive');
     const [deleteState, setDeleteState] = useState(false);
     const id = uuid.v4()
+    const log = new Date();
+    const date  = log.toLocaleDateString();
+    const time = log.toLocaleTimeString();
+    const localDate = new Date();
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    const timestamp = utcDate.toISOString();
+
 
     const AddNewEvent =  () => {
         
@@ -139,12 +148,26 @@ export default function AddEventScreen() {
             EventImage : url,
             Status: "Active"
           };
+
+          const adminactivity = {
+            _id: id ,
+            idofadmin : adminLoginInfo._id,
+            Activity: "Added or Edit Event Data",
+            timestamp : timestamp,
+            Time: time,
+            Date: date
+          }
     
-          remoteDBEvent
+          await remoteAdminActivities
+            .put(adminactivity)
+            .then((response) => {
+            })
+    
+          await remoteDBEvent
             .put(newEvent)
             .then((response) => {
+              Alert.alert('Your Event has been successfully added!')
               navigation.navigate('AdminHomeScreen');
-              Alert.alert('Done');
               // SyncAdmin();
             })
             .catch((err) => console.log(err));
