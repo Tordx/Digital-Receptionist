@@ -61,7 +61,6 @@ export default function UniversityMap ()  {
     
      const filterRooms = (floor) => {
       
-      console.log('rendered');
         return rooms?.filter((room) => room?.Floor === floor);
       };
 
@@ -78,7 +77,6 @@ export default function UniversityMap ()  {
             setCenterBuilding(item.BuildingLocation),
             setRooms(item.Rooms),
             setCenter(item.Coordinates)
-            console.log('what the fuck')
             }}
             style = {{ width: '95%'}}
             >
@@ -208,6 +206,7 @@ export default function UniversityMap ()  {
                         source={{ uri: buildingdata.BuildingPicture }} />
                       </Pressable>
                       </View>
+                  {filterRooms("1st floor").length !== 0 && 
                   <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
@@ -222,6 +221,8 @@ export default function UniversityMap ()  {
                           />
                   </View>
                   </View>
+                  }
+                  {filterRooms("2nd floor").length !== 0  && 
                   <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
@@ -234,9 +235,11 @@ export default function UniversityMap ()  {
                           />
                       </View>
                   </View>
+                  }
+                  {filterRooms("3rd floor").length !== 0 && 
                   <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
-                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
+                  <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>THIRD FLOOR</Text>
                           <FlatList
                               showsHorizontalScrollIndicator = {false}
                               horizontal
@@ -245,7 +248,7 @@ export default function UniversityMap ()  {
                               keyExtractor={(item) => item._id}
                           />
                       </View>
-                  </View>
+                  </View>}
               </View>
             )}
             </View>
