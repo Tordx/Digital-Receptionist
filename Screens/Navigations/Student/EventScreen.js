@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity , Image, ImageBackground, Platform, Pressable, Modal, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, FlatList, SafeAreaView , TouchableOpacity , Image, ImageBackground, Platform, Pressable, Modal, StatusBar, ActivityIndicator } from 'react-native'
 import React , {useState , useEffect ,useCallback} from 'react';
 import { CloseButton } from '../../../Components/Buttons';
 import { useNavigation } from '@react-navigation/native';
@@ -110,9 +110,9 @@ export default function EventScreen() {
             visible = {loading}
             animationType='fade'
           >
-            <View style = {[styles.contentcontainer, {backgroundColor: '#fddf54'}]}>
-              <Text>loading Data</Text>
-            </View>
+            <ImageBackground resizeMode = 'cover' source={require('../../../Assets/Img/Background_image.png')} style = {[styles.contentcontainer]}>
+             <ActivityIndicator size={'large'} color={'#0f2ed6'}/>
+            </ImageBackground>
           </Modal>
       </View>
     )
