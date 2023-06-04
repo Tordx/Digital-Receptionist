@@ -224,7 +224,9 @@ import LinearGradient from 'react-native-linear-gradient';
             </View>
         )
         : (
-          <ActivityIndicator size="large" color="#fddf54"/>
+          <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: 500}}>
+          <ActivityIndicator size="large" color="#0f2ed6"/>
+          </View>
         )}
 
              </View> 
