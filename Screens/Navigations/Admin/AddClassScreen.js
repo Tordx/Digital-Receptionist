@@ -9,7 +9,9 @@ import {
     TextInput,
     ImageBackground,
     ActivityIndicator,
-    Pressable
+    Pressable,
+    Modal,
+    Button
 } from 'react-native';
 import {remoteDBCourses , SyncCourses , remoteAdminActivities} from '../../../Database/pouchDb'
 import { CloseButton } from '../../../Components/Buttons';
@@ -21,6 +23,7 @@ import Icon  from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import { useSelector } from 'react-redux';
+import Maps from '../../../Components/Maps';
 
 const CustomInput = (props) => {
 
@@ -57,6 +60,9 @@ export default function AddClassScreen() {
     const [courseAcronym, setcourseAcronym] = useState('');
     const [college, setCollege] = useState('');
     const [collegeAcronym, setCollegeAcronym] = useState('');
+    const [building, setBuilding] = useState('');
+    const [chairperson, setChairperson] = useState('');
+    const [department, setDepartment] = useState('');
     const [status, setStatus] = useState('');
     const [ID, setID] = useState(null)
     const [rev, setRev] = useState()
@@ -74,6 +80,11 @@ export default function AddClassScreen() {
     const localDate = new Date();
     const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
     const timestamp = utcDate.toISOString();
+    const [modalVisible, setModalVisible] = useState(true);
+    const [selectedFloor, setSelectedFloor] = useState('1st floor');
+    const [defaultcoord, setDefaultCoord] = useState([120.2298390712316,16.031971466305023]);
+    const [inputs, setInputs] = useState([""]); // initial state with one input
+    const [room , setRoom] = useState('')
 
     const NextPage =  () => {
         
@@ -139,9 +150,13 @@ export default function AddClassScreen() {
             information: information,
             CourseAcronym : courseAcronym,
             College: college,
+            Department: department,
             CollegeAcronym : collegeAcronym,
-            EventImage : url,
-            Status: "Active"
+            ChairPerson : chairperson,
+            Building : building,
+            Image : url,
+            Status: "Active",
+            Coordinates: defaultcoord
           };
 
           const adminactivity = {
@@ -225,6 +240,11 @@ export default function AddClassScreen() {
       
           }
       }
+
+      const toggleModal = () => {
+        setModalVisible(!modalVisible);
+      };
+
       const renderItem = ({ item }) => {
         return(
           <View style = {{flex: 1, justifyContent: 'flex-start', alignContent: 'center', flexDirection: 'row', height: 100 }}>
@@ -277,7 +297,7 @@ export default function AddClassScreen() {
                 resizeMode = 'cover'
                 source = {require('../../../Assets/Img/announcement-image.png')}>
                    <Text
-                      style = {{fontSize: 30, fontWeight: 'bold', marginTop: 20, color: 'black'}}> 
+                      style = {{fontSize: 20, fontWeight: 'bold', color: 'black'}}> 
                       CONFIGURE COURSES </Text>
                 
                 
@@ -300,7 +320,7 @@ export default function AddClassScreen() {
                           onChangeText={(value) => setCollege(value)}
                           value={college}
                           placeholder = 'College of Arts and Sciences'
-                          title = 'College/Department'
+                          title = 'College'
 
                         />
                           
@@ -309,6 +329,24 @@ export default function AddClassScreen() {
                           value={collegeAcronym}
                           placeholder = 'CAS'
                           title = 'College Acronym'
+                          />
+                              <CustomInput
+                          onChangeText={(value) => setBuilding(value)}
+                          value={building}
+                          placeholder = 'Building'
+                          title = ' Building'
+                          />
+                              <CustomInput
+                          onChangeText={(value) => setChairperson(value)}
+                          value={chairperson}
+                          placeholder = 'ChairPerson'
+                          title = 'ChairPerson'
+                          />
+                               <CustomInput
+                          onChangeText={(value) => setDepartment(value)}
+                          value={department}
+                          placeholder = 'Deparment'
+                          title = 'Department'
                           />
                      <TouchableOpacity
                       onPress={NextPage}
@@ -319,6 +357,29 @@ export default function AddClassScreen() {
                     </View>
               :     
                 <View style = {[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+                      <Modal
+              visible={modalVisible}
+              animationType="slide"
+              onRequestClose={() => setModalVisible(false)}
+            >
+                <Maps
+                  id={id}
+                  title={building}
+                  coordinate={defaultcoord}
+                  centerCoordinate={defaultcoord}
+                  // zoomLevel = {zoomLevel ?? defaultZoomLevel}
+                  // followUserLocation = {true}
+                  logoEnabled = {false}
+                  attributionEnabled = {false}
+                  onLongPress={(event) => {
+                      console.log('Long press event:', event);
+                      const coordinates = event.geometry.coordinates;
+                      setDefaultCoord(coordinates)
+                      console.log('Selected coordinates:', coordinates);
+                  }}
+                    />
+                    <Button title="Close Modal" onPress={toggleModal} />
+             </Modal>
                     <ImageBackground
                         resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
                       <Pressable
@@ -455,7 +516,7 @@ export default function AddClassScreen() {
           
           backgroundColor: '#0f2ed6',
           width: '100%',
-          height: 75,
+          height: 60,
           justifyContent: 'center',
           alignItems: 'center',
           borderRightWidth: 1,

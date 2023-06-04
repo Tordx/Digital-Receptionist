@@ -70,7 +70,7 @@ export default function AddBuildingScreen() {
     const [room , setRoom] = useState('')
     // const [floor , setFloor] = useState('')
     const [selectedFloor, setSelectedFloor] = useState('1st floor');
-    const [defaultcoord, setDefaultCoord] = useState([119.97919707716136, 16.155291199328147]);
+    const [defaultcoord, setDefaultCoord] = useState([120.2298390712316,16.031971466305023]);
     const [inputs, setInputs] = useState([""]); // initial state with one input
     const [modalVisible, setModalVisible] = useState(true);
     const log = new Date();
@@ -302,6 +302,9 @@ export default function AddBuildingScreen() {
                   id={id}
                   title={buildingname}
                   coordinate={defaultcoord}
+                  centerCoordinate={defaultcoord}
+                  // zoomLevel = {zoomLevel ?? defaultZoomLevel}
+                  // followUserLocation = {true}
                   logoEnabled = {false}
                   attributionEnabled = {false}
                   onLongPress={(event) => {

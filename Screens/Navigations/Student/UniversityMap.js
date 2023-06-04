@@ -21,7 +21,7 @@ export default function UniversityMap ()  {
     const {buildingData} = useSelector((store) => (store.buildingmodal))
     const navigation = useNavigation()
     const [rooms, setRooms] = useState(buildingData.Rooms)
-    const [center, setCenter] = useState([120.22984621518788,16.032077640860166])  
+    const [center, setCenter] = useState([120.23015945874931,16.030972101857785])  
     const [cdnterid, setCenterID] = useState("center")  
     const [cdnterbuilding, setCenterBuilding] = useState("centerbuilding")  
     const [locationName, setLocationName] = useState('');

@@ -9,7 +9,9 @@ import {
     ImageBackground,
     FlatList,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    Modal,
+    Button
 } from 'react-native';
 import React , {useState , useEffect} from 'react'
 import {remoteDBCollege, remoteDBFaculty, remoteDBfacultyMember, SyncFaculty, remoteAdminActivities} from '../../../Database/pouchDb'
@@ -23,6 +25,7 @@ import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Picker } from '@react-native-picker/picker';
 import { useSelector } from 'react-redux';
+import Maps from '../../../Components/Maps';
 
 const CustomInput = (props) => {
 
@@ -58,7 +61,7 @@ export default function AddCollege() {
     const [dataforFaculty, setDataForFaculty] = useState('');
     const [College, setCollege] = useState('');
     const [CollegeAcronym, setCollegeAcronym] = useState('');
-    const [department, setDepartment] = useState([]);
+    const [department, setDepartment] = useState(['']);
     const [building, setBuilding] = useState('');
     const [dean, setDean] = useState('');
     const [image, setImage] = useState(null)
@@ -74,6 +77,16 @@ export default function AddCollege() {
     const localDate = new Date();
     const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
     const timestamp = utcDate.toISOString();
+    const [modalVisible, setModalVisible] = useState(true);
+    const [selectedFloor, setSelectedFloor] = useState('1st floor');
+    const [defaultcoord, setDefaultCoord] = useState([120.2298390712316,16.031971466305023]);
+    const [inputs, setInputs] = useState([""]); // initial state with one input
+    const [room , setRoom] = useState('')
+
+    const handleAddInput = () => {
+      const newInput = { id: id, Room: room , Floor: selectedFloor }; // create new input object
+      setInputs([...inputs, newInput]); // update the inputs array with the new input
+    };
 
     const AddNewFaculty =  () => {
         
@@ -149,7 +162,7 @@ export default function AddCollege() {
              Image : url,
              Building : building,
              Dean : dean,
-             Coordinates : coordinates
+             Coordinates : defaultcoord
            }
 
            const adminactivity = {
@@ -195,6 +208,11 @@ export default function AddCollege() {
   
       }
   }
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
         
 
 
@@ -289,6 +307,29 @@ export default function AddCollege() {
                       </View>
                 :     
                   <View style = {[styles.inputcontainer, {backgroundColor: '#fddf54'}]}>
+              <Modal
+              visible={modalVisible}
+              animationType="slide"
+              onRequestClose={() => setModalVisible(false)}
+            >
+                <Maps
+                  id={id}
+                  title={building}
+                  coordinate={defaultcoord}
+                  centerCoordinate={defaultcoord}
+                  // zoomLevel = {zoomLevel ?? defaultZoomLevel}
+                  // followUserLocation = {true}
+                  logoEnabled = {false}
+                  attributionEnabled = {false}
+                  onLongPress={(event) => {
+                      console.log('Long press event:', event);
+                      const coordinates = event.geometry.coordinates;
+                      setDefaultCoord(coordinates)
+                      console.log('Selected coordinates:', coordinates);
+                  }}
+                    />
+                    <Button title="Close Modal" onPress={toggleModal} />
+             </Modal>
                       <ImageBackground
                           resizeMode="cover" style={styles.imagecontainer} source={{uri: image}}>
                         <Pressable
