@@ -133,7 +133,6 @@ export const ClassScreen = () => {
       resizeMode = 'cover'
     >
         <View style = {styles.contentcontainer}>
-          <ScrollView>
         {newSearch ? (
         <FlatList
           style = {{paddingTop: 100}}
@@ -154,7 +153,6 @@ export const ClassScreen = () => {
       ) : (
         <ActivityIndicator size="large" color="#fddf54"/>
       )}
-      </ScrollView>
            </View>
            <LinearGradient colors = {['#f6f6f6', '#00000000']} style = {{position: 'absolute', top: 0, justifyContent: 'center', alignItems: 'center', width: '100%', height: 100}}>
          
