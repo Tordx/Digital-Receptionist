@@ -70,7 +70,7 @@ export default function AddBuildingScreen() {
     const [room , setRoom] = useState('')
     // const [floor , setFloor] = useState('')
     const [selectedFloor, setSelectedFloor] = useState('1st floor');
-    const [defaultcoord, setDefaultCoord] = useState([119.97919707716136, 16.155291199328147]);
+    const [defaultcoord, setDefaultCoord] = useState([120.2298390712316,16.031971466305023]);
     const [inputs, setInputs] = useState([""]); // initial state with one input
     const [modalVisible, setModalVisible] = useState(true);
     const log = new Date();
@@ -149,9 +149,6 @@ export default function AddBuildingScreen() {
 
   const setNewBuilding = async () => {
 
-    
-    console.log('Images');
-    console.log(image);
     const uri = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -168,19 +165,16 @@ export default function AddBuildingScreen() {
     } catch (e) {
       console.error(e);
     }
-    console.log('Image Uploaded');
     setImage(null);
     const url = await storage().ref(filename).getDownloadURL();
     // dispatch(setImages(url));
     setImage(url);
-    console.log(url);
-    console.log('url uploaded');
+
   
     const id = uuid.v4();
   
     if (image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png') {
       Alert.alert('Please upload building image');
-      console.log('No image uploaded');
     } else {
       try {
         const newEvent = {
@@ -302,6 +296,7 @@ export default function AddBuildingScreen() {
                   id={id}
                   title={buildingname}
                   coordinate={defaultcoord}
+                  centerCoordinate={defaultcoord}
                   logoEnabled = {false}
                   attributionEnabled = {false}
                   onLongPress={(event) => {
