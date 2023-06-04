@@ -181,9 +181,6 @@ const admindatas = async() => {
         return item
       });
       setDataForAdmin(newFilterData)
-      console.log('modifiedArr')
-      console.log(modifiedArr)
-      console.log('modifiedArr')
 
     }
 }

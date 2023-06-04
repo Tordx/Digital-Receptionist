@@ -78,15 +78,8 @@ export default function AddCollege() {
     const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
     const timestamp = utcDate.toISOString();
     const [modalVisible, setModalVisible] = useState(true);
-    const [selectedFloor, setSelectedFloor] = useState('1st floor');
     const [defaultcoord, setDefaultCoord] = useState([120.2298390712316,16.031971466305023]);
-    const [inputs, setInputs] = useState([""]); // initial state with one input
-    const [room , setRoom] = useState('')
 
-    const handleAddInput = () => {
-      const newInput = { id: id, Room: room , Floor: selectedFloor }; // create new input object
-      setInputs([...inputs, newInput]); // update the inputs array with the new input
-    };
 
     const AddNewFaculty =  () => {
         
@@ -110,9 +103,6 @@ export default function AddCollege() {
   
   
       }).then(image => {
-        console.log('yyyyyyyyyyyyy')
-        console.log(image.assets[0].uri)
-        console.log('xxxxxxxxxxxx')
         setImage(image.assets[0].uri)
         dispatch(setImages(image.assets[0].uri))
       });
@@ -120,10 +110,6 @@ export default function AddCollege() {
   }
 
      const setNewFaculty = async () => {
-      
-      console.log('Images')
-      console.log(image)
-      console.log('Images')
       const  uri  = image;
       const filename = uri.substring(uri.lastIndexOf('/') + 1);
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -147,10 +133,6 @@ export default function AddCollege() {
       setImage(null);
       const url = await storage().ref(filename).getDownloadURL();
       setImage(url)
-      console.log(url)
-      console.log('url')
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-
 
          try {
            var NewFaculty = {
@@ -202,10 +184,6 @@ export default function AddCollege() {
           return item.doc;
         });
         setDataForFaculty(modifiedArr)
-        console.log('modifiedArr')
-        console.log(modifiedArr)
-        console.log('modifiedArr')
-  
       }
   }
 

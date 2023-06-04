@@ -149,9 +149,6 @@ export default function AddBuildingScreen() {
 
   const setNewBuilding = async () => {
 
-    
-    console.log('Images');
-    console.log(image);
     const uri = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -168,19 +165,16 @@ export default function AddBuildingScreen() {
     } catch (e) {
       console.error(e);
     }
-    console.log('Image Uploaded');
     setImage(null);
     const url = await storage().ref(filename).getDownloadURL();
     // dispatch(setImages(url));
     setImage(url);
-    console.log(url);
-    console.log('url uploaded');
+
   
     const id = uuid.v4();
   
     if (image === 'https://cdn.iconscout.com/icon/free/png-256/gallery-44-267592.png') {
       Alert.alert('Please upload building image');
-      console.log('No image uploaded');
     } else {
       try {
         const newEvent = {
@@ -303,8 +297,6 @@ export default function AddBuildingScreen() {
                   title={buildingname}
                   coordinate={defaultcoord}
                   centerCoordinate={defaultcoord}
-                  // zoomLevel = {zoomLevel ?? defaultZoomLevel}
-                  // followUserLocation = {true}
                   logoEnabled = {false}
                   attributionEnabled = {false}
                   onLongPress={(event) => {

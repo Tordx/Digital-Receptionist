@@ -50,9 +50,6 @@ export default function UniversityMap ()  {
               return item;
             });;
             setBuildings(newFilterData)
-            console.log('newFilterData')
-            console.log(newFilterData)
-            console.log('newFilterData')
     
           }
         } 

@@ -234,9 +234,6 @@ export default function AddClassScreen() {
               
               setDataForCourse(newFilterData)
             }
-            console.log('modifiedArr')
-            console.log(modifiedArr)
-            console.log('modifiedArr')
       
           }
       }
@@ -367,8 +364,7 @@ export default function AddClassScreen() {
                   title={building}
                   coordinate={defaultcoord}
                   centerCoordinate={defaultcoord}
-                  // zoomLevel = {zoomLevel ?? defaultZoomLevel}
-                  // followUserLocation = {true}
+
                   logoEnabled = {false}
                   attributionEnabled = {false}
                   onLongPress={(event) => {
