@@ -95,7 +95,6 @@ export default function EventScreen() {
 
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator = {false}>
         <FlatList
           style = {{paddingTop: 100}}
           data={memoizedData}
@@ -111,7 +110,6 @@ export default function EventScreen() {
             
           }
           />
-          </ScrollView>
         <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
         name = 'arrow-back'
         size = {35}
