@@ -94,7 +94,7 @@ export default function EventScreen() {
   }
 
     return (
-      <View style={styles.container}>
+      <ImageBackground style={styles.container} source={require('../../../Assets/Img/Background_image.png')} resizeMode = 'cover'>
         <FlatList
           style = {{paddingTop: 100}}
           data={memoizedData}
@@ -145,7 +145,7 @@ export default function EventScreen() {
        color={'#0f2ed6'}
        onPress={() => setShowSearch(!showSearch)}
      />}  
-           </View>
+           </ImageBackground>
     )
 
 };

@@ -65,7 +65,7 @@ export default function BuildingMapScreen ()  {
                       </Pressable>
                    
                   </View>
-                 {filterRooms("1st floor")?.length !== 0 && <View style={[styles.header, {height: '15%'}]}>
+                 {filterRooms("1st floor").length !== 0 && <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>FIRST FLOOR</Text>
                       
@@ -79,7 +79,7 @@ export default function BuildingMapScreen ()  {
                           />
                   </View>
                   </View>}
-                  {filterRooms("2nd floor")?.length !== 0 && <View style={[styles.header, {height: '15%'}]}>
+                  {filterRooms("2nd floor").length !== 0 && <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>SECOND FLOOR</Text>
                           <FlatList
@@ -91,7 +91,7 @@ export default function BuildingMapScreen ()  {
                           />
                       </View>
                   </View>}
-                  {filterRooms("3rd floor")?.length !== 0 && <View style={[styles.header, {height: '15%'}]}>
+                  {filterRooms("3rd floor").length !== 0 && <View style={[styles.header, {height: '15%'}]}>
                   <View style = {{paddingVertical: 20, wdith: '100%'}}>
                   <Text style = {{ fontSize: 17, textAlign: 'center', paddingVertical: 5, marginTop: 30, color: '#303030', width: '100%', backgroundColor: '#00000019', fontFamily: 'italic'}}>THIRD FLOOR</Text>
                           <FlatList
