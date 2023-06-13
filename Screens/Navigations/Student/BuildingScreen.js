@@ -95,6 +95,8 @@ export default function EventScreen() {
 
     return (
       <ImageBackground style={styles.container} source={require('../../../Assets/Img/Background_image.png')} resizeMode = 'cover'>
+        
+        <ScrollView nestedScrollEnabled>
         <FlatList
           style = {{paddingTop: 100}}
           data={memoizedData}
@@ -110,6 +112,7 @@ export default function EventScreen() {
             
           }
           />
+          </ScrollView>
         <CloseButton style = {{position: 'absolute', top: 10, left: 10}}
         name = 'arrow-back'
         size = {35}

@@ -134,6 +134,7 @@ export const ClassScreen = () => {
     >
         <View style = {styles.contentcontainer}>
         {newSearch ? (
+          <ScrollView nestedScrollEnabled>
         <FlatList
           style = {{paddingTop: 100}}
           data={newSearch}
@@ -149,6 +150,7 @@ export const ClassScreen = () => {
           }
           
         />
+        </ScrollView>
        
       ) : (
         <ActivityIndicator size="large" color="#fddf54"/>
@@ -208,13 +210,13 @@ export const ClassScreen = () => {
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f2f3f7',
         
     },
 
     contentcontainer: {
 
       width: '100%',
+      height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
 
